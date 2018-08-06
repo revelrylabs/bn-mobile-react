@@ -16,7 +16,7 @@ Waffle Board | [link](https://waffle.io/revelrylabs/bn-mobile-react)
 Google Drive | [link](https://drive.google.com/drive/u/0/folders/15teu8YZtjJ06aLGGt8b1UBmEDS_O_-k0)
 Sprint Reports | [link](https://drive.google.com/drive/u/0/folders/1z5Qp0Z95lNAK0agxKyAIb_uqpvI-JTtW)
 Continuous Integration | [TBD]()
-Style Guide | [TB]()
+Style Guide | [TBD]()
 iOS App Store | [TBD]()
 Google Play Store | [TBD]()
 
