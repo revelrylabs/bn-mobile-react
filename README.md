@@ -5,7 +5,7 @@
 
 **Note:** _The CI badge links in markdown format are located in each TravisCI project by just clicking on the Badge next to the project name_
 
-# Project name
+# Big Neon
 Product Owner:
 * **Project Start Date:** 8/6/18
 
@@ -45,7 +45,7 @@ iOS | iPhone 6 and newer
 Android | Samsung S6, S7, and S8 families
 
 ## The Project Brief
-This is a Fork of the original Big Neon [project](). Revelry is participating in an open source contribution for Big Neon. 
+This is a Fork of the original Big Neon [repository](https://github.com/big-neon/bn-mobile-react). Revelry is participating in an open source contribution for Big Neon. 
 We will be working from this forked repository and submitting Pull Requests back to the original repo. From the original Big Neon repo:
 
 >Big Neon is a multi-tiered micro-services architecture for selling and managing tickets. The software system is made up 
