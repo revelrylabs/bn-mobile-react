@@ -127,5 +127,7 @@ This will be a React Native app for iOS and Android.
 
 ### Mobile
 React Native (https://facebook.github.io/react-native/)
+
 Unstated (https://github.com/jamiebuilds/unstated)
+
 React Navigation (https://reactnavigation.org/)
