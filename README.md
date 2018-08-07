@@ -115,6 +115,10 @@ Account Manager | |
 
 ## Project Setup
 
+* If you don't use the `asdf` version manager, set it up: https://github.com/asdf-vm/asdf
+* Run `./bin/setup` from the project directory.
+* Run `./bin/start` to start the app on your dev machine.
+
 ### Tech Stack
 #### Explanation
 _rationale on tech stack and architecture decision(s)_
