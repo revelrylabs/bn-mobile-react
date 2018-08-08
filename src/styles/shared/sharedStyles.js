@@ -292,22 +292,6 @@ const SharedStyles = {
     width: fullWidth - 20,
     height: 200,
   },
-  slideShowIconLink: {
-    backgroundColor: '#FFFFFF50',
-    color: secondaryColor,
-    fontSize: slideShowArrowFontSize,
-    paddingRight: globalPaddingTiny,
-  },
-  ImagePaginatorContainer: {
-    backgroundColor: textColor,
-    flex: 1,
-    flexDirection: 'column',
-    height: fullHeight / 2,
-    justifyContent: 'center',
-    paddingHorizontal: globalPaddingSmall,
-    paddingVertical: globalPaddingSmall,
-    width: fullWidth - 2 * globalPaddingSmall,
-  },
 }
 
 function createStyles(overrides = {}) {
