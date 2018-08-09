@@ -5,7 +5,6 @@ const fullWidth = Dimensions.get('window').width
 export const primaryColor = '#FF20B1'
 export const secondaryColor = '#707CED'
 export const tertiaryColor = '#4EB0E5'
-export const darkBlue = '#26375A'
 export const white = '#FFF'
 export const errorTextColor = '#FF0000'
 export const textColor = '#1E1E1E'
@@ -13,11 +12,7 @@ export const backgroundColor = white
 export const inputBackgroundColor = '#FAFAFA'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
-export const primaryUnderlayColor = '#276C74'
-export const secondaryUnderlayColor = '#276D90'
-export const primaryTransparent = 'rgba(34, 107, 116, 0.5)'
-
-export const createItemCameraColor = '#E3E3E3'
+export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -29,16 +24,15 @@ export const globalPaddingJumbo = 55
 export const globalMarginSmall = 10
 export const globalMargin = 20
 
-export const globalFontRegular = 'opensans-Regular'
-export const globalFontSemiBold = 'opensans-SemiBold'
-export const globalFontBold = 'opensans-Bold'
-export const globalFontItalic = 'opensans-Italic'
+export const globalFontRegular = 'tt_commons_regular'
+export const globalFontSemiBold = 'tt_commons_demibold'
+export const globalFontBold = 'tt_commons_bold'
+export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 24
 export const sectionHeaderFontSize = 18
 export const bodyFontSize = 15
 export const iconFontSize = 18
-export const slideShowArrowFontSize = 32
 
 const SharedStyles = {
   container: {
@@ -71,22 +65,6 @@ const SharedStyles = {
     width: fullWidth - globalPadding,
     flexDirection: 'column',
   },
-  tinyCube: {
-    width: bodyFontSize,
-    height: bodyFontSize,
-    marginRight: globalPaddingSmall,
-    borderRadius: 3,
-  },
-  listArrowLink: {
-    position: 'absolute',
-    right: 0,
-    top: 5,
-  },
-  chart: {
-    width: fullWidth * 0.8,
-    height: 130,
-    resizeMode: 'cover',
-  },
   paddingVerticalStandard: {
     paddingVertical: globalPadding,
   },
@@ -102,21 +80,6 @@ const SharedStyles = {
     paddingHorizontal: globalPaddingSmall,
     paddingBottom: globalPadding,
     width: fullWidth,
-  },
-  FilterAnalyticsText: {
-    flex: 1 / 4,
-    marginBottom: globalPadding,
-  },
-  FilterAnalytics: {
-    flex: 3 / 4,
-  },
-  AnalyticsFilterHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: globalPaddingSmall,
-    width: fullWidth - 2 * globalPadding,
   },
   section: {
     paddingVertical: globalPaddingLarge,
@@ -150,19 +113,13 @@ const SharedStyles = {
     marginBottom: globalMarginSmall,
   },
   button: {
-    backgroundColor: tertiaryColor,
+    backgroundColor: primaryColor,
     flex: 1,
     height: 50,
     justifyContent: 'center',
   },
   buttonSecondary: {
-    backgroundColor: darkBlue,
-    flex: 1,
-    height: 50,
-    justifyContent: 'center',
-  },
-  buttonTertiary: {
-    backgroundColor: primaryColor,
+    backgroundColor: secondaryColor,
     flex: 1,
     height: 50,
     justifyContent: 'center',
@@ -195,7 +152,7 @@ const SharedStyles = {
   lineHeight: {
     paddingBottom: globalPaddingTiny / 2,
   },
-  halfColum: {
+  halfColumn: {
     flex: 1 / 2,
   },
   sectionHeader: {
@@ -203,13 +160,6 @@ const SharedStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
     paddingVertical: globalPaddingSmall,
-  },
-  sectionHeaderLight: {
-    backgroundColor: 'transparent',
-    color: tertiaryColor,
-    fontFamily: globalFontSemiBold,
-    fontSize: sectionHeaderFontSize,
-    paddingVertical: globalPadding,
   },
   bodyText: {
     backgroundColor: 'transparent',
@@ -228,14 +178,6 @@ const SharedStyles = {
   errorText: {
     backgroundColor: 'transparent',
     color: errorTextColor,
-    fontFamily: globalFontItalic,
-    fontSize: bodyFontSize - 2,
-    marginTop: -5,
-    paddingBottom: globalPadding,
-  },
-  errorTextLight: {
-    backgroundColor: 'transparent',
-    color: white,
     fontFamily: globalFontItalic,
     fontSize: bodyFontSize - 2,
     marginTop: -5,
@@ -265,13 +207,6 @@ const SharedStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
   },
-  iconLinkContainerBack: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingTop: globalPaddingLarger,
-    paddingHorizontal: globalPaddingSmall,
-  },
   iconLinkWhite: {
     backgroundColor: 'transparent',
     paddingRight: globalPaddingTiny,
@@ -280,17 +215,6 @@ const SharedStyles = {
     color: white,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
-  },
-  slideShowArrowContainer: {
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: globalPaddingSmall,
-  },
-  slideShowImage: {
-    width: fullWidth - 20,
-    height: 200,
   },
 }
 
