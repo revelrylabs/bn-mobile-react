@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 export default function EventsTicket() {
   return (
     <View style={styles.container}>
-      <Text>Show a specific Event's Ticket</Text>
+      <Text>Show a specific Event&apos;s Ticket</Text>
     </View>
   );
 }
