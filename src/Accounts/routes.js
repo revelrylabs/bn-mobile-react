@@ -1,7 +1,7 @@
 import Account from './index'
 
 const ROUTES = {
-  Account
+  Account,
 }
 
 export default ROUTES
