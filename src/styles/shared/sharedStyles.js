@@ -133,7 +133,6 @@ const SharedStyles = {
     backgroundColor: 'transparent',
     fontFamily: globalFontBold,
     fontSize: headerFontSize,
-    paddingVertical: globalPadding,
     color: textColor,
   },
   headerLight: {
@@ -197,13 +196,13 @@ const SharedStyles = {
   },
   iconLink: {
     backgroundColor: 'transparent',
-    color: secondaryColor,
+    color: primaryColor,
     fontSize: iconFontSize,
     paddingRight: globalPaddingTiny,
     paddingTop: globalPaddingTiny - 2,
   },
   iconLinkText: {
-    color: secondaryColor,
+    color: primaryColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
   },
@@ -215,6 +214,11 @@ const SharedStyles = {
     color: white,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
+  },
+  iconImageSmall: {
+    width: 23,
+    height: 23,
+    marginRight: globalPaddingTiny,
   },
 }
 

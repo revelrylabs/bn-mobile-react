@@ -1,19 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import SharedStyles from '../styles/shared/sharedStyles'
+import FormStyles from '../styles/shared/formStyles'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = SharedStyles.createStyles()
+const formStyles = FormStyles.createStyles()
 
 export default function EventsIndex() {
   return (
     <View style={styles.container}>
-      <Text>Main Events Explore Page</Text>
+
+      <View style={styles.sectionHeaderContainer}>
+        <Text style={styles.header}>Explore</Text>
+        <View style={styles.iconLinkContainer}>
+          <Image
+            style={styles.iconImageSmall}
+            source={require('../../assets/heart-small.png')}
+          />
+          <Text style={styles.iconLinkText}>NYC</Text>
+          <Icon style={styles.iconLink} name="keyboard-arrow-down" />
+        </View>
+      </View>
+
     </View>
   );
 }
