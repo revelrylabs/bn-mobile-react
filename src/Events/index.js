@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Button, Text, View } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,10 +10,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function EventsIndex() {
+export default function EventsIndex(props) {
+  const {navigation: {navigate}} = props
+
   return (
     <View style={styles.container}>
       <Text>Main Events Explore Page</Text>
+      <Button
+        title="View Event"
+        onPress={() => navigate("EventsShow")}
+      />
+      <Button
+        title="Search Event"
+        onPress={() => navigate("EventsSearch")}
+      />
+      <Button
+        title="Change Location"
+        onPress={() => navigate("EventsChangeLocation")}
+      />
     </View>
   );
 }
