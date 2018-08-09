@@ -1,12 +1,31 @@
-import { createStackNavigator } from 'react-navigation'
-import Home from './Home'
+import { createStackNavigator, createBottomTabNavigator, BottomTabBar } from 'react-navigation'
+import EventRoutes from './Events/routes'
+import TicketRoutes from './Tickets/routes'
+import AccountRoutes from './Accounts/routes'
 
-const ROUTES = {
-  Home,
-}
-
-const OPTIONS = {
+const EventsStack = createStackNavigator({
+  ...EventRoutes,
+}, {
   initialRouteName: 'Home',
-}
+})
 
-export default createStackNavigator(ROUTES, OPTIONS)
+const TicketsStack =  createStackNavigator({
+  ...TicketRoutes,
+}, {
+  initialRouteName: 'MyTickets',
+})
+
+const AccountsStack =  createStackNavigator({
+  ...AccountRoutes,
+}, {
+  initialRouteName: 'Account',
+})
+
+
+export default createBottomTabNavigator(
+  {
+    Explore: EventsStack,
+    MyTickets: TicketsStack,
+    Account: AccountsStack,
+  }
+)
