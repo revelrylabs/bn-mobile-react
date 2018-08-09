@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
@@ -22,6 +22,14 @@ export default function EventsIndex() {
           <Icon style={styles.iconLink} name="keyboard-arrow-down" />
         </View>
       </View>
+
+      <TextInput
+        style={formStyles.input}
+        placeholder="Search Artists, Shows, Venues"
+        disabled
+      />
+
+      <Text style={styles.sectionHeader}>Hot This Week</Text>
 
     </View>
   );

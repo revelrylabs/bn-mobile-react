@@ -10,6 +10,7 @@ export const errorTextColor = '#FF0000'
 export const textColor = '#1E1E1E'
 export const backgroundColor = white
 export const inputBackgroundColor = '#FAFAFA'
+export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
@@ -41,8 +42,7 @@ const FormStyles = {
   },
   halfInput: {
     color: textColor,
-    backgroundColor: inputBackgroundColor,
-    borderColor,
+    backgroundColor: disabledColor,
     borderWidth: 1,
     borderStyle: 'solid',
     fontFamily: globalFontRegular,
@@ -75,7 +75,7 @@ const FormStyles = {
   },
   textAreaInput: {
     color: textColor,
-    backgroundColor: inputBackgroundColor,
+    backgroundColor: disabledColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     flex: 1,
@@ -83,13 +83,10 @@ const FormStyles = {
   input: {
     color: textColor,
     alignContent: 'center',
-    backgroundColor: inputBackgroundColor,
-    borderColor,
-    borderWidth: 1,
-    borderStyle: 'solid',
+    backgroundColor: disabledColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
-    height: 50,
+    height: 40,
     marginBottom: globalPaddingSmall + 5,
     paddingHorizontal: globalPadding,
     width: '100%',
@@ -160,12 +157,12 @@ const FormStyles = {
     width: '50%',
   },
   iconLink: {
-    color: disabledColor,
+    color: inputBackgroundColor,
     fontSize: iconFontSize,
     paddingRight: globalPaddingTiny,
   },
   iconLinkText: {
-    color: disabledColor,
+    color: inputBackgroundColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize - 3,
     textAlign: 'center',
@@ -182,7 +179,7 @@ const FormStyles = {
     textAlign: 'center',
   },
   checkBoxHelpText: {
-    color: disabledColor,
+    color: inputBackgroundColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     paddingBottom: globalPaddingTiny,

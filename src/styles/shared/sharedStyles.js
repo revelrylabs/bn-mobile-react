@@ -8,6 +8,7 @@ export const tertiaryColor = '#4EB0E5'
 export const white = '#FFF'
 export const errorTextColor = '#FF0000'
 export const textColor = '#1E1E1E'
+export const sectionHeaderColor = '#9DA3B4'
 export const backgroundColor = white
 export const inputBackgroundColor = '#FAFAFA'
 export const helpTextColor = '#666'
@@ -30,7 +31,7 @@ export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 24
-export const sectionHeaderFontSize = 18
+export const sectionHeaderFontSize = 16
 export const bodyFontSize = 15
 export const iconFontSize = 18
 
@@ -156,6 +157,7 @@ const SharedStyles = {
   },
   sectionHeader: {
     backgroundColor: 'transparent',
+    color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
     paddingVertical: globalPaddingSmall,
