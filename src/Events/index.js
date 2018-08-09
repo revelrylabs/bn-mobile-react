@@ -3,9 +3,11 @@ import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
+import SlideShowStyles from '../styles/shared/slideshowStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
+const slideshowStyles = SlideShowStyles.createStyles()
 
 export default function EventsIndex() {
   return (
@@ -30,6 +32,41 @@ export default function EventsIndex() {
       />
 
       <Text style={styles.sectionHeader}>Hot This Week</Text>
+
+      <View style={slideshowStyles.slideshowContainer}>
+
+        <Image
+          style={slideshowStyles.slideShowImage}
+          source={require('../../assets/slider-bkgd.jpg')}
+        />
+
+        <View style={slideshowStyles.detailsContainer}>
+          <View style={slideshowStyles.sectionTop}>
+            <View style={styles.iconLinkStarContainer}>
+              <Icon style={styles.iconLinkStar} name="star" />
+            </View>
+            <View style={styles.avatarContainer}>
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-male.png')}
+              />
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-female.png')}
+              />
+            </View>
+          </View>
+
+          <View style={slideshowStyles.sectionBottom}>
+            <View style={slideshowStyles.priceTagContainer}>
+              <Text style={slideshowStyles.priceTag}>$30</Text>
+            </View>
+            <Text style={slideshowStyles.header}>Future Islands</Text>
+            <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
+          </View>
+        </View>
+
+      </View>
 
     </View>
   );

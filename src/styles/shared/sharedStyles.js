@@ -14,6 +14,7 @@ export const inputBackgroundColor = '#FAFAFA'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.5)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -30,7 +31,7 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 24
+export const headerFontSize = 26
 export const sectionHeaderFontSize = 16
 export const bodyFontSize = 15
 export const iconFontSize = 18
@@ -208,20 +209,29 @@ const SharedStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
   },
-  iconLinkWhite: {
-    backgroundColor: 'transparent',
-    paddingRight: globalPaddingTiny,
+  iconLinkStarContainer: {
+    backgroundColor: whiteTransparent,
+    borderRadius: 100/2,
+    height: 45,
+    padding: globalPaddingSmall,
+    width: 45,
   },
-  iconLinkTextWhite: {
+  iconLinkStar: {
     color: white,
-    fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: headerFontSize,
   },
   iconImageSmall: {
     width: 23,
     height: 23,
     marginRight: globalPaddingTiny,
   },
+  avatarContainer: {
+
+  },
+  avatar: {
+    height: 45,
+    width: 45,
+  }.
 }
 
 function createStyles(overrides = {}) {
