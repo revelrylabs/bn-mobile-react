@@ -14,7 +14,7 @@ export const inputBackgroundColor = '#FAFAFA'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
-export const whiteTransparent = 'rgba(255, 255, 255, 0.5)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -225,13 +225,28 @@ const SharedStyles = {
     height: 23,
     marginRight: globalPaddingTiny,
   },
+  priceTagContainer: {
+    backgroundColor: white,
+    borderRadius: 5,
+    marginBottom: globalPaddingTiny,
+    padding: globalPaddingTiny,
+    width: 50,
+  },
+  priceTag: {
+    color: primaryColor,
+    fontFamily: globalFontBold,
+    fontSize: bodyFontSize,
+    textAlign: 'center',
+  },
   avatarContainer: {
-
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   avatar: {
     height: 45,
+    marginLeft: -10,
     width: 45,
-  }.
+  },
 }
 
 function createStyles(overrides = {}) {

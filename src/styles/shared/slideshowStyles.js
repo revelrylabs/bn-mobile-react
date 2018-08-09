@@ -74,17 +74,6 @@ const SlideShowStyles = {
     height: 300,
     position: 'absolute',
   },
-  priceTagContainer: {
-    backgroundColor: white,
-    borderRadius: 5,
-    padding: globalPaddingTiny,
-    width: 50,
-  },
-  priceTag: {
-    color: primaryColor,
-    fontFamily: globalFontBold,
-    fontSize: bodyFontSize,
-  },
 }
 
 function createStyles(overrides = {}) {

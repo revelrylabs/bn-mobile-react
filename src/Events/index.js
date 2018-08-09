@@ -34,7 +34,6 @@ export default function EventsIndex() {
       <Text style={styles.sectionHeader}>Hot This Week</Text>
 
       <View style={slideshowStyles.slideshowContainer}>
-
         <Image
           style={slideshowStyles.slideShowImage}
           source={require('../../assets/slider-bkgd.jpg')}
@@ -58,15 +57,16 @@ export default function EventsIndex() {
           </View>
 
           <View style={slideshowStyles.sectionBottom}>
-            <View style={slideshowStyles.priceTagContainer}>
-              <Text style={slideshowStyles.priceTag}>$30</Text>
+            <View style={styles.priceTagContainer}>
+              <Text style={styles.priceTag}>$30</Text>
             </View>
             <Text style={slideshowStyles.header}>Future Islands</Text>
             <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
           </View>
         </View>
-
       </View>
+
+      <Text style={styles.sectionHeader}>Upcoming</Text>
 
     </View>
   );
