@@ -14,6 +14,7 @@ export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -37,59 +38,55 @@ export const iconFontSize = 18
 export const pickerItemHeight = 120
 export const slideShowArrowFontSize = 32
 
-const SlideShowStyles = {
-  slideshowContainer: {
-    padding: globalPadding,
+const EventStyles = {
+  eventContainer: {
+    padding: globalPaddingSmall,
   },
   detailsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 300,
+    height: 180,
+  },
+  detailsContainerBottom: {
+    paddingBottom: globalPadding,
   },
   sectionTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  sectionMiddle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: globalPaddingJumbo,
-  },
-  slideShowIconLinkLeft: {
-    backgroundColor: 'transparent',
-    color: white,
-    fontSize: slideShowArrowFontSize,
-    marginLeft: -20,
-  },
-  slideShowIconLinkRight: {
-    backgroundColor: 'transparent',
-    color: white,
-    fontSize: slideShowArrowFontSize,
-    marginRight: -20,
-  },
   sectionBottom: {
-    paddingVertical: globalPaddingLarge,
+    paddingVertical: globalPadding,
+  },
+  iconLinkStarContainerSmall: {
+    backgroundColor: whiteTransparent,
+    borderRadius: 100/2,
+    height: 30,
+    padding: globalPaddingTiny,
+    width: 30,
+  },
+  iconLinkStarSmall: {
+    color: white,
+    fontSize: iconFontSize,
+  },
+  eventImage: {
+    width: fullWidth - 43,
+    height: 180,
+    position: 'absolute',
   },
   header: {
     fontFamily: globalFontBold,
-    fontSize: headerFontSize,
-    color: white,
-    marginTop: globalPaddingTiny,
+    fontSize: sectionHeaderFontSize,
+    color: textColor,
   },
   details: {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
-    color: disabledColor,
-  },
-  slideShowImage: {
-    width: fullWidth - 43,
-    height: 300,
-    position: 'absolute',
+    color: textColor,
   },
 }
 
 function createStyles(overrides = {}) {
-  return StyleSheet.create({...SlideShowStyles, ...overrides})
+  return StyleSheet.create({...EventStyles, ...overrides})
 }
 
 export default {

@@ -228,7 +228,6 @@ const SharedStyles = {
   priceTagContainer: {
     backgroundColor: white,
     borderRadius: 5,
-    marginBottom: globalPaddingTiny,
     padding: globalPaddingTiny,
     width: 50,
   },
@@ -246,6 +245,11 @@ const SharedStyles = {
     height: 45,
     marginLeft: -10,
     width: 45,
+  },
+  avatarSmall: {
+    height: 30,
+    marginLeft: -10,
+    width: 30,
   },
 }
 
