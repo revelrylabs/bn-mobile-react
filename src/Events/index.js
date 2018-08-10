@@ -36,7 +36,7 @@ export default function EventsIndex() {
       <View style={slideshowStyles.slideshowContainer}>
         <Image
           style={slideshowStyles.slideShowImage}
-          source={require('../../assets/slider-bkgd.jpg')}
+          source={require('../../assets/featured-1.png')}
         />
 
         <View style={slideshowStyles.detailsContainer}>
@@ -56,11 +56,16 @@ export default function EventsIndex() {
             </View>
           </View>
 
+          <View style={slideshowStyles.sectionMiddle}>
+            <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
+            <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
+          </View>
+
           <View style={slideshowStyles.sectionBottom}>
             <View style={styles.priceTagContainer}>
               <Text style={styles.priceTag}>$30</Text>
             </View>
-            <Text style={slideshowStyles.header}>Future Islands</Text>
+            <Text style={slideshowStyles.header}>Childish Gambino</Text>
             <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
           </View>
         </View>

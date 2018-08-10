@@ -35,6 +35,7 @@ export const sectionHeaderFontSize = 18
 export const bodyFontSize = 15
 export const iconFontSize = 18
 export const pickerItemHeight = 120
+export const slideShowArrowFontSize = 32
 
 const SlideShowStyles = {
   slideshowContainer: {
@@ -49,6 +50,23 @@ const SlideShowStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  sectionMiddle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: globalPaddingJumbo,
+  },
+  slideShowIconLinkLeft: {
+    backgroundColor: 'transparent',
+    color: white,
+    fontSize: slideShowArrowFontSize,
+    marginLeft: -20,
+  },
+  slideShowIconLinkRight: {
+    backgroundColor: 'transparent',
+    color: white,
+    fontSize: slideShowArrowFontSize,
+    marginRight: -20,
+  },
   sectionBottom: {
     paddingVertical: globalPaddingLarge,
   },
@@ -61,13 +79,6 @@ const SlideShowStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     color: disabledColor,
-  },
-  slideShowArrowContainer: {
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: globalPaddingSmall,
   },
   slideShowImage: {
     width: fullWidth - 43,
