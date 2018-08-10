@@ -8,11 +8,13 @@ export const tertiaryColor = '#4EB0E5'
 export const white = '#FFF'
 export const errorTextColor = '#FF0000'
 export const textColor = '#1E1E1E'
+export const sectionHeaderColor = '#9DA3B4'
 export const backgroundColor = white
 export const inputBackgroundColor = '#FAFAFA'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -29,8 +31,8 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 24
-export const sectionHeaderFontSize = 18
+export const headerFontSize = 26
+export const sectionHeaderFontSize = 16
 export const bodyFontSize = 15
 export const iconFontSize = 18
 
@@ -133,7 +135,6 @@ const SharedStyles = {
     backgroundColor: 'transparent',
     fontFamily: globalFontBold,
     fontSize: headerFontSize,
-    paddingVertical: globalPadding,
     color: textColor,
   },
   headerLight: {
@@ -157,6 +158,7 @@ const SharedStyles = {
   },
   sectionHeader: {
     backgroundColor: 'transparent',
+    color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
     paddingVertical: globalPaddingSmall,
@@ -197,24 +199,57 @@ const SharedStyles = {
   },
   iconLink: {
     backgroundColor: 'transparent',
-    color: secondaryColor,
+    color: primaryColor,
     fontSize: iconFontSize,
     paddingRight: globalPaddingTiny,
     paddingTop: globalPaddingTiny - 2,
   },
   iconLinkText: {
-    color: secondaryColor,
+    color: primaryColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
   },
-  iconLinkWhite: {
-    backgroundColor: 'transparent',
-    paddingRight: globalPaddingTiny,
+  iconLinkStarContainer: {
+    backgroundColor: whiteTransparent,
+    borderRadius: 100/2,
+    height: 45,
+    padding: globalPaddingSmall,
+    width: 45,
   },
-  iconLinkTextWhite: {
+  iconLinkStar: {
     color: white,
-    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize,
+  },
+  iconImageSmall: {
+    width: 23,
+    height: 23,
+    marginRight: globalPaddingTiny,
+  },
+  priceTagContainer: {
+    backgroundColor: white,
+    borderRadius: 5,
+    padding: globalPaddingTiny,
+    width: 50,
+  },
+  priceTag: {
+    color: primaryColor,
+    fontFamily: globalFontBold,
     fontSize: bodyFontSize,
+    textAlign: 'center',
+  },
+  avatarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  avatar: {
+    height: 45,
+    marginLeft: -10,
+    width: 45,
+  },
+  avatarSmall: {
+    height: 30,
+    marginLeft: -10,
+    width: 30,
   },
 }
 
