@@ -1,14 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import SharedStyles from '../styles/shared/sharedStyles'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = SharedStyles.createStyles()
 
 export default function EventsSearch() {
   return (
