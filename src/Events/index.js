@@ -70,11 +70,15 @@ export default function EventsIndex(props) {
         </View>
       </View>
 
-      <TextInput
-        style={formStyles.input}
-        placeholder="Search Artists, Shows, Venues"
-        disabled
-      />
+      <View style={formStyles.searchContainer}>
+        <Icon style={formStyles.searchIcon} name="search" />
+        <TextInput
+          style={formStyles.searchInput}
+          placeholder="Search artists, shows, venues..."
+          searchIcon={{ size: 24 }}
+          disabled
+        />
+      </View>
 
       <Text style={styles.sectionHeader}>Hot This Week</Text>
 
