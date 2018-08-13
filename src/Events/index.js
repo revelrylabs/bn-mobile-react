@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, Text, View, Image, TextInput } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Image, TextInput, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
@@ -11,35 +11,44 @@ const formStyles = FormStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
 const eventStyles = EventStyles.createStyles()
 
-function EventItemView({ bgImage, avatarImages, priceDollars, titleText, scheduleText }) {
+function EventItemView({
+  bgImage,
+  avatarImages,
+  priceDollars,
+  titleText,
+  scheduleText,
+  onPress,
+}) {
   return (
-    <View style={eventStyles.eventContainer}>
-      <Image
-        style={eventStyles.eventImage}
-        source={bgImage}
-      />
+    <TouchableHighlight underlayColor="#fff" onPress={onPress}>
+      <View style={eventStyles.eventContainer}>
+        <Image
+          style={eventStyles.eventImage}
+          source={bgImage}
+        />
 
-      <View style={eventStyles.detailsContainer}>
-        <View style={eventStyles.sectionTop}>
-          <View style={eventStyles.iconLinkStarContainerSmall}>
-            <Icon style={eventStyles.iconLinkStarSmall} name="star" />
+        <View style={eventStyles.detailsContainer}>
+          <View style={eventStyles.sectionTop}>
+            <View style={eventStyles.iconLinkStarContainerSmall}>
+              <Icon style={eventStyles.iconLinkStarSmall} name="star" />
+            </View>
+            <View style={styles.avatarContainer}>
+              {avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
+            </View>
           </View>
-          <View style={styles.avatarContainer}>
-            {avatarImages.map(source => <Image style={styles.avatarSmall} source={source} />)}
+          <View style={eventStyles.sectionBottom}>
+            <View style={styles.priceTagContainer}>
+              <Text style={styles.priceTag}>${priceDollars}</Text>
+            </View>
           </View>
         </View>
-        <View style={eventStyles.sectionBottom}>
-          <View style={styles.priceTagContainer}>
-            <Text style={styles.priceTag}>${priceDollars}</Text>
-          </View>
+
+        <View style={eventStyles.detailsContainerBottom}>
+          <Text style={eventStyles.header}>{titleText}</Text>
+          <Text style={eventStyles.details}>{scheduleText}</Text>
         </View>
       </View>
-
-      <View style={eventStyles.detailsContainerBottom}>
-        <Text style={eventStyles.header}>{titleText}</Text>
-        <Text style={eventStyles.details}>{scheduleText}</Text>
-      </View>
-    </View>
+    </TouchableHighlight>
   )
 }
 
@@ -110,6 +119,7 @@ export default function EventsIndex(props) {
       <Text style={styles.sectionHeader}>Upcoming</Text>
 
       <EventItemView
+        onPress={() => navigate('EventsShow')}
         bgImage={require('../../assets/event-smaller-1.png')}
         avatarImages={[
           require('../../assets/avatar-male.png'),
@@ -121,6 +131,7 @@ export default function EventsIndex(props) {
         scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
       />
       <EventItemView
+        onPress={() => navigate('EventsShow')}
         bgImage={require('../../assets/event-smaller-2.png')}
         avatarImages={[
           require('../../assets/avatar-female.png'),
@@ -132,6 +143,7 @@ export default function EventsIndex(props) {
         scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
       />
       <EventItemView
+        onPress={() => navigate('EventsShow')}
         bgImage={require('../../assets/event-smaller-3.png')}
         avatarImages={[
           require('../../assets/avatar-male.png'),
@@ -143,6 +155,7 @@ export default function EventsIndex(props) {
         scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
       />
       <EventItemView
+        onPress={() => navigate('EventsShow')}
         bgImage={require('../../assets/event-smaller-4.png')}
         avatarImages={[
           require('../../assets/avatar-male.png'),
