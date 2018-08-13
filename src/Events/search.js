@@ -4,10 +4,10 @@ import SharedStyles from '../styles/shared/sharedStyles'
 
 const styles = SharedStyles.createStyles()
 
-export default function EventsShow() {
+export default function EventsSearch() {
   return (
     <View style={styles.container}>
-      <Text>Show a specific Event</Text>
+      <Text>Search for Events</Text>
     </View>
   );
 }
