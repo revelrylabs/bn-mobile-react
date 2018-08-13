@@ -1,0 +1,3 @@
+rootProject.name = 'BigNeon'
+
+include ':app'
