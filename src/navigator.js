@@ -28,6 +28,16 @@ const AccountsStack =  createStackNavigator({
   initialRouteName: 'Account',
 })
 
+
+const navigationOptions = {
+  header: {
+    style: {
+      backgroundColor: 'white',
+      borderBottomColor: 'white',
+    },
+  }
+}
+
 const tabBarOptions = {
   tabBarOptions: {
     activeTintColor: '#FF20B1',
