@@ -110,7 +110,7 @@ export default function EventsIndex(props) {
             <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
           </View>
 
-          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow')}>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
             <View style={slideshowStyles.sectionBottom}>
               <View style={styles.priceTagContainer}>
                 <Text style={styles.priceTag}>$30</Text>
@@ -125,7 +125,7 @@ export default function EventsIndex(props) {
       <Text style={styles.sectionHeader}>Upcoming</Text>
 
       <EventItemView
-        onPress={() => navigate('EventsShow')}
+        onPress={() => navigate('EventsShow', {name: 'River Whyless'})}
         bgImage={require('../../assets/event-smaller-1.png')}
         avatarImages={[
           require('../../assets/avatar-male.png'),
@@ -137,7 +137,7 @@ export default function EventsIndex(props) {
         scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
       />
       <EventItemView
-        onPress={() => navigate('EventsShow')}
+        onPress={() => navigate('EventsShow', {name: 'Beyonce'})}
         bgImage={require('../../assets/event-smaller-2.png')}
         avatarImages={[
           require('../../assets/avatar-female.png'),
@@ -149,7 +149,7 @@ export default function EventsIndex(props) {
         scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
       />
       <EventItemView
-        onPress={() => navigate('EventsShow')}
+        onPress={() => navigate('EventsShow', {name: 'Drake'})}
         bgImage={require('../../assets/event-smaller-3.png')}
         avatarImages={[
           require('../../assets/avatar-male.png'),
@@ -161,7 +161,7 @@ export default function EventsIndex(props) {
         scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
       />
       <EventItemView
-        onPress={() => navigate('EventsShow')}
+        onPress={() => navigate('EventsShow', {name: 'Ed Sheeran'})}
         bgImage={require('../../assets/event-smaller-4.png')}
         avatarImages={[
           require('../../assets/avatar-male.png'),

@@ -20,14 +20,19 @@ const TicketsStack =  createStackNavigator({
   ...TicketRoutes,
 }, {
   initialRouteName: 'MyTickets',
+  navigationOptions: {
+    header: null
+  },
 })
 
 const AccountsStack =  createStackNavigator({
   ...AccountRoutes,
 }, {
   initialRouteName: 'Account',
+  navigationOptions: {
+    header: null
+  },
 })
-
 
 const navigationOptions = {
   header: {
@@ -80,6 +85,5 @@ export default createBottomTabNavigator(
       }
     },
   },
-  tabBarOptions: {
-  }
+  tabBarOptions: {},
 )
