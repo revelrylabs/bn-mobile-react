@@ -27,14 +27,16 @@ export const globalMarginSmall = 10
 export const globalMargin = 20
 
 export const globalFontRegular = 'tt_commons_regular'
+export const globalFontMedium = 'tt_commons_medium'
 export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 26
-export const sectionHeaderFontSize = 16
-export const bodyFontSize = 15
+export const headerFontSize = 38
+export const sectionHeaderFontSize = 21
+export const bodyFontSize = 18
 export const iconFontSize = 18
+export const iconStarFontSize = 26
 
 const SharedStyles = {
   container: {
@@ -145,7 +147,7 @@ const SharedStyles = {
     paddingBottom: globalPadding,
   },
   sectionHeaderContainer: {
-    alignItems: 'stretch',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: globalPaddingSmall,
@@ -206,7 +208,7 @@ const SharedStyles = {
   },
   iconLinkText: {
     color: primaryColor,
-    fontFamily: globalFontRegular,
+    fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
   },
   iconLinkStarContainer: {
@@ -218,7 +220,7 @@ const SharedStyles = {
   },
   iconLinkStar: {
     color: white,
-    fontSize: headerFontSize,
+    fontSize: iconStarFontSize,
   },
   iconImageSmall: {
     width: 23,
@@ -233,8 +235,9 @@ const SharedStyles = {
   },
   priceTag: {
     color: primaryColor,
-    fontFamily: globalFontBold,
+    fontFamily: globalFontMedium,
     fontSize: bodyFontSize,
+    letterSpacing: 1,
     textAlign: 'center',
   },
   avatarContainer: {

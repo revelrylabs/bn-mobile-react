@@ -26,13 +26,14 @@ export const globalMarginSmall = 10
 export const globalMargin = 20
 
 export const globalFontRegular = 'tt_commons_regular'
+export const globalFontMedium = 'tt_commons_medium'
 export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 32
-export const sectionHeaderFontSize = 18
-export const bodyFontSize = 15
+export const sectionHeaderFontSize = 21
+export const bodyFontSize = 18
 export const iconFontSize = 18
 export const pickerItemHeight = 120
 export const slideShowArrowFontSize = 32
