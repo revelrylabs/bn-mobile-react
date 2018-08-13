@@ -106,13 +106,15 @@ export default function EventsIndex(props) {
             <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
           </View>
 
-          <View style={slideshowStyles.sectionBottom}>
-            <View style={styles.priceTagContainer}>
-              <Text style={styles.priceTag}>$30</Text>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow')}>
+            <View style={slideshowStyles.sectionBottom}>
+              <View style={styles.priceTagContainer}>
+                <Text style={styles.priceTag}>$30</Text>
+              </View>
+              <Text style={slideshowStyles.header}>Childish Gambino</Text>
+              <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
             </View>
-            <Text style={slideshowStyles.header}>Childish Gambino</Text>
-            <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
-          </View>
+          </TouchableHighlight>
         </View>
       </View>
 
