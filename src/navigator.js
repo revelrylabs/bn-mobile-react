@@ -65,22 +65,34 @@ export default createBottomTabNavigator(
   {
     Explore: {
       screen: EventsStack,
-      navigationOptions: {
-        tabBarIcon: <Image style={navigationStyles.tabBarIconExplore} source={require('../assets/icon-explore.png')}/>,
+      navigationOptions: ({navigation}) => ({
+        tabBarIcon: ({focused}) => {
+          const imageName = focused ? require('../assets/icon-explore-active.png') : require('../assets/icon-explore.png')
+
+          return <Image style={navigationStyles.tabBarIconExplore} source={imageName}/>
+        },
         showIcon: true,
-      }
+      })
     },
     MyTickets: {
       screen: TicketsStack,
       navigationOptions: {
-        tabBarIcon: <Image style={navigationStyles.tabBarIconTicket} source={require('../assets/icon-ticket.png')}/>,
+        tabBarIcon: ({focused}) => {
+          const imageName = focused ? require('../assets/icon-ticket-active.png') : require('../assets/icon-ticket.png')
+
+          return <Image style={navigationStyles.tabBarIconTicket} source={imageName}/>
+        },
         showIcon: true,
       }
     },
     Account: {
       screen: AccountsStack,
       navigationOptions: {
-        tabBarIcon: <Image style={navigationStyles.tabBarIconAccount} source={require('../assets/icon-account.png')}/>,
+        tabBarIcon: ({focused}) => {
+          const imageName = focused ? require('../assets/icon-account-active.png') : require('../assets/icon-account.png')
+
+          return <Image style={navigationStyles.tabBarIconAccount} source={imageName}/>
+        },
         showIcon: true,
       }
     },
