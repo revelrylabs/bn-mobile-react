@@ -13,6 +13,7 @@ export const inputBackgroundColor = '#FAFAFA'
 export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
+export const searchIconColor = '#9E9E9E'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 
 export const globalPaddingTiny = 5
@@ -26,14 +27,16 @@ export const globalMarginSmall = 10
 export const globalMargin = 20
 
 export const globalFontRegular = 'tt_commons_regular'
+export const globalFontMedium = 'tt_commons_medium'
 export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 32
-export const sectionHeaderFontSize = 18
-export const bodyFontSize = 15
+export const headerFontSize = 38
+export const sectionHeaderFontSize = 21
+export const bodyFontSize = 18
 export const iconFontSize = 18
+export const searchIconFontSize = 21
 export const pickerItemHeight = 120
 
 const FormStyles = {
@@ -105,6 +108,30 @@ const FormStyles = {
     textAlign: 'left',
     marginTop: 0,
     paddingLeft: globalPadding,
+  },
+  searchContainer: {
+    backgroundColor: disabledColor,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: globalMargin,
+  },
+  searchIcon: {
+    color: searchIconColor,
+    fontSize: searchIconFontSize,
+    padding: globalPaddingSmall,
+  },
+  searchInput: {
+    flex: 1,
+    color: textColor,
+    alignContent: 'center',
+    backgroundColor: disabledColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    marginTop: globalPaddingTiny,
+    height: 40,
+    width: '100%',
   },
   arrowLink: {
     backgroundColor: 'transparent',
