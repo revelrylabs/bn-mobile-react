@@ -19,17 +19,17 @@ export default class App extends Component {
   }
 
   render() {
-    return this.state.isReady ? createElement(navigator) : null;
-    <View style={styles.container}>
-      <Video style={styles.splashVideo} source={Splash}
-         ref={(ref) => {
-           this.player = ref
-         }}
-         onBuffer={this.onBuffer}
-         onEnd={this.onEnd}
-         onError={this.videoError}
-         style={styles.backgroundVideo}
-      />
-    </View>
+    return this.state.isReady ? createElement(navigator) : null; (
+      <View style={styles.container}>
+        <Video style={styles.splashVideo} source={Splash}
+          ref={(ref) => {
+           this.player.presentFullscreenPlayer();
+          }}
+          resizeMode="cover"
+          paused={false}
+          style={styles.splashVideo}
+        />
+      </View>
+    );
   }
 }
