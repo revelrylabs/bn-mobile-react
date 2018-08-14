@@ -1,6 +1,12 @@
 import { Component, createElement } from 'react'
 import { loadFonts } from './assets/fonts'
 import navigator from './src/navigator'
+import Video from 'react-native-video';
+import Splash from './splash.mp4';
+import SharedStyles from './src/styles/shared/sharedStyles'
+
+const styles = SharedStyles.createStyles()
+
 
 export default class App extends Component {
   state = {
@@ -13,6 +19,17 @@ export default class App extends Component {
   }
 
   render() {
-    return this.state.isReady ? createElement(navigator) : null
+    return this.state.isReady ? createElement(navigator) : null;
+    <View style={styles.container}>
+      <Video style={styles.splashVideo} source={Splash}
+         ref={(ref) => {
+           this.player = ref
+         }}
+         onBuffer={this.onBuffer}
+         onEnd={this.onEnd}
+         onError={this.videoError}
+         style={styles.backgroundVideo}
+      />
+    </View>
   }
 }
