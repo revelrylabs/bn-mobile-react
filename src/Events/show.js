@@ -52,29 +52,37 @@ export default function EventsShow() {
       <View style={styles.container}>
 
         <View style={eventDetailsStyles.eventDetailsContainer}>
-          <Text style={eventDetailsStyles.sectionHeader}>People Going To This Event</Text>
-          <View style={styles.avatarContainer}>
-            <Image
-              style={styles.avatar}
-              source={require('../../assets/avatar-male.png')}
-            />
-            <Image
-              style={styles.avatar}
-              source={require('../../assets/avatar-female-2.png')}
-            />
-            <Image
-              style={styles.avatar}
-              source={require('../../assets/avatar-male-2.png')}
-            />
-            <Image
-              style={styles.avatar}
-              source={require('../../assets/avatar-female-3.png')}
-            />
-            <Image
-              style={styles.avatar}
-              source={require('../../assets/avatar-female.png')}
-            />
+
+          <View style={[eventDetailsStyles.eventDetailsLeft, styles.borderRight]}>
+            <Text style={eventDetailsStyles.sectionHeader}>People Going To This Event</Text>
+            <View style={eventDetailsStyles.avatarContainer}>
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-male.png')}
+              />
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-female-2.png')}
+              />
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-male-2.png')}
+              />
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-female-3.png')}
+              />
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-female.png')}
+              />
+            </View>
           </View>
+          <View style={eventDetailsStyles.eventDetailsRight}>
+            <Text style={eventDetailsStyles.sectionHeader}>Tickets From</Text>
+            <Text style={eventDetailsStyles.ticketPrice}>$30</Text>
+          </View>
+
         </View>
 
       </View>

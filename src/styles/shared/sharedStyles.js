@@ -262,6 +262,11 @@ const SharedStyles = {
   marginTopSmall: {
     marginTop: globalMarginSmall,
   },
+  borderRight: {
+    borderRightColor: borderColor,
+    borderStyle: 'solid',
+    borderRightWidth: 1,
+  },
 }
 
 function createStyles(overrides = {}) {

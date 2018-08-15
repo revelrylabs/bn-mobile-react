@@ -86,13 +86,31 @@ const EventDetailsStyles = {
     marginTop: globalPaddingTiny,
   },
   eventDetailsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     paddingVertical: globalPadding,
+  },
+  eventDetailsLeft: {
+    paddingRight: globalPadding,
+  },
+  eventDetailsRight: {
+    paddingLeft: globalPadding,
   },
   sectionHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     marginBottom: globalMargin,
+  },
+  avatarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingLeft: globalPaddingSmall,
+  },
+  ticketPrice: {
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize + sectionHeaderFontSize,
   },
 }
 
