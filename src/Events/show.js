@@ -155,6 +155,10 @@ export default function EventsShow() {
           />
           <Text style={eventDetailsStyles.iconSectionHeader}>Spotify</Text>
         </View>
+        <Image
+          style={eventDetailsStyles.imagePlaceholder}
+          source={require('../../assets/spotify-placeholder.png')}
+        />
 
       </View>
 

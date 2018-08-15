@@ -146,6 +146,10 @@ const EventDetailsStyles = {
     height: 20,
     marginRight: globalPaddingSmall,
   },
+  imagePlaceholder: {
+    height: 100,
+    width: fullWidth - 40,
+  }
 }
 
 function createStyles(overrides = {}) {
