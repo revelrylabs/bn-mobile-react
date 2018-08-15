@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, Text, View, Image, TouchableHighlight } from 'r
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventDetailsStyles from '../styles/event-details/eventDetailsStyles'
+import EventDetailsStyles from '../styles/shared/eventDetailsStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
@@ -18,9 +18,11 @@ export default function EventsShow() {
           style={eventDetailsStyles.videoBkgd}
           source={require('../../assets/video-bkgd.png')}
         />
-      </View>
+        <Image
+          style={eventDetailsStyles.videoBkgd}
+          source={require('../../assets/video-bkgd-overlay.png')}
+        />
 
-      <View style={styles.container}>
         <View style={slideshowStyles.detailsContainer}>
           <View style={slideshowStyles.sectionTop}>
             <View style={styles.iconLinkStarContainer}>
@@ -53,6 +55,10 @@ export default function EventsShow() {
             </View>
           </TouchableHighlight>
         </View>
+        
+      </View>
+
+      <View style={styles.container}>
       </View>
 
     </ScrollView>

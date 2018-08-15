@@ -41,10 +41,15 @@ export const slideShowArrowFontSize = 32
 
 const EventDetailsStyles = {
   videoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 200,
   },
   videoBkgd: {
     width: fullWidth,
-    height: 300,
+    height: 200,
     position: 'absolute',
   },
 }
