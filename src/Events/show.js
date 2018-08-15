@@ -24,28 +24,24 @@ export default function EventsShow() {
         />
 
         <View style={eventDetailsStyles.detailsContainer}>
+
           <View style={eventDetailsStyles.sectionTop}>
             <Icon style={styles.iconLinkCircle} name="close" />
 
-            <View style={styles.iconLinkCircleContainer}>
-              <Icon style={styles.iconLinkCircle} name="star" />
-            </View>
-
-            <View style={styles.avatarContainer}>
-              <Image
-                style={styles.avatar}
-                source={require('../../assets/avatar-male.png')}
-              />
-              <Image
-                style={styles.avatar}
-                source={require('../../assets/avatar-female.png')}
-              />
+            <View style={eventDetailsStyles.videoActionsContainer}>
+              <View style={styles.iconLinkCircleContainer}>
+                <Icon style={styles.iconLinkCircle} name="star" />
+              </View>
+              <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
+                <Icon style={styles.iconLinkCircle} name="reply" />
+              </View>
             </View>
           </View>
 
-          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
-            <View style={slideshowStyles.sectionBottom}>
-              <Text style={slideshowStyles.header}>Taylor Swift</Text>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <View style={eventDetailsStyles.sectionBottom}>
+              <Icon style={eventDetailsStyles.iconPlayLink} name="play-circle-outline" />
+              <Text style={eventDetailsStyles.header}>Taylor Swift</Text>
               <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
             </View>
           </TouchableHighlight>

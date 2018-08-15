@@ -14,7 +14,7 @@ export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
-export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -32,10 +32,11 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 38
+export const headerFontSize = 30
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
 export const iconFontSize = 18
+export const iconLargeFontSize = 56
 
 const EventDetailsStyles = {
   videoContainer: {
@@ -43,25 +44,46 @@ const EventDetailsStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 250,
+    height: 240,
   },
   videoBkgd: {
     width: fullWidth,
-    height: 250,
+    height: 240,
     position: 'absolute',
   },
   detailsContainer: {
     flexDirection: 'column',
-    height: 300,
+    height: 290,
     justifyContent: 'space-between',
     padding: globalPaddingSmall,
-    paddingTop: globalPaddingLarge,
+    paddingTop: globalPaddingJumbo + globalPaddingTiny,
     width: fullWidth,
   },
   sectionTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
+  },
+  sectionBottom: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -45,
+    paddingBottom: globalPaddingLarge,
+  },
+  videoActionsContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  iconPlayLink: {
+    color: whiteTransparent,
+    fontSize: iconLargeFontSize,
+    marginBottom: globalMargin,
+  },
+  header: {
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize,
+    color: white,
+    marginTop: globalPaddingTiny,
+  },
 }
 
 function createStyles(overrides = {}) {

@@ -72,7 +72,7 @@ const SlideShowStyles = {
     paddingVertical: globalPaddingLarge,
   },
   header: {
-    fontFamily: globalFontBold,
+    fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
     color: white,
     marginTop: globalPaddingTiny,

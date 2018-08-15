@@ -32,7 +32,7 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 38
+export const headerFontSize = 36
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
 export const iconFontSize = 18
@@ -150,6 +150,7 @@ const SharedStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: globalPaddingMedium,
     paddingVertical: globalPaddingSmall,
   },
   lineHeight: {
@@ -253,6 +254,9 @@ const SharedStyles = {
     height: 30,
     marginLeft: -10,
     width: 30,
+  },
+  marginTopSmall: {
+    marginTop: globalMarginSmall,
   },
 }
 
