@@ -98,6 +98,7 @@ export default function EventsShow() {
           />
           <Text style={eventDetailsStyles.iconSectionHeader}>Youtube</Text>
         </View>
+
         <View style={eventDetailsStyles.videoContainer}>
           <Image
             style={eventDetailsStyles.videoBkgd}
@@ -118,6 +119,7 @@ export default function EventsShow() {
           />
           <Text style={eventDetailsStyles.iconSectionHeader}>Instagram</Text>
         </View>
+
         <View style={imageGridStyles.imageGridContainer}>
           <Image
             style={imageGridStyles.image}
@@ -155,11 +157,26 @@ export default function EventsShow() {
           />
           <Text style={eventDetailsStyles.iconSectionHeader}>Spotify</Text>
         </View>
-        <Image
-          style={eventDetailsStyles.imagePlaceholder}
-          source={require('../../assets/spotify-placeholder.png')}
-        />
 
+        <View style={eventDetailsStyles.imagePlaceholderContainer}>
+          <Image
+            style={eventDetailsStyles.imagePlaceholder}
+            source={require('../../assets/spotify-placeholder.png')}
+          />
+          <View style={eventDetailsStyles.sliderArrowContainer}>
+            <Icon style={eventDetailsStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
+            <Icon style={eventDetailsStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
+          </View>
+        </View>
+
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableHighlight
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Get Tickets</Text>
+        </TouchableHighlight>
       </View>
 
     </ScrollView>

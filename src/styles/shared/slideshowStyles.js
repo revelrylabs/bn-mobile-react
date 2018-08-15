@@ -57,13 +57,11 @@ const SlideShowStyles = {
     paddingTop: globalPaddingJumbo,
   },
   slideShowIconLinkLeft: {
-    backgroundColor: 'transparent',
     color: white,
     fontSize: slideShowArrowFontSize,
     marginLeft: -20,
   },
   slideShowIconLinkRight: {
-    backgroundColor: 'transparent',
     color: white,
     fontSize: slideShowArrowFontSize,
     marginRight: -20,

@@ -114,23 +114,23 @@ const SharedStyles = {
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginBottom: globalMarginSmall,
   },
   button: {
     backgroundColor: primaryColor,
     flex: 1,
-    height: 50,
+    height: 60,
     justifyContent: 'center',
   },
   buttonSecondary: {
     backgroundColor: secondaryColor,
     flex: 1,
-    height: 50,
+    height: 60,
     justifyContent: 'center',
   },
   buttonText: {
     color: white,
     fontFamily: globalFontSemiBold,
+    fontSize: sectionHeaderFontSize,
     textAlign: 'center',
   },
   header: {

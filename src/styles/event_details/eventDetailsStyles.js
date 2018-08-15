@@ -13,6 +13,7 @@ export const inputBackgroundColor = '#FAFAFA'
 export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
+export const placeholderImageBackground = '#F6F7F5'
 export const sectionHeaderColor = '#9DA3B4'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
@@ -38,6 +39,7 @@ export const sectionHeaderFontSize = 18
 export const bodyFontSize = 16
 export const iconFontSize = 18
 export const iconLargeFontSize = 56
+export const slideShowArrowFontSize = 28
 
 const EventDetailsStyles = {
   videoContainer: {
@@ -146,10 +148,31 @@ const EventDetailsStyles = {
     height: 20,
     marginRight: globalPaddingSmall,
   },
+  imagePlaceholderContainer: {
+    height: 100,
+    paddingVertical: globalPadding,
+  },
   imagePlaceholder: {
     height: 100,
     width: fullWidth - 40,
-  }
+    position: 'absolute',
+  },
+  sliderArrowContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: globalPadding,
+  },
+  slideShowIconLinkLeft: {
+    color: textColor,
+    fontSize: slideShowArrowFontSize,
+    marginLeft: -23,
+  },
+  slideShowIconLinkRight: {
+    color: textColor,
+    fontSize: slideShowArrowFontSize,
+    marginRight: -23,
+  },
 }
 
 function createStyles(overrides = {}) {
