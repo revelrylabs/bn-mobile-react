@@ -40,49 +40,12 @@ export const pickerItemHeight = 120
 export const slideShowArrowFontSize = 32
 
 const EventDetailsStyles = {
-  eventContainer: {
-    padding: globalPaddingSmall,
+  videoContainer: {
   },
-  detailsContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    height: 180,
-  },
-  detailsContainerBottom: {
-    paddingBottom: globalPadding,
-  },
-  sectionTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  sectionBottom: {
-    paddingVertical: globalPadding,
-  },
-  iconLinkStarContainerSmall: {
-    backgroundColor: whiteTransparent,
-    borderRadius: 100/2,
-    height: 28,
-    padding: globalPaddingTiny,
-    width: 28,
-  },
-  iconLinkStarSmall: {
-    color: white,
-    fontSize: iconFontSize,
-  },
-  eventImage: {
-    width: fullWidth - 43,
-    height: 180,
+  videoBkgd: {
+    width: fullWidth,
+    height: 300,
     position: 'absolute',
-  },
-  header: {
-    fontFamily: globalFontBold,
-    fontSize: sectionHeaderFontSize,
-    color: textColor,
-  },
-  details: {
-    fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
-    color: textColor,
   },
 }
 
