@@ -36,7 +36,7 @@ export const headerFontSize = 38
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
 export const iconFontSize = 18
-export const iconStarFontSize = 26
+export const iconCircleFontSize = 26
 
 const SharedStyles = {
   container: {
@@ -211,16 +211,16 @@ const SharedStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
   },
-  iconLinkStarContainer: {
+  iconLinkCircleContainer: {
     backgroundColor: whiteTransparent,
     borderRadius: 100/2,
     height: 45,
     padding: globalPaddingSmall,
     width: 45,
   },
-  iconLinkStar: {
+  iconLinkCircle: {
     color: white,
-    fontSize: iconStarFontSize,
+    fontSize: iconCircleFontSize,
   },
   iconImageSmall: {
     width: 23,

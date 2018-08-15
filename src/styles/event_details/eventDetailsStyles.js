@@ -36,8 +36,6 @@ export const headerFontSize = 38
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
 export const iconFontSize = 18
-export const pickerItemHeight = 120
-export const slideShowArrowFontSize = 32
 
 const EventDetailsStyles = {
   videoContainer: {
@@ -45,13 +43,25 @@ const EventDetailsStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 200,
+    height: 250,
   },
   videoBkgd: {
     width: fullWidth,
-    height: 200,
+    height: 250,
     position: 'absolute',
   },
+  detailsContainer: {
+    flexDirection: 'column',
+    height: 300,
+    justifyContent: 'space-between',
+    padding: globalPaddingSmall,
+    paddingTop: globalPaddingLarge,
+    width: fullWidth,
+  },
+  sectionTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  }
 }
 
 function createStyles(overrides = {}) {

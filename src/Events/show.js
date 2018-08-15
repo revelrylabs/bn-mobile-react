@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, Text, View, Image, TouchableHighlight } from 'r
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventDetailsStyles from '../styles/shared/eventDetailsStyles'
+import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
@@ -23,11 +23,14 @@ export default function EventsShow() {
           source={require('../../assets/video-bkgd-overlay.png')}
         />
 
-        <View style={slideshowStyles.detailsContainer}>
-          <View style={slideshowStyles.sectionTop}>
-            <View style={styles.iconLinkStarContainer}>
-              <Icon style={styles.iconLinkStar} name="star" />
+        <View style={eventDetailsStyles.detailsContainer}>
+          <View style={eventDetailsStyles.sectionTop}>
+            <Icon style={styles.iconLinkCircle} name="close" />
+
+            <View style={styles.iconLinkCircleContainer}>
+              <Icon style={styles.iconLinkCircle} name="star" />
             </View>
+
             <View style={styles.avatarContainer}>
               <Image
                 style={styles.avatar}
@@ -40,22 +43,14 @@ export default function EventsShow() {
             </View>
           </View>
 
-          <View style={slideshowStyles.sectionMiddle}>
-            <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
-            <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
-          </View>
-
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
             <View style={slideshowStyles.sectionBottom}>
-              <View style={styles.priceTagContainer}>
-                <Text style={styles.priceTag}>$30</Text>
-              </View>
-              <Text style={slideshowStyles.header}>Childish Gambino</Text>
+              <Text style={slideshowStyles.header}>Taylor Swift</Text>
               <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
             </View>
           </TouchableHighlight>
         </View>
-        
+
       </View>
 
       <View style={styles.container}>
