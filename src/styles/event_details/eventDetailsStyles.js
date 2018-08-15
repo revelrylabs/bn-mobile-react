@@ -13,6 +13,7 @@ export const inputBackgroundColor = '#FAFAFA'
 export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
+export const sectionHeaderColor = '#9DA3B4'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
@@ -32,7 +33,7 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 30
+export const headerFontSize = 28
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
 export const iconFontSize = 18
@@ -51,7 +52,7 @@ const EventDetailsStyles = {
     height: 240,
     position: 'absolute',
   },
-  detailsContainer: {
+  videoDetailsContainer: {
     flexDirection: 'column',
     height: 290,
     justifyContent: 'space-between',
@@ -83,6 +84,15 @@ const EventDetailsStyles = {
     fontSize: headerFontSize,
     color: white,
     marginTop: globalPaddingTiny,
+  },
+  eventDetailsContainer: {
+    paddingVertical: globalPadding,
+  },
+  sectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    marginBottom: globalMargin,
   },
 }
 

@@ -246,11 +246,15 @@ const SharedStyles = {
     justifyContent: 'flex-start',
   },
   avatar: {
+    borderColor: white,
+    borderRadius: 45/2,
+    borderWidth: 1,
     height: 45,
     marginLeft: -10,
     width: 45,
   },
   avatarSmall: {
+    borderRadius: 30/2,
     height: 30,
     marginLeft: -10,
     width: 30,

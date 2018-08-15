@@ -23,7 +23,7 @@ export default function EventsShow() {
           source={require('../../assets/video-bkgd-overlay.png')}
         />
 
-        <View style={eventDetailsStyles.detailsContainer}>
+        <View style={eventDetailsStyles.videoDetailsContainer}>
 
           <View style={eventDetailsStyles.sectionTop}>
             <Icon style={styles.iconLinkCircle} name="close" />
@@ -50,6 +50,33 @@ export default function EventsShow() {
       </View>
 
       <View style={styles.container}>
+
+        <View style={eventDetailsStyles.eventDetailsContainer}>
+          <Text style={eventDetailsStyles.sectionHeader}>People Going To This Event</Text>
+          <View style={styles.avatarContainer}>
+            <Image
+              style={styles.avatar}
+              source={require('../../assets/avatar-male.png')}
+            />
+            <Image
+              style={styles.avatar}
+              source={require('../../assets/avatar-female-2.png')}
+            />
+            <Image
+              style={styles.avatar}
+              source={require('../../assets/avatar-male-2.png')}
+            />
+            <Image
+              style={styles.avatar}
+              source={require('../../assets/avatar-female-3.png')}
+            />
+            <Image
+              style={styles.avatar}
+              source={require('../../assets/avatar-female.png')}
+            />
+          </View>
+        </View>
+
       </View>
 
     </ScrollView>

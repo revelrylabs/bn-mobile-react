@@ -73,7 +73,7 @@ const EventStyles = {
     position: 'absolute',
   },
   header: {
-    fontFamily: globalFontBold,
+    fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
     color: textColor,
   },
