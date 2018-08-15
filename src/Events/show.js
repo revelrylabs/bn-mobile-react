@@ -88,12 +88,25 @@ export default function EventsShow() {
           <Text style={styles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
         </View>
 
+
         <View style={eventDetailsStyles.iconSectionHeaderContainer}>
           <Image
             style={eventDetailsStyles.iconYoutube}
             source={require('../../assets/icon-youtube.png')}
           />
           <Text style={eventDetailsStyles.iconSectionHeader}>Youtube</Text>
+        </View>
+
+        <View style={eventDetailsStyles.videoContainer}>
+          <Image
+            style={eventDetailsStyles.videoBkgd}
+            source={require('../../assets/video-youtube-bkgd.png')}
+          />
+          <Image
+            style={eventDetailsStyles.videoBkgd}
+            source={require('../../assets/video-bkgd-overlay.png')}
+          />
+          <Icon style={eventDetailsStyles.iconPlayLink} name="play-circle-outline" />
         </View>
 
 
