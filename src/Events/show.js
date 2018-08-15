@@ -52,7 +52,6 @@ export default function EventsShow() {
       <View style={styles.container}>
 
         <View style={eventDetailsStyles.eventDetailsContainer}>
-
           <View style={[eventDetailsStyles.eventDetailsLeft, styles.borderRight]}>
             <Text style={eventDetailsStyles.sectionHeader}>People Going To This Event</Text>
             <View style={eventDetailsStyles.avatarContainer}>
@@ -82,12 +81,37 @@ export default function EventsShow() {
             <Text style={eventDetailsStyles.sectionHeader}>Tickets From</Text>
             <Text style={eventDetailsStyles.ticketPrice}>$30</Text>
           </View>
-
         </View>
 
         <View style={eventDetailsStyles.eventDescriptionContainer}>
           <Text style={eventDetailsStyles.sectionHeader}>Description</Text>
           <Text style={styles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+        </View>
+
+        <View style={eventDetailsStyles.iconSectionHeaderContainer}>
+          <Image
+            style={eventDetailsStyles.iconYoutube}
+            source={require('../../assets/icon-youtube.png')}
+          />
+          <Text style={eventDetailsStyles.iconSectionHeader}>Youtube</Text>
+        </View>
+
+
+        <View style={eventDetailsStyles.iconSectionHeaderContainer}>
+          <Image
+            style={eventDetailsStyles.iconInstagram}
+            source={require('../../assets/icon-instagram.png')}
+          />
+          <Text style={eventDetailsStyles.iconSectionHeader}>Instagram</Text>
+        </View>
+
+
+        <View style={eventDetailsStyles.iconSectionHeaderContainer}>
+          <Image
+            style={eventDetailsStyles.iconSpotify}
+            source={require('../../assets/icon-spotify.png')}
+          />
+          <Text style={eventDetailsStyles.iconSectionHeader}>Spotify</Text>
         </View>
 
       </View>

@@ -120,6 +120,32 @@ const EventDetailsStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize + sectionHeaderFontSize,
   },
+  iconSectionHeaderContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingVertical: globalPadding,
+  },
+  iconSectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
+  iconYoutube: {
+    width: 20,
+    height: 15,
+    marginRight: globalPaddingSmall,
+  },
+  iconInstagram: {
+    width: 20,
+    height: 20,
+    marginRight: globalPaddingSmall,
+  },
+  iconSpotify: {
+    width: 20,
+    height: 20,
+    marginRight: globalPaddingSmall,
+  },
 }
 
 function createStyles(overrides = {}) {
