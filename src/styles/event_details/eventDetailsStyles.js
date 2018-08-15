@@ -34,8 +34,8 @@ export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 28
-export const sectionHeaderFontSize = 21
-export const bodyFontSize = 18
+export const sectionHeaderFontSize = 18
+export const bodyFontSize = 16
 export const iconFontSize = 18
 export const iconLargeFontSize = 56
 
@@ -85,6 +85,12 @@ const EventDetailsStyles = {
     color: white,
     marginTop: globalPaddingTiny,
   },
+  sectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+    marginBottom: globalMargin,
+  },
   eventDetailsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -96,11 +102,13 @@ const EventDetailsStyles = {
   eventDetailsRight: {
     paddingLeft: globalPadding,
   },
-  sectionHeader: {
-    color: sectionHeaderColor,
-    fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
-    marginBottom: globalMargin,
+  eventDescriptionContainer: {
+    paddingVertical: globalPadding,
+    borderTopColor: borderColor,
+    borderBottomColor: borderColor,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
   avatarContainer: {
     flexDirection: 'row',

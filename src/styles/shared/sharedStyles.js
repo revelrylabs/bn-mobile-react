@@ -34,7 +34,7 @@ export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 36
 export const sectionHeaderFontSize = 21
-export const bodyFontSize = 18
+export const bodyFontSize = 16
 export const iconFontSize = 18
 export const iconCircleFontSize = 26
 

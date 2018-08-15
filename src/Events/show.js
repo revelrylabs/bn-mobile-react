@@ -85,6 +85,11 @@ export default function EventsShow() {
 
         </View>
 
+        <View style={eventDetailsStyles.eventDescriptionContainer}>
+          <Text style={eventDetailsStyles.sectionHeader}>Description</Text>
+          <Text style={styles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+        </View>
+
       </View>
 
     </ScrollView>
