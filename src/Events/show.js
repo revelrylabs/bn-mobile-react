@@ -4,10 +4,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
+import ImageGridStyles from '../styles/event_details/imageGridStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const imageGridStyles = ImageGridStyles.createStyles()
 
 export default function EventsShow() {
   return (
@@ -96,7 +98,6 @@ export default function EventsShow() {
           />
           <Text style={eventDetailsStyles.iconSectionHeader}>Youtube</Text>
         </View>
-
         <View style={eventDetailsStyles.videoContainer}>
           <Image
             style={eventDetailsStyles.videoBkgd}
@@ -116,6 +117,34 @@ export default function EventsShow() {
             source={require('../../assets/icon-instagram.png')}
           />
           <Text style={eventDetailsStyles.iconSectionHeader}>Instagram</Text>
+        </View>
+        <View style={imageGridStyles.imageGridContainer}>
+          <Image
+            style={imageGridStyles.image}
+            source={require('../../assets/image-grid-1.png')}
+          />
+          <Image
+            style={imageGridStyles.image}
+            source={require('../../assets/image-grid-2.png')}
+          />
+          <Image
+            style={imageGridStyles.image}
+            source={require('../../assets/image-grid-3.png')}
+          />
+        </View>
+        <View style={imageGridStyles.imageGridContainer}>
+          <Image
+            style={imageGridStyles.image}
+            source={require('../../assets/image-grid-1.png')}
+          />
+          <Image
+            style={imageGridStyles.image}
+            source={require('../../assets/image-grid-2.png')}
+          />
+          <Image
+            style={imageGridStyles.image}
+            source={require('../../assets/image-grid-3.png')}
+          />
         </View>
 
 
