@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, Text, Button, View, Image } from 'react-native';
+import { StyleSheet, ScrollView, Text, Button, View, Image, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
@@ -31,10 +31,38 @@ export default function MyTickets(props) {
       </View>
 
       <View style={styles.containerDark}>
+
         <View style={styles.subnavContainer}>
           <Text style={styles.subnavHeaderActive}>Upcoming Events</Text>
           <Text style={styles.subnavHeader}>Past Events</Text>
         </View>
+
+        <TouchableHighlight>
+          <View style={eventStyles.eventContainer}>
+            <Image
+              style={eventStyles.eventImage}
+              source={require('../../assets/ticket-event.png')}
+            />
+
+            <View style={eventStyles.detailsContainer}>
+              <View style={eventStyles.sectionTop}>
+                <View style={eventStyles.iconLinkCircleContainerSmall}>
+                  <Icon style={eventStyles.iconLinkCircleSmall} name="local-activity" />
+                </View>
+              </View>
+              <View style={eventStyles.sectionBottom}>
+                <Text style={slideshowStyles.header}>Explosions In The Sky</Text>
+                <Text style={slideshowStyles.details}>Fox Theater | Oakland, CA</Text>
+              </View>
+            </View>
+
+            <View style={eventStyles.detailsContainerBottom}>
+              <Text style={eventStyles.header}>Explosions in the Sky</Text>
+              <Text style={eventStyles.details}>Fox Theater | Oakland, CA</Text>
+            </View>
+          </View>
+        </TouchableHighlight>
+
       </View>
 
 

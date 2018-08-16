@@ -59,8 +59,9 @@ const SharedStyles = {
   },
   containerDark: {
     backgroundColor: containerDarkColor,
-    width: fullWidth,
     flexDirection: 'column',
+    paddingHorizontal: globalPadding,
+    width: fullWidth,
   },
   halfContainer: {
     backgroundColor: white,
