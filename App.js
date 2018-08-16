@@ -1,8 +1,8 @@
-import { Component, createElement } from 'react'
-import { loadFonts } from './assets/fonts'
+import React, {Component, createElement} from 'react'
+import {loadFonts} from './assets/fonts'
+import {View} from 'react-native';
+import {Video, Asset, AppLoading} from 'expo';
 import navigator from './src/navigator'
-import Video from 'react-native-video';
-import Splash from './splash.mp4';
 import SharedStyles from './src/styles/shared/sharedStyles'
 
 const styles = SharedStyles.createStyles()
@@ -10,26 +10,52 @@ const styles = SharedStyles.createStyles()
 
 export default class App extends Component {
   state = {
-    isReady: false,
+    isAppReady: false,
+    isSplashReady: false,
+    isSplashDone: false,
   }
 
-  async componentDidMount() {
+  _cacheSplashResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
+    const video = require('./splash.mp4')
+
+    return Asset.fromModule(video).downloadAsync()
+  }
+
+  _cacheResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
+    setTimeout(() => {
+      this.setState({isSplashDone: true});
+    }, 3000);
     await loadFonts()
-    this.setState({ isReady: true })
+    this.setState({isAppReady: true});
   }
 
+  // eslint-disable-next-line complexity
   render() {
-    return this.state.isReady ? createElement(navigator) : null; (
-      <View style={styles.container}>
-        <Video style={styles.splashVideo} source={Splash}
-          ref={(ref) => {
-           this.player.presentFullscreenPlayer();
-          }}
-          resizeMode="cover"
-          paused={false}
-          style={styles.splashVideo}
+    if (!this.state.isSplashReady) {
+      return (
+        <AppLoading
+          startAsync={this._cacheSplashResourcesAsync}
+          onFinish={() => this.setState({isSplashReady: true})}
+          onError={console.warn} // eslint-disable-line no-console
+          autoHideSplash={false}
         />
-      </View>
-    );
+      )
+    }
+
+    if (!this.state.isAppReady || !this.state.isSplashDone) {
+      return (
+        <View style={{flex: 1}}>
+          <Video
+            style={styles.splashVideo}
+            source={require('./splash.mp4')}
+            onLoad={this._cacheResourcesAsync}
+            resizeMode="RESIZE_MODE_COVER"
+            shouldPlay
+          />
+        </View>
+      );
+    }
+
+    return createElement(navigator)
   }
 }
