@@ -49,7 +49,7 @@ export default class App extends Component {
             style={styles.splashVideo}
             source={require('./splash.mp4')}
             onLoad={this._cacheResourcesAsync}
-            resizeMode="RESIZE_MODE_COVER"
+            resizeMode="cover"
             shouldPlay
           />
         </View>
