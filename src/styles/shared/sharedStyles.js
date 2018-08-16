@@ -32,11 +32,11 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 38
+export const headerFontSize = 36
 export const sectionHeaderFontSize = 21
-export const bodyFontSize = 18
+export const bodyFontSize = 16
 export const iconFontSize = 18
-export const iconStarFontSize = 26
+export const iconCircleFontSize = 26
 
 const SharedStyles = {
   container: {
@@ -114,23 +114,23 @@ const SharedStyles = {
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginBottom: globalMarginSmall,
   },
   button: {
     backgroundColor: primaryColor,
     flex: 1,
-    height: 50,
+    height: 60,
     justifyContent: 'center',
   },
   buttonSecondary: {
     backgroundColor: secondaryColor,
     flex: 1,
-    height: 50,
+    height: 60,
     justifyContent: 'center',
   },
   buttonText: {
     color: white,
     fontFamily: globalFontSemiBold,
+    fontSize: sectionHeaderFontSize,
     textAlign: 'center',
   },
   header: {
@@ -150,6 +150,7 @@ const SharedStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: globalPaddingMedium,
     paddingVertical: globalPaddingSmall,
   },
   lineHeight: {
@@ -211,16 +212,16 @@ const SharedStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
   },
-  iconLinkStarContainer: {
+  iconLinkCircleContainer: {
     backgroundColor: whiteTransparent,
     borderRadius: 100/2,
     height: 45,
     padding: globalPaddingSmall,
     width: 45,
   },
-  iconLinkStar: {
+  iconLinkCircle: {
     color: white,
-    fontSize: iconStarFontSize,
+    fontSize: iconCircleFontSize,
   },
   iconImageSmall: {
     width: 23,
@@ -245,11 +246,15 @@ const SharedStyles = {
     justifyContent: 'flex-start',
   },
   avatar: {
+    borderColor: white,
+    borderRadius: 45/2,
+    borderWidth: 1,
     height: 45,
     marginLeft: -10,
     width: 45,
   },
   avatarSmall: {
+    borderRadius: 30/2,
     height: 30,
     marginLeft: -10,
     width: 30,
@@ -260,6 +265,14 @@ const SharedStyles = {
     left: 0,
     bottom: 0,
     right: 0,
+  },  
+  marginTopSmall: {
+    marginTop: globalMarginSmall,
+  },
+  borderRight: {
+    borderRightColor: borderColor,
+    borderStyle: 'solid',
+    borderRightWidth: 1,
   },
 }
 

@@ -29,8 +29,8 @@ function EventItemView({
 
         <View style={eventStyles.detailsContainer}>
           <View style={eventStyles.sectionTop}>
-            <View style={eventStyles.iconLinkStarContainerSmall}>
-              <Icon style={eventStyles.iconLinkStarSmall} name="star" />
+            <View style={eventStyles.iconLinkCircleContainerSmall}>
+              <Icon style={eventStyles.iconLinkCircleSmall} name="star" />
             </View>
             <View style={styles.avatarContainer}>
               {avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
@@ -90,8 +90,8 @@ export default function EventsIndex(props) {
 
         <View style={slideshowStyles.detailsContainer}>
           <View style={slideshowStyles.sectionTop}>
-            <View style={styles.iconLinkStarContainer}>
-              <Icon style={styles.iconLinkStar} name="star" />
+            <View style={styles.iconLinkCircleContainer}>
+              <Icon style={styles.iconLinkCircle} name="star" />
             </View>
             <View style={styles.avatarContainer}>
               <Image
