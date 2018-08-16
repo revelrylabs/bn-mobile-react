@@ -44,7 +44,7 @@ export default class App extends Component {
 
     if (!this.state.isAppReady || !this.state.isSplashDone) {
       return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Video
             style={styles.splashVideo}
             source={require('./splash.mp4')}
