@@ -48,6 +48,7 @@ export default function MyTickets(props) {
               <View style={eventStyles.sectionTop}>
                 <View style={eventStyles.iconLinkCircleContainerSmall}>
                   <Icon style={eventStyles.iconLinkCircleSmall} name="local-activity" />
+                  x 3
                 </View>
               </View>
               <View style={eventStyles.sectionBottom}>
