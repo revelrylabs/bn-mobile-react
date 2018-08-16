@@ -131,3 +131,11 @@ React Native (https://facebook.github.io/react-native/)
 Unstated (https://github.com/jamiebuilds/unstated)
 
 React Navigation (https://reactnavigation.org/)
+
+### Deploying
+
+The deploy script will work deploying to Test Flight, and the Alpha or Beta channels in Google Play.
+
+It requires several certificates and ENV keys set, many of which aren't shareable.
+
+We're using [Expo Build releasing through Fastlane](https://blog.expo.io/automating-standalone-expo-app-builds-and-deployments-with-fastlane-exp-and-exptool-9b2f5ad0a2cd) if you want to try to set up your own deploy.
