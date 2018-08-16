@@ -14,6 +14,9 @@ const EventsStack = createStackNavigator({
   ...EventRoutes,
 }, {
   initialRouteName: 'Home',
+  navigationOptions: {
+    header: null
+  },
 })
 
 const TicketsStack =  createStackNavigator({

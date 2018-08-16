@@ -34,10 +34,8 @@ export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 38
 export const sectionHeaderFontSize = 21
-export const bodyFontSize = 18
+export const bodyFontSize = 16
 export const iconFontSize = 18
-export const pickerItemHeight = 120
-export const slideShowArrowFontSize = 32
 
 const EventStyles = {
   eventContainer: {
@@ -58,14 +56,14 @@ const EventStyles = {
   sectionBottom: {
     paddingVertical: globalPadding,
   },
-  iconLinkStarContainerSmall: {
+  iconLinkCircleContainerSmall: {
     backgroundColor: whiteTransparent,
     borderRadius: 100/2,
     height: 28,
     padding: globalPaddingTiny,
     width: 28,
   },
-  iconLinkStarSmall: {
+  iconLinkCircleSmall: {
     color: white,
     fontSize: iconFontSize,
   },
@@ -75,7 +73,7 @@ const EventStyles = {
     position: 'absolute',
   },
   header: {
-    fontFamily: globalFontBold,
+    fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
     color: textColor,
   },
