@@ -16,17 +16,24 @@ export default function MyTickets(props) {
   const {navigation: {navigate}} = props
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView>
 
-      <View style={styles.sectionHeaderContainer}>
-        <Text style={styles.header}>Explore</Text>
-        <View style={styles.iconLinkContainer}>
-          <Image
-            style={styles.iconImageSmall}
-            source={require('../../assets/heart-small.png')}
-          />
-          <Text style={styles.iconLinkText}>NYC</Text>
-          <Icon style={styles.iconLink} name="keyboard-arrow-down" />
+      <View style={styles.headerContainer}>
+        <View style={styles.sectionHeaderContainer}>
+          <Text style={styles.header}>My Tickets</Text>
+          <View style={styles.iconLinkContainer}>
+            <Image
+              style={styles.iconImage}
+              source={require('../../assets/heart-large.png')}
+            />
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.containerDark}>
+        <View style={styles.subnavContainer}>
+          <Text style={styles.subnavHeaderActive}>Upcoming Events</Text>
+          <Text style={styles.subnavHeader}>Past Events</Text>
         </View>
       </View>
 
