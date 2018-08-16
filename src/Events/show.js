@@ -19,7 +19,11 @@ export default class EventShow extends Component {
 
   render() {
     return (
-      <Modal>
+      <Modal
+        onRequestClose={() => {
+          this.props.navigation.goBack()
+        }}
+      >
         <ScrollView>
           <View style={eventDetailsStyles.videoContainer}>
             <Image
@@ -34,9 +38,9 @@ export default class EventShow extends Component {
             <View style={eventDetailsStyles.videoDetailsContainer}>
 
               <View style={eventDetailsStyles.sectionTop}>
-                <Icon 
-                  style={styles.iconLinkCircle} 
-                  name="close" 
+                <Icon
+                  style={styles.iconLinkCircle}
+                  name="close"
                   onPress={() => {
                     this.props.navigation.goBack()
                   }}
