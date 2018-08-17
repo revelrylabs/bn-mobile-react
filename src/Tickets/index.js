@@ -5,11 +5,13 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
 import EventStyles from '../styles/shared/eventStyles'
+import TicketStyles from '../styles/tickets/ticketStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
 const eventStyles = EventStyles.createStyles()
+const ticketStyles = TicketStyles.createStyles()
 
 
 export default function MyTickets(props) {
