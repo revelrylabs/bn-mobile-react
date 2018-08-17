@@ -13,6 +13,7 @@ export const backgroundColor = white
 export const inputBackgroundColor = '#FAFAFA'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
+export const containerDarkColor = '#F5F6F7'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
 
@@ -43,6 +44,23 @@ const SharedStyles = {
     backgroundColor: white,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPadding,
+    width: fullWidth,
+    flexDirection: 'column',
+  },
+  containerDark: {
+    backgroundColor: containerDarkColor,
+    flexDirection: 'column',
+    paddingBottom: globalPaddingLarge,
+    paddingHorizontal: globalPadding,
+    width: fullWidth,
+  },
+  headerContainer: {
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    paddingHorizontal: globalPadding,
+    paddingTop: globalPadding,
     width: fullWidth,
     flexDirection: 'column',
   },
@@ -115,6 +133,12 @@ const SharedStyles = {
   buttonContainer: {
     flexDirection: 'row',
   },
+  lineHeight: {
+    paddingBottom: globalPaddingTiny / 2,
+  },
+  halfColumn: {
+    flex: 1 / 2,
+  },
   button: {
     backgroundColor: primaryColor,
     flex: 1,
@@ -146,18 +170,29 @@ const SharedStyles = {
     fontSize: headerFontSize,
     paddingBottom: globalPadding,
   },
+  subnavContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: globalPadding,
+    paddingVertical: globalPaddingSmall,
+  },
+  subnavHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
+  subnavHeaderActive: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
   sectionHeaderContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: globalPaddingMedium,
     paddingVertical: globalPaddingSmall,
-  },
-  lineHeight: {
-    paddingBottom: globalPaddingTiny / 2,
-  },
-  halfColumn: {
-    flex: 1 / 2,
   },
   sectionHeader: {
     backgroundColor: 'transparent',
@@ -223,6 +258,10 @@ const SharedStyles = {
     color: white,
     fontSize: iconCircleFontSize,
   },
+  iconImage: {
+    width: 30,
+    height: 30,
+  },
   iconImageSmall: {
     width: 23,
     height: 23,
@@ -265,7 +304,7 @@ const SharedStyles = {
     left: 0,
     bottom: 0,
     right: 0,
-  },  
+  },
   marginTopSmall: {
     marginTop: globalMarginSmall,
   },

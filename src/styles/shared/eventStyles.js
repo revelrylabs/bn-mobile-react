@@ -44,7 +44,7 @@ const EventStyles = {
   detailsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 180,
+    height: 175,
   },
   detailsContainerBottom: {
     paddingBottom: globalPadding,

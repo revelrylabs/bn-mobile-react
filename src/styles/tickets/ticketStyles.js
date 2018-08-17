@@ -13,8 +13,10 @@ export const inputBackgroundColor = '#FAFAFA'
 export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
+export const placeholderImageBackground = '#F6F7F5'
+export const sectionHeaderColor = '#9DA3B4'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
-export const whiteTransparent = 'rgba(225, 225, 225, 0.8)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -32,64 +34,57 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 32
-export const sectionHeaderFontSize = 21
-export const bodyFontSize = 18
+export const headerFontSize = 28
+export const sectionHeaderFontSize = 18
+export const bodyFontSize = 16
+export const bodyFontSizeSmall = 14
 export const iconFontSize = 18
-export const pickerItemHeight = 120
-export const slideShowArrowFontSize = 32
+export const iconLargeFontSize = 56
+export const slideShowArrowFontSize = 28
 
-const SlideShowStyles = {
-  slideshowContainer: {
+const TicketStyles = {
+  ticketContainer: {
+    marginTop: globalMargin,
     padding: globalPadding,
   },
   detailsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 300,
+    height: 145,
   },
-  sectionTop: {
+  ticketContainerBottom: {
+    backgroundColor: white,
+    marginTop: -10,
+  },
+  detailsContainerBottom: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    padding: globalPaddingSmall + globalPaddingTiny,
   },
-  sectionMiddle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: globalPaddingJumbo,
-  },
-  slideShowIconLinkLeft: {
+  iconTicket: {
     color: white,
-    fontSize: slideShowArrowFontSize,
-    marginLeft: -20,
+    fontSize: iconFontSize,
+    marginRight: globalPaddingTiny,
   },
-  slideShowIconLinkRight: {
+  iconTicketText: {
     color: white,
-    fontSize: slideShowArrowFontSize,
-    marginRight: -20,
   },
-  sectionBottom: {
-    paddingVertical: globalPaddingLarge,
-  },
-  header: {
-    fontFamily: globalFontSemiBold,
-    fontSize: headerFontSize,
-    color: white,
-    marginTop: globalPaddingTiny,
-  },
-  details: {
+  detailsBottomHeader: {
+    color: sectionHeaderColor,
     fontFamily: globalFontRegular,
+    fontSize: bodyFontSizeSmall,
+  },
+  detailsBottomText: {
     fontSize: bodyFontSize,
-    color: whiteTransparent,
+    paddingTop: globalPaddingTiny,
   },
-  slideShowImage: {
-    width: fullWidth - 43,
-    height: 300,
-    position: 'absolute',
-  },
+  detailsLast: {
+    textAlign: 'right',
+  }
 }
 
 function createStyles(overrides = {}) {
-  return StyleSheet.create({...SlideShowStyles, ...overrides})
+  return StyleSheet.create({...TicketStyles, ...overrides})
 }
 
 export default {
