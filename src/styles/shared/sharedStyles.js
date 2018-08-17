@@ -297,6 +297,13 @@ const SharedStyles = {
     marginLeft: -10,
     width: 30,
   },
+  splashVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },  
   marginTopSmall: {
     marginTop: globalMarginSmall,
   },
