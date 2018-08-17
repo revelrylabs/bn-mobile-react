@@ -45,7 +45,6 @@ export default function MyTickets(props) {
               style={eventStyles.eventImage}
               source={require('../../assets/ticket-event.png')}
             />
-
             <View style={ticketStyles.detailsContainer}>
               <View>
                 <View style={styles.iconLinkContainer}>
@@ -58,13 +57,25 @@ export default function MyTickets(props) {
                 <Text style={slideshowStyles.details}>Fox Theater | Oakland, CA</Text>
               </View>
             </View>
-
-            <View style={ticketStyles.detailsContainerBottom}>
-              <Text style={eventStyles.header}>Explosions in the Sky</Text>
-              <Text style={eventStyles.details}>Fox Theater | Oakland, CA</Text>
-            </View>
           </View>
         </TouchableHighlight>
+
+        <View style={ticketStyles.ticketContainerBottom}>
+          <View style={ticketStyles.detailsContainerBottom}>
+            <View>
+              <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
+              <Text style={ticketStyles.detailsBottomText}>Tue, July 21st</Text>
+            </View>
+            <View>
+              <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
+              <Text style={ticketStyles.detailsBottomText}>7:30pm</Text>
+            </View>
+            <View>
+              <Text style={ticketStyles.detailsBottomHeader}>ENDS</Text>
+              <Text style={ticketStyles.detailsBottomText}>12:30am</Text>
+            </View>
+          </View>
+        </View>
 
       </View>
 

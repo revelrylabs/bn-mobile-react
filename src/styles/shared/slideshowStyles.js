@@ -14,6 +14,7 @@ export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
+export const whiteTransparent = 'rgba(225, 225, 225, 0.8)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -78,7 +79,7 @@ const SlideShowStyles = {
   details: {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
-    color: disabledColor,
+    color: whiteTransparent,
   },
   slideShowImage: {
     width: fullWidth - 43,

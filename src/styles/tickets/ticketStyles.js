@@ -49,10 +49,15 @@ const TicketStyles = {
   detailsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 150,
+    height: 145,
+  },
+  ticketContainerBottom: {
+    backgroundColor: white,
   },
   detailsContainerBottom: {
-
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: globalPaddingSmall,
   },
   iconTicket: {
     color: white,
@@ -61,6 +66,15 @@ const TicketStyles = {
   },
   iconTicketText: {
     color: white,
+  },
+  detailsBottomHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+  },
+  detailsBottomText: {
+    fontSize: sectionHeaderFontSize,
+    paddingTop: globalPaddingTiny,
   },
 }
 
