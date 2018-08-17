@@ -47,6 +47,13 @@ const SharedStyles = {
     width: fullWidth,
     flexDirection: 'column',
   },
+  containerDark: {
+    backgroundColor: containerDarkColor,
+    flexDirection: 'column',
+    paddingBottom: globalPaddingLarge,
+    paddingHorizontal: globalPadding,
+    width: fullWidth,
+  },
   headerContainer: {
     backgroundColor: white,
     borderBottomColor: borderColor,
@@ -56,12 +63,6 @@ const SharedStyles = {
     paddingTop: globalPadding,
     width: fullWidth,
     flexDirection: 'column',
-  },
-  containerDark: {
-    backgroundColor: containerDarkColor,
-    flexDirection: 'column',
-    paddingHorizontal: globalPadding,
-    width: fullWidth,
   },
   halfContainer: {
     backgroundColor: white,
@@ -303,7 +304,7 @@ const SharedStyles = {
     left: 0,
     bottom: 0,
     right: 0,
-  },  
+  },
   marginTopSmall: {
     marginTop: globalMarginSmall,
   },

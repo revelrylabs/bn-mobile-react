@@ -71,8 +71,47 @@ export default function MyTickets(props) {
               <Text style={ticketStyles.detailsBottomText}>7:30pm</Text>
             </View>
             <View>
-              <Text style={ticketStyles.detailsBottomHeader}>ENDS</Text>
-              <Text style={ticketStyles.detailsBottomText}>12:30am</Text>
+              <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
+              <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>12:30am</Text>
+            </View>
+          </View>
+        </View>
+
+
+        <TouchableHighlight>
+          <View style={ticketStyles.ticketContainer}>
+            <Image
+              style={eventStyles.eventImage}
+              source={require('../../assets/ticket-event-2.png')}
+            />
+            <View style={ticketStyles.detailsContainer}>
+              <View>
+                <View style={styles.iconLinkContainer}>
+                  <Icon style={ticketStyles.iconTicket} name="local-activity" />
+                  <Text style={ticketStyles.iconTicketText}>x 3</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={slideshowStyles.header}>Tycho</Text>
+                <Text style={slideshowStyles.details}>Fox Theater | Oakland, CA</Text>
+              </View>
+            </View>
+          </View>
+        </TouchableHighlight>
+
+        <View style={ticketStyles.ticketContainerBottom}>
+          <View style={ticketStyles.detailsContainerBottom}>
+            <View>
+              <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
+              <Text style={ticketStyles.detailsBottomText}>Tue, July 21st</Text>
+            </View>
+            <View>
+              <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
+              <Text style={ticketStyles.detailsBottomText}>7:30pm</Text>
+            </View>
+            <View>
+              <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
+              <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>12:30am</Text>
             </View>
           </View>
         </View>

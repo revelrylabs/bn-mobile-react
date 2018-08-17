@@ -53,11 +53,12 @@ const TicketStyles = {
   },
   ticketContainerBottom: {
     backgroundColor: white,
+    marginTop: -10,
   },
   detailsContainerBottom: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: globalPaddingSmall,
+    padding: globalPaddingSmall + globalPaddingTiny,
   },
   iconTicket: {
     color: white,
@@ -76,6 +77,9 @@ const TicketStyles = {
     fontSize: sectionHeaderFontSize,
     paddingTop: globalPaddingTiny,
   },
+  detailsLast: {
+    textAlign: 'right',
+  }
 }
 
 function createStyles(overrides = {}) {
