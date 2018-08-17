@@ -37,6 +37,7 @@ export const globalFontItalic = 'tt_commons_italic'
 export const headerFontSize = 28
 export const sectionHeaderFontSize = 18
 export const bodyFontSize = 16
+export const bodyFontSizeSmall = 14
 export const iconFontSize = 18
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
@@ -71,10 +72,10 @@ const TicketStyles = {
   detailsBottomHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: bodyFontSizeSmall,
   },
   detailsBottomText: {
-    fontSize: sectionHeaderFontSize,
+    fontSize: bodyFontSize,
     paddingTop: globalPaddingTiny,
   },
   detailsLast: {

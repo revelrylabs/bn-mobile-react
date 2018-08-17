@@ -39,7 +39,7 @@ export default function MyTickets(props) {
           <Text style={styles.subnavHeader}>Past Events</Text>
         </View>
 
-        <TouchableHighlight>
+        <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate("EventTicket")}>
           <View style={ticketStyles.ticketContainer}>
             <Image
               style={eventStyles.eventImage}
@@ -78,7 +78,7 @@ export default function MyTickets(props) {
         </View>
 
 
-        <TouchableHighlight>
+        <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate("EventTicket")}>
           <View style={ticketStyles.ticketContainer}>
             <Image
               style={eventStyles.eventImage}
@@ -118,12 +118,6 @@ export default function MyTickets(props) {
 
       </View>
 
-
-
-      <Button
-        title="View Event Ticket"
-        onPress={() => navigate("EventTicket")}
-      />
     </ScrollView>
   );
 }
