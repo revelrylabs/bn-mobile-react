@@ -40,26 +40,26 @@ export default function MyTickets(props) {
         </View>
 
         <TouchableHighlight>
-          <View style={eventStyles.eventContainer}>
+          <View style={ticketStyles.ticketContainer}>
             <Image
               style={eventStyles.eventImage}
               source={require('../../assets/ticket-event.png')}
             />
 
-            <View style={eventStyles.detailsContainer}>
-              <View style={eventStyles.sectionTop}>
-                <View style={eventStyles.iconLinkCircleContainerSmall}>
-                  <Icon style={eventStyles.iconLinkCircleSmall} name="local-activity" />
-                  x 3
+            <View style={ticketStyles.detailsContainer}>
+              <View>
+                <View style={styles.iconLinkContainer}>
+                  <Icon style={ticketStyles.iconTicket} name="local-activity" />
+                  <Text style={ticketStyles.iconTicketText}>x 3</Text>
                 </View>
               </View>
-              <View style={eventStyles.sectionBottom}>
+              <View>
                 <Text style={slideshowStyles.header}>Explosions In The Sky</Text>
                 <Text style={slideshowStyles.details}>Fox Theater | Oakland, CA</Text>
               </View>
             </View>
 
-            <View style={eventStyles.detailsContainerBottom}>
+            <View style={ticketStyles.detailsContainerBottom}>
               <Text style={eventStyles.header}>Explosions in the Sky</Text>
               <Text style={eventStyles.details}>Fox Theater | Oakland, CA</Text>
             </View>

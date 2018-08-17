@@ -42,12 +42,25 @@ export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 
 const TicketStyles = {
-  videoContainer: {
-    flex: 1,
+  ticketContainer: {
+    marginTop: globalMargin,
+    padding: globalPadding,
+  },
+  detailsContainer: {
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 240,
+    justifyContent: 'space-between',
+    height: 150,
+  },
+  detailsContainerBottom: {
+
+  },
+  iconTicket: {
+    color: white,
+    fontSize: iconFontSize,
+    marginRight: globalPaddingTiny,
+  },
+  iconTicketText: {
+    color: white,
   },
 }
 
