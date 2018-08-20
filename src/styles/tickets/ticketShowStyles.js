@@ -43,9 +43,19 @@ export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 
 const TicketShowStyles = {
-  ticketContainer: {
-    marginTop: globalMargin,
-    padding: globalPadding,
+  modalContainer: {
+
+  },
+  modalBkgdImage: {
+
+  },
+  closeModal: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  closeModalHeader: {
+    color: white,
+    fontSize: bodyFontSize,
   },
 }
 
