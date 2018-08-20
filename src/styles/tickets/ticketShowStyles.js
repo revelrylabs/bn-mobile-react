@@ -54,7 +54,7 @@ const TicketShowStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: globalPaddingJumbo,
+    paddingTop: globalPaddingJumbo,
   },
   closeModalHeader: {
     color: white,
