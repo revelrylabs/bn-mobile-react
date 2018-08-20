@@ -44,23 +44,30 @@ export default function EventsTicket() {
               <View>
                 <View style={styles.iconLinkContainer}>
                   <Image
-                    style={eventStyles.eventImage}
+                    style={styles.iconImage}
                     source={require('../../assets/heart-white.png')}
                   />
                 </View>
               </View>
               <View>
-                <Text style={slideshowStyles.header}>Header</Text>
-                <Text style={slideshowStyles.details}>Location</Text>
+                <Text style={slideshowStyles.header}>Tycho</Text>
+                <Text style={slideshowStyles.details}>July 27th • 7:30pm  •  The Fillmore SF</Text>
+                <Text style={slideshowStyles.details}>Get Directions</Text>
               </View>
             </View>
           </View>
         </TouchableHighlight>
         <View style={ticketStyles.ticketContainerBottom}>
-          <View style={ticketStyles.detailsContainerBottom}>
+          <View style={ticketShowStyles.detailsContainerBottom}>
+            <View style={styles.avatarContainer}>
+              <Image
+                style={styles.avatar}
+                source={require('../../assets/avatar-female.png')}
+              />
+            </View>
             <View>
-              <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
-              <Text style={ticketStyles.detailsBottomText}>date</Text>
+              <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
+              <Text style={ticketStyles.detailsBottomHeader}>General Admission</Text>
             </View>
           </View>
         </View>

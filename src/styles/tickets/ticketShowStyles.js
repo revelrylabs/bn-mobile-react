@@ -61,6 +61,11 @@ const TicketShowStyles = {
     fontFamily: globalFontMedium,
     fontSize: closeModalHeaderSize,
   },
+  detailsContainerBottom: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    padding: globalPaddingSmall + globalPaddingTiny,
+  },
 }
 
 function createStyles(overrides = {}) {
