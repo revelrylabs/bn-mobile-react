@@ -40,22 +40,26 @@ export const bodyFontSize = 16
 export const bodyFontSizeSmall = 14
 export const iconFontSize = 18
 export const iconLargeFontSize = 56
-export const slideShowArrowFontSize = 28
+export const closeModalHeaderSize = 21
 
 const TicketShowStyles = {
   modalContainer: {
-
+    paddingHorizontal: globalPadding,
   },
   modalBkgdImage: {
-
+    width: fullWidth,
+    position: 'absolute',
   },
-  closeModal: {
+  closeModalContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingVertical: globalPaddingJumbo,
   },
   closeModalHeader: {
     color: white,
-    fontSize: bodyFontSize,
+    fontFamily: globalFontMedium,
+    fontSize: closeModalHeaderSize,
   },
 }
 

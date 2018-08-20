@@ -15,12 +15,16 @@ export default function EventsTicket() {
         source={require('../../assets/modal-bkgd.jpg')}
       />
 
-      <View style={ticketShowStyles.closeModal}>
+      <View style={ticketShowStyles.closeModalContainer}>
         <Icon
           style={styles.iconLinkCircle}
           name="close"
+          onPress={() => {
+            this.props.navigation.goBack()
+          }}
         />
         <Text style={ticketShowStyles.closeModalHeader}>Ticket 1 of 3</Text>
+        <Text>&nbsp;</Text>
       </View>
     </View>
   );
