@@ -85,13 +85,13 @@ export default function EventsTicket() {
         </View>
 
         <View style={ticketShowStyles.bottomNav}>
-          <View style={ticketShowStyles.bottomNavLinkContainer}>
-            <Icon style={ticketShowStyles.iconLink} name="call-made" />
-            <Text style={ticketShowStyles.iconLinkText}>ADD TO WALLET</Text>
+          <View style={[ticketShowStyles.bottomNavLinkContainer, styles.borderRight]}>
+            <Icon style={ticketShowStyles.bottomNavIcon} name="account-balance-wallet" />
+            <Text style={ticketShowStyles.bottomNavLinkText}>ADD TO WALLET &nbsp;</Text>
           </View>
           <View style={ticketShowStyles.bottomNavLinkContainer}>
-            <Icon style={ticketShowStyles.iconLink} name="call-made" />
-            <Text style={ticketShowStyles.iconLinkText}>TRANSFER TICKET</Text>
+            <Icon style={ticketShowStyles.bottomNavIcon} name="launch" />
+            <Text style={ticketShowStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
           </View>
         </View>
 

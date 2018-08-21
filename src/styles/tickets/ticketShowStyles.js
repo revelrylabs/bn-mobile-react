@@ -107,7 +107,17 @@ const TicketShowStyles = {
     justifyContent: 'space-between',
   },
   bottomNavLinkContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     padding: globalPadding,
+  },
+  bottomNavIcon: {
+    color: primaryColor,
+    fontSize: iconFontSize,
+    paddingRight: globalPaddingTiny,
+  },
+  bottomNavLinkText: {
+    color: textColor,
   },
 }
 
