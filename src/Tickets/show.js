@@ -52,7 +52,10 @@ export default function EventsTicket() {
               <View>
                 <Text style={slideshowStyles.header}>Tycho</Text>
                 <Text style={slideshowStyles.details}>July 27th • 7:30pm  •  The Fillmore SF</Text>
-                <Text style={slideshowStyles.details}>Get Directions</Text>
+                <View style={styles.iconLinkContainer}>
+                  <Text style={ticketShowStyles.iconLinkText}>GET DIRECTIONS</Text>
+                  <Icon style={ticketShowStyles.iconLink} name="call-made" />
+                </View>
               </View>
             </View>
           </View>
@@ -67,7 +70,7 @@ export default function EventsTicket() {
             </View>
             <View>
               <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
-              <Text style={ticketStyles.detailsBottomHeader}>General Admission</Text>
+              <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
             </View>
           </View>
         </View>

@@ -69,7 +69,7 @@ const TicketShowStyles = {
   avatarContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    paddingRight: globalPadding,
+    paddingRight: globalPaddingSmall,
   },
   avatar: {
     borderColor: white,
@@ -77,6 +77,18 @@ const TicketShowStyles = {
     borderWidth: 1,
     height: 45,
     width: 45,
+  },
+  iconLink: {
+    backgroundColor: 'transparent',
+    color: whiteTransparent,
+    fontSize: iconFontSize,
+    paddingRight: globalPaddingTiny,
+  },
+  iconLinkText: {
+    color: whiteTransparent,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingTiny,
   },
 }
 
