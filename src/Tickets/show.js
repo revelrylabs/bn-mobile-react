@@ -84,6 +84,17 @@ export default function EventsTicket() {
           />
         </View>
 
+        <View style={ticketShowStyles.bottomNav}>
+          <View style={ticketShowStyles.bottomNavLinkContainer}>
+            <Icon style={ticketShowStyles.iconLink} name="call-made" />
+            <Text style={ticketShowStyles.iconLinkText}>ADD TO WALLET</Text>
+          </View>
+          <View style={ticketShowStyles.bottomNavLinkContainer}>
+            <Icon style={ticketShowStyles.iconLink} name="call-made" />
+            <Text style={ticketShowStyles.iconLinkText}>TRANSFER TICKET</Text>
+          </View>
+        </View>
+
       </View>
     </ScrollView>
   );

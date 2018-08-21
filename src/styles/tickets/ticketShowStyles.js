@@ -55,7 +55,7 @@ const TicketShowStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: globalPaddingJumbo,
+    paddingTop: globalPaddingLarge,
   },
   closeModalHeader: {
     color: white,
@@ -95,11 +95,19 @@ const TicketShowStyles = {
     backgroundColor: containerDarkColor,
     flexDirection: 'row',
     justifyContent: 'center',
-    padding: globalPaddingLarge,
+    padding: globalPadding,
   },
   qrCode: {
     height: 250,
     width: 250,
+  },
+  bottomNav: {
+    backgroundColor: white,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  bottomNavLinkContainer: {
+    padding: globalPadding,
   },
 }
 
