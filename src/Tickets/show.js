@@ -86,8 +86,11 @@ export default function EventsTicket() {
 
         <View style={ticketShowStyles.bottomNav}>
           <View style={[ticketShowStyles.bottomNavLinkContainer, styles.borderRight]}>
-            <Icon style={ticketShowStyles.bottomNavIcon} name="account-balance-wallet" />
-            <Text style={ticketShowStyles.bottomNavLinkText}>ADD TO WALLET &nbsp;</Text>
+            <Image
+              style={ticketShowStyles.bottomNavImage}
+              source={require('../../assets/icon-wallet.png')}
+            />
+            <Text style={ticketShowStyles.bottomNavLinkText}>ADD TO WALLET</Text>
           </View>
           <View style={ticketShowStyles.bottomNavLinkContainer}>
             <Icon style={ticketShowStyles.bottomNavIcon} name="launch" />
