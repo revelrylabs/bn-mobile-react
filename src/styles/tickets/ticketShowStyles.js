@@ -66,6 +66,18 @@ const TicketShowStyles = {
     justifyContent: 'flex-start',
     padding: globalPaddingSmall + globalPaddingTiny,
   },
+  avatarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingRight: globalPadding,
+  },
+  avatar: {
+    borderColor: white,
+    borderRadius: 45/2,
+    borderWidth: 1,
+    height: 45,
+    width: 45,
+  },
 }
 
 function createStyles(overrides = {}) {

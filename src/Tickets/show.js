@@ -59,9 +59,9 @@ export default function EventsTicket() {
         </TouchableHighlight>
         <View style={ticketStyles.ticketContainerBottom}>
           <View style={ticketShowStyles.detailsContainerBottom}>
-            <View style={styles.avatarContainer}>
+            <View style={ticketShowStyles.avatarContainer}>
               <Image
-                style={styles.avatar}
+                style={ticketShowStyles.avatar}
                 source={require('../../assets/avatar-female.png')}
               />
             </View>
