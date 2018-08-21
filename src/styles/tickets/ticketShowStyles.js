@@ -62,6 +62,12 @@ const TicketShowStyles = {
     fontFamily: globalFontMedium,
     fontSize: closeModalHeaderSize,
   },
+  details: {
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    color: white,
+    paddingVertical: globalPaddingTiny,
+  },
   detailsContainerBottom: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -116,11 +122,6 @@ const TicketShowStyles = {
     color: primaryColor,
     fontSize: iconFontSize,
     paddingRight: globalPaddingTiny,
-  },
-  bottomNavImage: {
-    height: 14,
-    marginRight: globalPaddingSmall,
-    width: 18,
   },
   bottomNavLinkText: {
     color: sectionHeaderColor,

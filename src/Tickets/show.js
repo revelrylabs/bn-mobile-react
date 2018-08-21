@@ -52,7 +52,7 @@ export default function EventsTicket() {
                 </View>
                 <View>
                   <Text style={slideshowStyles.header}>Tycho</Text>
-                  <Text style={slideshowStyles.details}>July 27th • 7:30pm  •  The Fillmore SF</Text>
+                  <Text style={ticketShowStyles.details}>July 27th • 7:30pm  •  The Fillmore SF</Text>
                   <View style={styles.iconLinkContainer}>
                     <Text style={ticketShowStyles.iconLinkText}>GET DIRECTIONS</Text>
                     <Icon style={ticketShowStyles.iconLink} name="call-made" />
@@ -86,10 +86,7 @@ export default function EventsTicket() {
 
         <View style={ticketShowStyles.bottomNav}>
           <View style={[ticketShowStyles.bottomNavLinkContainer, styles.borderRight]}>
-            <Image
-              style={ticketShowStyles.bottomNavImage}
-              source={require('../../assets/icon-wallet.png')}
-            />
+            <Icon style={ticketShowStyles.bottomNavIcon} name="account-balance-wallet" />
             <Text style={ticketShowStyles.bottomNavLinkText}>ADD TO WALLET</Text>
           </View>
           <View style={ticketShowStyles.bottomNavLinkContainer}>
