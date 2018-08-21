@@ -15,6 +15,7 @@ export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const placeholderImageBackground = '#F6F7F5'
 export const sectionHeaderColor = '#9DA3B4'
+export const containerDarkColor = '#F5F6F7'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
@@ -89,6 +90,16 @@ const TicketShowStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     paddingRight: globalPaddingTiny,
+  },
+  qrCodeContainer: {
+    backgroundColor: containerDarkColor,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: globalPaddingLarge,
+  },
+  qrCode: {
+    height: 250,
+    width: 250,
   },
 }
 
