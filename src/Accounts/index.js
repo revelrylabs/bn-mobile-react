@@ -34,16 +34,53 @@ export default function Account() {
 
         <View style={accountStyles.accountHeaderContainer}>
           <View>
-            <Text style={accountStyles.accountHeader}>Kook McDropin</Text>
+            <Text style={accountStyles.accountEmailHeader}>Kook McDropin</Text>
             <View style={accountStyles.emailWrapper}>
               <Icon style={accountStyles.emailIcon} name="mail" />
-              <Text style={accountStyles.accountEmail}>kookmcdropz@gmail.com</Text>
+              <Text style={accountStyles.accountEmail}>KOOKMCDROPZ@GMAIL.COM</Text>
             </View>
           </View>
           <Image
             style={accountStyles.qrCodeSmall}
             source={require('../../assets/qr-code-small.png')}
           />
+        </View>
+      </View>
+
+      <View style={accountStyles.containerDark}>
+
+        <Text style={accountStyles.sectionHeader}>Account Details</Text>
+
+        <View style={accountStyles.accountRow}>
+          <View style={accountStyles.accountRowWrapper}>
+            <Icon style={accountStyles.accountIcon} name="account-circle" />
+            <Text style={accountStyles.accountHeader}>Account</Text>
+          </View>
+          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+        </View>
+
+        <View style={accountStyles.accountRow}>
+          <View style={accountStyles.accountRowWrapper}>
+            <Icon style={accountStyles.accountIcon} name="notifications" />
+            <Text style={accountStyles.accountHeader}>Notification Preferences</Text>
+          </View>
+          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+        </View>
+
+        <View style={accountStyles.accountRow}>
+          <View style={accountStyles.accountRowWrapper}>
+            <Icon style={accountStyles.accountIcon} name="credit-card" />
+            <Text style={accountStyles.accountHeader}>Billing Information</Text>
+          </View>
+          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+        </View>
+
+        <View style={accountStyles.accountRow}>
+          <View style={accountStyles.accountRowWrapper}>
+            <Icon style={accountStyles.accountIcon} name="assignment" />
+            <Text style={accountStyles.accountHeader}>Order History</Text>
+          </View>
+          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
         </View>
       </View>
 

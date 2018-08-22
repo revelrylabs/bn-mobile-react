@@ -14,6 +14,7 @@ export const disabledColor = '#F7F7F7'
 export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const placeholderImageBackground = '#F6F7F5'
+export const containerDarkColor = '#F5F6F7'
 export const sectionHeaderColor = '#9DA3B4'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
@@ -86,14 +87,15 @@ const AccountStyles = {
     justifyContent: 'space-between',
     paddingVertical: globalPaddingSmall,
   },
-  accountHeader: {
+  accountEmailHeader: {
     color: textColor,
-    fontFamily: globalFontSemiBold,
+    fontFamily: globalFontMedium,
     fontSize: sectionHeaderFontSize,
   },
   emailWrapper: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    paddingTop: globalPaddingTiny,
   },
   emailIcon: {
     color: sectionHeaderColor,
@@ -108,6 +110,50 @@ const AccountStyles = {
   qrCodeSmall: {
     height: 45,
     width: 45,
+  },
+  sectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    marginBottom: globalMarginSmall,
+    paddingHorizontal: globalPadding,
+    paddingTop: globalPaddingLarge,
+  },
+  containerDark: {
+    backgroundColor: containerDarkColor,
+    flexDirection: 'column',
+    height: fullHeight,
+    paddingBottom: globalPaddingLarge,
+    width: fullWidth,
+  },
+  accountRow: {
+    alignItems: 'center',
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingSmall,
+    width: fullWidth,
+  },
+  accountRowWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  accountIcon: {
+    color: sectionHeaderColor,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingSmall,
+  },
+  accountHeader: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+  },
+  accountArrow: {
+    color: sectionHeaderColor,
+    fontSize: avatarIconFontSize,
   },
 }
 
