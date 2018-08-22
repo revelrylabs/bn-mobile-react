@@ -40,12 +40,31 @@ export const bodyFontSize = 16
 export const bodyFontSizeSmall = 14
 export const iconFontSize = 18
 export const iconLargeFontSize = 56
-export const slideShowArrowFontSize = 28
 
 const AccountStyles = {
-  ticketContainer: {
-    marginTop: globalMargin,
-    padding: globalPadding,
+  accountBkgdContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 240,
+  },
+  accountBkgd: {
+    width: fullWidth,
+    height: 240,
+    position: 'absolute',
+  },
+  accountPhotoContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 290,
+    justifyContent: 'center',
+    paddingTop: globalPadding,
+    width: fullWidth,
+  },
+  accountPhotoText: {
+    color: whiteTransparent,
+    fontSize: bodyFontSizeSmall,
   },
 }
 

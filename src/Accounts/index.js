@@ -14,42 +14,16 @@ const accountStyles = AccountStyles.createStyles()
 export default function Account() {
   return (
     <ScrollView>
-      <View style={eventDetailsStyles.videoContainer}>
+      <View style={accountStyles.accountBkgdContainer}>
         <Image
-          style={eventDetailsStyles.videoBkgd}
-          source={require('../../assets/video-bkgd.png')}
-        />
-        <Image
-          style={eventDetailsStyles.videoBkgd}
-          source={require('../../assets/video-bkgd-overlay.png')}
+          style={accountStyles.accountBkgd}
+          source={require('../../assets/account-placeholder-bkgd.png')}
         />
 
-        <View style={eventDetailsStyles.videoDetailsContainer}>
-
-          <View style={eventDetailsStyles.sectionTop}>
-            <Icon
-              style={styles.iconLinkCircle}
-              name="close"
-              onPress={() => {
-                this.props.navigation.goBack()
-              }}
-            />
-            <View style={eventDetailsStyles.videoActionsContainer}>
-              <View style={styles.iconLinkCircleContainer}>
-                <Icon style={styles.iconLinkCircle} name="star" />
-              </View>
-              <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
-                <Icon style={styles.iconLinkCircle} name="reply" />
-              </View>
-            </View>
-          </View>
+        <View style={accountStyles.accountPhotoContainer}>
 
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-            <View style={eventDetailsStyles.sectionBottom}>
-              <Icon style={eventDetailsStyles.iconPlayLink} name="play-circle-outline" />
-              <Text style={eventDetailsStyles.header}>Taylor Swift</Text>
-              <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
-            </View>
+            <Text style={accountStyles.accountPhotoText}>+ TAP TO ADD A COVER PHOTO</Text>
           </TouchableHighlight>
         </View>
 
