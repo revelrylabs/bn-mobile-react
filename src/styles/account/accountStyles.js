@@ -35,7 +35,7 @@ export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 28
-export const sectionHeaderFontSize = 18
+export const sectionHeaderFontSize = 24
 export const bodyFontSize = 16
 export const bodyFontSizeSmall = 14
 export const iconFontSize = 18
@@ -67,10 +67,6 @@ const AccountStyles = {
     color: whiteTransparent,
     fontSize: bodyFontSizeSmall,
   },
-  avatarContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
   avatarPlaceholderContainer: {
     backgroundColor: sectionHeaderColor,
     borderColor: white,
@@ -84,6 +80,34 @@ const AccountStyles = {
   avatarIcon: {
     color: white,
     fontSize: avatarIconFontSize,
+  },
+  accountHeaderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: globalPaddingSmall,
+  },
+  accountHeader: {
+    color: textColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: sectionHeaderFontSize,
+  },
+  emailWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  emailIcon: {
+    color: sectionHeaderColor,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingTiny,
+  },
+  accountEmail: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSizeSmall,
+  },
+  qrCodeSmall: {
+    height: 45,
+    width: 45,
   },
 }
 

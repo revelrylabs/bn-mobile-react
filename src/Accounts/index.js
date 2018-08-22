@@ -31,6 +31,20 @@ export default function Account() {
         <View style={accountStyles.avatarPlaceholderContainer}>
           <Icon style={accountStyles.avatarIcon} name="person-add" />
         </View>
+
+        <View style={accountStyles.accountHeaderContainer}>
+          <View>
+            <Text style={accountStyles.accountHeader}>Kook McDropin</Text>
+            <View style={accountStyles.emailWrapper}>
+              <Icon style={accountStyles.emailIcon} name="mail" />
+              <Text style={accountStyles.accountEmail}>kookmcdropz@gmail.com</Text>
+            </View>
+          </View>
+          <Image
+            style={accountStyles.qrCodeSmall}
+            source={require('../../assets/qr-code-small.png')}
+          />
+        </View>
       </View>
 
     </ScrollView>
