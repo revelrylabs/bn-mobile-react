@@ -66,6 +66,19 @@ const AccountStyles = {
     color: whiteTransparent,
     fontSize: bodyFontSizeSmall,
   },
+  avatarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  avatarPlaceholderContainer: {
+    backgroundColor: sectionHeaderColor,
+    borderColor: white,
+    borderWidth: 1,
+    borderRadius: 100/2,
+    height: 55,
+    padding: globalPaddingSmall,
+    width: 55,
+  },
 }
 
 function createStyles(overrides = {}) {

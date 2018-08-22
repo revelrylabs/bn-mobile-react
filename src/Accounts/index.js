@@ -21,10 +21,13 @@ export default function Account() {
         />
 
         <View style={accountStyles.accountPhotoContainer}>
-
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
             <Text style={accountStyles.accountPhotoText}>+ TAP TO ADD A COVER PHOTO</Text>
           </TouchableHighlight>
+        </View>
+
+        <View style={accountStyles.avatarPlaceholderContainer}>
+          <Icon style={styles.iconLinkCircle} name="person-add" />
         </View>
 
       </View>
