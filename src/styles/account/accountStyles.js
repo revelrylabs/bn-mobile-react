@@ -39,6 +39,7 @@ export const sectionHeaderFontSize = 18
 export const bodyFontSize = 16
 export const bodyFontSizeSmall = 14
 export const iconFontSize = 18
+export const avatarIconFontSize = 28
 export const iconLargeFontSize = 56
 
 const AccountStyles = {
@@ -76,8 +77,13 @@ const AccountStyles = {
     borderWidth: 1,
     borderRadius: 100/2,
     height: 55,
+    marginTop: -50,
     padding: globalPaddingSmall,
     width: 55,
+  },
+  avatarIcon: {
+    color: white,
+    fontSize: avatarIconFontSize,
   },
 }
 
