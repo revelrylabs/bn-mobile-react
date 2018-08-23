@@ -65,7 +65,7 @@ const Ticket = ({ticket, navigate}) => {
                 </View>
               </View>
               <View>
-                <Text style={slideshowStyles.header}>{ticket.name}</Text>
+                <Text style={ticketStyles.header}>{ticket.name}</Text>
                 <Text style={ticketShowStyles.details}>{ticket.date} • {ticket.starts}  •  {ticket.venue}</Text>
                 <View style={styles.iconLinkContainer}>
                   <Text style={ticketShowStyles.iconLinkText}>GET DIRECTIONS</Text>
@@ -104,8 +104,8 @@ const Ticket = ({ticket, navigate}) => {
           <Text style={ticketShowStyles.bottomNavLinkText}>ADD TO WALLET</Text>
         </View>
         <View style={ticketShowStyles.bottomNavLinkContainer}>
-          <Icon style={ticketShowStyles.bottomNavIcon} name="launch" />
           <Text style={ticketShowStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
+          <Icon style={ticketShowStyles.bottomNavIcon} name="launch" />
         </View>
       </View>
     </View>
@@ -177,12 +177,12 @@ export default class EventsTicket extends Component {
             <Pagination
               dotsLength={ticketData.length}
               activeDotIndex={activeSlide}
-              // containerStyle={styles.paginationContainer}
+              containerStyle={styles.paginationContainer}
               dotColor={'rgba(255, 255, 255, 0.92)'}
-              // dotStyle={styles.paginationDot}
-              // inactiveDotColor={colors.black}
+              dotStyle={styles.paginationDot}
+              inactiveDotColor={'rgba(255, 255, 255, 0.3)'}
               inactiveDotOpacity={0.4}
-              inactiveDotScale={0.6}
+              inactiveDotScale={1}
               carouselRef={this._ticketSlider}
               tappableDots={!!this._ticketSlider}
             />

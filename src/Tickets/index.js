@@ -82,7 +82,7 @@ const Ticket = ({navigate, ticket}) => (
             </View>
           </View>
           <View>
-            <Text style={slideshowStyles.header}>{ticket.name}</Text>
+            <Text style={ticketStyles.header}>{ticket.name}</Text>
             <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
           </View>
         </View>

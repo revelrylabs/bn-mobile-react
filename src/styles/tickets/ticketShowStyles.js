@@ -82,7 +82,8 @@ const TicketShowStyles = {
   detailsContainerBottom: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    padding: globalPaddingSmall + globalPaddingTiny,
+    paddingHorizontal: globalPaddingSmall + globalPaddingTiny,
+    paddingVertical: globalPaddingSmall,
   },
   avatarContainer: {
     flexDirection: 'row',
@@ -99,20 +100,20 @@ const TicketShowStyles = {
   iconLink: {
     backgroundColor: 'transparent',
     color: whiteTransparent,
-    fontSize: iconFontSize,
+    fontSize: bodyFontSize,
     paddingRight: globalPaddingTiny,
   },
   iconLinkText: {
     color: whiteTransparent,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: bodyFontSizeSmall,
     paddingRight: globalPaddingTiny,
   },
   qrCodeContainer: {
     backgroundColor: containerDarkColor,
     flexDirection: 'row',
     justifyContent: 'center',
-    padding: globalPaddingSmall,
+    padding: globalPadding,
     width: fullWidth - 43,
   },
   qrCode: {
@@ -128,6 +129,7 @@ const TicketShowStyles = {
     width: fullWidth - 43,
   },
   bottomNavLinkContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
     paddingBottom: globalPaddingSmall + globalPaddingTiny,
@@ -136,11 +138,11 @@ const TicketShowStyles = {
   bottomNavIcon: {
     color: primaryColor,
     fontSize: iconFontSize,
-    paddingRight: globalPaddingTiny,
+    paddingHorizontal: globalPaddingTiny,
   },
   bottomNavLinkText: {
     color: sectionHeaderColor,
-    fontFamily: globalFontSemiBold,
+    fontFamily: globalFontMedium,
   },
 }
 

@@ -313,6 +313,9 @@ const SharedStyles = {
     borderStyle: 'solid',
     borderRightWidth: 1,
   },
+  paginationContainer: {
+    paddingTop: globalPadding,
+  }
 }
 
 function createStyles(overrides = {}) {
