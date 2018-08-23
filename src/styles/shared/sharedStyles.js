@@ -313,6 +313,14 @@ const SharedStyles = {
     borderStyle: 'solid',
     borderRightWidth: 1,
   },
+  slider: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  sliderContentContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   paginationContainer: {
     paddingTop: globalPadding,
   }

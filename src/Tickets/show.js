@@ -150,43 +150,43 @@ export default class EventsTicket extends Component {
               source={require('../../assets/modal-bkgd.jpg')}
             />
 
-            <View style={ticketShowStyles.closeModalContainer}>
-              <Icon
-                style={styles.iconLinkCircle}
-                name="close"
-                onPress={() => {
-                  navigation.goBack()
+            <View>
+              <View style={ticketShowStyles.closeModalContainer}>
+                <Icon
+                  style={styles.iconLinkCircle}
+                  name="close"
+                  onPress={() => {
+                    navigation.goBack()
+                  }}
+                />
+                <Text style={ticketShowStyles.closeModalHeader}>Ticket {activeSlide + 1} of {ticketData.length}</Text>
+                <Text>&nbsp;</Text>
+              </View>
+              <Carousel
+                ref={(ref) => {
+                  this._ticketSlider = ref
                 }}
+                data={ticketData}
+                renderItem={this._renderItem}
+                sliderWidth={fullWidth}
+                itemWidth={itemWidth}
+                // containerCustomStyle={styles.slider}
+                // contentContainerCustomStyle={styles.sliderContentContainer}
+                onSnapToItem={(index) => this.setState({activeSlide: index})}
               />
-              <Text style={ticketShowStyles.closeModalHeader}>Ticket {activeSlide + 1} of {ticketData.length}</Text>
-              <Text>&nbsp;</Text>
+              <Pagination
+                dotsLength={ticketData.length}
+                activeDotIndex={activeSlide}
+                containerStyle={styles.paginationContainer}
+                dotColor={'rgba(255, 255, 255, 0.92)'}
+                dotStyle={styles.paginationDot}
+                inactiveDotColor={'rgba(255, 255, 255, 0.3)'}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={1}
+                carouselRef={this._ticketSlider}
+                tappableDots={!!this._ticketSlider}
+              />
             </View>
-
-            <Carousel
-              ref={(ref) => {
-                this._ticketSlider = ref
-              }}
-              data={ticketData}
-              renderItem={this._renderItem}
-              sliderWidth={fullWidth}
-              itemWidth={itemWidth}
-              // containerCustomStyle={styles.slider}
-              // contentContainerCustomStyle={styles.sliderContentContainer}
-              onSnapToItem={(index) => this.setState({activeSlide: index})}
-            />
-            <Pagination
-              dotsLength={ticketData.length}
-              activeDotIndex={activeSlide}
-              containerStyle={styles.paginationContainer}
-              dotColor={'rgba(255, 255, 255, 0.92)'}
-              dotStyle={styles.paginationDot}
-              inactiveDotColor={'rgba(255, 255, 255, 0.3)'}
-              inactiveDotOpacity={0.4}
-              inactiveDotScale={1}
-              carouselRef={this._ticketSlider}
-              tappableDots={!!this._ticketSlider}
-            />
-
 
           </View>
         </ScrollView>

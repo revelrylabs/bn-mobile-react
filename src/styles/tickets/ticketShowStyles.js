@@ -56,6 +56,7 @@ export const closeModalHeaderSize = 21
 
 const TicketShowStyles = {
   modalContainer: {
+    height: fullHeight,
     paddingHorizontal: globalPadding,
   },
   modalBkgdImage: {
@@ -73,6 +74,12 @@ const TicketShowStyles = {
     fontFamily: globalFontMedium,
     fontSize: closeModalHeaderSize,
   },
+  // carouselContainer: {
+  //   alignItems: 'center',
+  //   flexDirection: 'column',
+  //   justifyContent: 'center',
+  //   height: fullHeight,
+  // },
   details: {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
