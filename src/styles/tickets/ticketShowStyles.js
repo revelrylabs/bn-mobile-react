@@ -8,7 +8,7 @@ function wp (percentage) {
   return Math.round(value);
 }
 
-const slideWidth = wp(75);
+const slideWidth = wp(100);
 const itemHorizontalMargin = wp(2);
 
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
@@ -112,22 +112,24 @@ const TicketShowStyles = {
     backgroundColor: containerDarkColor,
     flexDirection: 'row',
     justifyContent: 'center',
-    padding: globalPadding,
+    padding: globalPaddingSmall,
+    width: fullWidth - 43,
   },
   qrCode: {
-    height: 250,
-    width: 250,
+    height: 200,
+    width: 200,
   },
   bottomNav: {
     backgroundColor: white,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    width: fullWidth - 43,
   },
   bottomNavLinkContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    paddingBottom: globalPaddingSmall + globalPaddingTiny,
     padding: globalPadding,
-    width: 200,
   },
   bottomNavIcon: {
     color: primaryColor,

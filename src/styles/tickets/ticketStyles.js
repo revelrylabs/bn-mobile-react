@@ -55,6 +55,7 @@ const TicketStyles = {
   ticketContainerBottom: {
     backgroundColor: white,
     marginTop: -10,
+    width: fullWidth - 43,
   },
   detailsContainerBottom: {
     flexDirection: 'row',
