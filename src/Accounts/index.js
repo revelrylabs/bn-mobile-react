@@ -11,7 +11,9 @@ const slideshowStyles = SlideShowStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 
-export default function Account() {
+export default function Account(props) {
+  const { navigation: { navigate } } = props
+
   return (
     <ScrollView>
 
@@ -51,39 +53,48 @@ export default function Account() {
 
         <Text style={accountStyles.sectionHeader}>Account Details</Text>
 
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
-            <Icon style={accountStyles.accountIcon} name="account-circle" />
-            <Text style={accountStyles.accountHeader}>Account</Text>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+          <View style={accountStyles.accountRow}>
+            <View style={accountStyles.accountRowWrapper}>
+              <Icon style={accountStyles.accountIcon} name="account-circle" />
+              <Text style={accountStyles.accountHeader}>Account</Text>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
-          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-        </View>
+        </TouchableHighlight>
 
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
-            <Icon style={accountStyles.accountIcon} name="notifications" />
-            <Text style={accountStyles.accountHeader}>Notification Preferences</Text>
-          </View>
-          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-        </View>
 
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
-            <Icon style={accountStyles.accountIcon} name="credit-card" />
-            <Text style={accountStyles.accountHeader}>Billing Information</Text>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Notifications')}>
+          <View style={accountStyles.accountRow}>
+            <View style={accountStyles.accountRowWrapper}>
+              <Icon style={accountStyles.accountIcon} name="notifications" />
+              <Text style={accountStyles.accountHeader}>Notification Preferences</Text>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
-          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-        </View>
+        </TouchableHighlight>
 
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
-            <Icon style={accountStyles.accountIcon} name="assignment" />
-            <Text style={accountStyles.accountHeader}>Order History</Text>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Billing')}>
+          <View style={accountStyles.accountRow}>
+            <View style={accountStyles.accountRowWrapper}>
+              <Icon style={accountStyles.accountIcon} name="credit-card" />
+              <Text style={accountStyles.accountHeader}>Billing Information</Text>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
-          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-        </View>
+        </TouchableHighlight>
+    
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('OrderHistory')}>
+          <View style={accountStyles.accountRow}>
+            <View style={accountStyles.accountRowWrapper}>
+              <Icon style={accountStyles.accountIcon} name="assignment" />
+              <Text style={accountStyles.accountHeader}>Order History</Text>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+          </View>
+        </TouchableHighlight>
+
       </View>
-
     </ScrollView>
   );
 }
