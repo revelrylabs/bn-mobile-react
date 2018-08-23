@@ -83,7 +83,7 @@ export default function Account(props) {
             <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
         </TouchableHighlight>
-    
+
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('OrderHistory')}>
           <View style={accountStyles.accountRow}>
             <View style={accountStyles.accountRowWrapper}>
