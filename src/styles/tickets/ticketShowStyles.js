@@ -1,6 +1,17 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
-const fullWidth = Dimensions.get('window').width
+export const fullWidth = Dimensions.get('window').width
+
+function wp (percentage) {
+  const value = (percentage * fullWidth) / 100;
+
+  return Math.round(value);
+}
+
+const slideWidth = wp(75);
+const itemHorizontalMargin = wp(2);
+
+export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export const primaryColor = '#FF20B1'
 export const secondaryColor = '#707CED'
@@ -135,4 +146,6 @@ function createStyles(overrides = {}) {
 
 export default {
   createStyles,
+  fullWidth,
+  itemWidth,
 }
