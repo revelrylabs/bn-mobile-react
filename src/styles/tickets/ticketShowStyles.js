@@ -121,6 +121,8 @@ const TicketShowStyles = {
   },
   bottomNav: {
     backgroundColor: white,
+    borderBottomRightRadius: 20/2,
+    borderBottomLeftRadius: 20/2,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: fullWidth - 43,
