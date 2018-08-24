@@ -9,7 +9,8 @@
       "bundleIdentifier": "com.revelrylabs.bigneon"
     },
     "android": {
-      "package": "com.revelrylabs.bigneon"
+      "package": "com.revelrylabs.bigneon",
+      "versionCode": 2
     }
   }
 }
