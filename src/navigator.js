@@ -32,9 +32,6 @@ const AccountsStack =  createStackNavigator({
   ...AccountRoutes,
 }, {
   initialRouteName: 'Account',
-  // navigationOptions: {
-  //   header: null
-  // },
 })
 
 const navigationOptions = {
