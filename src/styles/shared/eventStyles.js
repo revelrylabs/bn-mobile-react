@@ -68,9 +68,9 @@ const EventStyles = {
     fontSize: iconFontSize,
   },
   eventImage: {
-    width: fullWidth - 43,
     height: 180,
     position: 'absolute',
+    width: fullWidth - 43,
   },
   header: {
     fontFamily: globalFontSemiBold,

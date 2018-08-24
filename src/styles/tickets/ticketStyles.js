@@ -37,7 +37,7 @@ export const globalFontItalic = 'tt_commons_italic'
 export const headerFontSize = 28
 export const sectionHeaderFontSize = 18
 export const bodyFontSize = 16
-export const bodyFontSizeSmall = 14
+export const bodyFontSizeSmall = 13
 export const iconFontSize = 18
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
@@ -52,9 +52,16 @@ const TicketStyles = {
     justifyContent: 'space-between',
     height: 145,
   },
+  header: {
+    fontFamily: globalFontRegular,
+    fontSize: headerFontSize,
+    color: white,
+    marginBottom: globalPaddingTiny,
+  },
   ticketContainerBottom: {
     backgroundColor: white,
     marginTop: -10,
+    width: fullWidth - 43,
   },
   detailsContainerBottom: {
     flexDirection: 'row',
@@ -73,6 +80,7 @@ const TicketStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSizeSmall,
+    letterSpacing: 0.5,
   },
   detailsBottomText: {
     fontSize: bodyFontSize,
