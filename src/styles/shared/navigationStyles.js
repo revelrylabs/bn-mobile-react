@@ -53,15 +53,20 @@ const NavigationStyles = {
   },
   navigationContainer: {
     backgroundColor: white,
-    borderBottomColor: white,
+    borderBottomColor: borderColor,
   },
   headerTitle: {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
   },
-  headerBackTitle: {
+  headerLeftWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerLeftTitle: {
     color: primaryColor,
-    fontFamily: globalFontSemiBold,
+    fontFamily: globalFontRegular,
     fontSize: headerFontSize,
   },
   backButton: {
