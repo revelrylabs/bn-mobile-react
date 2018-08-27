@@ -1,16 +1,32 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import {Text, View, TextInput, ScrollView, TouchableHighlight} from 'react-native';
+import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
+import TicketShowStyles from '../styles/tickets/ticketShowStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
+const ticketShowStyles = TicketShowStyles.createStyles()
 
 export default function AccountDetails() {
   return (
     <ScrollView>
       <View style={accountStyles.containerDark}>
+
+        <View style={accountStyles.accountRow}>
+          <View style={accountStyles.accountRowWrapper}>
+            <View style={ticketShowStyles.avatarContainer}>
+              <Image
+                style={ticketShowStyles.avatar}
+                source={require('../../assets/avatar-female.png')}
+              />
+            </View>
+            <TouchableHighlight style={accountStyles.accountInputHeader}>
+              <Text style={styles.buttonSecondaryText}>Change Profile Photo</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
 
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
