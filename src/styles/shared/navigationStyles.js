@@ -32,10 +32,11 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 38
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
+export const headerFontSize = 16
 export const iconFontSize = 18
+export const iconLargeFontSize = 38
 
 const NavigationStyles = {
   tabBarIconAccount: {
@@ -49,6 +50,23 @@ const NavigationStyles = {
   tabBarIconExplore: {
     height: 22,
     width: 25,
+  },
+  navigationContainer: {
+    backgroundColor: white,
+    borderBottomColor: white,
+  },
+  headerTitle: {
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize,
+  },
+  headerBackTitle: {
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize,
+  },
+  backButton: {
+    color: primaryColor,
+    fontSize: iconLargeFontSize,
   },
 }
 
