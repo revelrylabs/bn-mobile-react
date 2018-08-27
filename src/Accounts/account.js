@@ -11,7 +11,7 @@ export default function AccountDetails() {
   return (
     <ScrollView>
       <View style={accountStyles.containerDark}>
-      
+
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
             <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
@@ -32,7 +32,7 @@ export default function AccountDetails() {
             />
           </View>
         </View>
-        <View style={accountStyles.accountRow}>
+        <View style={[accountStyles.accountRow, styles.marginTop]}>
           <View style={accountStyles.accountRowWrapper}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
@@ -61,6 +61,13 @@ export default function AccountDetails() {
               placeholderTextColor='black'
             />
           </View>
+        </View>
+        <View style={[styles.buttonContainer, styles.marginTop]}>
+          <TouchableHighlight
+            style={styles.buttonSecondary}
+          >
+            <Text style={styles.buttonSecondaryText}>Sign Out</Text>
+          </TouchableHighlight>
         </View>
 
       </View>

@@ -147,15 +147,21 @@ const SharedStyles = {
     justifyContent: 'center',
   },
   buttonSecondary: {
-    backgroundColor: secondaryColor,
+    backgroundColor: white,
     flex: 1,
-    height: 60,
+    height: 50,
     justifyContent: 'center',
   },
   buttonText: {
     color: white,
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
+    textAlign: 'center',
+  },
+  buttonSecondaryText: {
+    color: primaryColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
     textAlign: 'center',
   },
   header: {
@@ -308,6 +314,9 @@ const SharedStyles = {
   },
   marginTopSmall: {
     marginTop: globalMarginSmall,
+  },
+  marginTop: {
+    marginTop: globalMargin,
   },
   borderRight: {
     borderRightColor: borderColor,
