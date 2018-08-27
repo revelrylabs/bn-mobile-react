@@ -139,6 +139,8 @@ const AccountStyles = {
     color: textColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   accountInputHeaderDisabled: {
     color: disabledHeaderColor,

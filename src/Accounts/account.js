@@ -16,7 +16,7 @@ export default function AccountDetails() {
 
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
-            <View style={ticketShowStyles.avatarContainer}>
+            <View style={[ticketShowStyles.avatarContainer, accountStyles.accountInputHeaderDisabled]}>
               <Image
                 style={ticketShowStyles.avatar}
                 source={require('../../assets/avatar-female.png')}
