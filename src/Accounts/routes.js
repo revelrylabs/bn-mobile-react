@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableHighlight } from 'react-native';
 import Account from './index'
 import AccountDetails from './account'
 import Notifications from './notifications'
@@ -22,15 +22,12 @@ const ROUTES = {
     navigationOptions: {
       title: 'Account',
       headerLeft: (
-        <View style={navigationStyles.headerLeftWrapper}>
-          <Icon style={navigationStyles.backButton} name="keyboard-arrow-left" />
-          <Text
-            style={navigationStyles.headerLeftTitle}
-            onPress={() => navigation.goBack()}
-          >
-            Settings
-          </Text>
-        </View>
+        <TouchableHighlight onPress={() => navigate('Account')}>
+          <View style={navigationStyles.headerLeftWrapper}>
+            <Icon style={navigationStyles.backButton} name="keyboard-arrow-left" />
+            <Text style={navigationStyles.headerLeftTitle}>Settings</Text>
+          </View>
+        </TouchableHighlight>
       ),
       headerStyle: navigationStyles.navigationContainer,
       headerTitleStyle: navigationStyles.headerTitle,

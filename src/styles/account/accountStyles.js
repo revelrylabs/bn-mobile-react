@@ -4,6 +4,7 @@ import {
   white,
   borderColor,
   containerDarkColor,
+  disabledHeaderColor,
   globalFontRegular,
   globalFontMedium,
   globalPaddingLarge,
@@ -132,7 +133,13 @@ const AccountStyles = {
   accountHeader: {
     color: textColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: iconFontSize,
+  },
+  accountHeaderDisabled: {
+    color: disabledHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
+    paddingRight: globalPaddingLarge,
   },
   accountArrow: {
     color: sectionHeaderColor,
