@@ -11,12 +11,12 @@ export default function AccountDetails() {
   return (
     <ScrollView>
       <View style={accountStyles.containerDark}>
-
+      
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
-            <Text style={accountStyles.accountHeaderDisabled}>First Name</Text>
+            <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
             <TextInput
-              style={accountStyles.accountHeader}
+              style={accountStyles.accountInputHeader}
               placeholder="Kook"
               placeholderTextColor='black'
             />
@@ -24,9 +24,9 @@ export default function AccountDetails() {
         </View>
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
-            <Text style={accountStyles.accountHeaderDisabled}>Last Name</Text>
+            <Text style={accountStyles.accountInputHeaderDisabled}>Last Name</Text>
             <TextInput
-              style={accountStyles.accountHeader}
+              style={accountStyles.accountInputHeader}
               placeholder="McDropin"
               placeholderTextColor='black'
             />
@@ -34,9 +34,9 @@ export default function AccountDetails() {
         </View>
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
-            <Text style={accountStyles.accountHeaderDisabled}>Mobile</Text>
+            <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
-              style={accountStyles.accountHeader}
+              style={accountStyles.accountInputHeader}
               placeholder="504-000-0000"
               placeholderTextColor='black'
             />
@@ -44,9 +44,9 @@ export default function AccountDetails() {
         </View>
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
-            <Text style={accountStyles.accountHeaderDisabled}>Email</Text>
+            <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
             <TextInput
-              style={accountStyles.accountHeader}
+              style={accountStyles.accountInputHeader}
               placeholder="kookmcdropz@gmail.com"
               placeholderTextColor='black'
             />
@@ -54,9 +54,9 @@ export default function AccountDetails() {
         </View>
         <View style={accountStyles.accountRow}>
           <View style={accountStyles.accountRowWrapper}>
-            <Text style={accountStyles.accountHeaderDisabled}>Password</Text>
+            <Text style={accountStyles.accountInputHeaderDisabled}>Password</Text>
             <TextInput
-              style={accountStyles.accountHeader}
+              style={accountStyles.accountInputHeader}
               placeholder="password"
               placeholderTextColor='black'
             />

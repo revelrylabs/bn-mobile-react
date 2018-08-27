@@ -8,6 +8,7 @@ import {
   globalFontRegular,
   globalFontMedium,
   globalPaddingLarge,
+  globalPaddingMedium,
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
@@ -101,13 +102,12 @@ const AccountStyles = {
     fontSize: bodyFontSize,
     marginBottom: globalMarginSmall,
     paddingHorizontal: globalPadding,
-    paddingTop: globalPaddingLarge,
   },
   containerDark: {
     backgroundColor: containerDarkColor,
     flexDirection: 'column',
     height: fullHeight,
-    paddingBottom: globalPaddingLarge,
+    paddingVertical: globalPaddingMedium,
     width: fullWidth,
   },
   accountRow: {
@@ -135,11 +135,16 @@ const AccountStyles = {
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
   },
-  accountHeaderDisabled: {
+  accountInputHeader: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
+  },
+  accountInputHeaderDisabled: {
     color: disabledHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
-    paddingRight: globalPaddingLarge,
+    width: 120,
   },
   accountArrow: {
     color: sectionHeaderColor,
