@@ -136,9 +136,6 @@ const AccountStyles = {
     fontSize: iconFontSize,
   },
   accountInputHeader: {
-    color: textColor,
-    fontFamily: globalFontRegular,
-    fontSize: iconFontSize,
     flexDirection: 'column',
     justifyContent: 'center',
   },
@@ -151,6 +148,9 @@ const AccountStyles = {
   accountArrow: {
     color: sectionHeaderColor,
     fontSize: avatarIconFontSize,
+  },
+  avatarContainer: {
+    width: 120,
   },
 }
 
