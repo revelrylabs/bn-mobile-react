@@ -170,8 +170,7 @@ export default class EventsTicket extends Component {
                 renderItem={this._renderItem}
                 sliderWidth={fullWidth}
                 itemWidth={itemWidth}
-                // containerCustomStyle={styles.slider}
-                // contentContainerCustomStyle={styles.sliderContentContainer}
+                slideStyle={ticketShowStyles.slideWrapper}
                 onSnapToItem={(index) => this.setState({activeSlide: index})}
               />
               <Pagination
