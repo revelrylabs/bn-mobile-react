@@ -1,12 +1,12 @@
 import React, {Component, createElement} from 'react'
 import {loadFonts} from './assets/fonts'
+import {loadImages} from './assets'
 import {View} from 'react-native';
 import {Video, Asset, AppLoading} from 'expo';
 import navigator from './src/navigator'
 import SharedStyles from './src/styles/shared/sharedStyles'
 
 const styles = SharedStyles.createStyles()
-
 
 export default class App extends Component {
   state = {
@@ -26,6 +26,7 @@ export default class App extends Component {
       this.setState({isSplashDone: true});
     }, 3000);
     await loadFonts()
+    await loadImages()
     this.setState({isAppReady: true});
   }
 
