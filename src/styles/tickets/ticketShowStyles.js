@@ -56,10 +56,13 @@ export const closeModalHeaderSize = 21
 
 const TicketShowStyles = {
   modalContainer: {
+    flexDirection: 'column',
     height: fullHeight,
+    justifyContent: 'center',
     paddingHorizontal: globalPadding,
   },
   modalBkgdImage: {
+    height: fullHeight,
     width: fullWidth,
     position: 'absolute',
   },
@@ -74,12 +77,10 @@ const TicketShowStyles = {
     fontFamily: globalFontMedium,
     fontSize: closeModalHeaderSize,
   },
-  // carouselContainer: {
-  //   alignItems: 'center',
-  //   flexDirection: 'column',
-  //   justifyContent: 'center',
-  //   height: fullHeight,
-  // },
+  slideWrapper: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
   details: {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
