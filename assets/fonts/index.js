@@ -1,5 +1,6 @@
-import { Font } from 'expo'
+import {Font} from 'expo'
 
+/* eslint-disable camelcase */
 const FONTS = {
   tt_commons_black: require('./tt_commons_black.ttf'),
   tt_commons_black_italic: require('./tt_commons_black_italic.ttf'),
