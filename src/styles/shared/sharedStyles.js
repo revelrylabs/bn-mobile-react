@@ -16,6 +16,7 @@ export const borderColor = '#DCDCDC'
 export const containerDarkColor = '#F5F6F7'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
+export const disabledHeaderColor = 'rgba(64, 64, 64, 0.5)'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -146,15 +147,21 @@ const SharedStyles = {
     justifyContent: 'center',
   },
   buttonSecondary: {
-    backgroundColor: secondaryColor,
+    backgroundColor: white,
     flex: 1,
-    height: 60,
+    height: 50,
     justifyContent: 'center',
   },
   buttonText: {
     color: white,
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
+    textAlign: 'center',
+  },
+  buttonSecondaryText: {
+    color: primaryColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
     textAlign: 'center',
   },
   header: {
@@ -307,6 +314,9 @@ const SharedStyles = {
   },
   marginTopSmall: {
     marginTop: globalMarginSmall,
+  },
+  marginTop: {
+    marginTop: globalMargin,
   },
   borderRight: {
     borderRightColor: borderColor,
