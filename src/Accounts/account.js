@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -9,7 +8,9 @@ const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketShowStyles = TicketShowStyles.createStyles()
 
-export default function AccountDetails() {
+export default function AccountDetails(props) {
+  const {navigation: {navigate}} = props
+
   return (
     <ScrollView>
       <View style={accountStyles.containerDark}>
@@ -23,7 +24,7 @@ export default function AccountDetails() {
               />
             </View>
             <TouchableHighlight style={accountStyles.accountInputHeader}>
-              <Text style={styles.buttonSecondaryText}>Change Profile Photo</Text>
+              <Text style={styles.buttonSecondaryText} onPress={() => navigate('ChangePhoto')}>Change Profile Photo</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -82,7 +83,7 @@ export default function AccountDetails() {
           <TouchableHighlight
             style={styles.buttonSecondary}
           >
-            <Text style={styles.buttonSecondaryText}>Sign Out</Text>
+            <Text style={styles.buttonSecondaryText} onPress={() => navigate('SignedOut')}>Sign Out</Text>
           </TouchableHighlight>
         </View>
 
