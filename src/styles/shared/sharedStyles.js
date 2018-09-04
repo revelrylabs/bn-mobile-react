@@ -344,11 +344,24 @@ const SharedStyles = {
     paddingBottom: globalPaddingTiny / 2,
   },
 
+  // FLEX HELPER STYLES
+  flexRowFlexStart: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  flexRowSpaceBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  flexColumnCenter: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+
   // ROWS COLS
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: globalPaddingSmall,
   },
   cols2: {
     width: fullWidth / 2 - globalPaddingLarge,

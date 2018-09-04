@@ -121,10 +121,6 @@ const AccountStyles = {
     paddingVertical: globalPaddingSmall,
     width: fullWidth,
   },
-  accountRowWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
   accountIcon: {
     color: sectionHeaderColor,
     fontSize: bodyFontSize,
@@ -134,10 +130,6 @@ const AccountStyles = {
     color: textColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
-  },
-  accountInputHeader: {
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
   accountInputHeaderDisabled: {
     color: disabledHeaderColor,

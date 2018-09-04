@@ -55,7 +55,7 @@ export default function Account(props) {
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={accountStyles.accountRow}>
-            <View style={accountStyles.accountRowWrapper}>
+            <View style={styles.flexRowFlexStart}>
               <Icon style={accountStyles.accountIcon} name="account-circle" />
               <Text style={accountStyles.accountHeader}>Account</Text>
             </View>
@@ -66,7 +66,7 @@ export default function Account(props) {
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Notifications')}>
           <View style={accountStyles.accountRow}>
-            <View style={accountStyles.accountRowWrapper}>
+            <View style={styles.flexRowFlexStart}>
               <Icon style={accountStyles.accountIcon} name="notifications" />
               <Text style={accountStyles.accountHeader}>Notification Preferences</Text>
             </View>
@@ -76,7 +76,7 @@ export default function Account(props) {
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Billing')}>
           <View style={accountStyles.accountRow}>
-            <View style={accountStyles.accountRowWrapper}>
+            <View style={styles.flexRowFlexStart}>
               <Icon style={accountStyles.accountIcon} name="credit-card" />
               <Text style={accountStyles.accountHeader}>Billing Information</Text>
             </View>
@@ -86,7 +86,7 @@ export default function Account(props) {
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('OrderHistory')}>
           <View style={accountStyles.accountRow}>
-            <View style={accountStyles.accountRowWrapper}>
+            <View style={styles.flexRowFlexStart}>
               <Icon style={accountStyles.accountIcon} name="assignment" />
               <Text style={accountStyles.accountHeader}>Order History</Text>
             </View>

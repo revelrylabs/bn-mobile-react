@@ -29,12 +29,27 @@ export const avatarIconFontSize = 28
 export const iconLargeFontSize = 56
 
 const NotificationStyles = {
-  accountBkgdContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
+  notificationHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: globalPadding,
+  },
+  notificationRow: {
     alignItems: 'center',
-    height: 240,
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingSmall,
+    width: fullWidth,
+  },
+  sectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    marginBottom: globalMarginSmall,
   },
 }
 

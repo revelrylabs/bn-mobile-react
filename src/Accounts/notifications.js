@@ -14,23 +14,32 @@ export default function Notifications() {
     <ScrollView>
       <View style={accountStyles.containerDark}>
 
-        <View style={styles.row}>
+        <View style={notificationStyles.notificationHeaderRow}>
           <View style={styles.cols2}>
-            <Text style={accountStyles.sectionHeader}>Notification Type</Text>
+            <Text style={notificationStyles.sectionHeader}>Notification Type</Text>
           </View>
-          <View style={[styles.cols2, accountStyles.accountRowWrapper]}>
-            <Text style={accountStyles.sectionHeader}>Phone</Text>
-            <Text style={accountStyles.sectionHeader}>Email</Text>
+          <View style={styles.flexRowSpaceBetween}>
+            <Text style={notificationStyles.sectionHeader}>Phone</Text>
+            <Text style={notificationStyles.sectionHeader}>Email</Text>
+          </View>
+        </View>
+
+        <View style={notificationStyles.notificationRow}>
+          <View style={styles.cols2}>
+            <Text style={accountStyles.accountHeader}>A friend is interested in an event</Text>
+          </View>
+          <View style={styles.flexRowSpaceBetween}>
+            <Icon style={accountStyles.accountIcon} name="phone-iphone" />
+            <Icon style={accountStyles.accountIcon} name="mail-outline" />
           </View>
         </View>
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={accountStyles.accountRow}>
-            <View style={accountStyles.accountRowWrapper}>
-              <Icon style={accountStyles.accountIcon} name="account-circle" />
-              <Text style={accountStyles.accountHeader}>Account</Text>
+            <View style={styles.flexRowFlexStart}>
+              <Text style={accountStyles.accountHeader}>A friend is interested in an Event</Text>
             </View>
-            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+            <Icon style={accountStyles.accountIcon} name="account-circle" />
           </View>
         </TouchableHighlight>
 
