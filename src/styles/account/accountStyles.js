@@ -1,4 +1,5 @@
 import {
+  primaryColor,
   textColor,
   sectionHeaderColor,
   white,
@@ -123,6 +124,11 @@ const AccountStyles = {
   },
   accountIcon: {
     color: sectionHeaderColor,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingSmall,
+  },
+  accountIconActive: {
+    color: primaryColor,
     fontSize: bodyFontSize,
     paddingRight: globalPaddingSmall,
   },

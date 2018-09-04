@@ -364,13 +364,13 @@ const SharedStyles = {
     justifyContent: 'space-between',
   },
   cols2: {
-    width: fullWidth / 2 - globalPaddingLarge,
+    width: fullWidth / 2,
   },
   cols3: {
-    width: fullWidth / 3 - globalPaddingLarge,
+    width: fullWidth / 3,
   },
   cols4: {
-    width: fullWidth / 4 - globalPaddingLarge,
+    width: fullWidth / 4,
   },
 }
 

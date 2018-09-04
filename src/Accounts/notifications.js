@@ -18,30 +18,21 @@ export default function Notifications() {
           <View style={styles.cols2}>
             <Text style={notificationStyles.sectionHeader}>Notification Type</Text>
           </View>
-          <View style={styles.flexRowSpaceBetween}>
-            <Text style={notificationStyles.sectionHeader}>Phone</Text>
-            <Text style={notificationStyles.sectionHeader}>Email</Text>
-          </View>
+          <Text style={notificationStyles.sectionHeader}>Phone</Text>
+          <Text style={notificationStyles.sectionHeader}>Email</Text>
         </View>
 
         <View style={notificationStyles.notificationRow}>
           <View style={styles.cols2}>
             <Text style={accountStyles.accountHeader}>A friend is interested in an event</Text>
           </View>
-          <View style={styles.flexRowSpaceBetween}>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
             <Icon style={accountStyles.accountIcon} name="phone-iphone" />
-            <Icon style={accountStyles.accountIcon} name="mail-outline" />
-          </View>
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Icon style={accountStyles.accountIconActive} name="mail-outline" />
+          </TouchableHighlight>
         </View>
-
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
-          <View style={accountStyles.accountRow}>
-            <View style={styles.flexRowFlexStart}>
-              <Text style={accountStyles.accountHeader}>A friend is interested in an Event</Text>
-            </View>
-            <Icon style={accountStyles.accountIcon} name="account-circle" />
-          </View>
-        </TouchableHighlight>
 
       </View>
     </ScrollView>
