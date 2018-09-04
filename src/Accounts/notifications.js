@@ -14,7 +14,15 @@ export default function Notifications() {
     <ScrollView>
       <View style={accountStyles.containerDark}>
 
-        <Text style={accountStyles.sectionHeader}>Notification Type</Text>
+        <View style={styles.row}>
+          <View style={styles.cols2}>
+            <Text style={accountStyles.sectionHeader}>Notification Type</Text>
+          </View>
+          <View style={[styles.cols2, accountStyles.accountRowWrapper]}>
+            <Text style={accountStyles.sectionHeader}>Phone</Text>
+            <Text style={accountStyles.sectionHeader}>Email</Text>
+          </View>
+        </View>
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={accountStyles.accountRow}>
