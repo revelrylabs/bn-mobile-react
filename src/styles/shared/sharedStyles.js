@@ -41,6 +41,7 @@ export const iconFontSize = 18
 export const iconCircleFontSize = 26
 
 const SharedStyles = {
+  // CONTAINERS
   container: {
     backgroundColor: white,
     paddingHorizontal: globalPadding,
@@ -88,9 +89,6 @@ const SharedStyles = {
     width: fullWidth - globalPadding,
     flexDirection: 'column',
   },
-  paddingVerticalStandard: {
-    paddingVertical: globalPadding,
-  },
   scrollingContainer: {
     backgroundColor: white,
     paddingHorizontal: globalPaddingSmall,
@@ -104,41 +102,23 @@ const SharedStyles = {
     paddingBottom: globalPadding,
     width: fullWidth,
   },
+  paginationContainer: {
+    paddingTop: globalPadding,
+  },
+  sectionHeaderContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: globalPaddingMedium,
+    paddingVertical: globalPaddingSmall,
+  },
   section: {
     paddingVertical: globalPaddingLarge,
   },
-  activeNavigation: {
-    backgroundColor: secondaryColor,
-  },
-  borderBottom: {
-    flex: 1,
-    flexDirection: 'column',
-    borderBottomColor: borderColor,
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    paddingBottom: globalPaddingMedium,
-    paddingTop: globalPaddingMedium,
-  },
-  row: {
-    paddingVertical: globalPadding,
-  },
-  paddingTopSmall: {
-    paddingTop: globalPaddingSmall,
-  },
-  paddingVerticalSmall: {
-    paddingVertical: globalPaddingSmall,
-  },
-  paddingBottomJumbo: {
-    paddingBottom: globalPaddingJumbo,
-  },
+
+  // BUTTONS
   buttonContainer: {
     flexDirection: 'row',
-  },
-  lineHeight: {
-    paddingBottom: globalPaddingTiny / 2,
-  },
-  halfColumn: {
-    flex: 1 / 2,
   },
   button: {
     backgroundColor: primaryColor,
@@ -164,6 +144,8 @@ const SharedStyles = {
     fontSize: iconFontSize,
     textAlign: 'center',
   },
+
+  // HEADERS
   header: {
     backgroundColor: 'transparent',
     fontFamily: globalFontBold,
@@ -177,30 +159,6 @@ const SharedStyles = {
     fontSize: headerFontSize,
     paddingBottom: globalPadding,
   },
-  subnavContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: globalPadding,
-    paddingVertical: globalPaddingSmall,
-  },
-  subnavHeader: {
-    color: sectionHeaderColor,
-    fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
-  },
-  subnavHeaderActive: {
-    color: textColor,
-    fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
-  },
-  sectionHeaderContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: globalPaddingMedium,
-    paddingVertical: globalPaddingSmall,
-  },
   sectionHeader: {
     backgroundColor: 'transparent',
     color: sectionHeaderColor,
@@ -208,6 +166,8 @@ const SharedStyles = {
     fontSize: sectionHeaderFontSize,
     paddingVertical: globalPaddingSmall,
   },
+
+  // TEXT STYLES
   bodyText: {
     backgroundColor: 'transparent',
     color: textColor,
@@ -238,6 +198,27 @@ const SharedStyles = {
     marginTop: -5,
     paddingBottom: globalPaddingTiny,
   },
+
+  // SUBNAV STYLES
+  subnavContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: globalPadding,
+    paddingVertical: globalPaddingSmall,
+  },
+  subnavHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
+  subnavHeaderActive: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
+
+  // ICONS
   iconLinkContainer: {
     alignItems: 'flex-start',
     flexDirection: 'row',
@@ -274,6 +255,8 @@ const SharedStyles = {
     height: 23,
     marginRight: globalPaddingTiny,
   },
+
+  // PRICE TAG STYLES
   priceTagContainer: {
     backgroundColor: white,
     borderRadius: 5,
@@ -287,6 +270,8 @@ const SharedStyles = {
     letterSpacing: 1,
     textAlign: 'center',
   },
+
+  // AVATAR STYLES
   avatarContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -305,6 +290,8 @@ const SharedStyles = {
     marginLeft: -10,
     width: 30,
   },
+
+  // SPLASH VIDEO STYLES
   splashVideo: {
     position: 'absolute',
     top: 0,
@@ -312,17 +299,8 @@ const SharedStyles = {
     bottom: 0,
     right: 0,
   },
-  marginTopSmall: {
-    marginTop: globalMarginSmall,
-  },
-  marginTop: {
-    marginTop: globalMargin,
-  },
-  borderRight: {
-    borderRightColor: borderColor,
-    borderStyle: 'solid',
-    borderRightWidth: 1,
-  },
+
+  // SLIDER STYLES
   slider: {
     flex: 1,
     flexDirection: 'column',
@@ -331,9 +309,56 @@ const SharedStyles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  paginationContainer: {
-    paddingTop: globalPadding,
-  }
+
+  // HELPERS
+  borderBottom: {
+    flex: 1,
+    flexDirection: 'column',
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    paddingBottom: globalPaddingMedium,
+    paddingTop: globalPaddingMedium,
+  },
+  borderRight: {
+    borderRightColor: borderColor,
+    borderStyle: 'solid',
+    borderRightWidth: 1,
+  },
+  paddingTopSmall: {
+    paddingTop: globalPaddingSmall,
+  },
+  paddingVerticalSmall: {
+    paddingVertical: globalPaddingSmall,
+  },
+  paddingBottomJumbo: {
+    paddingBottom: globalPaddingJumbo,
+  },
+  marginTopSmall: {
+    marginTop: globalMarginSmall,
+  },
+  marginTop: {
+    marginTop: globalMargin,
+  },
+  lineHeight: {
+    paddingBottom: globalPaddingTiny / 2,
+  },
+
+  // ROWS COLS
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: globalPaddingSmall,
+  },
+  cols2: {
+    width: fullWidth / 2 - globalPaddingLarge,
+  },
+  cols3: {
+    width: fullWidth / 3 - globalPaddingLarge,
+  },
+  cols4: {
+    width: fullWidth / 4 - globalPaddingLarge,
+  },
 }
 
 function createStyles(overrides = {}) {
