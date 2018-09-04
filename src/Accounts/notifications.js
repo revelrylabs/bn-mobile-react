@@ -34,6 +34,42 @@ export default function Notifications() {
           </TouchableHighlight>
         </View>
 
+        <View style={notificationStyles.notificationRow}>
+          <View style={styles.cols2}>
+            <Text style={accountStyles.accountHeader}>My dog buys tickets to a show</Text>
+          </View>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Icon style={accountStyles.accountIcon} name="phone-iphone" />
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Icon style={accountStyles.accountIcon} name="mail-outline" />
+          </TouchableHighlight>
+        </View>
+
+        <View style={notificationStyles.notificationRow}>
+          <View style={styles.cols2}>
+            <Text style={accountStyles.accountHeader}>An artist i dislike cancels a show in my area</Text>
+          </View>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Icon style={accountStyles.accountIconActive} name="phone-iphone" />
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Icon style={accountStyles.accountIcon} name="mail-outline" />
+          </TouchableHighlight>
+        </View>
+
+        <View style={notificationStyles.notificationRow}>
+          <View style={styles.cols2}>
+            <Text style={accountStyles.accountHeader}>Someone sends me a ticket</Text>
+          </View>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Icon style={accountStyles.accountIconActive} name="phone-iphone" />
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Icon style={accountStyles.accountIconActive} name="mail-outline" />
+          </TouchableHighlight>
+        </View>
+
       </View>
     </ScrollView>
   );
