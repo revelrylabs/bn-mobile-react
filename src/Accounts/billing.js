@@ -16,12 +16,14 @@ export default function Billing() {
 
         <Text style={accountStyles.sectionHeader}>Credit Cards</Text>
 
-        <View style={accountStyles.accountRow}>
-          <View style={billingStyles.billingRowWrapper}>
-            <Image
-              style={billingStyles.billingImage}
-              source={require('../../assets/icon-visa.png')}
-            />
+        <View style={billingStyles.billingRowWrapper}>
+          <View style={billingStyles.billingRow}>
+            <View style={billingStyles.imageWrapper}>
+              <Image
+                style={billingStyles.billingImageVisa}
+                source={require('../../assets/icon-visa.png')}
+              />
+            </View>
             <TextInput
               style={billingStyles.billingInputHeader}
               placeholder="**** **** **** 2386"
@@ -30,6 +32,45 @@ export default function Billing() {
             <TextInput
               style={billingStyles.billingInputHeader}
               placeholder="12/24"
+              placeholderTextColor='black'
+            />
+          </View>
+        </View>
+
+        <View style={billingStyles.billingRowWrapper}>
+          <View style={billingStyles.billingRow}>
+            <View style={billingStyles.imageWrapper}>
+              <Image
+                style={billingStyles.billingImageMC}
+                source={require('../../assets/icon-mastercard.png')}
+              />
+            </View>
+            <TextInput
+              style={billingStyles.billingInputHeader}
+              placeholder="**** **** **** 2595"
+              placeholderTextColor='black'
+            />
+            <TextInput
+              style={billingStyles.billingInputHeader}
+              placeholder="04/21"
+              placeholderTextColor='black'
+            />
+          </View>
+        </View>
+
+        <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
+
+        <View style={billingStyles.billingRowWrapper}>
+          <View style={billingStyles.billingRow}>
+            <View style={billingStyles.imageWrapper}>
+              <Image
+                style={billingStyles.billingImageVenmo}
+                source={require('../../assets/icon-venmo.png')}
+              />
+            </View>
+            <TextInput
+              style={billingStyles.billingInputHeader}
+              placeholder="kookster9000@hottopic.com"
               placeholderTextColor='black'
             />
           </View>

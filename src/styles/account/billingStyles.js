@@ -30,17 +30,35 @@ export const iconLargeFontSize = 56
 
 const BillingStyles = {
   billingRowWrapper: {
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingSmall,
+    width: fullWidth,
+  },
+  billingRow: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
-  billingImage: {
+  imageWrapper: {
+    width: 100,
+  },
+  billingImageVisa: {
     height: 10,
-    marginRight: globalPaddingLarge,
     width: 30,
   },
+  billingImageMC: {
+    height: 15,
+    width: 25,
+  },
+  billingImageVenmo: {
+    height: 25,
+    width: 25,
+  },
   billingInputHeader: {
-    paddingRight: globalPadding,
+    // paddingRight: globalPadding,
   },
 }
 
