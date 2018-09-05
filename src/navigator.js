@@ -56,7 +56,7 @@ const tabBarOptions = {
       borderWidth: 0,
       borderTopColor: '#DCDCDC',
       height: 50,
-      paddingVertical: 6,
+      paddingVertical: 3,
     },
   }
 }
