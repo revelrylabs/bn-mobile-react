@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, TextInput, ScrollView} from 'react-native';
+import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -74,6 +74,17 @@ export default function Billing() {
               placeholderTextColor='black'
             />
           </View>
+        </View>
+
+        <View style={[styles.buttonContainer, styles.marginTop]}>
+          <TouchableHighlight
+            style={styles.buttonSecondary}
+          >
+            <View style={styles.buttonIconContainer}>
+              <Icon style={billingStyles.billingButtonIcon} name="credit-card" />
+              <Text style={styles.buttonSecondaryText}>Add Payment Method</Text>
+            </View>
+          </TouchableHighlight>
         </View>
 
       </View>

@@ -1,24 +1,13 @@
 import {
-  textColor,
-  sectionHeaderColor,
+  primaryColor,
   white,
   borderColor,
-  containerDarkColor,
-  disabledHeaderColor,
-  globalFontRegular,
-  globalFontMedium,
-  globalPaddingLarge,
-  globalPaddingMedium,
   globalPadding,
   globalPaddingSmall,
-  globalPaddingTiny,
-  globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
-
-export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const headerFontSize = 28
 export const sectionHeaderFontSize = 24
@@ -58,7 +47,12 @@ const BillingStyles = {
     width: 25,
   },
   billingInputHeader: {
-    // paddingRight: globalPadding,
+    paddingRight: globalPadding,
+  },
+  billingButtonIcon: {
+    color: primaryColor,
+    fontSize: iconFontSize,
+    paddingRight: globalPaddingSmall,
   },
 }
 
