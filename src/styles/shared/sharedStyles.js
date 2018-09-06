@@ -147,9 +147,15 @@ const SharedStyles = {
     justifyContent: 'center',
   },
   buttonSecondary: {
+    alignItems: 'center',
     backgroundColor: white,
     flex: 1,
+    flexDirection: 'row',
     height: 50,
+    justifyContent: 'center',
+  },
+  buttonIconContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
   },
   buttonText: {
@@ -162,7 +168,6 @@ const SharedStyles = {
     color: primaryColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
-    textAlign: 'center',
   },
   header: {
     backgroundColor: 'transparent',
@@ -317,6 +322,9 @@ const SharedStyles = {
   },
   marginTop: {
     marginTop: globalMargin,
+  },
+  paddingRight: {
+    paddingRight: globalPadding,
   },
   borderRight: {
     borderRightColor: borderColor,
