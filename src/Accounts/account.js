@@ -15,8 +15,8 @@ export default function AccountDetails(props) {
     <ScrollView>
       <View style={accountStyles.containerDark}>
 
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
+        <View style={accountStyles.rowContainer}>
+          <View style={accountStyles.row}>
             <View style={[ticketShowStyles.avatarContainer, accountStyles.avatarContainer]}>
               <Image
                 style={ticketShowStyles.avatar}
@@ -29,8 +29,8 @@ export default function AccountDetails(props) {
           </View>
         </View>
 
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
+        <View style={accountStyles.rowContainer}>
+          <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
@@ -39,8 +39,8 @@ export default function AccountDetails(props) {
             />
           </View>
         </View>
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
+        <View style={accountStyles.rowContainer}>
+          <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Last Name</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
@@ -49,8 +49,8 @@ export default function AccountDetails(props) {
             />
           </View>
         </View>
-        <View style={[accountStyles.accountRow, styles.marginTop]}>
-          <View style={accountStyles.accountRowWrapper}>
+        <View style={[accountStyles.rowContainer, styles.marginTop]}>
+          <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
@@ -59,8 +59,8 @@ export default function AccountDetails(props) {
             />
           </View>
         </View>
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
+        <View style={accountStyles.rowContainer}>
+          <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
@@ -69,8 +69,8 @@ export default function AccountDetails(props) {
             />
           </View>
         </View>
-        <View style={accountStyles.accountRow}>
-          <View style={accountStyles.accountRowWrapper}>
+        <View style={accountStyles.rowContainer}>
+          <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Password</Text>
             <TextInput
               style={accountStyles.accountInputHeader}

@@ -73,9 +73,20 @@ const ROUTES = {
   },
   OrderHistory: {
     screen: OrderHistory,
-    navigationOptions: {
+    navigationOptions: ({navigation}) => ({
       title: 'Order History',
-    },
+      headerLeft: (
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigation.navigate('Account')}>
+          <View style={navigationStyles.headerLeftWrapper}>
+            <Icon style={navigationStyles.backButton} name="keyboard-arrow-left" />
+            <Text style={navigationStyles.headerLeftTitle}>Settings</Text>
+          </View>
+        </TouchableHighlight>
+      ),
+      headerStyle: navigationStyles.navigationContainer,
+      headerTitleStyle: navigationStyles.headerTitle,
+      headerBackTitleStyle: navigationStyles.headerBackTitle,
+    }),
   },
 }
 

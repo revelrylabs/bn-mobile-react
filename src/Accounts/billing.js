@@ -16,8 +16,8 @@ export default function Billing() {
 
         <Text style={accountStyles.sectionHeader}>Credit Cards</Text>
 
-        <View style={billingStyles.billingRowWrapper}>
-          <View style={billingStyles.billingRow}>
+        <View style={billingStyles.rowContainer}>
+          <View style={billingStyles.row}>
             <View style={billingStyles.imageWrapper}>
               <Image
                 style={billingStyles.billingImageVisa}
@@ -25,20 +25,20 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="**** **** **** 2386"
               placeholderTextColor='black'
             />
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="12/24"
               placeholderTextColor='black'
             />
           </View>
         </View>
 
-        <View style={billingStyles.billingRowWrapper}>
-          <View style={billingStyles.billingRow}>
+        <View style={billingStyles.rowContainer}>
+          <View style={billingStyles.row}>
             <View style={billingStyles.imageWrapper}>
               <Image
                 style={billingStyles.billingImageMC}
@@ -46,12 +46,12 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="**** **** **** 2595"
               placeholderTextColor='black'
             />
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="04/21"
               placeholderTextColor='black'
             />
@@ -60,8 +60,8 @@ export default function Billing() {
 
         <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
 
-        <View style={billingStyles.billingRowWrapper}>
-          <View style={billingStyles.billingRow}>
+        <View style={billingStyles.rowContainer}>
+          <View style={billingStyles.row}>
             <View style={billingStyles.imageWrapper}>
               <Image
                 style={billingStyles.billingImageVenmo}
@@ -69,7 +69,7 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="kookster9000@hottopic.com"
               placeholderTextColor='black'
             />

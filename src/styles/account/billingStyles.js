@@ -4,21 +4,14 @@ import {
   borderColor,
   globalPadding,
   globalPaddingSmall,
+  iconFontSize,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-export const headerFontSize = 28
-export const sectionHeaderFontSize = 24
-export const bodyFontSize = 16
-export const bodyFontSizeSmall = 14
-export const iconFontSize = 18
-export const avatarIconFontSize = 28
-export const iconLargeFontSize = 56
-
 const BillingStyles = {
-  billingRowWrapper: {
+  rowContainer: {
     backgroundColor: white,
     borderBottomColor: borderColor,
     borderBottomWidth: 1,
@@ -26,7 +19,7 @@ const BillingStyles = {
     paddingVertical: globalPaddingSmall,
     width: fullWidth,
   },
-  billingRow: {
+  row: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -45,9 +38,6 @@ const BillingStyles = {
   billingImageVenmo: {
     height: 25,
     width: 25,
-  },
-  billingInputHeader: {
-    paddingRight: globalPadding,
   },
   billingButtonIcon: {
     color: primaryColor,
