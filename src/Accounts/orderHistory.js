@@ -20,6 +20,7 @@ export default function OrderHistory() {
 
         <View style={billingStyles.billingRowWrapper}>
           <View style={billingStyles.billingRow}>
+            <Icon style={orderHistoryStyles.historyIcon} name="assignment" />
             <View>
               <Text style={orderHistoryStyles.orderHistoryDate}>AUG 14TH | THE WARFIELD</Text>
               <Text style={orderHistoryStyles.orderHistoryText}>Future Islands</Text>

@@ -21,6 +21,11 @@ export const avatarIconFontSize = 28
 export const iconLargeFontSize = 56
 
 const OrderHistoryStyles = {
+  historyIcon: {
+    color: sectionHeaderColor,
+    fontSize: iconFontSize,
+    paddingRight: globalPaddingSmall,
+  },
   orderHistoryDate: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
