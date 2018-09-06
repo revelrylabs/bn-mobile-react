@@ -20,22 +20,10 @@ export default function OrderHistory() {
 
         <View style={billingStyles.billingRowWrapper}>
           <View style={billingStyles.billingRow}>
-            <View style={billingStyles.imageWrapper}>
-              <Image
-                style={billingStyles.billingImageVisa}
-                source={require('../../assets/icon-visa.png')}
-              />
+            <View>
+              <Text style={orderHistoryStyles.orderHistoryDate}>AUG 14TH | THE WARFIELD</Text>
+              <Text style={orderHistoryStyles.orderHistoryText}>Future Islands</Text>
             </View>
-            <TextInput
-              style={billingStyles.billingInputHeader}
-              placeholder="**** **** **** 2386"
-              placeholderTextColor='black'
-            />
-            <TextInput
-              style={billingStyles.billingInputHeader}
-              placeholder="12/24"
-              placeholderTextColor='black'
-            />
           </View>
         </View>
 
