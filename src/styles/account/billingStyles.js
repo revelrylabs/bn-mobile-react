@@ -18,7 +18,7 @@ export const avatarIconFontSize = 28
 export const iconLargeFontSize = 56
 
 const BillingStyles = {
-  billingRowWrapper: {
+  rowContainer: {
     backgroundColor: white,
     borderBottomColor: borderColor,
     borderBottomWidth: 1,
@@ -26,7 +26,7 @@ const BillingStyles = {
     paddingVertical: globalPaddingSmall,
     width: fullWidth,
   },
-  billingRow: {
+  row: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',

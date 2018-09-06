@@ -18,13 +18,67 @@ export default function OrderHistory() {
 
         <Text style={accountStyles.sectionHeader}>Order Receipts</Text>
 
-        <View style={billingStyles.billingRowWrapper}>
-          <View style={billingStyles.billingRow}>
-            <Icon style={orderHistoryStyles.historyIcon} name="assignment" />
-            <View>
-              <Text style={orderHistoryStyles.orderHistoryDate}>AUG 14TH | THE WARFIELD</Text>
-              <Text style={orderHistoryStyles.orderHistoryText}>Future Islands</Text>
+        <View style={billingStyles.rowContainer}>
+          <View style={orderHistoryStyles.row}>
+
+            <View style={orderHistoryStyles.dateWrapper}>
+              <Icon style={orderHistoryStyles.icon} name="assignment" />
+              <View>
+                <Text style={orderHistoryStyles.orderHistoryDate}>AUG 14TH | THE WARFIELD</Text>
+                <Text style={orderHistoryStyles.orderHistoryText}>Future Islands</Text>
+              </View>
             </View>
+            <Text style={orderHistoryStyles.orderHistoryDate}>X3</Text>
+            <Text style={orderHistoryStyles.orderHistoryText}>$99.99</Text>
+
+          </View>
+        </View>
+
+        <View style={billingStyles.rowContainer}>
+          <View style={orderHistoryStyles.row}>
+
+            <View style={orderHistoryStyles.dateWrapper}>
+              <Icon style={orderHistoryStyles.icon} name="assignment" />
+              <View>
+                <Text style={orderHistoryStyles.orderHistoryDate}>AUG 14TH | THE WARFIELD</Text>
+                <Text style={orderHistoryStyles.orderHistoryText}>Future Islands</Text>
+              </View>
+            </View>
+            <Text style={orderHistoryStyles.orderHistoryDate}>X3</Text>
+            <Text style={orderHistoryStyles.orderHistoryText}>$99.99</Text>
+
+          </View>
+        </View>
+
+        <View style={billingStyles.rowContainer}>
+          <View style={orderHistoryStyles.row}>
+
+            <View style={orderHistoryStyles.dateWrapper}>
+              <Icon style={orderHistoryStyles.icon} name="assignment" />
+              <View>
+                <Text style={orderHistoryStyles.orderHistoryDate}>AUG 14TH | THE WARFIELD</Text>
+                <Text style={orderHistoryStyles.orderHistoryText}>Future Islands</Text>
+              </View>
+            </View>
+            <Text style={orderHistoryStyles.orderHistoryDate}>X3</Text>
+            <Text style={orderHistoryStyles.orderHistoryText}>$99.99</Text>
+
+          </View>
+        </View>
+
+        <View style={billingStyles.rowContainer}>
+          <View style={orderHistoryStyles.row}>
+
+            <View style={orderHistoryStyles.dateWrapper}>
+              <Icon style={orderHistoryStyles.icon} name="assignment" />
+              <View>
+                <Text style={orderHistoryStyles.orderHistoryDate}>AUG 14TH | THE WARFIELD</Text>
+                <Text style={orderHistoryStyles.orderHistoryText}>Future Islands</Text>
+              </View>
+            </View>
+            <Text style={orderHistoryStyles.orderHistoryDate}>X3</Text>
+            <Text style={orderHistoryStyles.orderHistoryText}>$99.99</Text>
+
           </View>
         </View>
 
