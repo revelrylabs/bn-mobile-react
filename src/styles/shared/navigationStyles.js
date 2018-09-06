@@ -2,14 +2,20 @@ import {
   primaryColor,
   borderColor,
   white,
+  textColor,
+  sectionHeaderColor,
   globalFontSemiBold,
   globalFontRegular,
+  sectionHeaderFontSize,
+  bodyFontSizeSmall,
+  globalMargin,
+  globalPaddingTiny,
+  globalPaddingSmall,
 } from './sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
 export const headerFontSize = 16
 export const iconFontSize = 18
@@ -49,6 +55,36 @@ const NavigationStyles = {
   backButton: {
     color: primaryColor,
     fontSize: iconLargeFontSize,
+  },
+
+  // SCROLLING HEADER
+  scrollHeaderContainer: {
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    left: 0,
+    overflow: 'hidden',
+    paddingVertical: globalPaddingSmall + globalPaddingTiny,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  scrollHeader: {
+    marginTop: globalMargin,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scrollTitle: {
+    color: textColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: sectionHeaderFontSize,
+  },
+  scrollSubTitle: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSizeSmall,
   },
 }
 
