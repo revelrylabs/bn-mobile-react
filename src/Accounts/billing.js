@@ -25,12 +25,12 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="**** **** **** 2386"
               placeholderTextColor='black'
             />
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="12/24"
               placeholderTextColor='black'
             />
@@ -46,12 +46,12 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="**** **** **** 2595"
               placeholderTextColor='black'
             />
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="04/21"
               placeholderTextColor='black'
             />
@@ -69,7 +69,7 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={billingStyles.billingInputHeader}
+              style={styles.paddingRight}
               placeholder="kookster9000@hottopic.com"
               placeholderTextColor='black'
             />
