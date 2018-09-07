@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform} from 'react-native';
+import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
