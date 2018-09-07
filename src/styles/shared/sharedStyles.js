@@ -323,6 +323,9 @@ const SharedStyles = {
   marginTop: {
     marginTop: globalMargin,
   },
+  paddingRight: {
+    paddingRight: globalPadding,
+  },
   borderRight: {
     borderRightColor: borderColor,
     borderStyle: 'solid',
