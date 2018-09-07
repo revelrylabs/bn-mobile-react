@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated } from 'react-native';
+import React, {Component} from 'react';
+import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
@@ -59,9 +59,7 @@ function EventItemView({
   )
 }
 
-export default function EventsIndex(props) {
-  const { navigation: { navigate } } = props
-
+export default class EventsIndex extends Component {
   constructor(props) {
     super(props);
 
@@ -103,6 +101,8 @@ export default function EventsIndex(props) {
       outputRange: [0, 0, -8],
       extrapolate: 'clamp',
     });
+
+    const {navigation: {navigate}} = this.props
 
     return (
       <View>
