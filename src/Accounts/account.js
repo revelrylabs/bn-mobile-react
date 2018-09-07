@@ -23,7 +23,7 @@ export default function AccountDetails(props) {
                 source={require('../../assets/avatar-female.png')}
               />
             </View>
-            <TouchableHighlight style={accountStyles.accountInputHeader}>
+            <TouchableHighlight style={styles.flexColumnCenter}>
               <Text style={styles.buttonSecondaryText} onPress={() => navigate('ChangePhoto')}>Change Profile Photo</Text>
             </TouchableHighlight>
           </View>
@@ -33,47 +33,51 @@ export default function AccountDetails(props) {
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
             <TextInput
-              style={accountStyles.accountInputHeader}
+              style={styles.flexColumnCenter}
               placeholder="Kook"
               placeholderTextColor='black'
             />
           </View>
         </View>
+
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Last Name</Text>
             <TextInput
-              style={accountStyles.accountInputHeader}
+              style={styles.flexColumnCenter}
               placeholder="McDropin"
               placeholderTextColor='black'
             />
           </View>
         </View>
+
         <View style={[accountStyles.rowContainer, styles.marginTop]}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
-              style={accountStyles.accountInputHeader}
+              style={styles.flexColumnCenter}
               placeholder="504-000-0000"
               placeholderTextColor='black'
             />
           </View>
         </View>
+
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
             <TextInput
-              style={accountStyles.accountInputHeader}
+              style={styles.flexColumnCenter}
               placeholder="kookmcdropz@gmail.com"
               placeholderTextColor='black'
             />
           </View>
         </View>
+
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Password</Text>
             <TextInput
-              style={accountStyles.accountInputHeader}
+              style={styles.flexColumnCenter}
               placeholder="password"
               placeholderTextColor='black'
             />
