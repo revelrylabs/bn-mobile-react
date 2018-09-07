@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl} from 'react-native';
+import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl, Easing} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
@@ -68,6 +68,9 @@ export default class EventsIndex extends Component {
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
       refreshing: false,
+      toValue: 1,
+      duration: 2000,
+      easing: Easing.linear,
     };
   }
 
@@ -85,6 +88,14 @@ export default class EventsIndex extends Component {
       inputRange: [0, HEADER_SCROLL_DISTANCE],
       outputRange: [0, -HEADER_SCROLL_DISTANCE],
       extrapolate: 'clamp',
+    });
+    const opacity = scrollY.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 1, 0]
+    });
+    const textSize = scrollY.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [18, 32, 18]
     });
 
     const {navigation: {navigate}} = this.props
@@ -231,10 +242,10 @@ export default class EventsIndex extends Component {
             scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
           />
         </ScrollView>
-        <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight}]}>
+        <Animated.View style={[navigationStyles.scrollHeaderContainer, { height: headerHeight, transform: [{translateY: headerTranslate}] }]}>
           <View style={navigationStyles.scrollHeader}>
-            <Text style={navigationStyles.scrollTitle}>Explore</Text>
-            <Text style={navigationStyles.scrollSubTitle}>All Dates &bull; Los Angeles, CA</Text>
+            <Animated.Text style={navigationStyles.scrollTitle}>Explore</Animated.Text>
+            <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; Los Angeles, CA</Animated.Text>
           </View>
         </Animated.View>
       </View>
