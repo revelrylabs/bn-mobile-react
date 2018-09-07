@@ -60,9 +60,6 @@ const NavigationStyles = {
   // SCROLLING HEADER
   scrollHeaderContainer: {
     backgroundColor: white,
-    borderBottomColor: borderColor,
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
     left: 0,
     overflow: 'hidden',
     paddingVertical: globalPaddingSmall + globalPaddingTiny,
