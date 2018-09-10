@@ -7,6 +7,8 @@ import {
   disabledHeaderColor,
   globalFontRegular,
   globalFontMedium,
+  bodyFontSize,
+  iconFontSize,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
@@ -22,9 +24,7 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const headerFontSize = 28
 export const sectionHeaderFontSize = 24
-export const bodyFontSize = 16
 export const bodyFontSizeSmall = 14
-export const iconFontSize = 18
 export const avatarIconFontSize = 28
 export const iconLargeFontSize = 56
 

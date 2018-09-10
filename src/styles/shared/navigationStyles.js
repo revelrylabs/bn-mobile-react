@@ -9,10 +9,7 @@ import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-export const sectionHeaderFontSize = 21
-export const bodyFontSize = 18
 export const headerFontSize = 16
-export const iconFontSize = 18
 export const iconLargeFontSize = 38
 
 const NavigationStyles = {

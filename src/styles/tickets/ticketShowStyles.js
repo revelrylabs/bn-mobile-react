@@ -1,3 +1,17 @@
+import {
+  primaryColor,
+  white,
+  containerDarkColor,
+  sectionHeaderColor,
+  bodyFontSize,
+  iconFontSize,
+  globalFontMedium,
+  globalFontRegular,
+  globalPaddingLarge,
+  globalPadding,
+  globalPaddingSmall,
+  globalPaddingTiny,
+} from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 export const fullWidth = Dimensions.get('window').width
@@ -13,58 +27,18 @@ const itemHorizontalMargin = wp(2);
 
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
-export const primaryColor = '#FF20B1'
-export const secondaryColor = '#707CED'
-export const tertiaryColor = '#4EB0E5'
-export const white = '#FFF'
-export const errorTextColor = '#FF0000'
-export const textColor = '#1E1E1E'
-export const backgroundColor = white
-export const inputBackgroundColor = '#FAFAFA'
-export const disabledColor = '#F7F7F7'
-export const helpTextColor = '#666'
-export const borderColor = '#DCDCDC'
-export const placeholderImageBackground = '#F6F7F5'
-export const sectionHeaderColor = '#9DA3B4'
-export const containerDarkColor = '#F5F6F7'
-export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
-export const globalPaddingTiny = 5
-export const globalPaddingSmall = 10
-export const globalPadding = 20
-export const globalPaddingMedium = 30
-export const globalPaddingLarge = 40
-export const globalPaddingLarger = 45
-export const globalPaddingJumbo = 55
-export const globalMarginSmall = 10
-export const globalMargin = 20
-
-export const globalFontRegular = 'tt_commons_regular'
-export const globalFontMedium = 'tt_commons_medium'
-export const globalFontSemiBold = 'tt_commons_demibold'
-export const globalFontBold = 'tt_commons_bold'
-export const globalFontItalic = 'tt_commons_italic'
-
-export const headerFontSize = 28
-export const sectionHeaderFontSize = 18
-export const bodyFontSize = 16
 export const bodyFontSizeSmall = 14
-export const iconFontSize = 18
-export const iconLargeFontSize = 56
 export const closeModalHeaderSize = 21
 
 const TicketShowStyles = {
+  // CONTAINER STYLES
   modalContainer: {
     flexDirection: 'column',
     height: fullHeight,
     justifyContent: 'center',
     paddingHorizontal: globalPadding,
-  },
-  modalBkgdImage: {
-    height: fullHeight,
-    width: fullWidth,
-    position: 'absolute',
   },
   closeModalContainer: {
     alignItems: 'center',
@@ -72,20 +46,9 @@ const TicketShowStyles = {
     justifyContent: 'space-between',
     paddingTop: globalPaddingLarge,
   },
-  closeModalHeader: {
-    color: white,
-    fontFamily: globalFontMedium,
-    fontSize: closeModalHeaderSize,
-  },
   slideWrapper: {
     flexDirection: 'column',
     justifyContent: 'center',
-  },
-  details: {
-    fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
-    color: white,
-    paddingVertical: globalPaddingTiny,
   },
   detailsContainerBottom: {
     flexDirection: 'row',
@@ -93,6 +56,28 @@ const TicketShowStyles = {
     paddingHorizontal: globalPaddingSmall + globalPaddingTiny,
     paddingVertical: globalPaddingSmall,
   },
+
+  // IMAGE BKGD STYLES
+  modalBkgdImage: {
+    height: fullHeight,
+    width: fullWidth,
+    position: 'absolute',
+  },
+
+  // TEXT STYLES
+  closeModalHeader: {
+    color: white,
+    fontFamily: globalFontMedium,
+    fontSize: closeModalHeaderSize,
+  },
+  details: {
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    color: white,
+    paddingVertical: globalPaddingTiny,
+  },
+
+  // AVATAR STYLES
   avatarContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -105,6 +90,8 @@ const TicketShowStyles = {
     height: 45,
     width: 45,
   },
+
+  // ICON STYLES
   iconLink: {
     backgroundColor: 'transparent',
     color: whiteTransparent,
@@ -117,6 +104,8 @@ const TicketShowStyles = {
     fontSize: bodyFontSizeSmall,
     paddingRight: globalPaddingTiny,
   },
+
+  // QR CODE STYLES
   qrCodeContainer: {
     backgroundColor: containerDarkColor,
     flexDirection: 'row',
@@ -128,6 +117,8 @@ const TicketShowStyles = {
     height: 200,
     width: 200,
   },
+
+  // BOTTOM NAV STYLES
   bottomNav: {
     backgroundColor: white,
     borderBottomRightRadius: 20/2,
