@@ -1,45 +1,30 @@
+import {
+  tertiaryColor,
+  white,
+  textColor,
+  borderColor,
+  searchIconColor,
+  inputBackgroundColor,
+  globalFontRegular,
+  globalFontSemiBold,
+  globalPadding,
+  globalPaddingSmall,
+  globalPaddingTiny,
+  globalMargin,
+} from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-export const primaryColor = '#FF20B1'
-export const secondaryColor = '#707CED'
-export const tertiaryColor = '#4EB0E5'
-export const white = '#FFF'
-export const errorTextColor = '#FF0000'
-export const textColor = '#1E1E1E'
-export const backgroundColor = white
-export const inputBackgroundColor = '#FAFAFA'
 export const disabledColor = '#F7F7F7'
-export const helpTextColor = '#666'
-export const borderColor = '#DCDCDC'
-export const searchIconColor = '#9E9E9E'
-export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 
-export const globalPaddingTiny = 5
-export const globalPaddingSmall = 10
-export const globalPadding = 20
-export const globalPaddingMedium = 30
-export const globalPaddingLarge = 40
-export const globalPaddingLarger = 45
-export const globalPaddingJumbo = 55
-export const globalMarginSmall = 10
-export const globalMargin = 20
-
-export const globalFontRegular = 'tt_commons_regular'
-export const globalFontMedium = 'tt_commons_medium'
-export const globalFontSemiBold = 'tt_commons_demibold'
-export const globalFontBold = 'tt_commons_bold'
-export const globalFontItalic = 'tt_commons_italic'
-
-export const headerFontSize = 38
-export const sectionHeaderFontSize = 21
 export const bodyFontSize = 18
 export const iconFontSize = 18
 export const searchIconFontSize = 21
-export const pickerItemHeight = 120
 
 const FormStyles = {
+
+  // CONTAINER STYLES
   inputContainer: {
     paddingBottom: globalPadding,
   },
@@ -68,6 +53,16 @@ const FormStyles = {
     paddingHorizontal: globalPaddingSmall,
     paddingTop: globalPaddingSmall,
   },
+  searchContainer: {
+    backgroundColor: disabledColor,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: globalMargin,
+  },
+
+  // TEXTAREA STYLES
   textArea: {
     height: '100%',
     justifyContent: 'center',
@@ -83,6 +78,8 @@ const FormStyles = {
     fontSize: bodyFontSize,
     flex: 1,
   },
+
+  // INPUT STYLES
   input: {
     color: textColor,
     alignContent: 'center',
@@ -109,14 +106,8 @@ const FormStyles = {
     marginTop: 0,
     paddingLeft: globalPadding,
   },
-  searchContainer: {
-    backgroundColor: disabledColor,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: globalMargin,
-  },
+
+  // SEARCH STYLES
   searchIcon: {
     color: searchIconColor,
     fontSize: searchIconFontSize,
@@ -133,13 +124,8 @@ const FormStyles = {
     height: 40,
     width: '100%',
   },
-  arrowLink: {
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    width: '100%',
-    textAlign: 'right',
-    paddingRight: globalPadding,
-  },
+
+  // PLACEHOLDER STYLES
   placeholder: {
     position: 'absolute',
     textAlign: 'left',
@@ -147,6 +133,13 @@ const FormStyles = {
     paddingLeft: globalPadding,
     color: textColor,
     opacity: 0.5,
+  },
+
+  // CHECKBOX STYLES
+  checkBoxContainer: {
+    flex: 1,
+    padding: 1,
+    justifyContent: 'center',
   },
   checkboxIconContainer: {
     alignItems: 'flex-start',
@@ -156,65 +149,11 @@ const FormStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  checkboxIconContainerLast: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: globalPadding,
-  },
-  iconLinkContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: globalPadding,
-  },
-  iconLinkContainerFirst: {
-    alignItems: 'center',
-    borderRightColor: borderColor,
-    borderRightWidth: 1,
-    borderStyle: 'solid',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: globalPadding,
-  },
-  iconLinkWrapper: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '50%',
-  },
-  iconLink: {
-    color: inputBackgroundColor,
-    fontSize: iconFontSize,
-    paddingRight: globalPaddingTiny,
-  },
-  iconLinkText: {
-    color: inputBackgroundColor,
-    fontFamily: globalFontRegular,
-    fontSize: bodyFontSize - 3,
-    textAlign: 'center',
-  },
-  iconLinkActive: {
-    color: tertiaryColor,
-    fontSize: iconFontSize,
-    paddingRight: globalPaddingTiny,
-  },
-  iconLinkTextActive: {
-    color: tertiaryColor,
-    fontFamily: globalFontRegular,
-    fontSize: bodyFontSize - 3,
-    textAlign: 'center',
-  },
   checkBoxHelpText: {
     color: inputBackgroundColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     paddingBottom: globalPaddingTiny,
-  },
-  checkBoxContainer: {
-    flex: 1,
-    padding: 1,
-    justifyContent: 'center',
   },
 }
 
