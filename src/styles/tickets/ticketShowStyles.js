@@ -33,16 +33,12 @@ export const iconFontSize = 18
 export const closeModalHeaderSize = 21
 
 const TicketShowStyles = {
+  // CONTAINER STYLES
   modalContainer: {
     flexDirection: 'column',
     height: fullHeight,
     justifyContent: 'center',
     paddingHorizontal: globalPadding,
-  },
-  modalBkgdImage: {
-    height: fullHeight,
-    width: fullWidth,
-    position: 'absolute',
   },
   closeModalContainer: {
     alignItems: 'center',
@@ -50,20 +46,9 @@ const TicketShowStyles = {
     justifyContent: 'space-between',
     paddingTop: globalPaddingLarge,
   },
-  closeModalHeader: {
-    color: white,
-    fontFamily: globalFontMedium,
-    fontSize: closeModalHeaderSize,
-  },
   slideWrapper: {
     flexDirection: 'column',
     justifyContent: 'center',
-  },
-  details: {
-    fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
-    color: white,
-    paddingVertical: globalPaddingTiny,
   },
   detailsContainerBottom: {
     flexDirection: 'row',
@@ -71,6 +56,28 @@ const TicketShowStyles = {
     paddingHorizontal: globalPaddingSmall + globalPaddingTiny,
     paddingVertical: globalPaddingSmall,
   },
+
+  // IMAGE BKGD STYLES
+  modalBkgdImage: {
+    height: fullHeight,
+    width: fullWidth,
+    position: 'absolute',
+  },
+
+  // TEXT STYLES
+  closeModalHeader: {
+    color: white,
+    fontFamily: globalFontMedium,
+    fontSize: closeModalHeaderSize,
+  },
+  details: {
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    color: white,
+    paddingVertical: globalPaddingTiny,
+  },
+
+  // AVATAR STYLES
   avatarContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -83,6 +90,8 @@ const TicketShowStyles = {
     height: 45,
     width: 45,
   },
+
+  // ICON STYLES
   iconLink: {
     backgroundColor: 'transparent',
     color: whiteTransparent,
@@ -95,6 +104,8 @@ const TicketShowStyles = {
     fontSize: bodyFontSizeSmall,
     paddingRight: globalPaddingTiny,
   },
+
+  // QR CODE STYLES
   qrCodeContainer: {
     backgroundColor: containerDarkColor,
     flexDirection: 'row',
@@ -106,6 +117,8 @@ const TicketShowStyles = {
     height: 200,
     width: 200,
   },
+
+  // BOTTOM NAV STYLES
   bottomNav: {
     backgroundColor: white,
     borderBottomRightRadius: 20/2,
