@@ -1,47 +1,32 @@
+import {
+  primaryColor,
+  white,
+  sectionHeaderColor,
+  borderColor,
+  textColor,
+  globalFontRegular,
+  globalFontSemiBold,
+  globalPaddingJumbo,
+  globalPaddingLarge,
+  globalPaddingMedium,
+  globalPadding,
+  globalPaddingSmall,
+  globalPaddingTiny,
+  globalMargin,
+} from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-export const primaryColor = '#FF20B1'
-export const secondaryColor = '#707CED'
-export const tertiaryColor = '#4EB0E5'
-export const white = '#FFF'
-export const errorTextColor = '#FF0000'
-export const textColor = '#1E1E1E'
-export const backgroundColor = white
-export const inputBackgroundColor = '#FAFAFA'
-export const disabledColor = '#F7F7F7'
-export const helpTextColor = '#666'
-export const borderColor = '#DCDCDC'
-export const placeholderImageBackground = '#F6F7F5'
-export const sectionHeaderColor = '#9DA3B4'
-export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
-
-export const globalPaddingTiny = 5
-export const globalPaddingSmall = 10
-export const globalPadding = 20
-export const globalPaddingMedium = 30
-export const globalPaddingLarge = 40
-export const globalPaddingLarger = 45
-export const globalPaddingJumbo = 55
-export const globalMarginSmall = 10
-export const globalMargin = 20
-
-export const globalFontRegular = 'tt_commons_regular'
-export const globalFontMedium = 'tt_commons_medium'
-export const globalFontSemiBold = 'tt_commons_demibold'
-export const globalFontBold = 'tt_commons_bold'
-export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 28
 export const sectionHeaderFontSize = 18
-export const bodyFontSize = 16
-export const iconFontSize = 18
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 
 const EventDetailsStyles = {
+  // VIDEO STYLES
   videoContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -62,6 +47,8 @@ const EventDetailsStyles = {
     paddingTop: globalPaddingJumbo + globalPaddingTiny,
     width: fullWidth,
   },
+
+  // CONTAINER STYLES
   sectionTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -76,11 +63,19 @@ const EventDetailsStyles = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
-  iconPlayLink: {
-    color: whiteTransparent,
-    fontSize: iconLargeFontSize,
-    marginBottom: globalMargin,
+  avatarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingLeft: globalPaddingSmall,
   },
+  iconSectionHeaderContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingVertical: globalPadding,
+  },
+
+  // TEXT STYLES
   header: {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
@@ -93,6 +88,18 @@ const EventDetailsStyles = {
     fontSize: sectionHeaderFontSize,
     marginBottom: globalMargin,
   },
+  iconSectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
+  ticketPrice: {
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize + sectionHeaderFontSize,
+  },
+
+  // EVENT DESCRIPTION STYLES
   eventDetailsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -112,26 +119,12 @@ const EventDetailsStyles = {
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
-  avatarContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingLeft: globalPaddingSmall,
-  },
-  ticketPrice: {
-    color: primaryColor,
-    fontFamily: globalFontSemiBold,
-    fontSize: headerFontSize + sectionHeaderFontSize,
-  },
-  iconSectionHeaderContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingVertical: globalPadding,
-  },
-  iconSectionHeader: {
-    color: sectionHeaderColor,
-    fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+
+  // ICON STYLES
+  iconPlayLink: {
+    color: whiteTransparent,
+    fontSize: iconLargeFontSize,
+    marginBottom: globalMargin,
   },
   iconYoutube: {
     width: 20,
@@ -148,6 +141,9 @@ const EventDetailsStyles = {
     height: 20,
     marginRight: globalPaddingSmall,
   },
+
+
+  // IMAGE PLACEHOLDER STYLES
   imagePlaceholderContainer: {
     height: 100,
     paddingVertical: globalPadding,
@@ -157,6 +153,8 @@ const EventDetailsStyles = {
     width: fullWidth - 40,
     position: 'absolute',
   },
+
+  // SLIDER STYLES
   sliderArrowContainer: {
     alignItems: 'center',
     flexDirection: 'row',
