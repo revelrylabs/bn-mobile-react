@@ -3,6 +3,8 @@ import {
   white,
   containerDarkColor,
   sectionHeaderColor,
+  bodyFontSize,
+  iconFontSize,
   globalFontMedium,
   globalFontRegular,
   globalPaddingLarge,
@@ -27,9 +29,7 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
-export const bodyFontSize = 16
 export const bodyFontSizeSmall = 14
-export const iconFontSize = 18
 export const closeModalHeaderSize = 21
 
 const TicketShowStyles = {

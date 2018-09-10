@@ -7,6 +7,7 @@ import {
   inputBackgroundColor,
   globalFontRegular,
   globalFontSemiBold,
+  iconFontSize,
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
@@ -19,7 +20,6 @@ const fullWidth = Dimensions.get('window').width
 export const disabledColor = '#F7F7F7'
 
 export const bodyFontSize = 18
-export const iconFontSize = 18
 export const searchIconFontSize = 21
 
 const FormStyles = {

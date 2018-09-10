@@ -1,6 +1,9 @@
 import {
   white,
   textColor,
+  sectionHeaderFontSize,
+  bodyFontSize,
+  iconFontSize,
   globalFontRegular,
   globalFontSemiBold,
   globalPadding,
@@ -14,9 +17,6 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
 
 export const headerFontSize = 38
-export const sectionHeaderFontSize = 21
-export const bodyFontSize = 16
-export const iconFontSize = 18
 
 const EventStyles = {
   // CONTAINER STYLES

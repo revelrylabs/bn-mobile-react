@@ -2,6 +2,8 @@ import {
   white,
   sectionHeaderColor,
   globalFontRegular,
+  bodyFontSize,
+  iconFontSize,
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
@@ -14,9 +16,7 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const headerFontSize = 28
-export const bodyFontSize = 16
 export const bodyFontSizeSmall = 13
-export const iconFontSize = 18
 
 const TicketStyles = {
   // CONTAINER STYLES
