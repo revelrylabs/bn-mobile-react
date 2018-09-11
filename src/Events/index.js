@@ -105,10 +105,6 @@ export default function EventsIndex(props) {
             </View>
           </View>
 
-          <View style={slideshowStyles.sectionMiddle}>
-            <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
-            <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
-          </View>
 
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
             <View style={slideshowStyles.sectionBottom}>
