@@ -26,23 +26,23 @@ const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
     transparent={true}
   >
     <View style={modalStyles.modalContainer}>
-      <View style={ticketShowStyles.qrCodeContainer}>
+      <View style={modalStyles.qrCodeContainer}>
         <Image
           style={ticketShowStyles.qrCode}
           source={require('../../assets/qr-code-placeholder.png')}
         />
-      </View>
-      <Text style={styles.sectionHeader}>Show this to complete a ticket transfer.</Text>
-      <View style={styles.buttonContainer}>
-        <TouchableHighlight
-          style={styles.button}
-          name="close"
-          onPress={() => {
-            toggleModal(!modalVisible)
-          }}
-        >
-          <Text style={styles.buttonText}>Got It</Text>
-        </TouchableHighlight>
+        <Text style={styles.sectionHeader}>Show this to complete a ticket transfer.</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight
+            style={styles.button}
+            name="close"
+            onPress={() => {
+              toggleModal(!modalVisible)
+            }}
+          >
+            <Text style={styles.buttonText}>Got It</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     </View>
   </Modal>

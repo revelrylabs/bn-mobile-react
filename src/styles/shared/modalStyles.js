@@ -1,6 +1,7 @@
 import {
   white,
   textColor,
+  containerDarkColor,
   sectionHeaderFontSize,
   bodyFontSize,
   iconFontSize,
@@ -25,6 +26,13 @@ const ModalStyles = {
     height: fullHeight,
     justifyContent: 'center',
     paddingHorizontal: globalPadding,
+  },
+  qrCodeContainer: {
+    backgroundColor: containerDarkColor,
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+    padding: globalPadding,
+    width: fullWidth - 43,
   },
 }
 
