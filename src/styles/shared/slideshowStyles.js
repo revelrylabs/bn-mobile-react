@@ -41,18 +41,6 @@ const SlideShowStyles = {
     paddingVertical: globalPaddingLarge,
   },
 
-  // ICON STYLES
-  slideShowIconLinkLeft: {
-    color: white,
-    fontSize: slideShowArrowFontSize,
-    marginLeft: -20,
-  },
-  slideShowIconLinkRight: {
-    color: white,
-    fontSize: slideShowArrowFontSize,
-    marginRight: -20,
-  },
-
   // TEXT STYLES
   header: {
     fontFamily: globalFontSemiBold,
