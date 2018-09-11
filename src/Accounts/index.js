@@ -7,12 +7,14 @@ import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import TicketShowStyles from '../styles/tickets/ticketShowStyles'
 import EventStyles from '../styles/shared/eventStyles'
+import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketShowStyles = TicketShowStyles.createStyles()
 const eventStyles = EventStyles.createStyles()
+const modalStyles = ModalStyles.createStyles()
 
 
 const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
@@ -22,18 +24,15 @@ const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
     }}
     visible={modalVisible}
     transparent={true}
-    backdropColor={'black'}
-    backdropOpacity={0.70}
   >
-    <View style={ticketStyles.ticketContainer}>
-      <View style={ticketStyles.detailsContainer}>
-        <View style={ticketShowStyles.qrCodeContainer}>
-          <Image
-            style={ticketShowStyles.qrCode}
-            source={require('../../assets/qr-code-placeholder.png')}
-          />
-        </View>
+    <View style={modalStyles.modalContainer}>
+      <View style={ticketShowStyles.qrCodeContainer}>
+        <Image
+          style={ticketShowStyles.qrCode}
+          source={require('../../assets/qr-code-placeholder.png')}
+        />
       </View>
+      <Text style={styles.sectionHeader}>Show this to complete a ticket transfer.</Text>
       <View style={styles.buttonContainer}>
         <TouchableHighlight
           style={styles.button}
