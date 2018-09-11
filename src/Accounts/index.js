@@ -4,9 +4,15 @@ import {ScrollView, Modal, Text, View, Image, TouchableHighlight, Button} from '
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
+import TicketStyles from '../styles/tickets/ticketStyles'
+import TicketShowStyles from '../styles/tickets/ticketShowStyles'
+import EventStyles from '../styles/shared/eventStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
+const ticketStyles = TicketStyles.createStyles()
+const ticketShowStyles = TicketShowStyles.createStyles()
+const eventStyles = EventStyles.createStyles()
 
 
 const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
@@ -15,10 +21,18 @@ const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
       toggleModal(!modalVisible)
     }}
     visible={modalVisible}
+    transparent={true}
+    backdropColor={'black'}
+    backdropOpacity={0.70}
   >
-    <View>
-      <View>
-        <Image source={require('../../assets/qr-code-placeholder.png')} />
+    <View style={ticketStyles.ticketContainer}>
+      <View style={ticketStyles.detailsContainer}>
+        <View>
+          <Image
+            style={ticketShowStyles.qrCode}
+            source={require('../../assets/qr-code-placeholder.png')}
+          />
+        </View>
       </View>
       <Button
         name="close"
