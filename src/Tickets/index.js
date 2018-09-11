@@ -30,6 +30,7 @@ const sampleTickets = {
       starts: '7:30pm',
       ends: '12:30am',
       image: sampleImages.image1,
+      qrCode: '',
     },
     {
       quantity: 3,
@@ -40,6 +41,7 @@ const sampleTickets = {
       starts: '7:30pm',
       ends: '12:30am',
       image: sampleImages.image2,
+      qrCode: '',
     },
   ],
   past: [
@@ -52,6 +54,7 @@ const sampleTickets = {
       starts: '7:30pm',
       ends: '12:30am',
       image: sampleImages.image2,
+      qrCode: '',
     },
     {
       quantity: 3,
@@ -62,13 +65,14 @@ const sampleTickets = {
       starts: '7:30pm',
       ends: '12:30am',
       image: sampleImages.image1,
+      qrCode: '',
     },
   ],
 }
 
 const Ticket = ({navigate, ticket}) => (
   <View>
-    <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTicket')}>
+    <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
       <View style={ticketStyles.ticketContainer}>
         <Image
           style={eventStyles.eventImage}

@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {Modal, ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
+import {Modal, ScrollView, Text, View, Image} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import Ticket from './Ticket'
 import SharedStyles from '../styles/shared/sharedStyles'
-import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventStyles from '../styles/shared/eventStyles'
-import TicketStyles from '../styles/tickets/ticketStyles'
 import TicketShowStyles from '../styles/tickets/ticketShowStyles'
 
 const styles = SharedStyles.createStyles()
-const slideshowStyles = SlideShowStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
-const ticketStyles = TicketStyles.createStyles()
+
 const ticketShowStyles = TicketShowStyles.createStyles()
 
 const ticketData = [
@@ -44,78 +40,6 @@ const ticketData = [
     ends: '12:30am',
   },
 ]
-
-const Ticket = ({ticket, navigate}) => {
-  return (
-    <View>
-      <View>
-        <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTicket')}>
-          <View style={ticketStyles.ticketContainer}>
-            <Image
-              style={eventStyles.eventImage}
-              source={ticket.image}
-            />
-            <View style={ticketStyles.detailsContainer}>
-              <View>
-                <View style={styles.iconLinkContainer}>
-                  <Image
-                    style={styles.iconImage}
-                    source={require('../../assets/heart-white.png')}
-                  />
-                </View>
-              </View>
-              <View>
-                <Text style={ticketStyles.header}>{ticket.name}</Text>
-                <Text style={ticketShowStyles.details}>{ticket.date} • {ticket.starts}  •  {ticket.venue}</Text>
-                <View style={styles.iconLinkContainer}>
-                  <Text style={ticketShowStyles.iconLinkText}>GET DIRECTIONS</Text>
-                  <Icon style={ticketShowStyles.iconLink} name="call-made" />
-                </View>
-              </View>
-            </View>
-          </View>
-        </TouchableHighlight>
-        <View style={ticketStyles.ticketContainerBottom}>
-          <View style={ticketShowStyles.detailsContainerBottom}>
-            <View style={ticketShowStyles.avatarContainer}>
-              <Image
-                style={ticketShowStyles.avatar}
-                source={require('../../assets/avatar-female.png')}
-              />
-            </View>
-            <View>
-              <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
-              <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      <View style={ticketShowStyles.qrCodeContainer}>
-        <Image
-          style={ticketShowStyles.qrCode}
-          source={require('../../assets/qr-code-placeholder.png')}
-        />
-      </View>
-
-      <View style={ticketShowStyles.bottomNav}>
-        <View style={[ticketShowStyles.bottomNavLinkContainer, styles.borderRight]}>
-          <Icon style={ticketShowStyles.bottomNavIcon} name="account-balance-wallet" />
-          <Text style={ticketShowStyles.bottomNavLinkText}>ADD TO WALLET</Text>
-        </View>
-        <View style={ticketShowStyles.bottomNavLinkContainer}>
-          <Text style={ticketShowStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
-          <Icon style={ticketShowStyles.bottomNavIcon} name="launch" />
-        </View>
-      </View>
-    </View>
-  )
-}
-
-Ticket.propTypes = {
-  navigate: PropTypes.func.isRequired,
-  ticket: PropTypes.object.isRequired,
-}
 
 export default class EventsTicket extends Component {
   static propTypes = {
