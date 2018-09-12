@@ -26,12 +26,12 @@ const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
     transparent={true}
   >
     <View style={modalStyles.modalContainer}>
-      <View style={modalStyles.qrCodeContainer}>
+      <View style={modalStyles.contentWrapper}>
         <Image
-          style={ticketShowStyles.qrCode}
+          style={modalStyles.qrCode}
           source={require('../../assets/qr-code-placeholder.png')}
         />
-        <Text style={styles.sectionHeader}>Show this to complete a ticket transfer.</Text>
+        <Text style={modalStyles.header}>Show this to complete a ticket transfer.</Text>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.button}
