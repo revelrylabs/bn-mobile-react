@@ -1,9 +1,9 @@
 import MyTickets from './index'
-import EventTicket from './show'
+import EventTickets from './showEventTickets'
 
 const ROUTES = {
   MyTickets,
-  EventTicket,
+  EventTickets,
 }
 
 export default ROUTES

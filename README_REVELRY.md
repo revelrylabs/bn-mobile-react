@@ -123,6 +123,19 @@ Account Manager | |
 #### Explanation
 This will be a React Native app for iOS and Android.
 
+#### React Native Standalone Debugger
+To use the RN Standalone Debugger with an iPhone simulator, first install it with:
+
+```
+brew update && brew cask install react-native-debugger
+```
+
+Then, make sure You disable Remote Debugging on any running simulators.  (`Cmd+D -> Disable Remote JS Debugging`)
+
+Then run `npm run debug`
+
+After the standalone debugger loads up, you can then re-enable Remote JS Debugging, which should then open in the standalone app, and not in a browser window.
+
 ### Requirements
 
 ### Mobile

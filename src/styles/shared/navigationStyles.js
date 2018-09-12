@@ -18,7 +18,6 @@ const fullWidth = Dimensions.get('window').width
 
 export const bodyFontSize = 18
 export const headerFontSize = 16
-export const iconFontSize = 18
 export const iconLargeFontSize = 38
 
 const NavigationStyles = {
