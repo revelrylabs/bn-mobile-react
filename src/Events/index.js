@@ -14,7 +14,7 @@ const eventStyles = EventStyles.createStyles()
 const navigationStyles = NavigationStyles.createStyles()
 
 const HEADER_MAX_HEIGHT = 0;
-const HEADER_MIN_HEIGHT = -100;
+const HEADER_MIN_HEIGHT = -25;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 

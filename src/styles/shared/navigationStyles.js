@@ -11,6 +11,7 @@ import {
   globalMargin,
   globalPaddingTiny,
   globalPaddingSmall,
+  globalPaddingLarge,
 } from './sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -67,7 +68,7 @@ const NavigationStyles = {
     top: 0,
   },
   scrollHeader: {
-    marginTop: globalMargin,
+    marginTop: globalPaddingLarge,
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
