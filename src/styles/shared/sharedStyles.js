@@ -233,7 +233,6 @@ const SharedStyles = {
     color: primaryColor,
     fontSize: iconFontSize,
     paddingRight: globalPaddingTiny,
-    paddingTop: globalPaddingTiny - 2,
   },
   iconLinkText: {
     color: primaryColor,
@@ -256,8 +255,8 @@ const SharedStyles = {
     height: 30,
   },
   iconImageSmall: {
-    width: 23,
-    height: 23,
+    width: 20,
+    height: 20,
     marginRight: globalPaddingTiny,
   },
 
