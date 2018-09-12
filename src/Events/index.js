@@ -81,21 +81,17 @@ export default class EventsIndex extends Component {
     );
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE],
-      outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+      outputRange: [HEADER_MAX_HEIGHT, 100],
       extrapolate: 'clamp',
     });
     const headerTranslate = scrollY.interpolate({
-      inputRange: [0, HEADER_SCROLL_DISTANCE],
+      inputRange: [0, 100],
       outputRange: [0, -HEADER_SCROLL_DISTANCE],
       extrapolate: 'clamp',
     });
     const opacity = scrollY.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 1, 0]
-    });
-    const textSize = scrollY.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [18, 32, 18]
+      inputRange: [0, 0.9, 1],
+      outputRange: [1, 0, 1],
     });
 
     const {navigation: {navigate}} = this.props
@@ -128,7 +124,7 @@ export default class EventsIndex extends Component {
           }}
         >
           <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.header}>Explore</Text>
+            <Animated.Text style={[styles.header, {opacity: opacity}]}>Explore</Animated.Text>
             <View style={styles.iconLinkContainer}>
               <Image
                 style={styles.iconImageSmall}
@@ -244,7 +240,7 @@ export default class EventsIndex extends Component {
         </ScrollView>
         <Animated.View style={[navigationStyles.scrollHeaderContainer, { height: headerHeight, transform: [{translateY: headerTranslate}] }]}>
           <View style={navigationStyles.scrollHeader}>
-            <Animated.Text style={navigationStyles.scrollTitle}>Explore</Animated.Text>
+            <Animated.Text style={[navigationStyles.scrollTitle, {opacity: opacity}]}>Explore</Animated.Text>
             <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; Los Angeles, CA</Animated.Text>
           </View>
         </Animated.View>
