@@ -38,7 +38,7 @@ export const headerFontSize = 36
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 16
 export const iconFontSize = 18
-export const iconCircleFontSize = 26
+export const iconCircleFontSize = 25
 
 const SharedStyles = {
   // CONTAINERS
@@ -248,6 +248,17 @@ const SharedStyles = {
   },
   iconLinkCircle: {
     color: white,
+    fontSize: iconCircleFontSize,
+  },
+  iconLinkCircleContainerActive: {
+    backgroundColor: white,
+    borderRadius: 100/2,
+    height: 45,
+    padding: globalPaddingSmall,
+    width: 45,
+  },
+  iconLinkCircleActive: {
+    color: primaryColor,
     fontSize: iconCircleFontSize,
   },
   iconImage: {

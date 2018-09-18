@@ -46,8 +46,8 @@ export default class EventShow extends Component {
                   }}
                 />
                 <View style={eventDetailsStyles.videoActionsContainer}>
-                  <View style={styles.iconLinkCircleContainer}>
-                    <Icon style={styles.iconLinkCircle} name="star" />
+                  <View style={styles.iconLinkCircleContainerActive}>
+                    <Icon style={styles.iconLinkCircleActive} name="star" />
                   </View>
                   <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
                     <Icon style={styles.iconLinkCircle} name="reply" />
