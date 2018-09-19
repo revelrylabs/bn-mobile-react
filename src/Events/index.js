@@ -8,12 +8,15 @@ import FormStyles from '../styles/shared/formStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
 import EventStyles from '../styles/shared/eventStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
+import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
 const eventStyles = EventStyles.createStyles()
 const navigationStyles = NavigationStyles.createStyles()
+const modalStyles = ModalStyles.createStyles()
+
 
 const HEADER_MAX_HEIGHT = 0;
 const HEADER_MIN_HEIGHT = -25;
@@ -128,7 +131,11 @@ export default class EventsIndex extends Component {
   }
 
   locRowOption = (rowData, _rowID, _highlighted) => {
-    return <Text>{rowData.name}</Text>
+    return (
+      <View style={modalStyles.rowWrapper}>
+        <Text>{rowData.name}</Text>
+      </View>
+    )
   }
 
   render() {
@@ -187,6 +194,7 @@ export default class EventsIndex extends Component {
               onSelect={this.changeLocation}
               options={SAMPLE_LOCATIONS}
               renderRow={this.locRowOption}
+              dropdownStyle={modalStyles.modalDropdownContainer}
             >
               <View style={styles.iconLinkContainer}>
                 <Image

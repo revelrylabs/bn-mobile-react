@@ -1,4 +1,5 @@
 import {
+  white,
   textColor,
   globalFontRegular,
   containerDarkColor,
@@ -29,6 +30,14 @@ const ModalStyles = {
     backgroundColor: containerDarkColor,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingJumbo,
+  },
+  modalDropdownContainer: {
+    backgroundColor: white,
+    height: fullHeight,
+    width: fullWidth,
+  },
+  rowWrapper: {
+    padding: globalPadding,
   },
 
   // IMAGE STYLES
