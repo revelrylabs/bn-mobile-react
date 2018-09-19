@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl, Easing} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import ModalDropdown from 'react-native-modal-dropdown';
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
@@ -17,6 +19,33 @@ const HEADER_MAX_HEIGHT = 0;
 const HEADER_MIN_HEIGHT = -25;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
+const SAMPLE_LOCATIONS = [
+  {
+    name: 'Philadelphia, PA',
+    nickname: 'PHILLY',
+    id: 1,
+  },
+  {
+    name: 'New York, NY',
+    nickname: 'NYC',
+    id: 2,
+  },
+  {
+    name: 'New Orleans, LA',
+    nickname: 'NOLA',
+    id: 3,
+  },
+  {
+    name: 'San Francisco, CA',
+    nickname: 'SF',
+    id: 4,
+  },
+  {
+    name: 'Washington, D.C.',
+    nickname: 'DC',
+    id: 5,
+  },
+]
 
 function EventItemView({
   bgImage,
@@ -59,7 +88,20 @@ function EventItemView({
   )
 }
 
+EventItemView.propTypes = {
+  bgImage: PropTypes.number,
+  avatarImages: PropTypes.array,
+  priceDollars: PropTypes.number,
+  titleText: PropTypes.string,
+  scheduleText: PropTypes.string,
+  onPress: PropTypes.func,
+}
+
 export default class EventsIndex extends Component {
+  static propTypes = {
+    navigation: PropTypes.object,
+  }
+
   constructor(props) {
     super(props);
 
@@ -71,7 +113,22 @@ export default class EventsIndex extends Component {
       toValue: 1,
       duration: 2000,
       easing: Easing.linear,
+      selectedLocationId: 2,
     };
+  }
+
+  changeLocation = (index, selectedLocation) => {
+    this.setState({selectedLocationId: selectedLocation.id})
+  }
+
+  get currentLocationDisplayName() {
+    const selectedLoc = SAMPLE_LOCATIONS.find((loc) => (loc.id === this.state.selectedLocationId))
+
+    return selectedLoc.nickname
+  }
+
+  locRowOption = (rowData, _rowID, _highlighted) => {
+    return <Text>{rowData.name}</Text>
   }
 
   render() {
@@ -124,15 +181,22 @@ export default class EventsIndex extends Component {
           }}
         >
           <View style={styles.sectionHeaderContainer}>
-            <Animated.Text style={[styles.header, {opacity: opacity}]}>Explore</Animated.Text>
-            <View style={styles.iconLinkContainer}>
-              <Image
-                style={styles.iconImageSmall}
-                source={require('../../assets/heart-small.png')}
-              />
-              <Text style={styles.iconLinkText}>NYC</Text>
-              <Icon style={styles.iconLink} name="keyboard-arrow-down" />
-            </View>
+            <Animated.Text style={[styles.header, {opacity}]}>Explore</Animated.Text>
+            <ModalDropdown
+              ref={(ref) => { this._dropdown = ref }}
+              onSelect={this.changeLocation}
+              options={SAMPLE_LOCATIONS}
+              renderRow={this.locRowOption}
+            >
+              <View style={styles.iconLinkContainer}>
+                <Image
+                  style={styles.iconImageSmall}
+                  source={require('../../assets/heart-small.png')}
+                />
+                <Text style={styles.iconLinkText}>{this.currentLocationDisplayName}</Text>
+                <Icon style={styles.iconLink} name="keyboard-arrow-down" />
+              </View>
+            </ModalDropdown>
           </View>
 
           <View style={formStyles.searchContainer}>
@@ -140,7 +204,7 @@ export default class EventsIndex extends Component {
             <TextInput
               style={formStyles.searchInput}
               placeholder="Search artists, shows, venues..."
-              searchIcon={{ size: 24 }}
+              searchIcon={{size: 24}}
               disabled
             />
           </View>
@@ -238,9 +302,9 @@ export default class EventsIndex extends Component {
             scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
           />
         </ScrollView>
-        <Animated.View style={[navigationStyles.scrollHeaderContainer, { height: headerHeight, transform: [{translateY: headerTranslate}] }]}>
+        <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
           <View style={navigationStyles.scrollHeader}>
-            <Animated.Text style={[navigationStyles.scrollTitle, {opacity: opacity}]}>Explore</Animated.Text>
+            <Animated.Text style={[navigationStyles.scrollTitle, {opacity}]}>Explore</Animated.Text>
             <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; Los Angeles, CA</Animated.Text>
           </View>
         </Animated.View>

@@ -13,11 +13,14 @@ const EventsIndexRoute = {
 
 const EventsShowRoute = {
   screen: EventsShow,
-  navigationOptions: ({navigation}) => ({
+  navigationOptions: ({
+    navigation
+  }) => ({
     title: navigation.state.params.name,
   }),
 }
 
+// @TODO: Can I set a dropdown transition animation? Also, add the navigate(''EventsChangeLocation) to Event Index
 const EventsChangeLocationRoute = {
   screen: EventsChangeLocation,
   navigationOptions: {
