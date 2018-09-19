@@ -1,8 +1,12 @@
 import {
   white,
+  primaryColor,
   textColor,
   globalFontRegular,
+  globalFontSemiBold,
   containerDarkColor,
+  globalPaddingTiny,
+  globalPaddingSmall,
   globalPadding,
   globalPaddingLarge,
   globalPaddingJumbo,
@@ -37,13 +41,22 @@ const ModalStyles = {
     width: fullWidth,
   },
   rowWrapper: {
-    padding: globalPadding,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: globalPaddingSmall + globalPaddingTiny,
   },
 
   // IMAGE STYLES
   qrCode: {
     height: 250,
     width: 250,
+  },
+
+  // ICON STYLES
+  locationIcon: {
+    color: primaryColor,
+    fontSize: headerFontSize,
+    paddingRight: globalPaddingSmall,
   },
 
   // TEXT STYLES
@@ -53,7 +66,12 @@ const ModalStyles = {
     fontSize: headerFontSize,
     paddingVertical: globalPaddingLarge,
     textAlign: 'center',
-  }
+  },
+  locationText: {
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize,
+    textAlign: 'right',
+  },
 }
 
 function createStyles(overrides = {}) {
