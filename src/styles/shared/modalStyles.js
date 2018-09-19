@@ -10,6 +10,7 @@ import {
   globalPadding,
   globalPaddingLarge,
   globalPaddingJumbo,
+  globalMargin,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -38,6 +39,7 @@ const ModalStyles = {
   modalDropdownContainer: {
     backgroundColor: white,
     height: fullHeight,
+    marginTop: globalMargin,
     width: fullWidth,
   },
   rowWrapper: {
