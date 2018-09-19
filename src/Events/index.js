@@ -65,8 +65,8 @@ function EventItemView({
 
         <View style={eventStyles.detailsContainer}>
           <View style={eventStyles.sectionTop}>
-            <View style={eventStyles.iconLinkCircleContainerSmall}>
-              <Icon style={eventStyles.iconLinkCircleSmall} name="star" />
+            <View style={eventStyles.iconLinkCircleContainerSmallActive}>
+              <Icon style={eventStyles.iconLinkCircleSmallActive} name="star" />
             </View>
             <View style={styles.avatarContainer}>
               {avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
