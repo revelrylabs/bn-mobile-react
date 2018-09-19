@@ -1,5 +1,6 @@
 import {
   white,
+  primaryColor,
   textColor,
   sectionHeaderFontSize,
   bodyFontSize,
@@ -63,7 +64,18 @@ const EventStyles = {
     color: white,
     fontSize: iconFontSize,
   },
-
+  iconLinkCircleContainerSmallActive: {
+    backgroundColor: white,
+    borderRadius: 100/2,
+    height: 28,
+    padding: globalPaddingTiny,
+    width: 28,
+  },
+  iconLinkCircleSmallActive: {
+    color: primaryColor,
+    fontSize: iconFontSize,
+  },
+  
   // IMAGE BKGD STYLES
   eventImage: {
     height: 180,
