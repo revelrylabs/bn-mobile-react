@@ -17,7 +17,18 @@ export default class EventShow extends Component {
     navigation: PropTypes.object.isRequired,
   }
 
+  state = {
+    favorite: true,
+  }
+
+  toggleFavorite = (favorite) => {
+
+    this.setState({favorite})
+  }
+
   render() {
+    const {favorite} = this.state
+
     return (
       <Modal
         onRequestClose={() => {
@@ -46,9 +57,11 @@ export default class EventShow extends Component {
                   }}
                 />
                 <View style={eventDetailsStyles.videoActionsContainer}>
-                  <View style={styles.iconLinkCircleContainerActive}>
-                    <Icon style={styles.iconLinkCircleActive} name="star" />
-                  </View>
+                  <TouchableHighlight onPress={() => this.toggleFavorite(!favorite)}>
+                    <View style={favorite ? styles.iconLinkCircleContainer : styles.iconLinkCircleContainerActive}>
+                      <Icon style={favorite ? styles.iconLinkCircle : styles.iconLinkCircleActive} name="star" />
+                    </View>
+                  </TouchableHighlight>
                   <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
                     <Icon style={styles.iconLinkCircle} name="reply" />
                   </View>
