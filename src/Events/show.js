@@ -83,7 +83,7 @@ export default class EventShow extends Component {
 
             <View style={eventDetailsStyles.eventDetailsHeaderWrapper}>
               <Text style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
-              <Text style={eventDetailsStyles.sectionHeader}>By: Public Works</Text>
+              <Text style={eventDetailsStyles.descriptionSubHeader}>By: Public Works</Text>
             </View>
 
             <View style={eventDetailsStyles.eventDetailsContainer}>
@@ -117,8 +117,17 @@ export default class EventShow extends Component {
             </View>
 
             <View style={eventDetailsStyles.eventDescriptionContainer}>
-              <Text style={eventDetailsStyles.sectionHeader}>Description</Text>
-              <Text style={styles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+              <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
+              <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+
+              <Text style={eventDetailsStyles.sectionHeader}>PERFORMING ARTISTS</Text>
+              <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+
+              <Text style={eventDetailsStyles.sectionHeader}>AGE RESTRICTIONS</Text>
+              <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+
+              <Text style={eventDetailsStyles.sectionHeader}>EVENT DESCRIPTION</Text>
+              <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
             </View>
 
 

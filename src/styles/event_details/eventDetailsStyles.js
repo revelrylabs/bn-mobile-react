@@ -7,6 +7,7 @@ import {
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
+  globalFontBold,
   bodyFontSize,
   globalPaddingJumbo,
   globalPaddingLarge,
@@ -83,6 +84,12 @@ const EventDetailsStyles = {
     color: textColor,
     marginTop: globalPaddingTiny,
   },
+  descriptionSubHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+    marginBottom: globalMargin,
+  },
   header: {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
@@ -90,10 +97,17 @@ const EventDetailsStyles = {
     marginTop: globalPaddingTiny,
   },
   sectionHeader: {
+    color: textColor,
+    fontFamily: globalFontBold,
+    fontSize: sectionHeaderFontSize,
+    marginVertical: globalMargin,
+  },
+  bodyText: {
+    backgroundColor: 'transparent',
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
-    marginBottom: globalMargin,
+    fontSize: bodyFontSize,
+    paddingBottom: globalPaddingSmall,
   },
   iconSectionHeader: {
     color: sectionHeaderColor,
