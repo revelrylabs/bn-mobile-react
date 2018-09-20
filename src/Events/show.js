@@ -117,7 +117,12 @@ export default class EventShow extends Component {
             </View>
 
             <View style={eventDetailsStyles.eventDescriptionContainer}>
-              <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
+
+              <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
+                <Icon style={eventDetailsStyles.iconEventDescription} name="account-circle" />
+                <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
+              </View>
+
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
                 <Text style={styles.linkText}>The Warfield</Text>
               </TouchableHighlight>

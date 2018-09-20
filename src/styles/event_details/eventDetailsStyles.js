@@ -73,9 +73,6 @@ const EventDetailsStyles = {
     justifyContent: 'flex-start',
     paddingVertical: globalPadding,
   },
-  eventDetailsHeaderWrapper: {
-
-  },
 
   // TEXT STYLES
   descriptionHeader: {
@@ -120,12 +117,13 @@ const EventDetailsStyles = {
     fontSize: headerFontSize + sectionHeaderFontSize,
   },
 
-  // EVENT DESCRIPTION STYLES
+  // EVENT DETAILS/DESCRIPTION STYLES
   eventDetailsContainer: {
     flexDirection: 'row',
     paddingVertical: globalPadding,
   },
-  eventDetailsLeft: {
+  eventDetailsHeaderWrapper: {
+
   },
   eventDescriptionContainer: {
     paddingVertical: globalPadding,
@@ -134,6 +132,11 @@ const EventDetailsStyles = {
     borderStyle: 'solid',
     borderTopWidth: 1,
     borderBottomWidth: 1,
+  },
+  eventDescriptionHeaderWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 
   // AVATAR STYLES
@@ -189,7 +192,11 @@ const EventDetailsStyles = {
     height: 20,
     marginRight: globalPaddingSmall,
   },
-
+  iconEventDescription: {
+    color: sectionHeaderColor,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingSmall,
+  },
 
   // IMAGE PLACEHOLDER STYLES
   imagePlaceholderContainer: {
