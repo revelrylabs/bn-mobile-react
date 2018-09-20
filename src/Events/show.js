@@ -81,6 +81,11 @@ export default class EventShow extends Component {
 
           <View style={styles.container}>
 
+            <View style={eventDetailsStyles.eventDetailsHeaderWrapper}>
+              <Text style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
+              <Text style={eventDetailsStyles.sectionHeader}>By: Public Works</Text>
+            </View>
+
             <View style={eventDetailsStyles.eventDetailsContainer}>
               <View style={[eventDetailsStyles.eventDetailsLeft, styles.borderRight]}>
                 <Text style={eventDetailsStyles.sectionHeader}>People Going To This Event</Text>

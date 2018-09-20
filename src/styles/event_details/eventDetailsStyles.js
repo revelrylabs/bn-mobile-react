@@ -74,8 +74,17 @@ const EventDetailsStyles = {
     justifyContent: 'flex-start',
     paddingVertical: globalPadding,
   },
+  eventDetailsHeaderWrapper: {
+
+  },
 
   // TEXT STYLES
+  descriptionHeader: {
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize,
+    color: textColor,
+    marginTop: globalPaddingTiny,
+  },
   header: {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
