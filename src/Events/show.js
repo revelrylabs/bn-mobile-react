@@ -119,7 +119,7 @@ export default class EventShow extends Component {
             <View style={eventDetailsStyles.eventDescriptionContainer}>
 
               <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
-                <Icon style={eventDetailsStyles.iconEventDescription} name="account-circle" />
+                <Icon style={eventDetailsStyles.iconEventDescription} name="access-time" />
                 <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
               </View>
 
@@ -136,18 +136,28 @@ export default class EventShow extends Component {
                 Doors 7:00 PM PDT - Show 8:00 PM PDT
               </Text>
 
-              <Text style={eventDetailsStyles.sectionHeader}>PERFORMING ARTISTS</Text>
+              <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
+                <Icon style={eventDetailsStyles.iconEventDescription} name="person-outline" />
+                <Text style={eventDetailsStyles.sectionHeader}>PERFORMING ARTISTS</Text>
+              </View>
               <Text style={eventDetailsStyles.bodyText}>
                 Taylor Swift, Kanye West, Drake, Beyonce, Ed Sheeran, Elton John, Eminem, Paul McCartney, Flordia Georgia Line, Coldplay, Maroon 5 and Carrie Underwood.
               </Text>
 
-              <Text style={eventDetailsStyles.sectionHeader}>AGE RESTRICTIONS</Text>
+              <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
+                <Icon style={eventDetailsStyles.iconEventDescription} name="error-outline" />
+                <Text style={eventDetailsStyles.sectionHeader}>AGE RESTRICTIONS</Text>
+              </View>
               <Text style={eventDetailsStyles.bodyText}>
                 This event is for all ages.
               </Text>
 
-              <Text style={eventDetailsStyles.sectionHeader}>EVENT DESCRIPTION</Text>
+              <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
+                <Icon style={eventDetailsStyles.iconEventDescription} name="music-note" />
+                <Text style={eventDetailsStyles.sectionHeader}>EVENT DESCRIPTION</Text>
+              </View>
               <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+
             </View>
 
 
