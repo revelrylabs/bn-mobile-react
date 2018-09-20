@@ -87,34 +87,32 @@ export default class EventShow extends Component {
             </View>
 
             <View style={eventDetailsStyles.eventDetailsContainer}>
-              <View style={[eventDetailsStyles.eventDetailsLeft, styles.borderRight]}>
-                <Text style={eventDetailsStyles.sectionHeader}>People Going To This Event</Text>
+              <View style={eventDetailsStyles.eventDetailsLeft}>
                 <View style={eventDetailsStyles.avatarContainer}>
                   <Image
-                    style={styles.avatar}
+                    style={eventDetailsStyles.avatar}
                     source={require('../../assets/avatar-male.png')}
                   />
                   <Image
-                    style={styles.avatar}
+                    style={eventDetailsStyles.avatar}
                     source={require('../../assets/avatar-female-2.png')}
                   />
                   <Image
-                    style={styles.avatar}
+                    style={eventDetailsStyles.avatar}
                     source={require('../../assets/avatar-male-2.png')}
                   />
                   <Image
-                    style={styles.avatar}
+                    style={eventDetailsStyles.avatar}
                     source={require('../../assets/avatar-female-3.png')}
                   />
                   <Image
-                    style={styles.avatar}
+                    style={eventDetailsStyles.avatar}
                     source={require('../../assets/avatar-female.png')}
                   />
+                  <View style={eventDetailsStyles.attendeeContainer}>
+                    <Text style={eventDetailsStyles.attendeeNumber}>+327</Text>
+                  </View>
                 </View>
-              </View>
-              <View style={eventDetailsStyles.eventDetailsRight}>
-                <Text style={eventDetailsStyles.sectionHeader}>Tickets From</Text>
-                <Text style={eventDetailsStyles.ticketPrice}>$30</Text>
               </View>
             </View>
 

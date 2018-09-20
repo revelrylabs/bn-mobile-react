@@ -5,7 +5,9 @@ import {
   borderColor,
   textColor,
   globalFontRegular,
+  globalFontMedium,
   globalFontSemiBold,
+  bodyFontSize,
   globalPaddingJumbo,
   globalPaddingLarge,
   globalPaddingMedium,
@@ -24,6 +26,7 @@ export const headerFontSize = 28
 export const sectionHeaderFontSize = 18
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
+export const attendeeFontSize = 12
 
 const EventDetailsStyles = {
   // VIDEO STYLES
@@ -62,11 +65,6 @@ const EventDetailsStyles = {
   videoActionsContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-  },
-  avatarContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingLeft: globalPaddingSmall,
   },
   iconSectionHeaderContainer: {
     alignItems: 'center',
@@ -111,14 +109,9 @@ const EventDetailsStyles = {
   // EVENT DESCRIPTION STYLES
   eventDetailsContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
     paddingVertical: globalPadding,
   },
   eventDetailsLeft: {
-    paddingRight: globalPadding,
-  },
-  eventDetailsRight: {
-    paddingLeft: globalPadding,
   },
   eventDescriptionContainer: {
     paddingVertical: globalPadding,
@@ -127,6 +120,38 @@ const EventDetailsStyles = {
     borderStyle: 'solid',
     borderTopWidth: 1,
     borderBottomWidth: 1,
+  },
+
+  // AVATAR STYLES
+  avatarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  avatar: {
+    borderColor: white,
+    borderRadius: 45/2,
+    borderWidth: 1,
+    height: 45,
+    marginRight: globalPaddingSmall,
+    width: 45,
+  },
+  attendeeContainer: {
+    borderColor: borderColor,
+    borderRadius: 45/2,
+    borderWidth: 1,
+    height: 45,
+    padding: globalPaddingTiny,
+    width: 45,
+  },
+  attendeeNumber: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    color: primaryColor,
+    fontFamily: globalFontMedium,
+    fontSize: attendeeFontSize,
+    letterSpacing: 1,
+    padding: globalPaddingTiny,
+    textAlign: 'center',
   },
 
   // ICON STYLES
