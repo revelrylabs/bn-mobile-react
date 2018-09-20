@@ -57,7 +57,7 @@ export default class EventShow extends Component {
                   }}
                 />
                 <View style={eventDetailsStyles.videoActionsContainer}>
-                  <TouchableHighlight onPress={() => this.toggleFavorite(!favorite)}>
+                  <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
                     <View style={favorite ? styles.iconLinkCircleContainer : styles.iconLinkCircleContainerActive}>
                       <Icon style={favorite ? styles.iconLinkCircle : styles.iconLinkCircleActive} name="star" />
                     </View>
