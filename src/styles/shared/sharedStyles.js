@@ -203,6 +203,12 @@ const SharedStyles = {
     marginTop: -5,
     paddingBottom: globalPaddingTiny,
   },
+  linkText: {
+    backgroundColor: 'transparent',
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+  },
 
   // SUBNAV STYLES
   subnavContainer: {
@@ -351,6 +357,9 @@ const SharedStyles = {
   },
   paddingBottomJumbo: {
     paddingBottom: globalPaddingJumbo,
+  },
+  noPaddingBottom: {
+    paddingBottom: 0,
   },
   marginTopSmall: {
     marginTop: globalMarginSmall,

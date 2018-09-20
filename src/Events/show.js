@@ -118,13 +118,28 @@ export default class EventShow extends Component {
 
             <View style={eventDetailsStyles.eventDescriptionContainer}>
               <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
-              <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+                <Text style={styles.linkText}>The Warfield</Text>
+              </TouchableHighlight>
+              <Text style={eventDetailsStyles.bodyText}>
+                982 Market St, San Fransisco, CA 94102, USA
+              </Text>
+              <Text style={[eventDetailsStyles.bodyText, styles.noPaddingBottom]}>
+                Thursday, September 27, 2018
+              </Text>
+              <Text style={eventDetailsStyles.bodyText}>
+                Doors 7:00 PM PDT - Show 8:00 PM PDT
+              </Text>
 
               <Text style={eventDetailsStyles.sectionHeader}>PERFORMING ARTISTS</Text>
-              <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+              <Text style={eventDetailsStyles.bodyText}>
+                Taylor Swift, Kanye West, Drake, Beyonce, Ed Sheeran, Elton John, Eminem, Paul McCartney, Flordia Georgia Line, Coldplay, Maroon 5 and Carrie Underwood.
+              </Text>
 
               <Text style={eventDetailsStyles.sectionHeader}>AGE RESTRICTIONS</Text>
-              <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+              <Text style={eventDetailsStyles.bodyText}>
+                This event is for all ages.
+              </Text>
 
               <Text style={eventDetailsStyles.sectionHeader}>EVENT DESCRIPTION</Text>
               <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
