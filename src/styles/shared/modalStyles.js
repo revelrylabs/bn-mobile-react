@@ -2,9 +2,11 @@ import {
   white,
   primaryColor,
   textColor,
+  sectionHeaderColor,
   globalFontRegular,
   globalFontSemiBold,
   containerDarkColor,
+  iconFontSize,
   globalPaddingTiny,
   globalPaddingSmall,
   globalPadding,
@@ -73,6 +75,11 @@ const ModalStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
     textAlign: 'right',
+  },
+  sectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
   },
 }
 

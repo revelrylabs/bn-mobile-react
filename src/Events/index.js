@@ -24,7 +24,7 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 const SAMPLE_LOCATIONS = [
   {
-    name: 'Where are you looking for Events?',
+    name: 'Where are you looking for events?',
     nickname: '',
     id: 1,
   },
@@ -140,7 +140,7 @@ export default class EventsIndex extends Component {
       return (
         <View>
           <View style={modalStyles.rowWrapper}>
-            <Text>{rowData.name}</Text>
+            <Text style={modalStyles.sectionHeader}>{rowData.name}</Text>
           </View>
         </View>
       )
