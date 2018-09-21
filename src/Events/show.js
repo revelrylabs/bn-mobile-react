@@ -96,7 +96,7 @@ export default class EventShow extends Component {
               <TouchableHighlight style={eventDetailsStyles.buttonRounded}>
                 <View style={styles.flexRowCenter}>
                   <Icon style={eventDetailsStyles.buttonRoundedIcon} name="star" />
-                  <Text style={eventDetailsStyles.buttonRoundedText}>I'm Interested</Text>
+                  <Text style={eventDetailsStyles.buttonRoundedText}>I&apos;m Interested</Text>
                 </View>
               </TouchableHighlight>
               <TouchableHighlight style={eventDetailsStyles.buttonRounded}>
