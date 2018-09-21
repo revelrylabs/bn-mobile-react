@@ -349,6 +349,9 @@ const SharedStyles = {
     borderStyle: 'solid',
     borderRightWidth: 1,
   },
+  paddingTop: {
+    paddingTop: globalPadding,
+  },
   paddingTopSmall: {
     paddingTop: globalPaddingSmall,
   },

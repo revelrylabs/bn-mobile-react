@@ -23,9 +23,10 @@ const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
-export const headerFontSize = 28
+export const headerFontSize = 26
 export const sectionHeaderFontSize = 18
-export const calendarDateFontSize = 21
+export const calendarDateFontSize = 24
+export const calendarMonthFontSize = 14
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 export const attendeeFontSize = 12
@@ -80,13 +81,14 @@ const EventDetailsStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
     color: textColor,
-    marginTop: globalPaddingTiny,
+    width: 275,
   },
   descriptionSubHeader: {
     color: sectionHeaderColor,
-    fontFamily: globalFontRegular,
+    fontFamily: globalFontMedium,
     fontSize: sectionHeaderFontSize,
     marginBottom: globalMargin,
+    paddingTop: globalPaddingTiny,
   },
   header: {
     fontFamily: globalFontSemiBold,
@@ -113,19 +115,11 @@ const EventDetailsStyles = {
     fontFamily: globalFontBold,
     fontSize: sectionHeaderFontSize,
   },
-  ticketPrice: {
-    color: primaryColor,
-    fontFamily: globalFontSemiBold,
-    fontSize: headerFontSize + sectionHeaderFontSize,
-  },
 
   // EVENT DETAILS/DESCRIPTION STYLES
   eventDetailsContainer: {
     flexDirection: 'row',
     paddingVertical: globalPadding,
-  },
-  eventDetailsHeaderWrapper: {
-
   },
   eventDescriptionContainer: {
     paddingVertical: globalPadding,
@@ -220,18 +214,25 @@ const EventDetailsStyles = {
     fontSize: bodyFontSize,
     textAlign: 'center',
   },
+  buttonRoundedIcon: {
+    color: sectionHeaderColor,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingTiny,
+  },
 
   // CALENDAR STYLES
   calendarWrapper: {
     backgroundColor: textColor,
     borderRadius: 5,
+    height: 50,
+    marginRight: globalPaddingSmall,
     padding: globalPaddingTiny,
     width: 50,
   },
   calendarMonth: {
     color: white,
     fontFamily: globalFontMedium,
-    fontSize: bodyFontSize,
+    fontSize: calendarMonthFontSize,
     textAlign: 'center',
   },
   calendarDate: {
