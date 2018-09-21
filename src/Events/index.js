@@ -24,29 +24,34 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 const SAMPLE_LOCATIONS = [
   {
+    name: 'Where are you looking for Events?',
+    nickname: '',
+    id: 1,
+  },
+  {
     name: 'Philadelphia, PA',
     nickname: 'PHILLY',
-    id: 1,
+    id: 2,
   },
   {
     name: 'New York, NY',
     nickname: 'NYC',
-    id: 2,
+    id: 3,
   },
   {
     name: 'New Orleans, LA',
     nickname: 'NOLA',
-    id: 3,
+    id: 4,
   },
   {
     name: 'San Francisco, CA',
     nickname: 'SF',
-    id: 4,
+    id: 5,
   },
   {
     name: 'Washington, D.C.',
     nickname: 'DC',
-    id: 5,
+    id: 6,
   },
 ]
 
@@ -131,14 +136,24 @@ export default class EventsIndex extends Component {
   }
 
   locRowOption = (rowData, _rowID, _highlighted) => {
-    return (
-      <View>
-        <View style={modalStyles.rowWrapper}>
-          <Icon style={modalStyles.locationIcon} name="location-on" />
-          <Text style={modalStyles.locationText}>{rowData.name}</Text>
+    if (_rowID == 0) {
+      return (
+        <View>
+          <View style={modalStyles.rowWrapper}>
+            <Text>{rowData.name}</Text>
+          </View>
         </View>
-      </View>
-    )
+      )
+    } else {
+      return (
+        <View>
+          <View style={modalStyles.rowWrapper}>
+            <Icon style={modalStyles.locationIcon} name="location-on" />
+            <Text style={modalStyles.locationText}>{rowData.name}</Text>
+          </View>
+        </View>
+      )
+    }
   }
 
   render() {
@@ -197,6 +212,7 @@ export default class EventsIndex extends Component {
               onSelect={this.changeLocation}
               options={SAMPLE_LOCATIONS}
               renderRow={this.locRowOption}
+              renderSeparator={() => <View /> }
               dropdownStyle={modalStyles.modalDropdownContainer}
             >
               <View style={styles.iconLinkContainer}>
