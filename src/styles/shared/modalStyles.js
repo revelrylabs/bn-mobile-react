@@ -1,10 +1,18 @@
 import {
+  white,
+  primaryColor,
   textColor,
+  sectionHeaderColor,
   globalFontRegular,
+  globalFontSemiBold,
   containerDarkColor,
+  iconFontSize,
+  globalPaddingTiny,
+  globalPaddingSmall,
   globalPadding,
   globalPaddingLarge,
   globalPaddingJumbo,
+  globalMargin,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -30,11 +38,30 @@ const ModalStyles = {
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingJumbo,
   },
+  modalDropdownContainer: {
+    backgroundColor: white,
+    borderColor: white,
+    height: fullHeight,
+    marginTop: globalMargin,
+    width: fullWidth,
+  },
+  rowWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: globalPaddingSmall + globalPaddingTiny,
+  },
 
   // IMAGE STYLES
   qrCode: {
     height: 250,
     width: 250,
+  },
+
+  // ICON STYLES
+  locationIcon: {
+    color: primaryColor,
+    fontSize: headerFontSize,
+    paddingRight: globalPaddingSmall,
   },
 
   // TEXT STYLES
@@ -44,7 +71,17 @@ const ModalStyles = {
     fontSize: headerFontSize,
     paddingVertical: globalPaddingLarge,
     textAlign: 'center',
-  }
+  },
+  locationText: {
+    fontFamily: globalFontSemiBold,
+    fontSize: headerFontSize,
+    textAlign: 'right',
+  },
+  sectionHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
+  },
 }
 
 function createStyles(overrides = {}) {
