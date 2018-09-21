@@ -203,6 +203,12 @@ const SharedStyles = {
     marginTop: -5,
     paddingBottom: globalPaddingTiny,
   },
+  linkText: {
+    backgroundColor: 'transparent',
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+  },
 
   // SUBNAV STYLES
   subnavContainer: {
@@ -343,14 +349,23 @@ const SharedStyles = {
     borderStyle: 'solid',
     borderRightWidth: 1,
   },
+  paddingTop: {
+    paddingTop: globalPadding,
+  },
   paddingTopSmall: {
     paddingTop: globalPaddingSmall,
   },
   paddingVerticalSmall: {
     paddingVertical: globalPaddingSmall,
   },
+  paddingLeft: {
+    paddingLeft: globalPadding,
+  },
   paddingBottomJumbo: {
     paddingBottom: globalPaddingJumbo,
+  },
+  noPaddingBottom: {
+    paddingBottom: 0,
   },
   marginTopSmall: {
     marginTop: globalMarginSmall,
@@ -370,6 +385,10 @@ const SharedStyles = {
   flexRowSpaceBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  flexRowCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   flexColumnCenter: {
     flexDirection: 'column',
