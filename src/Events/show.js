@@ -124,7 +124,7 @@ export default class EventShow extends Component {
               </View>
 
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-                <Text style={styles.linkText}>The Warfield</Text>
+                <Text style={[styles.linkText, styles.paddingLeft]}>The Warfield</Text>
               </TouchableHighlight>
               <Text style={eventDetailsStyles.bodyText}>
                 982 Market St, San Fransisco, CA 94102, USA
@@ -166,7 +166,7 @@ export default class EventShow extends Component {
                 style={eventDetailsStyles.iconYoutube}
                 source={require('../../assets/icon-youtube.png')}
               />
-              <Text style={eventDetailsStyles.iconSectionHeader}>Youtube</Text>
+              <Text style={eventDetailsStyles.iconSectionHeader}>YOUTUBE</Text>
             </View>
 
             <View style={eventDetailsStyles.videoContainer}>
@@ -187,7 +187,7 @@ export default class EventShow extends Component {
                 style={eventDetailsStyles.iconInstagram}
                 source={require('../../assets/icon-instagram.png')}
               />
-              <Text style={eventDetailsStyles.iconSectionHeader}>Instagram</Text>
+              <Text style={eventDetailsStyles.iconSectionHeader}>INSTAGRAM</Text>
             </View>
 
             <View style={imageGridStyles.imageGridContainer}>
@@ -225,7 +225,7 @@ export default class EventShow extends Component {
                 style={eventDetailsStyles.iconSpotify}
                 source={require('../../assets/icon-spotify.png')}
               />
-              <Text style={eventDetailsStyles.iconSectionHeader}>Spotify</Text>
+              <Text style={eventDetailsStyles.iconSectionHeader}>SPOTIFY</Text>
             </View>
 
             <View style={eventDetailsStyles.imagePlaceholderContainer}>

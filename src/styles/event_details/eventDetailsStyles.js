@@ -105,10 +105,11 @@ const EventDetailsStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     paddingBottom: globalPaddingSmall,
+    paddingLeft: globalPadding,
   },
   iconSectionHeader: {
-    color: sectionHeaderColor,
-    fontFamily: globalFontRegular,
+    color: textColor,
+    fontFamily: globalFontBold,
     fontSize: sectionHeaderFontSize,
   },
   ticketPrice: {
@@ -137,6 +138,7 @@ const EventDetailsStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    marginLeft: -5,
   },
 
   // AVATAR STYLES
