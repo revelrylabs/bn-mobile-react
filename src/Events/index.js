@@ -207,6 +207,7 @@ export default class EventsIndex extends Component {
               onSelect={this.changeLocation}
               options={SAMPLE_LOCATIONS}
               renderRow={this.locRowOption}
+              renderSeparator={() => <View /> }              
               dropdownStyle={modalStyles.modalDropdownContainer}
             >
               <View style={styles.iconLinkContainer}>
