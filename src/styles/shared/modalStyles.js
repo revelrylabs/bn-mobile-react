@@ -40,6 +40,7 @@ const ModalStyles = {
   },
   modalDropdownContainer: {
     backgroundColor: white,
+    borderColor: white,
     height: fullHeight,
     marginTop: globalMargin,
     width: fullWidth,
