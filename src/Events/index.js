@@ -131,14 +131,24 @@ export default class EventsIndex extends Component {
   }
 
   locRowOption = (rowData, _rowID, _highlighted) => {
-    return (
-      <View>
+    if (_rowID == 0) {
+      return (
+        <View>
+          <View style={modalStyles.rowWrapper}>
+            <Text>Where are you looking for Events?</Text>
+          </View>
+        </View>
+      )
+    } else {
+      return (
+        <View>
         <View style={modalStyles.rowWrapper}>
           <Icon style={modalStyles.locationIcon} name="location-on" />
           <Text style={modalStyles.locationText}>{rowData.name}</Text>
         </View>
       </View>
-    )
+      )
+    }
   }
 
   render() {
