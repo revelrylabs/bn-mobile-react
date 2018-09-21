@@ -82,6 +82,10 @@ export default class EventShow extends Component {
           <View style={styles.container}>
 
             <View style={eventDetailsStyles.eventDetailsHeaderWrapper}>
+              <View style={eventDetailsStyles.calendarWrapper}>
+                <Text style={eventDetailsStyles.calendarMonth}>sept</Text>
+                <Text style={eventDetailsStyles.calendarDate}>27</Text>
+              </View>
               <Text style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
               <Text style={eventDetailsStyles.descriptionSubHeader}>By: Public Works</Text>
             </View>

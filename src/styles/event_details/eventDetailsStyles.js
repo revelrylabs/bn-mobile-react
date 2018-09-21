@@ -25,6 +25,7 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const headerFontSize = 28
 export const sectionHeaderFontSize = 18
+export const calendarDateFontSize = 21
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 export const attendeeFontSize = 12
@@ -217,6 +218,26 @@ const EventDetailsStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
+    textAlign: 'center',
+  },
+
+  // CALENDAR STYLES
+  calendarWrapper: {
+    backgroundColor: textColor,
+    borderRadius: 5,
+    padding: globalPaddingTiny,
+    width: 50,
+  },
+  calendarMonth: {
+    color: white,
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize,
+    textAlign: 'center',
+  },
+  calendarDate: {
+    color: white,
+    fontFamily: globalFontMedium,
+    fontSize: calendarDateFontSize,
     textAlign: 'center',
   },
 
