@@ -143,15 +143,16 @@ const EventDetailsStyles = {
 
   // AVATAR STYLES
   avatarContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   avatar: {
     borderColor: white,
     borderRadius: 45/2,
     borderWidth: 1,
     height: 45,
-    marginRight: globalPaddingSmall,
+    marginHorizontal: globalPaddingTiny,
     width: 45,
   },
   attendeeContainer: {
@@ -159,6 +160,7 @@ const EventDetailsStyles = {
     borderRadius: 45/2,
     borderWidth: 1,
     height: 45,
+    marginHorizontal: globalPaddingTiny,
     padding: globalPaddingTiny,
     width: 45,
   },
