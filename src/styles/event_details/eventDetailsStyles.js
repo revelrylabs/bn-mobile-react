@@ -163,13 +163,11 @@ const EventDetailsStyles = {
     width: 45,
   },
   attendeeNumber: {
-    flexDirection: 'column',
-    alignItems: 'center',
     color: primaryColor,
-    fontFamily: globalFontMedium,
+    fontFamily: globalFontBold,
     fontSize: attendeeFontSize,
     letterSpacing: 1,
-    padding: globalPaddingTiny,
+    paddingTop: globalPaddingSmall,
     textAlign: 'center',
   },
 
