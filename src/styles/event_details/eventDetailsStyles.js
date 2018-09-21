@@ -200,6 +200,26 @@ const EventDetailsStyles = {
     paddingRight: globalPaddingSmall,
   },
 
+  // BUTTON STYLES
+  buttonRounded: {
+    alignItems: 'center',
+    backgroundColor: white,
+    borderColor: borderColor,
+    borderRadius: 45/2,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'center',
+    marginHorizontal: globalPaddingTiny,
+  },
+  buttonRoundedText: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    textAlign: 'center',
+  },
+
   // IMAGE PLACEHOLDER STYLES
   imagePlaceholderContainer: {
     height: 100,

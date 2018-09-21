@@ -383,6 +383,10 @@ const SharedStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  flexRowCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   flexColumnCenter: {
     flexDirection: 'column',
     justifyContent: 'center',

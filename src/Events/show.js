@@ -86,6 +86,21 @@ export default class EventShow extends Component {
               <Text style={eventDetailsStyles.descriptionSubHeader}>By: Public Works</Text>
             </View>
 
+            <View style={styles.flexRowSpaceBetween}>
+              <TouchableHighlight style={eventDetailsStyles.buttonRounded}>
+                <View style={styles.flexRowCenter}>
+                  <Icon style={eventDetailsStyles.iconEventDescription} name="star" />
+                  <Text style={eventDetailsStyles.buttonRoundedText}>I'm Interested</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight style={eventDetailsStyles.buttonRounded}>
+                <View style={styles.flexRowCenter}>
+                  <Icon style={eventDetailsStyles.iconEventDescription} name="reply" />
+                  <Text style={eventDetailsStyles.buttonRoundedText}>Share Event</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+
             <View style={eventDetailsStyles.eventDetailsContainer}>
               <View style={eventDetailsStyles.eventDetailsLeft}>
                 <View style={eventDetailsStyles.avatarContainer}>
