@@ -119,7 +119,7 @@ const EventDetailsStyles = {
     color: textColor,
     fontFamily: globalFontBold,
     fontSize: sectionHeaderFontSize,
-    marginBottom: globalMargin,
+    paddingBottom: globalPaddingSmall,
     textAlign: 'center',
   },
 
