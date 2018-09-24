@@ -261,14 +261,15 @@ export default class EventShow extends Component {
             </View>
 
           </View>
+          <Text style={eventDetailsStyles.priceHeader}>$30 to $55</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableHighlight
+              style={eventDetailsStyles.buttonRoundedSecondary}
+            >
+              <Text style={styles.buttonText}>Get Tickets</Text>
+            </TouchableHighlight>
+          </View>
         </ScrollView>
-        <View style={styles.buttonContainer}>
-          <TouchableHighlight
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Get Tickets</Text>
-          </TouchableHighlight>
-        </View>
       </Modal>
     )
   }

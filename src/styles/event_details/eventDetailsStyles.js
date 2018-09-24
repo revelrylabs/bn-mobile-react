@@ -115,6 +115,13 @@ const EventDetailsStyles = {
     fontFamily: globalFontBold,
     fontSize: sectionHeaderFontSize,
   },
+  priceHeader: {
+    color: textColor,
+    fontFamily: globalFontBold,
+    fontSize: sectionHeaderFontSize,
+    paddingBottom: globalPaddingSmall,
+    textAlign: 'center',
+  },
 
   // EVENT DETAILS/DESCRIPTION STYLES
   eventDetailsContainer: {
@@ -219,6 +226,18 @@ const EventDetailsStyles = {
     fontSize: bodyFontSize,
     paddingRight: globalPaddingTiny,
   },
+  buttonRoundedSecondary: {
+    backgroundColor: primaryColor,
+    borderColor: borderColor,
+    borderRadius: 55/2,
+    borderWidth: 1,
+    flex: 1,
+    height: 55,
+    justifyContent: 'center',
+    marginHorizontal: globalMargin,
+    marginBottom: globalPaddingLarge,
+  },
+
 
   // CALENDAR STYLES
   calendarWrapper: {
