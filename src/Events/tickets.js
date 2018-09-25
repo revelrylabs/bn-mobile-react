@@ -28,7 +28,7 @@ export default class GetTickets extends Component {
         <TouchableHighlight>
           <View style={eventTicketStyles.rowContainer}>
             <View style={eventTicketStyles.row}>
-              <Icon style={eventTicketStyles.ticketIcon} name="account-circle" />
+              <Text style={eventTicketStyles.ticketPrice}>$35</Text>
               <View>
                 <Text style={eventTicketStyles.ticketHeader}>General Admission</Text>
                 <Text style={eventTicketStyles.ticketSubHeader}>Lorem ipsum dolor sit amet non lorem.</Text>

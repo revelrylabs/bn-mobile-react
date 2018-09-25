@@ -17,6 +17,8 @@ const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
+export const ticketPriceFontSize = 32
+
 
 const EventTicketStyles = {
   // ROW STYLES
@@ -36,11 +38,12 @@ const EventTicketStyles = {
     justifyContent: 'flex-start',
   },
 
-  // ACCOUNT SUBNAV STYLES
-  ticketIcon: {
-    color: sectionHeaderColor,
-    fontSize: bodyFontSize,
-    paddingRight: globalPaddingSmall,
+  // TICKET SUBNAV STYLES
+  ticketPrice: {
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: ticketPriceFontSize,
+    paddingRight: globalPadding,
   },
   ticketHeader: {
     color: textColor,
