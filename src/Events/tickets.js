@@ -18,23 +18,26 @@ export default class GetTickets extends Component {
   render() {
     return (
       <ScrollView>
-        <View style={styles.container}>
 
+        <View style={styles.container}>
           <View style={styles.sectionHeaderContainer}>
             <Text style={styles.header}>Ticket Type</Text>
           </View>
-
-          <TouchableHighlight>
-            <View style={eventTicketStyles.rowContainer}>
-              <View style={eventTicketStyles.row}>
-                <Icon style={eventTicketStyles.ticketIcon} name="account-circle" />
-                <Text style={eventTicketStyles.ticketHeader}>Account</Text>
-              </View>
-              <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-            </View>
-          </TouchableHighlight>
-
         </View>
+
+        <TouchableHighlight>
+          <View style={eventTicketStyles.rowContainer}>
+            <View style={eventTicketStyles.row}>
+              <Icon style={eventTicketStyles.ticketIcon} name="account-circle" />
+              <View>
+                <Text style={eventTicketStyles.ticketHeader}>General Admission</Text>
+                <Text style={eventTicketStyles.ticketSubHeader}>Lorem ipsum dolor sit amet non lorem.</Text>
+              </View>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+          </View>
+        </TouchableHighlight>
+
       </ScrollView>
     )
   }

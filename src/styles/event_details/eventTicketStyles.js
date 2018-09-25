@@ -7,6 +7,7 @@ import {
   bodyFontSize,
   iconFontSize,
   globalFontRegular,
+  globalFontSemiBold,
   globalPadding,
   globalPaddingSmall,
 } from '../shared/sharedStyles'
@@ -27,7 +28,7 @@ const EventTicketStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
-    paddingVertical: globalPaddingSmall,
+    paddingVertical: globalPadding,
     width: fullWidth,
   },
   row: {
@@ -43,8 +44,13 @@ const EventTicketStyles = {
   },
   ticketHeader: {
     color: textColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+  },
+  ticketSubHeader: {
+    color: borderColor,
     fontFamily: globalFontRegular,
-    fontSize: iconFontSize,
+    fontSize: bodyFontSize,
   },
 }
 
