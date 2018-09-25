@@ -17,9 +17,15 @@ export default class PaymentTypes extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Payment Types</Text>
-      </View>
+      <ScrollView>
+
+        <View style={styles.container}>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.header}>Payment Options</Text>
+          </View>
+        </View>
+
+      </ScrollView>
     )
   }
 }
