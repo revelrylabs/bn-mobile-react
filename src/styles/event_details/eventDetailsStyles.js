@@ -40,6 +40,23 @@ const EventDetailsStyles = {
     alignItems: 'center',
     height: 240,
   },
+  videoContainerHeader: {
+    position: 'absolute',
+    top: 0,
+  },
+  mainBody: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingHorizontal: 0,
+  },
+  spacer: {
+    height: 220,
+  },
+  mainBodyContent: {
+    backgroundColor: 'white',
+    paddingHorizontal: globalPadding,
+  },
   videoBkgd: {
     width: fullWidth,
     height: 240,
@@ -55,6 +72,10 @@ const EventDetailsStyles = {
   },
 
   // CONTAINER STYLES
+  fixedFooter: {
+    position: 'absolute',
+    bottom: 0,
+  },
   sectionTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
