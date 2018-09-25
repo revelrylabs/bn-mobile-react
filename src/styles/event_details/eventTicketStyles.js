@@ -1,5 +1,14 @@
 import {
+  white,
   primaryColor,
+  sectionHeaderColor,
+  borderColor,
+  textColor,
+  bodyFontSize,
+  iconFontSize,
+  globalFontRegular,
+  globalPadding,
+  globalPaddingSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
