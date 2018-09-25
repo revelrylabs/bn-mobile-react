@@ -21,6 +21,12 @@ export const ticketPriceFontSize = 32
 
 
 const EventTicketStyles = {
+  // CONTAINER STYLES
+  fullHeightContainer: {
+    backgroundColor: white,
+    height: fullHeight,
+  },
+
   // ROW STYLES
   rowContainer: {
     alignItems: 'center',
@@ -51,7 +57,7 @@ const EventTicketStyles = {
     fontSize: bodyFontSize,
   },
   ticketSubHeader: {
-    color: borderColor,
+    color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
   },
