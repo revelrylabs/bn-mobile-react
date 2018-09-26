@@ -10,6 +10,7 @@ import {
   globalFontSemiBold,
   globalPadding,
   globalPaddingSmall,
+  globalMargin,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -60,6 +61,15 @@ const EventTicketStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
+  },
+
+  // ICON STYLES
+  iconPayment: {
+    borderRadius: 15/2,
+    borderWidth: 1,
+    height: 50,
+    marginRight: globalMargin,
+    width: 80,
   },
 }
 

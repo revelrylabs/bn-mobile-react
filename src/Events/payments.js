@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight, ScrollView} from 'react-native'
+import {Text, View, Image, TouchableHighlight, ScrollView} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -24,6 +24,21 @@ export default class PaymentTypes extends Component {
             <Text style={styles.header}>Payment Options</Text>
           </View>
         </View>
+
+        <TouchableHighlight>
+          <View style={eventTicketStyles.rowContainer}>
+            <View style={eventTicketStyles.row}>
+              <Image
+                style={eventTicketStyles.iconPayment}
+                source={require('../../assets/icon-apple-pay.png')}
+              />
+              <View>
+                <Text style={eventTicketStyles.ticketHeader}>Apply Pay</Text>
+              </View>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+          </View>
+        </TouchableHighlight>
 
       </ScrollView>
     )
