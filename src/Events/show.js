@@ -37,10 +37,7 @@ export default class EventShow extends Component {
             style={eventDetailsStyles.videoBkgd}
             source={require('../../assets/video-bkgd.png')}
           />
-          <Image
-            style={eventDetailsStyles.videoBkgd}
-            source={require('../../assets/video-bkgd-overlay.png')}
-          />
+
 
           <View style={eventDetailsStyles.videoDetailsContainer}>
 
@@ -64,13 +61,6 @@ export default class EventShow extends Component {
               </View>
             </View>
 
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-              <View style={eventDetailsStyles.sectionBottom}>
-                <Icon style={eventDetailsStyles.iconPlayLink} name="play-circle-outline" />
-                <Text style={eventDetailsStyles.header}>Taylor Swift</Text>
-                <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
-              </View>
-            </TouchableHighlight>
           </View>
 
         </View>

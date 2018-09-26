@@ -55,6 +55,8 @@ const EventDetailsStyles = {
   },
   mainBodyContent: {
     backgroundColor: 'white',
+    borderTopRightRadius: 30/2,
+    borderTopLeftRadius: 30/2,
     paddingHorizontal: globalPadding,
   },
   videoBkgd: {
