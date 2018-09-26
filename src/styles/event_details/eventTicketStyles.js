@@ -8,6 +8,7 @@ import {
   iconFontSize,
   globalFontRegular,
   globalFontSemiBold,
+  globalPaddingLarge,
   globalPadding,
   globalPaddingSmall,
   globalMargin,
@@ -70,7 +71,20 @@ const EventTicketStyles = {
     borderWidth: 1,
     height: 50,
     marginRight: globalMargin,
-    width: 80,
+    width: 70,
+  },
+
+  // BUTTON STYLES
+  buttonRounded: {
+    backgroundColor: white,
+    borderColor: borderColor,
+    borderRadius: 55/2,
+    borderWidth: 1,
+    flex: 1,
+    height: 55,
+    justifyContent: 'center',
+    marginHorizontal: globalMargin,
+    marginBottom: globalPaddingLarge,
   },
 }
 

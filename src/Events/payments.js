@@ -38,6 +38,30 @@ export default class PaymentTypes extends Component {
           </View>
         </TouchableHighlight>
 
+        <TouchableHighlight>
+          <View style={eventTicketStyles.rowContainer}>
+            <View style={eventTicketStyles.row}>
+              <Image
+                style={eventTicketStyles.iconPayment}
+                source={require('../../assets/icon-visa-pay.png')}
+              />
+              <View>
+                <Text style={eventTicketStyles.ticketHeader}>**** **** **** 4455</Text>
+                <Text style={eventTicketStyles.ticketSubHeader}>Karim Balaa . Expires 09/18</Text>
+              </View>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+          </View>
+        </TouchableHighlight>
+
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight
+            style={eventTicketStyles.buttonRounded}
+          >
+            <Text style={styles.buttonText}>Get Tickets</Text>
+          </TouchableHighlight>
+        </View>
+
       </ScrollView>
     )
   }
