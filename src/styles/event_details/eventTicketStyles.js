@@ -41,6 +41,7 @@ const EventTicketStyles = {
     width: fullWidth,
   },
   row: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },

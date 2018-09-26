@@ -32,9 +32,7 @@ export default class PaymentTypes extends Component {
                 style={eventTicketStyles.iconPayment}
                 source={require('../../assets/icon-apple-pay.png')}
               />
-              <View>
-                <Text style={eventTicketStyles.ticketHeader}>Apply Pay</Text>
-              </View>
+              <Text style={eventTicketStyles.ticketHeader}>Apply Pay</Text>
             </View>
             <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
