@@ -38,7 +38,7 @@ const EventDetailsStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 240,
+    height: 300,
   },
   videoContainerHeader: {
     position: 'absolute',
@@ -51,6 +51,7 @@ const EventDetailsStyles = {
     paddingHorizontal: 0,
   },
   spacer: {
+    // backgroundColor: primaryColor,
     height: 220,
   },
   mainBodyContent: {
@@ -61,7 +62,7 @@ const EventDetailsStyles = {
   },
   videoBkgd: {
     width: fullWidth,
-    height: 240,
+    height: 300,
     position: 'absolute',
   },
   videoDetailsContainer: {
