@@ -44,22 +44,6 @@ const EventDetailsStyles = {
     position: 'absolute',
     top: 0,
   },
-  mainBody: {
-    backgroundColor: 'transparent',
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingHorizontal: 0,
-  },
-  spacer: {
-    // backgroundColor: primaryColor,
-    height: 220,
-  },
-  mainBodyContent: {
-    backgroundColor: 'white',
-    borderTopRightRadius: 30/2,
-    borderTopLeftRadius: 30/2,
-    paddingHorizontal: globalPadding,
-  },
   videoBkgd: {
     width: fullWidth,
     height: 300,
@@ -70,8 +54,26 @@ const EventDetailsStyles = {
     height: 290,
     justifyContent: 'space-between',
     padding: globalPaddingSmall,
-    paddingTop: globalPaddingJumbo + globalPaddingTiny,
+    paddingTop: globalPaddingLarge,
     width: fullWidth,
+  },
+
+  // MAIN BODY STYLES
+  mainBody: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingHorizontal: 0,
+  },
+  mainBodyContent: {
+    backgroundColor: 'white',
+    borderTopRightRadius: 30/2,
+    borderTopLeftRadius: 30/2,
+    paddingHorizontal: globalPadding,
+    paddingTop: globalPaddingMedium,
+  },
+  spacer: {
+    height: 220,
   },
 
   // CONTAINER STYLES

@@ -38,7 +38,6 @@ export default class EventShow extends Component {
             source={require('../../assets/video-bkgd.png')}
           />
 
-
           <View style={eventDetailsStyles.videoDetailsContainer}>
 
             <View style={eventDetailsStyles.sectionTop}>
