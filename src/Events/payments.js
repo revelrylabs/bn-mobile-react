@@ -17,7 +17,7 @@ export default class PaymentTypes extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={eventTicketStyles.fullHeightContainer}>
 
         <View style={styles.container}>
           <View style={styles.sectionHeaderContainer}>
@@ -54,11 +54,9 @@ export default class PaymentTypes extends Component {
           </View>
         </TouchableHighlight>
 
-        <View style={styles.buttonContainer}>
-          <TouchableHighlight
-            style={eventTicketStyles.buttonRounded}
-          >
-            <Text style={styles.buttonText}>Get Tickets</Text>
+        <View style={[styles.buttonContainer, styles.paddingTop]}>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" style={eventTicketStyles.buttonRounded}>
+            <Text style={[styles.buttonSecondaryText, styles.textCenter]}>Add New Payment Method</Text>
           </TouchableHighlight>
         </View>
 

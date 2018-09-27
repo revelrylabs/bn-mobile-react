@@ -77,11 +77,11 @@ const EventTicketStyles = {
   // BUTTON STYLES
   buttonRounded: {
     backgroundColor: white,
-    borderColor: borderColor,
-    borderRadius: 55/2,
-    borderWidth: 1,
+    borderColor: primaryColor,
+    borderRadius: 15/2,
+    borderWidth: 2,
     flex: 1,
-    height: 55,
+    height: 45,
     justifyContent: 'center',
     marginHorizontal: globalMargin,
     marginBottom: globalPaddingLarge,
