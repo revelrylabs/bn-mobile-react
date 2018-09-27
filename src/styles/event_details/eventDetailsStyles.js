@@ -64,6 +64,7 @@ const EventDetailsStyles = {
     paddingLeft: 0,
     paddingRight: 0,
     paddingHorizontal: 0,
+    marginTop: 240,
   },
   mainBodyContent: {
     backgroundColor: 'white',
@@ -74,6 +75,9 @@ const EventDetailsStyles = {
   },
   spacer: {
     height: 220,
+  },
+  spacerFooter: {
+    height: 60,
   },
 
   // CONTAINER STYLES
