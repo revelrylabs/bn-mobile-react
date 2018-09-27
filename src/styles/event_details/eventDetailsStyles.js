@@ -9,7 +9,6 @@ import {
   globalFontSemiBold,
   globalFontBold,
   bodyFontSize,
-  globalPaddingJumbo,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
@@ -38,11 +37,15 @@ const EventDetailsStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 240,
+    height: 300,
+  },
+  videoContainerHeader: {
+    position: 'absolute',
+    top: 0,
   },
   videoBkgd: {
     width: fullWidth,
-    height: 240,
+    height: 300,
     position: 'absolute',
   },
   videoDetailsContainer: {
@@ -50,11 +53,37 @@ const EventDetailsStyles = {
     height: 290,
     justifyContent: 'space-between',
     padding: globalPaddingSmall,
-    paddingTop: globalPaddingJumbo + globalPaddingTiny,
+    paddingTop: globalPaddingLarge,
     width: fullWidth,
   },
 
+  // MAIN BODY STYLES
+  mainBody: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingHorizontal: 0,
+    marginTop: 240,
+  },
+  mainBodyContent: {
+    backgroundColor: 'white',
+    borderTopRightRadius: 30/2,
+    borderTopLeftRadius: 30/2,
+    paddingHorizontal: globalPadding,
+    paddingTop: globalPaddingMedium,
+  },
+  spacer: {
+    height: 220,
+  },
+  spacerFooter: {
+    height: 60,
+  },
+
   // CONTAINER STYLES
+  fixedFooter: {
+    position: 'absolute',
+    bottom: 0,
+  },
   sectionTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
