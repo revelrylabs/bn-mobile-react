@@ -35,7 +35,7 @@ const EventTicketStyles = {
     backgroundColor: 'white',
     borderTopRightRadius: 30/2,
     borderTopLeftRadius: 30/2,
-    paddingHorizontal: globalPadding,
+    height: fullHeight,
     paddingTop: globalPaddingMedium,
     minHeight: '100%',
   },
