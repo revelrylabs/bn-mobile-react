@@ -4,10 +4,12 @@ import {Text, View, Image, TouchableHighlight, ScrollView} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
+import FormStyles from '../styles/shared/formStyles'
 import EventTicketStyles from '../styles/event_details/eventTicketStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
+const formStyles = FormStyles.createStyles()
 const eventTicketStyles = EventTicketStyles.createStyles()
 
 export default class PaymentTypes extends Component {
@@ -50,6 +52,7 @@ export default class PaymentTypes extends Component {
                 <Text style={eventTicketStyles.ticketSubHeader}>Karim Balaa . Expires 09/18</Text>
               </View>
             </View>
+
             <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
         </TouchableHighlight>
