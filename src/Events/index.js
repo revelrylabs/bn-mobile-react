@@ -135,8 +135,8 @@ export default class EventsIndex extends Component {
     return selectedLoc.nickname
   }
 
-  locRowOption = (rowData, _rowID, _highlighted) => {
-    if (_rowID == 0) {
+  locRowOption = (rowData, rowID, _highlighted) => {
+    if (rowID === 0) {
       return (
         <View>
           <View style={modalStyles.rowWrapper}>
@@ -190,8 +190,8 @@ export default class EventsIndex extends Component {
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={() => {
-                this.setState({ refreshing: true });
-                setTimeout(() => this.setState({ refreshing: false }), 1000);
+                this.setState({refreshing: true});
+                setTimeout(() => this.setState({refreshing: false}), 1000);
               }}
               // Android offset for RefreshControl
               progressViewOffset={HEADER_MAX_HEIGHT}
@@ -208,11 +208,13 @@ export default class EventsIndex extends Component {
           <View style={styles.sectionHeaderContainer}>
             <Animated.Text style={[styles.header, {opacity}]}>Explore</Animated.Text>
             <ModalDropdown
-              ref={(ref) => { this._dropdown = ref }}
+              ref={(ref) => {
+                this._dropdown = ref
+              }}
               onSelect={this.changeLocation}
               options={SAMPLE_LOCATIONS}
               renderRow={this.locRowOption}
-              renderSeparator={() => <View /> }
+              renderSeparator={() => <View />}
               dropdownStyle={modalStyles.modalDropdownContainer}
             >
               <View style={styles.iconLinkContainer}>

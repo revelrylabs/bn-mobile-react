@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -11,9 +11,7 @@ const eventDetailsStyles = EventDetailsStyles.createStyles()
 const imageGridStyles = ImageGridStyles.createStyles()
 
 export default class Details extends Component {
-  static propTypes = {
-    navigation: PropTypes.object,
-  }
+  // static propTypes = {}
 
   render() {
     return (

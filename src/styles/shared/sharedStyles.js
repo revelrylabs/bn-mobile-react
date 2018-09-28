@@ -341,13 +341,16 @@ const SharedStyles = {
     paddingBottom: globalPaddingMedium,
     paddingTop: globalPaddingMedium,
   },
-  paddingRight: {
-    paddingRight: globalPadding,
-  },
   borderRight: {
     borderRightColor: borderColor,
     borderStyle: 'solid',
     borderRightWidth: 1,
+  },
+  textCenter: {
+    textAlign: 'center',
+  },
+  paddingRight: {
+    paddingRight: globalPadding,
   },
   paddingTop: {
     paddingTop: globalPadding,

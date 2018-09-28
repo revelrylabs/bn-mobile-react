@@ -2,17 +2,20 @@ import {
   white,
   primaryColor,
   sectionHeaderColor,
+  containerDarkColor,
   borderColor,
   textColor,
   bodyFontSize,
-  iconFontSize,
+  sectionHeaderFontSize,
   globalFontRegular,
   globalFontSemiBold,
+  globalPaddingLarge,
   globalPaddingSmall,
-  globalPaddingMedium,
   globalPadding,
+  globalMargin,
+  globalPaddingMedium,
 } from '../shared/sharedStyles'
-import {StyleSheet, Dimensions, Platform} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
@@ -61,7 +64,17 @@ const EventTicketStyles = {
     paddingVertical: globalPadding,
     width: fullWidth,
   },
+  rowContainerActive: {
+    alignItems: 'center',
+    backgroundColor: containerDarkColor,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPadding,
+    width: fullWidth,
+  },
   row: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
@@ -77,11 +90,38 @@ const EventTicketStyles = {
     color: textColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
+    paddingTop: globalPaddingSmall,
   },
   ticketSubHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
+  },
+
+  // ICON STYLES
+  iconPayment: {
+    borderRadius: 15/2,
+    borderWidth: 1,
+    height: 50,
+    marginRight: globalMargin,
+    width: 70,
+  },
+  iconCheck: {
+    color: primaryColor,
+    fontSize: sectionHeaderFontSize,
+  },
+
+  // BUTTON STYLES
+  buttonRounded: {
+    backgroundColor: white,
+    borderColor: primaryColor,
+    borderRadius: 15/2,
+    borderWidth: 2,
+    flex: 1,
+    height: 45,
+    justifyContent: 'center',
+    marginHorizontal: globalMargin,
+    marginBottom: globalPaddingLarge,
   },
 }
 
