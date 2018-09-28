@@ -6,14 +6,13 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventStyles from '../styles/shared/eventStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
+import EventItemView from './event_card'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
 const navigationStyles = NavigationStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
@@ -55,55 +54,49 @@ const SAMPLE_LOCATIONS = [
   },
 ]
 
-function EventItemView({
-  bgImage,
-  avatarImages,
-  priceDollars,
-  titleText,
-  scheduleText,
-  onPress,
-}) {
-  return (
-    <TouchableHighlight underlayColor="#fff" onPress={onPress}>
-      <View style={eventStyles.eventContainer}>
-        <Image
-          style={eventStyles.eventImage}
-          source={bgImage}
-        />
-
-        <View style={eventStyles.detailsContainer}>
-          <View style={eventStyles.sectionTop}>
-            <View style={eventStyles.iconLinkCircleContainerSmallActive}>
-              <Icon style={eventStyles.iconLinkCircleSmallActive} name="star" />
-            </View>
-            <View style={styles.avatarContainer}>
-              {avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
-            </View>
-          </View>
-          <View style={eventStyles.sectionBottom}>
-            <View style={styles.priceTagContainer}>
-              <Text style={styles.priceTag}>${priceDollars}</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={eventStyles.detailsContainerBottom}>
-          <Text style={eventStyles.header}>{titleText}</Text>
-          <Text style={eventStyles.details}>{scheduleText}</Text>
-        </View>
-      </View>
-    </TouchableHighlight>
-  )
-}
-
-EventItemView.propTypes = {
-  bgImage: PropTypes.number,
-  avatarImages: PropTypes.array,
-  priceDollars: PropTypes.number,
-  titleText: PropTypes.string,
-  scheduleText: PropTypes.string,
-  onPress: PropTypes.func,
-}
+const SAMPLE_AVATARS = [
+  require('../../assets/avatar-female.png'),
+  require('../../assets/avatar-male.png'),
+  require('../../assets/avatar-female.png'),
+]
+const SAMPLE_EVENTS = [
+  {
+    name: 'River Whyless',
+    bgImage: require('../../assets/event-smaller-1.png'),
+    avatarImages: SAMPLE_AVATARS,
+    priceDollars: 30,
+    titleText: 'River Whyless',
+    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    favorite: true,
+  },
+  {
+    name: 'Beyonce',
+    bgImage: require('../../assets/event-smaller-2.png'),
+    avatarImages: SAMPLE_AVATARS,
+    priceDollars: 30,
+    titleText: 'Beyonce',
+    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    favorite: false,
+  },
+  {
+    name: 'Drake',
+    bgImage: require('../../assets/event-smaller-3.png'),
+    avatarImages: SAMPLE_AVATARS,
+    priceDollars: 30,
+    titleText: 'Drake',
+    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    favorite: false,
+  },
+  {
+    name: 'Ed Sheeran',
+    bgImage: require('../../assets/event-smaller-4.png'),
+    avatarImages: SAMPLE_AVATARS,
+    priceDollars: 30,
+    titleText: 'Ed Sheeran',
+    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    favorite: true,
+  },
+]
 
 export default class EventsIndex extends Component {
   static propTypes = {
@@ -122,7 +115,12 @@ export default class EventsIndex extends Component {
       duration: 2000,
       easing: Easing.linear,
       selectedLocationId: 2,
+      mainFavorite: true,
     };
+  }
+
+  setFavorite = (mainFavorite) => {
+    this.setState({mainFavorite})
   }
 
   changeLocation = (index, selectedLocation) => {
@@ -156,6 +154,19 @@ export default class EventsIndex extends Component {
     }
   }
 
+  get allEvents() {
+    const {navigation: {navigate}} = this.props
+
+    return SAMPLE_EVENTS.map((event, index) => (
+      <EventItemView
+        key={index}
+        onPress={() => navigate('EventsShow', {name: 'River Whyless'})}
+        event={event}
+      />
+    ))
+  }
+
+  /* eslint-disable-next-line complexity */
   render() {
     const scrollY = Animated.add(
       this.state.scrollY,
@@ -177,6 +188,7 @@ export default class EventsIndex extends Component {
     });
 
     const {navigation: {navigate}} = this.props
+    const {mainFavorite} = this.state
 
     return (
       <View>
@@ -247,9 +259,11 @@ export default class EventsIndex extends Component {
 
             <View style={slideshowStyles.detailsContainer}>
               <View style={slideshowStyles.sectionTop}>
-                <View style={styles.iconLinkCircleContainer}>
-                  <Icon style={styles.iconLinkCircle} name="star" />
-                </View>
+                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!mainFavorite)}>
+                  <View style={mainFavorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
+                    <Icon style={mainFavorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
+                  </View>
+                </TouchableHighlight>
                 <View style={styles.avatarContainer}>
                   <Image
                     style={styles.avatar}
@@ -281,54 +295,7 @@ export default class EventsIndex extends Component {
 
           <Text style={styles.sectionHeader}>Upcoming</Text>
 
-          <EventItemView
-            onPress={() => navigate('EventsShow', {name: 'River Whyless'})}
-            bgImage={require('../../assets/event-smaller-1.png')}
-            avatarImages={[
-              require('../../assets/avatar-male.png'),
-              require('../../assets/avatar-female.png'),
-              require('../../assets/avatar-female.png'),
-            ]}
-            priceDollars={30}
-            titleText="River Whyless"
-            scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
-          />
-          <EventItemView
-            onPress={() => navigate('EventsShow', {name: 'Beyonce'})}
-            bgImage={require('../../assets/event-smaller-2.png')}
-            avatarImages={[
-              require('../../assets/avatar-female.png'),
-              require('../../assets/avatar-male.png'),
-              require('../../assets/avatar-female.png'),
-            ]}
-            priceDollars={30}
-            titleText="Beyonce"
-            scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
-          />
-          <EventItemView
-            onPress={() => navigate('EventsShow', {name: 'Drake'})}
-            bgImage={require('../../assets/event-smaller-3.png')}
-            avatarImages={[
-              require('../../assets/avatar-male.png'),
-              require('../../assets/avatar-female.png'),
-              require('../../assets/avatar-female.png'),
-            ]}
-            priceDollars={30}
-            titleText="Drake"
-            scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
-          />
-          <EventItemView
-            onPress={() => navigate('EventsShow', {name: 'Ed Sheeran'})}
-            bgImage={require('../../assets/event-smaller-4.png')}
-            avatarImages={[
-              require('../../assets/avatar-male.png'),
-              require('../../assets/avatar-female.png'),
-              require('../../assets/avatar-female.png'),
-            ]}
-            priceDollars={30}
-            titleText="Ed Sheeran"
-            scheduleText="Fri, July 20 - 8:50 pm - The Warfield"
-          />
+          {this.allEvents}
         </ScrollView>
         <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
           <View style={navigationStyles.scrollHeader}>
