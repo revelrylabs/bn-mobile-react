@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
-import AccountStyles from '../styles/account/accountStyles'
 import EventTicketStyles from '../styles/event_details/eventTicketStyles'
 
 const styles = SharedStyles.createStyles()
-const accountStyles = AccountStyles.createStyles()
 const eventTicketStyles = EventTicketStyles.createStyles()
 
 export default class PaymentTypes extends Component {
@@ -20,11 +18,12 @@ export default class PaymentTypes extends Component {
   get options() {
     const {paymentOptions, selectedPaymentId, selectPayment} = this.props
 
+    /* eslint-disable-next-line complexity */
     return paymentOptions.map((payment) => {
       const selected = payment.id === selectedPaymentId
       const rightIcon = selected ?
-        null :
-        <Icon style={eventTicketStyles.iconCheck} name="check-circle" />
+        <Icon style={eventTicketStyles.iconCheck} name="check-circle" /> :
+        <Icon style={eventTicketStyles.iconCheck} name="keyboard-arrow-right" />
 
       return (
         <TouchableHighlight key={payment.id} onPress={() => selectPayment(payment.id)}>
