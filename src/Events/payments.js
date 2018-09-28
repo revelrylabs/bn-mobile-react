@@ -23,8 +23,8 @@ export default class PaymentTypes extends Component {
     return paymentOptions.map((payment) => {
       const selected = payment.id === selectedPaymentId
       const rightIcon = selected ?
-        null : // @ Brittany - selected icon goes here
-        <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+        null :
+        <Icon style={eventTicketStyles.iconCheck} name="check-circle" />
 
       return (
         <TouchableHighlight key={payment.id} onPress={() => selectPayment(payment.id)}>
@@ -50,21 +50,21 @@ export default class PaymentTypes extends Component {
   render() {
     return (
       <View style={eventTicketStyles.mainBody}>
+        <View style={eventTicketStyles.mainBodyContent}>
 
-        <View style={styles.container}>
-          <View style={styles.sectionHeaderContainer}>
+          <View style={styles.container}>
             <Text style={styles.header}>Payment Options</Text>
           </View>
+
+          {this.options}
+
+          <View style={[styles.buttonContainer, styles.paddingTop]}>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" style={eventTicketStyles.buttonRounded}>
+              <Text style={[styles.buttonSecondaryText, styles.textCenter]}>Add New Payment Method</Text>
+            </TouchableHighlight>
+          </View>
+
         </View>
-
-        {this.options}
-
-        <View style={[styles.buttonContainer, styles.paddingTop]}>
-          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" style={eventTicketStyles.buttonRounded}>
-            <Text style={[styles.buttonSecondaryText, styles.textCenter]}>Add New Payment Method</Text>
-          </TouchableHighlight>
-        </View>
-
       </View>
     )
   }

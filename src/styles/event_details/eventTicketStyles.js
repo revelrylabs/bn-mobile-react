@@ -5,9 +5,11 @@ import {
   borderColor,
   textColor,
   bodyFontSize,
+  sectionHeaderFontSize,
   globalFontRegular,
   globalFontSemiBold,
   globalPaddingLarge,
+  globalPaddingSmall,
   globalPadding,
   globalMargin,
   globalPaddingMedium,
@@ -78,6 +80,7 @@ const EventTicketStyles = {
     color: textColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
+    paddingTop: globalPaddingSmall,
   },
   ticketSubHeader: {
     color: sectionHeaderColor,
@@ -92,6 +95,10 @@ const EventTicketStyles = {
     height: 50,
     marginRight: globalMargin,
     width: 70,
+  },
+  iconCheck: {
+    color: primaryColor,
+    fontSize: sectionHeaderFontSize,
   },
 
   // BUTTON STYLES
