@@ -11,7 +11,19 @@ import Checkout from './checkout'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
-
+const PaymentOptions = [
+  {
+    header: 'Apple Pay',
+    icon: require('../../assets/icon-apple-pay.png'),
+    id: 1,
+  },
+  {
+    header: '**** **** **** 4455',
+    icon: require('../../assets/icon-visa-pay.png'),
+    id: 2,
+    subheader: 'Karim Balaa . Expires 09/18',
+  },
+]
 
 export default class EventShow extends Component {
   static propTypes = {
@@ -21,6 +33,7 @@ export default class EventShow extends Component {
   state = {
     favorite: false,
     currentScreen: 'details',
+    selectedPaymentId: 1,
   }
 
   scrollToTop = () => {
@@ -36,9 +49,16 @@ export default class EventShow extends Component {
     this.setState({currentScreen})
   }
 
+  selectPayment = (selectedPaymentId) => {
+    this.setState({
+      selectedPaymentId,
+      currentScreen: 'checkout',
+    })
+  }
+
   /* eslint-disable-next-line complexity */
   get showScreen() {
-    const {currentScreen} = this.state
+    const {currentScreen, selectedPaymentId} = this.state
 
     switch (currentScreen) {
     case 'details':
@@ -48,7 +68,14 @@ export default class EventShow extends Component {
     case 'checkout':
       return <Checkout changeScreen={this.changeScreen} />
     case 'payment':
-      return <PaymentTypes changeScreen={this.changeScreen} />
+      return (
+        <PaymentTypes
+          changeScreen={this.changeScreen}
+          paymentOptions={PaymentOptions}
+          selectedPaymentId={selectedPaymentId}
+          selectPayment={this.selectPayment}
+        />
+      )
     default:
       return <Details />
     }

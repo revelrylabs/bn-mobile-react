@@ -9,7 +9,6 @@ import {
   globalFontSemiBold,
   globalFontBold,
   bodyFontSize,
-  globalPaddingJumbo,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
