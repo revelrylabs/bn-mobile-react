@@ -27,7 +27,7 @@ export default class PaymentTypes extends Component {
 
       return (
         <TouchableHighlight key={payment.id} onPress={() => selectPayment(payment.id)}>
-          <View className={selected ? 'rowContainerActive' : 'rowContainer'}>
+          <View style={selected ? eventTicketStyles.rowContainerActive : eventTicketStyles.rowContainer}>
             <View style={eventTicketStyles.row}>
               <Image
                 style={eventTicketStyles.iconPayment}
