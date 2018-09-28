@@ -40,7 +40,7 @@ export default class EventsIndex extends Component {
 
           <View style={eventStyles.detailsContainer}>
             <View style={eventStyles.sectionTop}>
-              <TouchableHighlight onPress={() => this.setFavorite(!favorite)}>
+              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!favorite)}>
                 <View style={favorite ? eventStyles.iconLinkCircleContainerSmallActive : eventStyles.iconLinkCircleContainerSmall}>
                   <Icon style={favorite ? eventStyles.iconLinkCircleSmallActive : eventStyles.iconLinkCircleSmall} name="star" />
                 </View>

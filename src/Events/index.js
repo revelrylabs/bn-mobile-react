@@ -259,7 +259,7 @@ export default class EventsIndex extends Component {
 
             <View style={slideshowStyles.detailsContainer}>
               <View style={slideshowStyles.sectionTop}>
-                <TouchableHighlight onPress={() => this.setFavorite(!mainFavorite)}>
+                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!mainFavorite)}>
                   <View style={mainFavorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
                     <Icon style={mainFavorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
                   </View>
