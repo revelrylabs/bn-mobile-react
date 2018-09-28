@@ -63,6 +63,15 @@ const EventTicketStyles = {
     paddingVertical: globalPadding,
     width: fullWidth,
   },
+  rowContainerActive: {
+    alignItems: 'center',
+    backgroundColor: borderColor,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPadding,
+    width: fullWidth,
+  },
   row: {
     alignItems: 'center',
     flexDirection: 'row',
