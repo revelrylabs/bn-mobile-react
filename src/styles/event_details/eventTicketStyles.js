@@ -8,8 +8,9 @@ import {
   iconFontSize,
   globalFontRegular,
   globalFontSemiBold,
-  globalPadding,
   globalPaddingSmall,
+  globalPaddingMedium,
+  globalPadding,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -21,6 +22,27 @@ export const ticketPriceFontSize = 32
 
 
 const EventTicketStyles = {
+  // MAIN BODY STYLES
+  mainBody: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingHorizontal: 0,
+    minHeight: '100%',
+    marginTop: 240,
+  },
+  mainBodyContent: {
+    backgroundColor: 'white',
+    borderTopRightRadius: 30/2,
+    borderTopLeftRadius: 30/2,
+    height: fullHeight,
+    paddingTop: globalPaddingMedium,
+    minHeight: '100%',
+  },
+  spacer: {
+    height: 220,
+  },
+
   // CONTAINER STYLES
   fullHeightContainer: {
     backgroundColor: white,
