@@ -22,8 +22,7 @@ export default class PaymentTypes extends Component {
     return paymentOptions.map((payment) => {
       const selected = payment.id === selectedPaymentId
       const rightIcon = selected ?
-        <Icon style={eventTicketStyles.iconCheck} name="check-circle" /> :
-        <Icon style={eventTicketStyles.iconCheck} name="keyboard-arrow-right" />
+        <Icon style={eventTicketStyles.iconCheck} name="check-circle" /> : null
 
       return (
         <TouchableHighlight key={payment.id} onPress={() => selectPayment(payment.id)}>

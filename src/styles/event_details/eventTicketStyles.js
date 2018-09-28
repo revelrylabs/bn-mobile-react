@@ -2,6 +2,7 @@ import {
   white,
   primaryColor,
   sectionHeaderColor,
+  containerDarkColor,
   borderColor,
   textColor,
   bodyFontSize,
@@ -65,7 +66,7 @@ const EventTicketStyles = {
   },
   rowContainerActive: {
     alignItems: 'center',
-    backgroundColor: borderColor,
+    backgroundColor: containerDarkColor,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
