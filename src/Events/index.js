@@ -235,23 +235,6 @@ export default class EventsIndex extends Component {
               disabled
             />
           </View>
-          <TouchableHighlight underlayColor="#fff" onPress={() => navigate('GetTickets')}>
-            <Text>
-              Get Tickets
-            </Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight underlayColor="#fff" onPress={() => navigate('Checkout')}>
-            <Text>
-              Checkout
-            </Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight underlayColor="#fff" onPress={() => navigate('PaymentTypes')}>
-            <Text>
-              Payment Types
-            </Text>
-          </TouchableHighlight>
           <Text style={styles.sectionHeader}>Hot This Week</Text>
 
           <View style={slideshowStyles.slideshowContainer}>
