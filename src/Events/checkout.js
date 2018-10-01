@@ -17,14 +17,28 @@ export default class Checkout extends Component {
 
   render() {
     return (
-      <View style={[styles.container, eventTicketStyles.mainBody]}>
+      <View style={eventTicketStyles.mainBody}>
         <View style={eventTicketStyles.mainBodyContent}>
 
           <View style={styles.container}>
-            <View style={styles.sectionHeaderContainer}>
-              <Text style={eventTicketStyles.header}>Checkout</Text>
-            </View>
+            <Text style={eventTicketStyles.header}>Checkout</Text>
           </View>
+
+          <TouchableHighlight>
+            <View style={eventTicketStyles.rowContainer}>
+              <View style={eventTicketStyles.row}>
+                <View>
+                  <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
+                  <Text style={eventTicketStyles.ticketSubHeader}>General Admission</Text>
+                </View>
+              </View>
+              <View style={eventTicketStyles.row}>
+                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+                <Text style={eventTicketStyles.ticketPrice}>1</Text>
+                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+              </View>
+            </View>
+          </TouchableHighlight>
 
           <TouchableHighlight onPress={() => this.props.changeScreen('payment')}>
             <View style={eventTicketStyles.rowContainer}>

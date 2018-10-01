@@ -25,8 +25,10 @@ export const globalPaddingMedium = 30
 export const globalPaddingLarge = 40
 export const globalPaddingLarger = 45
 export const globalPaddingJumbo = 55
-export const globalMarginSmall = 10
-export const globalMargin = 20
+
+export const globalMarginTiny = globalPaddingTiny
+export const globalMarginSmall = globalPaddingSmall
+export const globalMargin = globalPadding
 
 export const globalFontRegular = 'tt_commons_regular'
 export const globalFontMedium = 'tt_commons_medium'
@@ -358,17 +360,14 @@ const SharedStyles = {
   paddingRight: {
     paddingRight: globalPadding,
   },
+  paddingLeft: {
+    paddingLeft: globalPadding,
+  },
   paddingTop: {
     paddingTop: globalPadding,
   },
   paddingTopSmall: {
     paddingTop: globalPaddingSmall,
-  },
-  paddingVerticalSmall: {
-    paddingVertical: globalPaddingSmall,
-  },
-  paddingLeft: {
-    paddingLeft: globalPadding,
   },
   paddingBottomJumbo: {
     paddingBottom: globalPaddingJumbo,
@@ -376,11 +375,17 @@ const SharedStyles = {
   noPaddingBottom: {
     paddingBottom: 0,
   },
-  marginTopSmall: {
-    marginTop: globalMarginSmall,
+  paddingVerticalSmall: {
+    paddingVertical: globalPaddingSmall,
   },
   marginTop: {
     marginTop: globalMargin,
+  },
+  marginTopSmall: {
+    marginTop: globalMarginSmall,
+  },
+  marginBottomTiny: {
+    marginBottom: globalMarginTiny,
   },
   lineHeight: {
     paddingBottom: globalPaddingTiny / 2,
