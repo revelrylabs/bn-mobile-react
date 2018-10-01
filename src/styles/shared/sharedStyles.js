@@ -272,8 +272,8 @@ const SharedStyles = {
     height: 30,
   },
   iconImageSmall: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     marginRight: globalPaddingTiny,
   },
 
