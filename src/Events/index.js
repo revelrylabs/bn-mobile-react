@@ -229,7 +229,7 @@ export default class EventsIndex extends Component {
               renderSeparator={() => <View />}
               dropdownStyle={modalStyles.modalDropdownContainer}
             >
-              <View style={styles.iconLinkContainer}>
+              <View style={styles.dropdownLinkContainer}>
                 <Image
                   style={styles.iconImageSmall}
                   source={require('../../assets/heart-small.png')}
