@@ -22,7 +22,7 @@ export default class Checkout extends Component {
 
           <View style={styles.container}>
             <View style={styles.sectionHeaderContainer}>
-              <Text style={styles.header}>Checkout</Text>
+              <Text style={eventTicketStyles.header}>Checkout</Text>
             </View>
           </View>
 

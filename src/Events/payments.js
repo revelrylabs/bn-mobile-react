@@ -51,7 +51,7 @@ export default class PaymentTypes extends Component {
         <View style={eventTicketStyles.mainBodyContent}>
 
           <View style={styles.container}>
-            <Text style={styles.header}>Payment Options</Text>
+            <Text style={eventTicketStyles.header}>Payment Options</Text>
           </View>
 
           {this.options}
