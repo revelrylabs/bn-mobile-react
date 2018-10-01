@@ -161,30 +161,28 @@ export default class EventShow extends Component {
             style={eventDetailsStyles.videoBkgd}
             source={require('../../assets/video-bkgd.png')}
           />
+        </View>
+        <ScrollView>
+          {this.showScreen}
+        </ScrollView>
+        <View style={[eventDetailsStyles.videoDetailsContainer, eventDetailsStyles.videoContainerHeader]}>
 
-          <View style={eventDetailsStyles.videoDetailsContainer}>
-
-            <View style={eventDetailsStyles.sectionTop}>
-              {this.backArrow}
-              <View style={eventDetailsStyles.videoActionsContainer}>
-                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
-                  <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                    <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
-                  </View>
-                </TouchableHighlight>
-                <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
-                  <Icon style={styles.iconLinkCircle} name="reply" />
+          <View style={eventDetailsStyles.sectionTop}>
+            {this.backArrow}
+            <View style={eventDetailsStyles.videoActionsContainer}>
+              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
+                <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
+                  <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
                 </View>
+              </TouchableHighlight>
+              <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
+                <Icon style={styles.iconLinkCircle} name="reply" />
               </View>
             </View>
-
           </View>
 
         </View>
 
-        <ScrollView>
-          {this.showScreen}
-        </ScrollView>
 
         {this.getTickets}
       </View>

@@ -42,15 +42,17 @@ const EventDetailsStyles = {
   videoContainerHeader: {
     position: 'absolute',
     top: 0,
+    width: fullWidth,
   },
   videoBkgd: {
     width: fullWidth,
     height: 300,
     position: 'absolute',
+    top: 0,
   },
   videoDetailsContainer: {
     flexDirection: 'column',
-    height: 290,
+    height: 100,
     justifyContent: 'space-between',
     padding: globalPaddingSmall,
     paddingTop: globalPaddingLarge,
@@ -95,7 +97,7 @@ const EventDetailsStyles = {
     paddingBottom: globalPaddingLarge,
   },
   videoActionsContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'flex-start',
   },
   iconSectionHeaderContainer: {
