@@ -234,6 +234,11 @@ const SharedStyles = {
     alignItems: 'flex-start',
     flexDirection: 'row',
   },
+  dropdownLinkContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   iconLink: {
     backgroundColor: 'transparent',
     color: primaryColor,
@@ -275,6 +280,7 @@ const SharedStyles = {
     width: 18,
     height: 18,
     marginRight: globalPaddingTiny,
+    marginTop: -2,
   },
 
   // PRICE TAG STYLES
