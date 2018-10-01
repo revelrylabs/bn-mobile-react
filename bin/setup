@@ -1,0 +1,7 @@
+#!/bin/bash +xe
+
+cd $(pwd)/$(dirname $0)/..
+
+asdf plugin-add nodejs
+asdf install
+npm install
