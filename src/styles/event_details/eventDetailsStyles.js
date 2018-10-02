@@ -31,7 +31,7 @@ export const slideShowArrowFontSize = 28
 export const attendeeFontSize = 12
 
 const EventDetailsStyles = {
-  // VIDEO STYLES
+  // VIDEO BKGD STYLES
   videoContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -39,24 +39,28 @@ const EventDetailsStyles = {
     alignItems: 'center',
     height: 300,
   },
-  videoContainerHeader: {
-    position: 'absolute',
-    top: 0,
-    width: fullWidth,
-  },
   videoBkgd: {
     width: fullWidth,
     height: 300,
     position: 'absolute',
     top: 0,
   },
-  videoDetailsContainer: {
-    flexDirection: 'column',
-    height: 100,
-    justifyContent: 'space-between',
-    padding: globalPaddingSmall,
-    paddingTop: globalPaddingLarge,
+  // videoDetailsContainer: {
+  //   flexDirection: 'column',
+  //   height: 100,
+  //   justifyContent: 'space-between',
+  //   padding: globalPaddingSmall,
+  //   paddingTop: globalPaddingLarge,
+  //   width: fullWidth,
+  // },
+
+  // VIDEO HEADER ACTIONS STYLES
+  videoHeaderContainer: {
+    position: 'absolute',
+    top: 0,
     width: fullWidth,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   // MAIN BODY STYLES
@@ -82,23 +86,22 @@ const EventDetailsStyles = {
   },
 
   // CONTAINER STYLES
+  backArrowContainer: {
+
+  },
+  videoActionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
   fixedFooter: {
     position: 'absolute',
     bottom: 0,
-  },
-  sectionTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   sectionBottom: {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -45,
     paddingBottom: globalPaddingLarge,
-  },
-  videoActionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
   },
   iconSectionHeaderContainer: {
     alignItems: 'center',
