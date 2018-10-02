@@ -33,9 +33,9 @@ export default class Checkout extends Component {
                 </View>
               </View>
               <View style={eventTicketStyles.row}>
-                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+                <Icon style={eventTicketStyles.removeIcon} name="remove-circle" />
                 <Text style={eventTicketStyles.ticketPrice}>1</Text>
-                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+                <Icon style={eventTicketStyles.addIcon} name="add-circle" />
               </View>
             </View>
           </TouchableHighlight>
