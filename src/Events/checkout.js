@@ -34,7 +34,7 @@ export default class Checkout extends Component {
               </View>
               <View style={eventTicketStyles.row}>
                 <Icon style={eventTicketStyles.removeIcon} name="remove-circle" />
-                <Text style={eventTicketStyles.ticketPrice}>1</Text>
+                <Text style={eventTicketStyles.quantityPrice}>1</Text>
                 <Icon style={eventTicketStyles.addIcon} name="add-circle" />
               </View>
             </View>

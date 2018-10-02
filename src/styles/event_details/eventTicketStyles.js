@@ -8,6 +8,7 @@ import {
   bodyFontSize,
   sectionHeaderFontSize,
   globalFontRegular,
+  globalFontMedium,
   globalFontSemiBold,
   globalPaddingLarge,
   globalPaddingSmall,
@@ -87,6 +88,12 @@ const EventTicketStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
     color: textColor,
+  },
+  quantityPrice: {
+    color: textColor,
+    fontFamily: globalFontMedium,
+    fontSize: ticketPriceFontSize,
+    paddingHorizontal: globalPaddingSmall,
   },
 
   // TICKET SUBNAV STYLES
