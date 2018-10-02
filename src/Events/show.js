@@ -143,11 +143,13 @@ export default class EventShow extends Component {
     const icon = currentScreen === 'details' ? 'close' : 'arrow-back'
 
     return (
-      <Icon
-        style={eventDetailsStyles.backArrow}
-        name={icon}
-        onPress={() => this.prevScreen}
-      />
+      <View style={eventDetailsStyles.backArrowCircleContainer}>
+        <Icon
+          style={eventDetailsStyles.backArrow}
+          name={icon}
+          onPress={() => this.prevScreen}
+        />
+      </View>
     )
   }
 

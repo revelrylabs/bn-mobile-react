@@ -4,6 +4,7 @@ import {
   sectionHeaderColor,
   borderColor,
   textColor,
+  disabledHeaderColor,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
@@ -30,7 +31,7 @@ export const calendarMonthFontSize = 14
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 export const attendeeFontSize = 12
-export const backArrowFontSize = 38
+export const backArrowFontSize = 25
 
 const EventDetailsStyles = {
   // VIDEO BKGD STYLES
@@ -42,13 +43,20 @@ const EventDetailsStyles = {
     zIndex: -10,
   },
 
-  // VIDEO HEADER STYLES
+  // CLOSE ICON STYLES
   backArrowWrapper: {
     position: 'absolute',
     top: 0,
     padding: globalPaddingSmall,
     paddingTop: globalPaddingLarge,
     zIndex: 0,
+  },
+  backArrowCircleContainer: {
+    backgroundColor: disabledHeaderColor,
+    borderRadius: 100/2,
+    height: 45,
+    padding: globalPaddingSmall,
+    width: 45,
   },
   backArrow: {
     color: white,
