@@ -48,7 +48,7 @@ const EventDetailsStyles = {
     top: 0,
     padding: globalPaddingSmall,
     paddingTop: globalPaddingLarge,
-    zIndex: -1,
+    zIndex: 0,
   },
   backArrow: {
     color: white,
@@ -63,7 +63,7 @@ const EventDetailsStyles = {
     position: 'absolute',
     top: 0,
     right: 0,
-    zIndex: -1,
+    zIndex: 0,
   },
 
   // MAIN BODY STYLES
@@ -72,10 +72,7 @@ const EventDetailsStyles = {
     paddingLeft: 0,
     paddingRight: 0,
     paddingHorizontal: 0,
-    // height: fullHeight - 240,
-    // flexDirection: 'column',
-    // justifyContent: 'flex-end',
-    // marginTop: 240,
+    marginTop: 240,
   },
   mainBodyContent: {
     backgroundColor: 'white',
@@ -84,12 +81,7 @@ const EventDetailsStyles = {
     paddingHorizontal: globalPadding,
     paddingTop: globalPaddingMedium,
     position: 'relative',
-    zIndex: 0,
-  },
-  spacer: {
-    height: 240,
-    position: 'relative',
-    zIndex: -100,
+    zIndex: 10,
   },
   spacerFooter: {
     height: 60,

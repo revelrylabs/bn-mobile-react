@@ -160,7 +160,6 @@ export default class EventShow extends Component {
           style={eventDetailsStyles.videoBkgd}
           source={require('../../assets/video-bkgd.png')}
         />
-        <View style={eventDetailsStyles.spacer} />
 
         <ScrollView>
           {this.showScreen}
