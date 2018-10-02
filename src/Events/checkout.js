@@ -24,21 +24,28 @@ export default class Checkout extends Component {
             <Text style={eventTicketStyles.header}>Checkout</Text>
           </View>
 
-          <TouchableHighlight>
-            <View style={eventTicketStyles.rowContainer}>
-              <View style={eventTicketStyles.row}>
-                <View>
-                  <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
-                  <Text style={eventTicketStyles.ticketSubHeader}>General Admission</Text>
-                </View>
-              </View>
-              <View style={eventTicketStyles.row}>
-                <Icon style={eventTicketStyles.removeIcon} name="remove-circle" />
-                <Text style={eventTicketStyles.quantityPrice}>1</Text>
-                <Icon style={eventTicketStyles.addIcon} name="add-circle" />
+          <View style={eventTicketStyles.rowContainer}>
+            <View style={eventTicketStyles.row}>
+              <View>
+                <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
+                <Text style={eventTicketStyles.ticketSubHeader}>General Admission</Text>
               </View>
             </View>
-          </TouchableHighlight>
+            <View style={eventTicketStyles.row}>
+              <Icon style={eventTicketStyles.removeIcon} name="remove-circle" />
+              <Text style={eventTicketStyles.quantityPrice}>1</Text>
+              <Icon style={eventTicketStyles.addIcon} name="add-circle" />
+            </View>
+          </View>
+
+          <View style={eventTicketStyles.rowContainer}>
+            <View style={eventTicketStyles.row}>
+              <View>
+                <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Taylor Swift</Text>
+                <Text style={eventTicketStyles.ticketSubHeader}>Friday, July 20 - 8:50 pm - The Warfield</Text>
+              </View>
+            </View>
+          </View>
 
           <TouchableHighlight onPress={() => this.props.changeScreen('payment')}>
             <View style={eventTicketStyles.rowContainer}>
