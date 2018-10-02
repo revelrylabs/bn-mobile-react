@@ -29,6 +29,7 @@ export const calendarMonthFontSize = 14
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 export const attendeeFontSize = 12
+export const backArrowFontSize = 38
 
 const EventDetailsStyles = {
   // VIDEO BKGD STYLES
@@ -54,13 +55,31 @@ const EventDetailsStyles = {
   //   width: fullWidth,
   // },
 
-  // VIDEO HEADER ACTIONS STYLES
+  // VIDEO HEADER STYLES
   videoHeaderContainer: {
     position: 'absolute',
     top: 0,
-    width: fullWidth,
+    // width: fullWidth,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  backArrowWrapper: {
+    padding: globalPaddingSmall,
+    paddingTop: globalPaddingLarge,
+  },
+  backArrow: {
+    color: white,
+    fontSize: backArrowFontSize,
+  },
+  videoActionsWrapper: {
+    // flexDirection: 'column',
+    // justifyContent: 'flex-start',
+    flex: 1,
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: globalPaddingSmall,
+    paddingTop: globalPaddingLarge,
   },
 
   // MAIN BODY STYLES
@@ -86,13 +105,6 @@ const EventDetailsStyles = {
   },
 
   // CONTAINER STYLES
-  backArrowContainer: {
-
-  },
-  videoActionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
   fixedFooter: {
     position: 'absolute',
     bottom: 0,

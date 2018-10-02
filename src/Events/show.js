@@ -144,7 +144,7 @@ export default class EventShow extends Component {
 
     return (
       <Icon
-        style={styles.iconLinkCircle}
+        style={eventDetailsStyles.backArrow}
         name={icon}
         onPress={() => this.prevScreen}
       />
@@ -169,18 +169,20 @@ export default class EventShow extends Component {
 
         <View style={eventDetailsStyles.videoHeaderContainer}>
 
-          <View style={eventDetailsStyles.backArrowContainer}>
+          <View style={eventDetailsStyles.backArrowWrapper}>
             {this.backArrow}
           </View>
 
-          <View style={eventDetailsStyles.videoActionsContainer}>
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
-              <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
+          <View style={eventDetailsStyles.videoActionsWrapper}>
+            <View style={styles.flexColumnFlexStart}>
+              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
+                <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
+                  <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
+                </View>
+              </TouchableHighlight>
+              <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
+                <Icon style={styles.iconLinkCircle} name="reply" />
               </View>
-            </TouchableHighlight>
-            <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
-              <Icon style={styles.iconLinkCircle} name="reply" />
             </View>
           </View>
 
