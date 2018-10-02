@@ -156,37 +156,34 @@ export default class EventShow extends Component {
 
     return (
       <View style={{backgroundColor: 'white'}}>
-        <View style={[eventDetailsStyles.videoContainer, eventDetailsStyles.videoHeaderContainer]}>
-          <Image
-            style={eventDetailsStyles.videoBkgd}
-            source={require('../../assets/video-bkgd.png')}
-          />
-        </View>
+        <Image
+          style={eventDetailsStyles.videoBkgd}
+          source={require('../../assets/video-bkgd.png')}
+        />
+        <View style={eventDetailsStyles.spacer} />
 
         <ScrollView>
           {this.showScreen}
         </ScrollView>
 
-        <View style={eventDetailsStyles.videoHeaderContainer}>
 
-          <View style={eventDetailsStyles.backArrowWrapper}>
-            {this.backArrow}
-          </View>
+        <View style={eventDetailsStyles.backArrowWrapper}>
+          {this.backArrow}
+        </View>
 
-          <View style={eventDetailsStyles.videoActionsWrapper}>
-            <View style={styles.flexColumnFlexStart}>
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
-                <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                  <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
-                </View>
-              </TouchableHighlight>
-              <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
-                <Icon style={styles.iconLinkCircle} name="reply" />
+        <View style={eventDetailsStyles.videoActionsWrapper}>
+          <View style={styles.flexColumnFlexStart}>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
+              <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
+                <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
               </View>
+            </TouchableHighlight>
+            <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
+              <Icon style={styles.iconLinkCircle} name="reply" />
             </View>
           </View>
-
         </View>
+
 
 
 

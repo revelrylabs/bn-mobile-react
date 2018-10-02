@@ -9,6 +9,7 @@ import {
   globalFontSemiBold,
   globalFontBold,
   bodyFontSize,
+  globalPaddingLarger,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
@@ -33,53 +34,36 @@ export const backArrowFontSize = 38
 
 const EventDetailsStyles = {
   // VIDEO BKGD STYLES
-  videoContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 300,
-  },
   videoBkgd: {
-    width: fullWidth,
     height: 300,
     position: 'absolute',
     top: 0,
+    width: fullWidth,
+    zIndex: -10,
   },
-  // videoDetailsContainer: {
-  //   flexDirection: 'column',
-  //   height: 100,
-  //   justifyContent: 'space-between',
-  //   padding: globalPaddingSmall,
-  //   paddingTop: globalPaddingLarge,
-  //   width: fullWidth,
-  // },
 
   // VIDEO HEADER STYLES
-  videoHeaderContainer: {
+  backArrowWrapper: {
     position: 'absolute',
     top: 0,
-    // width: fullWidth,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  backArrowWrapper: {
     padding: globalPaddingSmall,
     paddingTop: globalPaddingLarge,
+    zIndex: -1,
   },
   backArrow: {
     color: white,
     fontSize: backArrowFontSize,
   },
   videoActionsWrapper: {
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
     flex: 1,
-    alignItems: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     padding: globalPaddingSmall,
-    paddingTop: globalPaddingLarge,
+    paddingTop: globalPaddingLarger,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: -1,
   },
 
   // MAIN BODY STYLES
@@ -88,7 +72,10 @@ const EventDetailsStyles = {
     paddingLeft: 0,
     paddingRight: 0,
     paddingHorizontal: 0,
-    marginTop: 240,
+    // height: fullHeight - 240,
+    // flexDirection: 'column',
+    // justifyContent: 'flex-end',
+    // marginTop: 240,
   },
   mainBodyContent: {
     backgroundColor: 'white',
@@ -96,9 +83,13 @@ const EventDetailsStyles = {
     borderTopLeftRadius: 30/2,
     paddingHorizontal: globalPadding,
     paddingTop: globalPaddingMedium,
+    position: 'relative',
+    zIndex: 0,
   },
   spacer: {
-    height: 220,
+    height: 240,
+    position: 'relative',
+    zIndex: -100,
   },
   spacerFooter: {
     height: 60,
@@ -120,6 +111,13 @@ const EventDetailsStyles = {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     paddingVertical: globalPadding,
+  },
+  youtubeVideoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 300,
   },
 
   // TEXT STYLES
