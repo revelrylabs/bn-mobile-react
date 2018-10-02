@@ -170,22 +170,6 @@ export default class EventShow extends Component {
           {this.backArrow}
         </View>
 
-        <View style={eventDetailsStyles.videoActionsWrapper}>
-          <View style={styles.flexColumnFlexStart}>
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
-              <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
-              </View>
-            </TouchableHighlight>
-            <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
-              <Icon style={styles.iconLinkCircle} name="reply" />
-            </View>
-          </View>
-        </View>
-
-
-
-
         {this.getTickets}
       </View>
     )

@@ -54,17 +54,6 @@ const EventDetailsStyles = {
     color: white,
     fontSize: backArrowFontSize,
   },
-  videoActionsWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    padding: globalPaddingSmall,
-    paddingTop: globalPaddingLarger,
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    zIndex: 0,
-  },
 
   // MAIN BODY STYLES
   mainBody: {
