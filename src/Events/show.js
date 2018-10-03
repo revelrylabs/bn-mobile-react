@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, TouchableHighlight} from 'react-native'
+import {NavigationActions, StackActions} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -95,29 +96,47 @@ export default class EventShow extends Component {
           </TouchableHighlight>
         </View>
       )
-    } else {
-      return null
     }
+
+    return null
   }
 
-  get purchaseTicket() {
+  get purchaseTicketButton() {
     const {currentScreen} = this.state
 
     if (currentScreen === 'checkout') {
+      const ticketDetails = {
+        ticketId: 1,
+        purchaseId: 1,
+      }
+
       return (
         <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
           <TouchableHighlight
             style={styles.button}
-            onPress={() => this.changeScreen('confirm')}
+            onPress={() => this.purchaseTicket(ticketDetails)}
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
         </View>
       )
-    } else {
-      return null
     }
+
+    return null
   }
+
+  purchaseTicket = (_purchasedTicket) => {
+    const {navigation: {navigate}} = this.props
+
+    this.props.navigation.dispatch(StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({routeName: 'Home'})],
+    }));
+
+    // @TODO: Set a "purchasedTicket flag in unstated so we can use it on MyTickets"
+    navigate('MyTickets')
+  }
+
 
   /* eslint-disable-next-line complexity */
   get prevScreen() {
@@ -183,8 +202,8 @@ export default class EventShow extends Component {
 
         </View>
 
-
         {this.getTickets}
+        {this.purchaseTicketButton}
       </View>
     )
   }

@@ -31,6 +31,7 @@ const sampleTickets = {
       ends: '12:30am',
       image: sampleImages.image1,
       qrCode: '',
+      id: 1,
     },
     {
       quantity: 3,
@@ -42,6 +43,7 @@ const sampleTickets = {
       ends: '12:30am',
       image: sampleImages.image2,
       qrCode: '',
+      id: 2,
     },
   ],
   past: [
@@ -55,6 +57,7 @@ const sampleTickets = {
       ends: '12:30am',
       image: sampleImages.image2,
       qrCode: '',
+      id: 3,
     },
     {
       quantity: 3,
@@ -66,6 +69,7 @@ const sampleTickets = {
       ends: '12:30am',
       image: sampleImages.image1,
       qrCode: '',
+      id: 4,
     },
   ],
 }
@@ -130,12 +134,25 @@ TicketsView.propTypes = {
 
 
 export default class MyTickets extends Component {
-  state = {
-    activeTab: 'upcoming',
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      activeTab: 'upcoming',
+      purchasedTicket: this.hasPurchasedTicket,
+    }
+
   }
 
   tabStyle(viewType) {
     return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
+  }
+
+  get hasPurchasedTicket() {
+    const {navigation} = this.props
+
+    return false //@TODO: Grab a purchasedTicket from unstated
   }
 
   render() {

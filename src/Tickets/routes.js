@@ -2,7 +2,7 @@ import MyTickets from './index'
 import EventTickets from './showEventTickets'
 
 const ROUTES = {
-  MyTickets,
+  MyTicketList: MyTickets,
   EventTickets,
 }
 
