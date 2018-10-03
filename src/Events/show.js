@@ -184,7 +184,6 @@ export default class EventShow extends Component {
           {this.showScreen}
         </ScrollView>
 
-
         <View style={eventDetailsStyles.backArrowWrapper}>
           {this.backArrow}
         </View>

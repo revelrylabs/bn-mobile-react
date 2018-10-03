@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
-import {ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
+import {ScrollView, Text, View, Image, Animated, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
@@ -75,45 +75,47 @@ const sampleTickets = {
 }
 
 const Ticket = ({navigate, ticket}) => (
-  <View>
-    <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
-      <View style={ticketStyles.ticketContainer}>
-        <Image
-          style={eventStyles.eventImage}
-          source={ticket.image}
-        />
-        <View style={ticketStyles.detailsContainer}>
-          <View>
-            <View style={styles.iconLinkContainer}>
-              <Icon style={ticketStyles.iconTicket} name="local-activity" />
-              <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
+  <Animated.View style={{ transform: [{scale: this.springValue}] }}>
+    <View>
+      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
+        <View style={ticketStyles.ticketContainer}>
+          <Image
+            style={eventStyles.eventImage}
+            source={ticket.image}
+          />
+          <View style={ticketStyles.detailsContainer}>
+            <View>
+              <View style={styles.iconLinkContainer}>
+                <Icon style={ticketStyles.iconTicket} name="local-activity" />
+                <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
+              </View>
+            </View>
+            <View>
+              <Text style={ticketStyles.header}>{ticket.name}</Text>
+              <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
             </View>
           </View>
-          <View>
-            <Text style={ticketStyles.header}>{ticket.name}</Text>
-            <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
-          </View>
         </View>
-      </View>
-    </TouchableHighlight>
+      </TouchableHighlight>
 
-    <View style={ticketStyles.ticketContainerBottom}>
-      <View style={ticketStyles.detailsContainerBottom}>
-        <View>
-          <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
-          <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
-        </View>
-        <View>
-          <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
-          <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
-        </View>
-        <View>
-          <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
-          <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
+      <View style={ticketStyles.ticketContainerBottom}>
+        <View style={ticketStyles.detailsContainerBottom}>
+          <View>
+            <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
+            <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
+          </View>
+          <View>
+            <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
+            <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
+          </View>
+          <View>
+            <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
+            <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
+          </View>
         </View>
       </View>
     </View>
-  </View>
+  </Animated.View>
 )
 
 Ticket.propTypes = {
@@ -141,9 +143,20 @@ export default class MyTickets extends Component {
     this.state = {
       activeTab: 'upcoming',
       purchasedTicket: this.hasPurchasedTicket,
+      // springValue: new Animated.Value(0.3),
     }
-
   }
+
+  // spring () {
+  //   this.springValue.setValue(0.3)
+  //   Animated.spring(
+  //     this.springValue,
+  //     {
+  //       toValue: 1,
+  //       friction: 1
+  //     }
+  //   ).start()
+  // }
 
   tabStyle(viewType) {
     return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
