@@ -74,8 +74,8 @@ const sampleTickets = {
   ],
 }
 
-const Ticket = ({navigate, ticket}) => (
-  <Animated.View style={{ transform: [{scale: this.springValue}] }}>
+const Ticket = ({navigate, ticket, spring, springValue}) => (
+  <Animated.View style={{ transform: [{scale: springValue}] }}>
     <View>
       <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
         <View style={ticketStyles.ticketContainer}>
@@ -143,20 +143,21 @@ export default class MyTickets extends Component {
     this.state = {
       activeTab: 'upcoming',
       purchasedTicket: this.hasPurchasedTicket,
-      // springValue: new Animated.Value(0.3),
+      springValue: new Animated.Value(0.3),
     }
   }
 
-  // spring () {
-  //   this.springValue.setValue(0.3)
-  //   Animated.spring(
-  //     this.springValue,
-  //     {
-  //       toValue: 1,
-  //       friction: 1
-  //     }
-  //   ).start()
-  // }
+  spring () {
+    this.springValue.setValue(0.3)
+    Animated.spring(
+      this.state.springValue,
+      {
+        toValue: 1,
+        friction: 1,
+        tension: 1,
+      }
+    ).start()
+  }
 
   tabStyle(viewType) {
     return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
@@ -169,7 +170,7 @@ export default class MyTickets extends Component {
   }
 
   render() {
-    const {navigation: {navigate}} = this.props
+    const {navigation: {navigate, spring, springValue}} = this.props
 
     return (
       <ScrollView>
