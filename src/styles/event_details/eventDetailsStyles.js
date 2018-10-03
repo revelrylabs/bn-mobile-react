@@ -4,11 +4,13 @@ import {
   sectionHeaderColor,
   borderColor,
   textColor,
+  disabledHeaderColor,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
   globalFontBold,
   bodyFontSize,
+  globalPaddingLarger,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
@@ -29,32 +31,36 @@ export const calendarMonthFontSize = 14
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 export const attendeeFontSize = 12
+export const backArrowFontSize = 25
 
 const EventDetailsStyles = {
-  // VIDEO STYLES
-  videoContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+  // VIDEO BKGD STYLES
+  videoBkgd: {
     height: 300,
-  },
-  videoContainerHeader: {
     position: 'absolute',
     top: 0,
-  },
-  videoBkgd: {
     width: fullWidth,
-    height: 300,
-    position: 'absolute',
+    zIndex: -10,
   },
-  videoDetailsContainer: {
-    flexDirection: 'column',
-    height: 290,
-    justifyContent: 'space-between',
+
+  // CLOSE ICON STYLES
+  backArrowWrapper: {
+    position: 'absolute',
+    top: 0,
     padding: globalPaddingSmall,
     paddingTop: globalPaddingLarge,
-    width: fullWidth,
+    zIndex: 0,
+  },
+  backArrowCircleContainer: {
+    backgroundColor: disabledHeaderColor,
+    borderRadius: 100/2,
+    height: 45,
+    padding: globalPaddingSmall,
+    width: 45,
+  },
+  backArrow: {
+    color: white,
+    fontSize: backArrowFontSize,
   },
 
   // MAIN BODY STYLES
@@ -71,9 +77,8 @@ const EventDetailsStyles = {
     borderTopLeftRadius: 30/2,
     paddingHorizontal: globalPadding,
     paddingTop: globalPaddingMedium,
-  },
-  spacer: {
-    height: 220,
+    position: 'relative',
+    zIndex: 10,
   },
   spacerFooter: {
     height: 60,
@@ -84,25 +89,24 @@ const EventDetailsStyles = {
     position: 'absolute',
     bottom: 0,
   },
-  sectionTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   sectionBottom: {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -45,
     paddingBottom: globalPaddingLarge,
   },
-  videoActionsContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-  },
   iconSectionHeaderContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     paddingVertical: globalPadding,
+  },
+  youtubeVideoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 300,
   },
 
   // TEXT STYLES
