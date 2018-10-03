@@ -57,11 +57,11 @@ export default class Checkout extends Component {
               </View>
             </View>
             <View style={eventTicketStyles.row}>
-              <TouchableHighlight onPress={() => this.decrementTickets()}>
+              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.decrementTickets()}>
                 <Icon style={eventTicketStyles.removeIcon} name="remove-circle" />
               </TouchableHighlight>
               <Text style={eventTicketStyles.quantityPrice}>{this.state.quantity}</Text>
-              <TouchableHighlight onPress={() => this.incrementTickets()}>
+              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.incrementTickets()}>
                 <Icon style={eventTicketStyles.addIcon} name="add-circle" />
               </TouchableHighlight>
             </View>
