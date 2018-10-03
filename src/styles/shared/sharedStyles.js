@@ -412,6 +412,10 @@ const SharedStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  flexColumnFlexStart: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
 
   // ROWS COLS
   row: {
