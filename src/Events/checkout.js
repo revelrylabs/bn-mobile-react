@@ -15,6 +15,31 @@ export default class Checkout extends Component {
     changeScreen: PropTypes.func,
   }
 
+  constructor(props) {
+    super(props)
+
+    this. state = {
+      quantity: 1,
+    }
+  }
+
+  incrementTickets = () => {
+    const {quantity} = this.state
+
+    // @TODO: Add a check for max tickets allowed
+    this.setState({quantity: quantity + 1})
+  }
+
+  decrementTickets = () => {
+    const {quantity} = this.state
+
+    // Dont decrement below one ticket
+    if (quantity <= 1) { return null }
+
+    // @TODO: Add a check for max tickets allowed
+    this.setState({quantity: quantity - 1})
+  }
+
   render() {
     return (
       <View style={eventTicketStyles.mainBody}>
@@ -32,9 +57,13 @@ export default class Checkout extends Component {
               </View>
             </View>
             <View style={eventTicketStyles.row}>
-              <Icon style={eventTicketStyles.removeIcon} name="remove-circle" />
-              <Text style={eventTicketStyles.quantityPrice}>1</Text>
-              <Icon style={eventTicketStyles.addIcon} name="add-circle" />
+              <TouchableHighlight onPress={() => this.decrementTickets()}>
+                <Icon style={eventTicketStyles.removeIcon} name="remove-circle" />
+              </TouchableHighlight>
+              <Text style={eventTicketStyles.quantityPrice}>{this.state.quantity}</Text>
+              <TouchableHighlight onPress={() => this.incrementTickets()}>
+                <Icon style={eventTicketStyles.addIcon} name="add-circle" />
+              </TouchableHighlight>
             </View>
           </View>
 
