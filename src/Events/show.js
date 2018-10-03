@@ -162,44 +162,31 @@ export default class EventShow extends Component {
     const icon = currentScreen === 'details' ? 'close' : 'arrow-back'
 
     return (
-      <Icon
-        style={styles.iconLinkCircle}
-        name={icon}
-        onPress={() => this.prevScreen}
-      />
+      <View style={eventDetailsStyles.backArrowCircleContainer}>
+        <Icon
+          style={eventDetailsStyles.backArrow}
+          name={icon}
+          onPress={() => this.prevScreen}
+        />
+      </View>
     )
   }
 
   render() {
-    const {favorite} = this.state
-
     return (
       <View style={{backgroundColor: 'white'}}>
-        <View style={[eventDetailsStyles.videoContainer, eventDetailsStyles.videoContainerHeader]}>
-          <Image
-            style={eventDetailsStyles.videoBkgd}
-            source={require('../../assets/video-bkgd.png')}
-          />
-        </View>
+        <Image
+          style={eventDetailsStyles.videoBkgd}
+          source={require('../../assets/video-bkgd.png')}
+        />
+
         <ScrollView>
           {this.showScreen}
         </ScrollView>
-        <View style={[eventDetailsStyles.videoDetailsContainer, eventDetailsStyles.videoContainerHeader]}>
 
-          <View style={eventDetailsStyles.sectionTop}>
-            {this.backArrow}
-            <View style={eventDetailsStyles.videoActionsContainer}>
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
-                <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                  <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
-                </View>
-              </TouchableHighlight>
-              <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
-                <Icon style={styles.iconLinkCircle} name="reply" />
-              </View>
-            </View>
-          </View>
 
+        <View style={eventDetailsStyles.backArrowWrapper}>
+          {this.backArrow}
         </View>
 
         {this.getTickets}

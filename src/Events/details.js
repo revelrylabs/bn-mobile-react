@@ -126,7 +126,7 @@ export default class Details extends Component {
             <Text style={eventDetailsStyles.iconSectionHeader}>YOUTUBE</Text>
           </View>
 
-          <View style={eventDetailsStyles.videoContainer}>
+          <View style={eventDetailsStyles.youtubeVideoContainer}>
             <Image
               style={eventDetailsStyles.videoBkgd}
               source={require('../../assets/video-youtube-bkgd.png')}
