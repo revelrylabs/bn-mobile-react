@@ -384,6 +384,9 @@ const SharedStyles = {
   marginTopSmall: {
     marginTop: globalMarginSmall,
   },
+  marginBottomSmall: {
+    marginBottom: globalMarginSmall,
+  },
   marginBottomTiny: {
     marginBottom: globalMarginTiny,
   },
@@ -397,6 +400,7 @@ const SharedStyles = {
     justifyContent: 'flex-start',
   },
   flexRowSpaceBetween: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

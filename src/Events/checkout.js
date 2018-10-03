@@ -64,6 +64,35 @@ export default class Checkout extends Component {
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
+
+          <View style={eventTicketStyles.rowContainer}>
+            <View style={eventTicketStyles.row}>
+              <View>
+                <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Sub Total</Text>
+                <Text style={eventTicketStyles.ticketHeader}>Fees</Text>
+              </View>
+            </View>
+            <View style={eventTicketStyles.row}>
+              <View>
+                <Text style={[eventTicketStyles.ticketSubHeader, styles.marginBottomSmall]}>$30.00 USD</Text>
+                <Text style={eventTicketStyles.ticketSubHeader}>$5.00 USD</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={eventTicketStyles.rowContainer}>
+            <View style={eventTicketStyles.row}>
+              <View>
+                <Text style={eventTicketStyles.ticketHeader}>Total</Text>
+              </View>
+            </View>
+            <View style={eventTicketStyles.row}>
+              <View>
+                <Text style={eventTicketStyles.ticketHeader}>$35.00 USD</Text>
+              </View>
+            </View>
+          </View>
+
         </View>
       </View>
     )
