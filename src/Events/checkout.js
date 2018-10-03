@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight} from 'react-native'
+import {Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -50,7 +50,16 @@ export default class Checkout extends Component {
           <TouchableHighlight onPress={() => this.props.changeScreen('payment')}>
             <View style={eventTicketStyles.rowContainer}>
               <View style={eventTicketStyles.row}>
-                <Text style={eventTicketStyles.ticketPrice}>Change Payment Type</Text>
+                <View>
+                  <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Payment</Text>
+                  <View style={styles.flexRowFlexStart}>
+                    <Image
+                      style={eventTicketStyles.iconPaymentSmall}
+                      source={require('../../assets/icon-visa-pay.png')}
+                    />
+                    <Text style={eventTicketStyles.ticketSubHeaderPink}>**** **** **** 4455</Text>
+                  </View>
+                </View>
               </View>
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
             </View>

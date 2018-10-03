@@ -12,6 +12,7 @@ import {
   globalFontSemiBold,
   globalPaddingLarge,
   globalPaddingSmall,
+  globalPaddingTiny,
   globalPadding,
   globalMargin,
   globalPaddingMedium,
@@ -107,21 +108,35 @@ const EventTicketStyles = {
     color: textColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
-    paddingTop: globalPaddingSmall,
+    paddingTop: globalPaddingTiny,
   },
   ticketSubHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
   },
+  ticketSubHeaderPink: {
+    color: primaryColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+  },
 
   // ICON STYLES
   iconPayment: {
+    borderColor: 'transparent',
     borderRadius: 15/2,
     borderWidth: 1,
     height: 50,
     marginRight: globalMargin,
     width: 70,
+  },
+  iconPaymentSmall: {
+    borderColor: 'transparent',
+    borderRadius: 15/2,
+    borderWidth: 1,
+    height: 25,
+    marginRight: globalMargin,
+    width: 40,
   },
   iconCheck: {
     color: primaryColor,
