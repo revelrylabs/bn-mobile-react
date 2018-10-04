@@ -74,48 +74,52 @@ const sampleTickets = {
   ],
 }
 
-const Ticket = ({navigate, ticket, spring, springValue}) => (
+const AnimatedTicket = ({navigate, ticket, springValue}) => (
   <Animated.View style={{ transform: [{scale: springValue}] }}>
-    <View>
-      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
-        <View style={ticketStyles.ticketContainer}>
-          <Image
-            style={eventStyles.eventImage}
-            source={ticket.image}
-          />
-          <View style={ticketStyles.detailsContainer}>
-            <View>
-              <View style={styles.iconLinkContainer}>
-                <Icon style={ticketStyles.iconTicket} name="local-activity" />
-                <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
-              </View>
-            </View>
-            <View>
-              <Text style={ticketStyles.header}>{ticket.name}</Text>
-              <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
-            </View>
-          </View>
-        </View>
-      </TouchableHighlight>
+    <Ticket navigate={navigate} ticket={ticket} />
+  </Animated.View>
+)
 
-      <View style={ticketStyles.ticketContainerBottom}>
-        <View style={ticketStyles.detailsContainerBottom}>
+const Ticket = ({navigate, ticket, springValue}) => (
+  <View>
+    <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
+      <View style={ticketStyles.ticketContainer}>
+        <Image
+          style={eventStyles.eventImage}
+          source={ticket.image}
+        />
+        <View style={ticketStyles.detailsContainer}>
           <View>
-            <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
-            <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
+            <View style={styles.iconLinkContainer}>
+              <Icon style={ticketStyles.iconTicket} name="local-activity" />
+              <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
+            </View>
           </View>
           <View>
-            <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
-            <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
-          </View>
-          <View>
-            <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
-            <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
+            <Text style={ticketStyles.header}>{ticket.name}</Text>
+            <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
           </View>
         </View>
       </View>
+    </TouchableHighlight>
+
+    <View style={ticketStyles.ticketContainerBottom}>
+      <View style={ticketStyles.detailsContainerBottom}>
+        <View>
+          <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
+          <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
+        </View>
+        <View>
+          <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
+          <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
+        </View>
+        <View>
+          <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
+          <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
+        </View>
+      </View>
     </View>
-  </Animated.View>
+  </View>
 )
 
 Ticket.propTypes = {
@@ -123,9 +127,11 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({navigate, viewType}) => (
-  sampleTickets[viewType].map((ticket) => (
-    <Ticket key={ticket.name} navigate={navigate} ticket={ticket} />
+const TicketsView = ({navigate, viewType, springValue}) => (
+  sampleTickets[viewType].map((ticket, index) => (
+    index === 0 ?
+      <AnimatedTicket key={ticket.name} navigate={navigate} ticket={ticket} springValue={springValue} /> :
+      <Ticket key={ticket.name} navigate={navigate} ticket={ticket} />
   ))
 )
 
@@ -140,17 +146,22 @@ export default class MyTickets extends Component {
   constructor(props) {
     super(props)
 
+    this.springValue = new Animated.Value(0.3)
+
     this.state = {
       activeTab: 'upcoming',
       purchasedTicket: this.hasPurchasedTicket,
-      springValue: new Animated.Value(0.3),
     }
   }
 
-  spring () {
+  componentDidMount() {
+    this.spring()
+  }
+
+  spring() {
     this.springValue.setValue(0.3)
     Animated.spring(
-      this.state.springValue,
+      this.springValue,
       {
         toValue: 1,
         friction: 1,
@@ -170,7 +181,7 @@ export default class MyTickets extends Component {
   }
 
   render() {
-    const {navigation: {navigate, spring, springValue}} = this.props
+    const {navigation: {navigate}} = this.props
 
     return (
       <ScrollView>
@@ -194,7 +205,7 @@ export default class MyTickets extends Component {
             <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
           </View>
 
-          <TicketsView navigate={navigate} viewType={this.state.activeTab} />
+          <TicketsView navigate={navigate} viewType={this.state.activeTab} springValue={this.springValue} />
 
         </View>
 
