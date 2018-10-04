@@ -21,7 +21,7 @@ export default class GetTickets extends Component {
         <View style={eventTicketStyles.mainBodyContent}>
 
           <View style={styles.container}>
-            <Text style={styles.header}>Ticket Type</Text>
+            <Text style={eventTicketStyles.header}>Ticket Type</Text>
           </View>
 
           <TouchableHighlight onPress={() => this.props.changeScreen('checkout')}>
