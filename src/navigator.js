@@ -8,39 +8,19 @@ import NavigationStyles from './styles/shared/navigationStyles'
 
 const navigationStyles = NavigationStyles.createStyles()
 
-const createStackModalNavigator = (routeConfigs, navigatorConfig, navigationOptions = false) => {
-  const CardStackNavigator = createStackNavigator(routeConfigs, navigatorConfig);
-  const modalRouteConfig = {};
-  const routeNames = Object.keys(routeConfigs);
+const EventsStack = createStackNavigator({
+  ...EventRoutes,
+}, {
+  initialRouteName: 'Home',
+  navigationOptions: {
+    header: null,
+  },
+})
 
-  for (let i = 0; i < routeNames.length; i++) {
-    modalRouteConfig[`${routeNames[i]}Modal`] = routeConfigs[routeNames[i]];
-  }
-
-  const ModalStackNavigator = createStackNavigator({
-    CardStackNavigator: {screen: CardStackNavigator},
-    ...modalRouteConfig,
-  }, {
-    mode: 'modal',
-    headerMode: 'none',
-  });
-
-  console.log(navigationOptions);
-
-
-  if (navigationOptions) {
-    ModalStackNavigator.navigationOptions = navigationOptions
-  }
-
-  return ModalStackNavigator;
-};
-
-const eventNavigationOptions = ({navigation}) => {
+EventsStack.navigationOptions = ({navigation}) => {
   let tabBarVisible = true;
 
-  // Use .routes[0] becauser the ModalStackNavigator embeds event routes indside a second route object
-  // remove .routes[0] if switching back to a normal stackNavigator
-  if (navigation.state.routes[0].index > 0) {
+  if (navigation.state.index > 0) {
     tabBarVisible = false;
   }
 
@@ -49,19 +29,10 @@ const eventNavigationOptions = ({navigation}) => {
   };
 };
 
-const EventsStack = createStackModalNavigator({
-  ...EventRoutes,
-}, {
-  initialRouteName: 'Home',
-  navigationOptions: {
-    header: null,
-  },
-}, eventNavigationOptions)
-
 const TicketsStack = createStackNavigator({
   ...TicketRoutes,
 }, {
-  initialRouteName: 'MyTickets',
+  initialRouteName: 'MyTicketList',
   navigationOptions: {
     header: null,
   },
