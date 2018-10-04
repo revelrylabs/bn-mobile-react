@@ -128,11 +128,6 @@ export default class EventShow extends Component {
   purchaseTicket = (_purchasedTicket) => {
     const {navigation: {navigate}} = this.props
 
-    this.props.navigation.dispatch(StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({routeName: 'Home'})],
-    }));
-
     // @TODO: Set a "purchasedTicket flag in unstated so we can use it on MyTickets"
     navigate('MyTickets')
   }
