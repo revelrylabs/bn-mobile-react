@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation'
 import {Image} from 'react-native';
 import EventRoutes from './Events/routes'
 import TicketRoutes from './Tickets/routes'
 import AccountRoutes from './Accounts/routes'
 import NavigationStyles from './styles/shared/navigationStyles'
+
+import {Subscribe} from 'unstated'
+import {TicketsContainer} from './Tickets/ticketStateProvider'
+import {EventsContainer} from './Events/eventStateProvider'
 
 const navigationStyles = NavigationStyles.createStyles()
 
@@ -62,11 +66,27 @@ const tabBarOptions = {
   },
 }
 
+class ticketStackWithStore extends Component {
+  static router = TicketsStack.router;
+
+  render() {
+    return <Subscribe to={[TicketsContainer]}>{(ticketStore) => <TicketsStack navigation={this.props.navigation} screenProps={{store: ticketStore}} />}</Subscribe>
+  }
+}
+
+class eventStackWithStore extends Component {
+  static router = EventsStack.router;
+
+  render() {
+    return <Subscribe to={[EventsContainer]}>{(eventStore) => <EventsStack navigation={this.props.navigation} screenProps={{store: eventStore}} />}</Subscribe>
+  }
+}
+
 /* eslint-disable react/display-name, react/prop-types */
 export default createBottomTabNavigator(
   {
     Explore: {
-      screen: EventsStack,
+      screen: eventStackWithStore,
       navigationOptions: ({_navigation}) => ({
         tabBarIcon: ({focused}) => {
           const imageName = focused ? require('../assets/icon-explore-active.png') : require('../assets/icon-explore.png')
@@ -77,7 +97,7 @@ export default createBottomTabNavigator(
       }),
     },
     MyTickets: {
-      screen: TicketsStack,
+      screen: ticketStackWithStore,
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           const imageName = focused ? require('../assets/icon-ticket-active.png') : require('../assets/icon-ticket.png')
