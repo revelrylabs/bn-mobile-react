@@ -54,12 +54,11 @@ const ModalStyles = {
 
   // ACTIVITY INDICATOR
   activityIndicator: {
+    alignItems: 'center',
     backgroundColor: containerDarkColor,
-    borderColor: containerDarkColor,
     borderRadius: 20/2,
-    borderWidth: 1,
-    paddingHorizontal: globalPadding,
-    paddingVertical: globalPaddingMedium,
+    justifyContent: 'space-around',
+    height: 100,
     width: 100,
   },
 
