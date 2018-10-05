@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, Modal, TouchableHighlight} from 'react-native'
+import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
 import {NavigationActions, StackActions} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -25,22 +25,9 @@ const LoadingScreen = ({toggleModal, modalVisible}) => (
     transparent={true}
   >
     <View style={modalStyles.modalContainer}>
-      <View style={modalStyles.contentWrapper}>
-        <Image
-          style={modalStyles.qrCode}
-          source={require('../../assets/qr-code-placeholder.png')}
-        />
-        <Text style={modalStyles.header}>Show this to complete a ticket transfer.</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableHighlight
-            style={styles.button}
-            name="close"
-            onPress={() => {
-              toggleModal(!modalVisible)
-            }}
-          >
-            <Text style={styles.buttonText}>Got It</Text>
-          </TouchableHighlight>
+      <View style={styles.flexRowCenter}>
+        <View style={modalStyles.activityIndicator}>
+          <ActivityIndicator size="large" color="#FF20B1" />
         </View>
       </View>
     </View>
@@ -163,6 +150,7 @@ export default class EventShow extends Component {
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
+
           <TouchableHighlight style={styles.button} onPress={() => this.toggleLoadingModal(true)}>
             <Text style={styles.buttonText}>modal test</Text>
           </TouchableHighlight>

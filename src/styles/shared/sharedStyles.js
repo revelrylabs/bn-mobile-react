@@ -405,6 +405,11 @@ const SharedStyles = {
     justifyContent: 'space-between',
   },
   flexRowCenter: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  flexRowCenter: {
     flexDirection: 'row',
     justifyContent: 'center',
   },

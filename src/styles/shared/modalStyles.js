@@ -10,6 +10,7 @@ import {
   globalPaddingTiny,
   globalPaddingSmall,
   globalPadding,
+  globalPaddingMedium,
   globalPaddingLarge,
   globalPaddingJumbo,
   globalMargin,
@@ -49,6 +50,17 @@ const ModalStyles = {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     padding: globalPaddingSmall + globalPaddingTiny,
+  },
+
+  // ACTIVITY INDICATOR
+  activityIndicator: {
+    backgroundColor: containerDarkColor,
+    borderColor: containerDarkColor,
+    borderRadius: 20/2,
+    borderWidth: 1,
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingMedium,
+    width: 100,
   },
 
   // IMAGE STYLES
