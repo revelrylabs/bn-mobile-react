@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, TouchableHighlight} from 'react-native'
+import {ScrollView, Text, View, Image, Modal, TouchableHighlight} from 'react-native'
 import {NavigationActions, StackActions} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -9,9 +9,49 @@ import Details from './details'
 import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
+import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const modalStyles = ModalStyles.createStyles()
+
+
+const LoadingScreen = ({toggleModal, modalVisible}) => (
+  <Modal
+    onRequestClose={() => {
+      toggleModal(!modalVisible)
+    }}
+    visible={modalVisible}
+    transparent={true}
+  >
+    <View style={modalStyles.modalContainer}>
+      <View style={modalStyles.contentWrapper}>
+        <Image
+          style={modalStyles.qrCode}
+          source={require('../../assets/qr-code-placeholder.png')}
+        />
+        <Text style={modalStyles.header}>Show this to complete a ticket transfer.</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight
+            style={styles.button}
+            name="close"
+            onPress={() => {
+              toggleModal(!modalVisible)
+            }}
+          >
+            <Text style={styles.buttonText}>Got It</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    </View>
+  </Modal>
+)
+
+LoadingScreen.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+}
+
 const PaymentOptions = [
   {
     header: 'Apple Pay',
@@ -118,6 +158,11 @@ export default class EventShow extends Component {
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
+
+          <TouchableHighlight onPress={() => this.toggleLoadingModal(true)}>
+            <Text style={styles.buttonText}>Purchase Ticket</Text>
+          </TouchableHighlight>
+
         </View>
       )
     }
@@ -167,9 +212,20 @@ export default class EventShow extends Component {
     )
   }
 
+  state = {
+    showLoadingModal: false,
+  }
+
+  toggleLoadingModal = (visible) => {
+    this.setState({showLoadingModal: visible})
+  }
+
   render() {
+    const {showLoadingModal} = this.state
+
     return (
       <View style={{backgroundColor: 'white'}}>
+        <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={showLoadingModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
           source={require('../../assets/video-bkgd.png')}
