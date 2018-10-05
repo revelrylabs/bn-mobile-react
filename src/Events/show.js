@@ -75,6 +75,7 @@ export default class EventShow extends Component {
     favorite: false,
     currentScreen: 'details',
     selectedPaymentId: 1,
+    showLoadingModal: false,
   }
 
   scrollToTop = () => {
@@ -95,6 +96,10 @@ export default class EventShow extends Component {
       selectedPaymentId,
       currentScreen: 'checkout',
     })
+  }
+
+  toggleLoadingModal = (visible) => {
+    this.setState({showLoadingModal: visible})
   }
 
   /* eslint-disable-next-line complexity */
@@ -158,11 +163,9 @@ export default class EventShow extends Component {
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
-
-          <TouchableHighlight onPress={() => this.toggleLoadingModal(true)}>
-            <Text style={styles.buttonText}>Purchase Ticket</Text>
+          <TouchableHighlight style={styles.button} onPress={() => this.toggleLoadingModal(true)}>
+            <Text style={styles.buttonText}>modal test</Text>
           </TouchableHighlight>
-
         </View>
       )
     }
@@ -210,14 +213,6 @@ export default class EventShow extends Component {
         />
       </View>
     )
-  }
-
-  state = {
-    showLoadingModal: false,
-  }
-
-  toggleLoadingModal = (visible) => {
-    this.setState({showLoadingModal: visible})
   }
 
   render() {
