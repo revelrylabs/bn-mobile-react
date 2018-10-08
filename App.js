@@ -4,7 +4,7 @@ import {loadFonts} from './assets/fonts'
 import {loadImages} from './assets'
 import {View} from 'react-native';
 import {Video, Asset, AppLoading} from 'expo';
-import navigator from './src/navigator'
+import navigator from './src/navigators/navigator'
 import SharedStyles from './src/styles/shared/sharedStyles'
 
 const styles = SharedStyles.createStyles()
@@ -29,6 +29,12 @@ export default class App extends Component {
     await loadImages()
     this.setState({isAppReady: true});
   }
+
+  // Sign Out Code
+  // _signOutAsync = async () => {
+  //   await AsyncStorage.clear();
+  //   this.props.navigation.navigate('Auth');
+  // };
 
   // eslint-disable-next-line complexity
   render() {
