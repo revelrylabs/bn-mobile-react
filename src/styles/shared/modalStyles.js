@@ -62,6 +62,12 @@ const ModalStyles = {
     width: 100,
   },
 
+  // EMOJI ACTIVITY INDICATOR
+  emojiActivityIndicator: {
+    height: 53,
+    width: 35,
+  },
+
   // IMAGE STYLES
   qrCode: {
     height: 250,

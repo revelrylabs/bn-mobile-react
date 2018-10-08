@@ -34,6 +34,15 @@ const LoadingScreen = ({toggleModal, modalVisible}) => (
   </Modal>
 )
 
+/* Emoji img that appears after the ActivityIndicator
+<Image
+  style={modalStyles.emojiActivityIndicator}
+  source={require('../../assets/emoji-loader.png')}
+/>
+*/
+
+
+
 LoadingScreen.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   modalVisible: PropTypes.bool.isRequired,
@@ -152,7 +161,7 @@ export default class EventShow extends Component {
           </TouchableHighlight>
 
           <TouchableHighlight style={styles.button} onPress={() => this.toggleLoadingModal(true)}>
-            <Text style={styles.buttonText}>modal test</Text>
+            <Text style={styles.buttonText}>Modal Test</Text>
           </TouchableHighlight>
         </View>
       )
