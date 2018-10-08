@@ -12,75 +12,19 @@ const slideshowStyles = SlideShowStyles.createStyles()
 const eventStyles = EventStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
-
-// Hardcoding for now, will probably be replaced by a URL,
-// and <Image source={{uri: ticket.imageUrl}} ... />
-const sampleImages = {
-  image1: require('../../assets/ticket-event.png'),
-  image2: require('../../assets/ticket-event-2.png'),
-}
-const sampleTickets = {
-  upcoming: [
-    {
-      quantity: 3,
-      name: 'Explosions In The Sky',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, July 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image1,
-      qrCode: '',
-      id: 1,
-    },
-    {
-      quantity: 3,
-      name: 'Tycho',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, July 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image2,
-      qrCode: '',
-      id: 2,
-    },
-  ],
-  past: [
-    {
-      quantity: 3,
-      name: 'Tycho',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, January 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image2,
-      qrCode: '',
-      id: 3,
-    },
-    {
-      quantity: 3,
-      name: 'Explosions In The Sky',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, January 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image1,
-      qrCode: '',
-      id: 4,
-    },
-  ],
-}
-
 const AnimatedTicket = ({navigate, ticket, springValue}) => (
-  <Animated.View style={{ transform: [{scale: springValue}] }}>
+  <Animated.View style={{transform: [{scale: springValue}]}}>
     <Ticket navigate={navigate} ticket={ticket} />
   </Animated.View>
 )
 
-const Ticket = ({navigate, ticket, springValue}) => (
+AnimatedTicket.propTypes = {
+  navigate: PropTypes.func.isRequired,
+  ticket: PropTypes.object.isRequired,
+  springValue: PropTypes.object.isRequired,
+}
+
+const Ticket = ({navigate, ticket}) => (
   <View>
     <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
       <View style={ticketStyles.ticketContainer}>
@@ -127,17 +71,23 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({navigate, viewType, springValue}) => (
-  sampleTickets[viewType].map((ticket, index) => (
+const TicketsView = ({tickets, navigate, springValue}) => (
+  tickets.map((ticket, index) => (
     index === 0 ?
-      <AnimatedTicket key={ticket.name} navigate={navigate} ticket={ticket} springValue={springValue} /> :
+      <AnimatedTicket
+        key={ticket.name}
+        navigate={navigate}
+        ticket={ticket}
+        springValue={springValue}
+      /> :
       <Ticket key={ticket.name} navigate={navigate} ticket={ticket} />
   ))
 )
 
 TicketsView.propTypes = {
   navigate: PropTypes.func.isRequired,
-  viewType: PropTypes.string.isRequired,
+  tickets: PropTypes.array.isRequired,
+  springValue: PropTypes.object.isRequired,
 }
 
 
@@ -147,9 +97,11 @@ export default class MyTickets extends Component {
     super(props)
 
     this.springValue = new Animated.Value(0.3)
+    const {screenProps: {store: {state}}} = props
 
     this.state = {
       activeTab: 'upcoming',
+      tickets: state.tickets || [],
       purchasedTicket: this.hasPurchasedTicket,
     }
   }
@@ -174,10 +126,16 @@ export default class MyTickets extends Component {
     return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
   }
 
+  get ticketsForActiveView() {
+    const {tickets, activeTab} = this.state
+
+    return tickets[activeTab] || []
+  }
+
   get hasPurchasedTicket() {
     const {navigation} = this.props
 
-    return false //@TODO: Grab a purchasedTicket from unstated
+    return false // @TODO: Grab a purchasedTicket from unstated
   }
 
   render() {
@@ -205,7 +163,7 @@ export default class MyTickets extends Component {
             <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
           </View>
 
-          <TicketsView navigate={navigate} viewType={this.state.activeTab} springValue={this.springValue} />
+          <TicketsView navigate={navigate} tickets={this.ticketsForActiveView} springValue={this.springValue} />
 
         </View>
 
@@ -216,4 +174,5 @@ export default class MyTickets extends Component {
 
 MyTickets.propTypes = {
   navigation: PropTypes.object.isRequired,
+  screenProps: PropTypes.object.isRequired,
 }

@@ -21,90 +21,17 @@ const HEADER_MAX_HEIGHT = 0;
 const HEADER_MIN_HEIGHT = -25;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-const SAMPLE_LOCATIONS = [
-  {
-    name: 'Where are you looking for events?',
-    nickname: '',
-    id: 1,
-  },
-  {
-    name: 'Philadelphia, PA',
-    nickname: 'PHILLY',
-    id: 2,
-  },
-  {
-    name: 'New York, NY',
-    nickname: 'NYC',
-    id: 3,
-  },
-  {
-    name: 'New Orleans, LA',
-    nickname: 'NOLA',
-    id: 4,
-  },
-  {
-    name: 'San Francisco, CA',
-    nickname: 'SF',
-    id: 5,
-  },
-  {
-    name: 'Washington, D.C.',
-    nickname: 'DC',
-    id: 6,
-  },
-]
-
-const SAMPLE_AVATARS = [
-  require('../../assets/avatar-female.png'),
-  require('../../assets/avatar-male.png'),
-  require('../../assets/avatar-female.png'),
-]
-const SAMPLE_EVENTS = [
-  {
-    name: 'River Whyless',
-    bgImage: require('../../assets/event-smaller-1.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'River Whyless',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: true,
-  },
-  {
-    name: 'Beyonce',
-    bgImage: require('../../assets/event-smaller-2.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Beyonce',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: false,
-  },
-  {
-    name: 'Drake',
-    bgImage: require('../../assets/event-smaller-3.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Drake',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: false,
-  },
-  {
-    name: 'Ed Sheeran',
-    bgImage: require('../../assets/event-smaller-4.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Ed Sheeran',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: true,
-  },
-]
-
 export default class EventsIndex extends Component {
   static propTypes = {
     navigation: PropTypes.object,
+    screenProps: PropTypes.object,
   }
 
+  /* eslint-disable-next-line complexity */
   constructor(props) {
     super(props);
+
+    const {screenProps: {store: {state}}} = props
 
     this.state = {
       scrollY: new Animated.Value(
@@ -114,21 +41,30 @@ export default class EventsIndex extends Component {
       toValue: 1,
       duration: 2000,
       easing: Easing.linear,
-      selectedLocationId: 2,
+      selectedLocationId: state.selectedLocationId || 2,
       mainFavorite: true,
+      events: state.events || [],
+      locations: state.locations || [],
     };
+  }
+
+  componentWillReceiveProps(newProps) {
+    // Check for updated Location
+    const {screenProps: {store: {state: {selectedLocationId}}}} = newProps
+
+    if (selectedLocationId !== this.state.selectedLocationId) {
+      // also do some kind of event re-search action to load new city events
+      this.setState({selectedLocationId})
+    }
   }
 
   setFavorite = (mainFavorite) => {
     this.setState({mainFavorite})
   }
 
-  changeLocation = (index, selectedLocation) => {
-    this.setState({selectedLocationId: selectedLocation.id})
-  }
-
   get currentLocationDisplayName() {
-    const selectedLoc = SAMPLE_LOCATIONS.find((loc) => (loc.id === this.state.selectedLocationId))
+    const {locations} = this.state
+    const selectedLoc = locations.find((loc) => (loc.id === this.state.selectedLocationId))
 
     return selectedLoc.nickname
   }
@@ -156,8 +92,9 @@ export default class EventsIndex extends Component {
 
   get allEvents() {
     const {navigation: {navigate}} = this.props
+    const {events} = this.state
 
-    return SAMPLE_EVENTS.map((event, index) => (
+    return events.map((event, index) => (
       <EventItemView
         key={index}
         onPress={() => navigate('EventsShow', {name: 'River Whyless'})}
@@ -187,8 +124,8 @@ export default class EventsIndex extends Component {
       outputRange: [1, 0, 1],
     });
 
-    const {navigation: {navigate}} = this.props
-    const {mainFavorite} = this.state
+    const {navigation: {navigate}, screenProps: {store}} = this.props
+    const {mainFavorite, locations} = this.state
 
     return (
       <View>
@@ -223,8 +160,8 @@ export default class EventsIndex extends Component {
               ref={(ref) => {
                 this._dropdown = ref
               }}
-              onSelect={this.changeLocation}
-              options={SAMPLE_LOCATIONS}
+              onSelect={store.changeLocation}
+              options={locations}
               renderRow={this.locRowOption}
               renderSeparator={() => <View />}
               dropdownStyle={modalStyles.modalDropdownContainer}
