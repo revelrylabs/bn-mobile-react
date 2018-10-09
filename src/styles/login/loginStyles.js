@@ -10,12 +10,14 @@ import {
   iconFontSize,
   globalFontRegular,
   globalFontMedium,
+  globalFontSemiBold,
   globalPaddingJumbo,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
+  globalMargin,
   globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
@@ -41,7 +43,7 @@ const LoginStyles = {
   section: {
     alignItems: 'center',
     flexDirection: 'column',
-    height: 600,
+    height: 700,
     justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
     width: fullWidth,
@@ -50,34 +52,36 @@ const LoginStyles = {
   // LOGO
   logo: {
     height: 220,
-    marginBottom: globalPaddingJumbo,
     width: 150,
   },
 
   // BUTTONS
   buttonContainer: {
     flexDirection: 'row',
+    marginBottom: globalMargin,
+    width: fullWidth - globalPaddingMedium,
   },
   button: {
     backgroundColor: primaryColor,
+    borderColor: 'transparent',
+    borderRadius: 4,
+    borderWidth: 1,
     flex: 1,
     height: 60,
     justifyContent: 'center',
   },
   buttonText: {
     color: white,
-    fontFamily: globalFontRegular,
+    fontFamily: globalFontSemiBold,
     fontSize: iconFontSize,
     textAlign: 'center',
   },
   buttonSecondary: {
-    alignItems: 'center',
     backgroundColor: 'transparent',
     borderColor: whiteTransparent,
-    borderWidth: 1,
     borderRadius: 4,
+    borderWidth: 1,
     flex: 1,
-    flexDirection: 'row',
     height: 60,
     justifyContent: 'center',
   },
@@ -85,6 +89,7 @@ const LoginStyles = {
     color: whiteTransparent,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
+    textAlign: 'center',
   },
 }
 
