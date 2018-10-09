@@ -31,13 +31,13 @@ export default class LogIn extends Component {
 
             <View>
               <View style={loginStyles.buttonContainer}>
-                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={loginStyles.linearGradient}>
-                  <TouchableHighlight
-                    underlayColor="rgba(0, 0, 0, 0)"
-                    style={loginStyles.button}
-                  >
+                <LinearGradient
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  colors={['#5491CC', '#9A68B2', '#E53D96']}
+                  style={loginStyles.button}
+                >
                     <Text style={loginStyles.buttonText}>Get Started</Text>
-                  </TouchableHighlight>
                 </LinearGradient>
               </View>
 

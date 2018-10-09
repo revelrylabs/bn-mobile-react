@@ -52,6 +52,7 @@ const LoginStyles = {
   // LOGO
   logo: {
     height: 220,
+    marginTop: globalPaddingJumbo,
     width: 150,
   },
 
@@ -90,11 +91,6 @@ const LoginStyles = {
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
     textAlign: 'center',
-  },
-
-  // BUTTON GRADIENT
-  linearGradient: {
-    
   },
 }
 
