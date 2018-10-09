@@ -31,7 +31,7 @@ const IMAGES = [
   require('./image-grid-1.png'),
   require('./image-grid-2.png'),
   require('./image-grid-3.png'),
-  require('./login-bkgd.jpg'),
+  require('./login-bkgd.png'),
   require('./modal-bkgd.jpg'),
   require('./qr-code-placeholder.png'),
   require('./qr-code-small.png'),
