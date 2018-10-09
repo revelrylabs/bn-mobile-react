@@ -91,6 +91,11 @@ const LoginStyles = {
     fontSize: iconFontSize,
     textAlign: 'center',
   },
+
+  // BUTTON GRADIENT
+  linearGradient: {
+    
+  },
 }
 
 function createStyles(overrides = {}) {
