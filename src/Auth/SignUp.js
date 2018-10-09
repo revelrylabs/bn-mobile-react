@@ -21,22 +21,20 @@ export default class LogIn extends Component {
             source={require('../../assets/login-bkgd.png')}
           />
 
-          <View style={loginStyles.container}>
+          <View style={loginStyles.section}>
 
-            <View>
-              <Image
-                style={loginStyles.logo}
-                source={require('../../assets/big-neon-logo.png')}
-              />
-            </View>
+            <Image
+              style={loginStyles.logo}
+              source={require('../../assets/big-neon-logo.png')}
+            />
 
-            <View>
+            <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
                 onPress={() => this.props.navigation.navigate('LogIn')}
                 style={loginStyles.buttonSecondary}
               >
-                <Text>Login To Your Account</Text>
+                <Text style={loginStyles.buttonSecondaryText}>Login To Your Account</Text>
               </TouchableHighlight>
             </View>
 
