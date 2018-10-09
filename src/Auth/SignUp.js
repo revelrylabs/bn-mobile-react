@@ -20,17 +20,28 @@ export default class LogIn extends Component {
             style={loginStyles.signupBkgd}
             source={require('../../assets/login-bkgd.png')}
           />
+
           <View style={loginStyles.container}>
-            <Image
-              style={loginStyles.logo}
-              source={require('../../assets/big-neon-logo.png')}
-            />
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-              <Text>+ TAP TO ADD A COVER PHOTO</Text>
-            </TouchableHighlight>
-            <Text>Sign Up</Text>
-            <Button title="I have an account already" onPress={() => this.props.navigation.navigate('LogIn')} />
+
+            <View>
+              <Image
+                style={loginStyles.logo}
+                source={require('../../assets/big-neon-logo.png')}
+              />
+            </View>
+
+            <View>
+              <TouchableHighlight
+                underlayColor="rgba(0, 0, 0, 0)"
+                onPress={() => this.props.navigation.navigate('LogIn')}
+                style={loginStyles.buttonSecondary}
+              >
+                <Text>Login To Your Account</Text>
+              </TouchableHighlight>
+            </View>
+
           </View>
+
         </View>
       </ScrollView>
     )

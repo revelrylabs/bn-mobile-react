@@ -37,19 +37,21 @@ const LoginStyles = {
   },
   container: {
     alignItems: 'center',
-    flexDirection: 'row',
-    // height: 290,
-    justifyContent: 'center',
-    paddingTop: globalPadding,
+    flexDirection: 'column',
+    height: 600,
+    justifyContent: 'space-between',
     width: fullWidth,
   },
 
   // LOGO
   logo: {
-    height: 200,
+    height: 220,
     paddingBottom: globalPadding,
-    width: 100,
+    width: 150,
   },
+
+  // BUTTONS
+
 }
 
 function createStyles(overrides = {}) {
