@@ -8,6 +8,7 @@ import {
   disabledHeaderColor,
   bodyFontSize,
   iconFontSize,
+  sectionHeaderFontSize,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
@@ -28,7 +29,7 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.5)'
 export const facebookColor = '#4267B2'
 
 const LoginStyles = {
-  // SIGN UP BACKGROUND
+  // BACKGROUND IMAGE STYLES
   signupBkgdContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -52,21 +53,14 @@ const LoginStyles = {
 
   // CONTAINERS
   container: {
-    flex: 1,
     backgroundColor: white,
+    flex: 1,
+    flexDirection: 'column',
     height: fullHeight,
+    justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingLarge,
     width: fullWidth,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-
-  // LOGO
-  logo: {
-    height: 220,
-    marginTop: globalPaddingJumbo,
-    width: 150,
   },
 
   // BUTTONS
@@ -87,7 +81,7 @@ const LoginStyles = {
   buttonText: {
     color: white,
     fontFamily: globalFontSemiBold,
-    fontSize: iconFontSize,
+    fontSize: sectionHeaderFontSize,
     textAlign: 'center',
   },
   buttonSecondary: {
@@ -102,7 +96,7 @@ const LoginStyles = {
   buttonSecondaryText: {
     color: whiteTransparent,
     fontFamily: globalFontRegular,
-    fontSize: iconFontSize,
+    fontSize: sectionHeaderFontSize,
     textAlign: 'center',
   },
 
@@ -126,6 +120,13 @@ const LoginStyles = {
   phoneIcon: {
     fontSize: iconFontSize,
     marginRight: globalMarginSmall,
+  },
+
+  // LOGO STYLES
+  logo: {
+    height: 220,
+    marginTop: globalPaddingJumbo,
+    width: 150,
   },
 }
 

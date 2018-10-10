@@ -31,8 +31,9 @@ export default class SignIn extends Component {
       <View style={loginStyles.container}>
 
         <View>
-          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>Welcome back!</Text>
-
+          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
+            Welcome back!
+          </Text>
           <TextInput
             style={formStyles.input}
             placeholder="Email Address"
@@ -52,10 +53,9 @@ export default class SignIn extends Component {
               colors={['#5491CC', '#9A68B2', '#E53D96']}
               style={loginStyles.button}
             >
-                <Text style={loginStyles.buttonText}>Login to your account</Text>
+              <Text style={loginStyles.buttonText}>Login to your account</Text>
             </LinearGradient>
           </TouchableHighlight>
-
           <TouchableHighlight onPress={() => this.props.navigation.goBack()}>
             <View style={styles.flexRowCenter}>
               <Text style={styles.linkTextDark}>Reset your password</Text>
