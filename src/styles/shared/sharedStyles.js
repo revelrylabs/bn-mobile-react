@@ -166,6 +166,12 @@ const SharedStyles = {
     fontSize: headerFontSize,
     paddingBottom: globalPadding,
   },
+  headerSmaller: {
+    backgroundColor: 'transparent',
+    fontFamily: globalFontBold,
+    fontSize: sectionHeaderFontSize,
+    color: textColor,
+  },
   sectionHeader: {
     backgroundColor: 'transparent',
     color: sectionHeaderColor,
