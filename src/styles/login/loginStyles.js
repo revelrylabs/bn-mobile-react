@@ -44,9 +44,10 @@ const LoginStyles = {
   },
   section: {
     alignItems: 'center',
+    flex: 1,
     flexDirection: 'column',
-    height: 700,
-    justifyContent: 'space-between',
+    height: fullHeight,
+    justifyContent: 'space-around',
     paddingHorizontal: globalPadding,
     width: fullWidth,
   },
@@ -124,9 +125,9 @@ const LoginStyles = {
 
   // LOGO STYLES
   logo: {
-    height: 220,
+    height: 200,
     marginTop: globalPaddingJumbo,
-    width: 150,
+    width: 135,
   },
 }
 
