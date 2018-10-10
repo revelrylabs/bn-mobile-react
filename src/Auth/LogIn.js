@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Button, View, Text, TextInput, AsyncStorage, ScrollView, TouchableHighlight} from 'react-native'
+import {Button, View, Text, Image, TextInput, AsyncStorage, ScrollView, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -55,11 +55,22 @@ export default class SignIn extends Component {
             </LinearGradient>
           </TouchableHighlight>
 
-
           <TouchableHighlight onPress={() => this.props.navigation.goBack()}>
             <View style={styles.flexRowCenter}>
               <Text style={styles.linkTextDark}>Reset your password</Text>
               <Icon name="keyboard-arrow-right" />
+            </View>
+          </TouchableHighlight>
+
+
+          <TouchableHighlight onPress={() => this.props.navigation.goBack()}>
+            <View style={styles.flexRowCenter}>
+              <Image
+                style={loginStyles.facebookIcon}
+                source={require('../../assets/icon-facebook.png')}
+              />
+              <Text style={loginStyles.linkTextBlue}>Login with Facebook</Text>
+              <Icon style={loginStyles.arrowIconBlue} name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
 

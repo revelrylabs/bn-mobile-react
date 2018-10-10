@@ -25,6 +25,7 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.5)'
+export const facebookColor = '#4267B2'
 
 const LoginStyles = {
   // SIGN UP BACKGROUND
@@ -101,6 +102,24 @@ const LoginStyles = {
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
     textAlign: 'center',
+  },
+
+  // TEXT STYLES
+  linkTextBlue: {
+    backgroundColor: 'transparent',
+    color: facebookColor,
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize,
+  },
+
+  // ICON STYLES
+  arrowIconBlue: {
+    color: facebookColor,
+  },
+  facebookIcon: {
+    height: 15,
+    marginRight: globalMarginSmall,
+    width: 15,
   },
 }
 

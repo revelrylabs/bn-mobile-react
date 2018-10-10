@@ -22,6 +22,7 @@ const IMAGES = [
   require('./icon-account.png'),
   require('./icon-explore-active.png'),
   require('./icon-explore.png'),
+  require('./icon-facebook.png'),
   require('./icon-instagram.png'),
   require('./icon-spotify.png'),
   require('./icon-ticket.png'),
