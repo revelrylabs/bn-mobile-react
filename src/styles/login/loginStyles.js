@@ -27,7 +27,7 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.5)'
 
 const LoginStyles = {
-  // SIGN UP CONTAINERS
+  // SIGN UP BACKGROUND
   signupBkgdContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -47,6 +47,16 @@ const LoginStyles = {
     justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
     width: fullWidth,
+  },
+
+  // CONTAINERS
+  container: {
+    backgroundColor: white,
+    height: fullHeight,
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPadding,
+    width: fullWidth,
+    flexDirection: 'column',
   },
 
   // LOGO
