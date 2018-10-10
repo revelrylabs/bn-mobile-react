@@ -28,6 +28,8 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.5)'
 export const facebookColor = '#4267B2'
 
+export const backButtonFontSize = 28
+
 const LoginStyles = {
   // BACKGROUND IMAGE STYLES
   signupBkgdContainer: {
@@ -53,6 +55,10 @@ const LoginStyles = {
   },
 
   // CONTAINERS
+  navigationContainer: {
+    backgroundColor: white,
+    borderBottomColor: white,
+  },
   container: {
     backgroundColor: white,
     flex: 1,
@@ -110,6 +116,10 @@ const LoginStyles = {
   },
 
   // ICON STYLES
+  backButton: {
+    fontSize: backButtonFontSize,
+    marginLeft: globalMargin,
+  },
   arrowIconBlue: {
     color: facebookColor,
   },

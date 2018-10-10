@@ -13,6 +13,10 @@ export default class LogIn extends Component {
     navigation: PropTypes.object.isRequired,
   }
 
+  static navigationOptions = {
+    header: null,
+  };
+
   render() {
     return (
       <View style={loginStyles.signupBkgdContainer}>

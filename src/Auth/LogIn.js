@@ -11,6 +11,11 @@ const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
 
+const returnToButton = (navigation) => (
+  <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+    <Icon style={loginStyles.backButton} name="arrow-back" />
+  </TouchableHighlight>
+)
 
 export default class SignIn extends Component {
   static propTypes = {
@@ -18,7 +23,8 @@ export default class SignIn extends Component {
   }
 
   static navigationOptions = {
-    title: 'null',
+    headerLeft: ({navigation}) => (returnToButton(navigation)),
+    headerStyle: loginStyles.navigationContainer,
   };
 
   _logInAsync = async () => {
@@ -65,7 +71,7 @@ export default class SignIn extends Component {
         </View>
 
         <View>
-          <TouchableHighlight onPress={() => this.props.navigation.goBack()}>
+          <TouchableHighlight>
             <View style={styles.flexRowCenter}>
               <Image
                 style={loginStyles.facebookIcon}
@@ -76,7 +82,7 @@ export default class SignIn extends Component {
             </View>
           </TouchableHighlight>
 
-          <TouchableHighlight style={styles.paddingTopSmall} onPress={() => this.props.navigation.goBack()}>
+          <TouchableHighlight style={styles.paddingTopSmall}>
             <View style={styles.flexRowCenter}>
               <Icon style={loginStyles.phoneIcon} name="phone-iphone" />
               <Text style={styles.linkTextDark}>Login with SMS</Text>
