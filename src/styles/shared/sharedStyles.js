@@ -217,24 +217,11 @@ const SharedStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
   },
-
-  // SUBNAV STYLES
-  subnavContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: globalPadding,
-    paddingVertical: globalPaddingSmall,
-  },
-  subnavHeader: {
-    color: sectionHeaderColor,
-    fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
-  },
-  subnavHeaderActive: {
+  linkTextDark: {
+    backgroundColor: 'transparent',
     color: textColor,
-    fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize,
   },
 
   // ICONS
@@ -289,6 +276,25 @@ const SharedStyles = {
     height: 18,
     marginRight: globalPaddingTiny,
     marginTop: -2,
+  },
+
+  // SUBNAV STYLES
+  subnavContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: globalPadding,
+    paddingVertical: globalPaddingSmall,
+  },
+  subnavHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
+  subnavHeaderActive: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
   },
 
   // PRICE TAG STYLES
@@ -411,6 +417,7 @@ const SharedStyles = {
     justifyContent: 'space-between',
   },
   flexRowCenter: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
   },

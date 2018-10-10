@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, Button, Image, ScrollView, TouchableHighlight} from 'react-native'
-import {LinearGradient} from 'expo';
+import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import LoginStyles from '../styles/login/loginStyles'
 
@@ -30,7 +30,7 @@ export default class LogIn extends Component {
             />
 
             <View>
-              <View style={loginStyles.buttonContainer}>
+              <TouchableHighlight style={loginStyles.buttonContainer}>
                 <LinearGradient
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 0}}
@@ -39,7 +39,7 @@ export default class LogIn extends Component {
                 >
                     <Text style={loginStyles.buttonText}>Get Started</Text>
                 </LinearGradient>
-              </View>
+              </TouchableHighlight>
 
               <View style={loginStyles.buttonContainer}>
                 <TouchableHighlight
