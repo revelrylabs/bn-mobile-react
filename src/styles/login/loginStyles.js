@@ -52,12 +52,14 @@ const LoginStyles = {
 
   // CONTAINERS
   container: {
+    flex: 1,
     backgroundColor: white,
     height: fullHeight,
     paddingHorizontal: globalPadding,
-    paddingVertical: globalPadding,
+    paddingVertical: globalPaddingLarge,
     width: fullWidth,
     flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 
   // LOGO
@@ -120,6 +122,10 @@ const LoginStyles = {
     height: 15,
     marginRight: globalMarginSmall,
     width: 15,
+  },
+  phoneIcon: {
+    fontSize: iconFontSize,
+    marginRight: globalMarginSmall,
   },
 }
 

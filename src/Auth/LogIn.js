@@ -28,9 +28,10 @@ export default class SignIn extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <View style={loginStyles.container}>
-          <Text style={[styles.headerSmaller, styles.textCenter]}>Welcome back!</Text>
+      <View style={loginStyles.container}>
+
+        <View>
+          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>Welcome back!</Text>
 
           <TextInput
             style={formStyles.input}
@@ -61,8 +62,9 @@ export default class SignIn extends Component {
               <Icon name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
+        </View>
 
-
+        <View>
           <TouchableHighlight onPress={() => this.props.navigation.goBack()}>
             <View style={styles.flexRowCenter}>
               <Image
@@ -74,8 +76,16 @@ export default class SignIn extends Component {
             </View>
           </TouchableHighlight>
 
+          <TouchableHighlight style={styles.paddingTopSmall} onPress={() => this.props.navigation.goBack()}>
+            <View style={styles.flexRowCenter}>
+              <Icon style={loginStyles.phoneIcon} name="phone-iphone" />
+              <Text style={styles.linkTextDark}>Login with SMS</Text>
+              <Icon name="keyboard-arrow-right" />
+            </View>
+          </TouchableHighlight>
         </View>
-      </ScrollView>
+
+      </View>
     )
   }
 }

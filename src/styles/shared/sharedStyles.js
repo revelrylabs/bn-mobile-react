@@ -37,6 +37,7 @@ export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 36
+export const headerSecondaryFontSize = 24
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 16
 export const iconFontSize = 18
@@ -166,10 +167,10 @@ const SharedStyles = {
     fontSize: headerFontSize,
     paddingBottom: globalPadding,
   },
-  headerSmaller: {
+  headerSecondary: {
     backgroundColor: 'transparent',
     fontFamily: globalFontBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: headerSecondaryFontSize,
     color: textColor,
   },
   sectionHeader: {
@@ -429,6 +430,10 @@ const SharedStyles = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
+  flexColumnSpaceBetween: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
 
   // ROWS COLS
   row: {
@@ -443,6 +448,12 @@ const SharedStyles = {
   },
   cols4: {
     width: fullWidth / 4,
+  },
+  flex2: {
+    flex: 2,
+  },
+  flex3: {
+    flex: 3,
   },
 }
 
