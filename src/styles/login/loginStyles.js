@@ -114,6 +114,11 @@ const LoginStyles = {
     fontFamily: globalFontMedium,
     fontSize: bodyFontSize,
   },
+  mutedText: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+  },
 
   // ICON STYLES
   backButton: {

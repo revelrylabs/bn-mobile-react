@@ -35,8 +35,35 @@ export default class SignUp extends Component {
 
         <View>
           <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
-            Sign Up!
+            Create your account
           </Text>
+          <TextInput
+            style={formStyles.input}
+            placeholder="Email Address"
+            disabled
+          />
+          <TextInput
+            style={formStyles.input}
+            placeholder="Password"
+            disabled
+          />
+          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this._logInAsync}>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={['#5491CC', '#9A68B2', '#E53D96']}
+              style={loginStyles.button}
+            >
+              <Text style={loginStyles.buttonText}>Let's Do This</Text>
+            </LinearGradient>
+          </TouchableHighlight>
+        </View>
+
+        <View>
+          <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
+          <TouchableHighlight>
+            <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service &amp; Privacy Policy.</Text>
+          </TouchableHighlight>
         </View>
 
       </View>

@@ -406,6 +406,9 @@ const SharedStyles = {
   lineHeight: {
     paddingBottom: globalPaddingTiny / 2,
   },
+  textUnderline: {
+    textDecorationLine: 'underline',
+  },
 
   // FLEX HELPER STYLES
   flexRowFlexStart: {
