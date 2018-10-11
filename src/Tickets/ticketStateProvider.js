@@ -61,14 +61,13 @@ const sampleTickets = {
   ],
 }
 
-
-
 class TicketsContainer extends Container {
   constructor(props = {}) {
     super(props);
 
     this.state = {
       tickets: sampleTickets,
+      purchasedTicketId: false,
     };
   }
 
@@ -76,6 +75,10 @@ class TicketsContainer extends Container {
     const tickets = [...this.state.tickets, ticket]
 
     this.setState({tickets})
+  }
+
+  setPurchasedTicket = (purchasedTicketId) => {
+    this.setState({purchasedTicketId})
   }
 }
 

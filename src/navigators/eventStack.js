@@ -4,6 +4,7 @@ import {createStackNavigator} from 'react-navigation'
 import EventRoutes from '../Events/routes'
 import {Subscribe} from 'unstated'
 import {EventsContainer} from '../Events/eventStateProvider'
+import {TicketsContainer} from '../Tickets/ticketStateProvider'
 
 const EventsStack = createStackNavigator({
   ...EventRoutes,
@@ -33,6 +34,14 @@ export default class eventStackWithStore extends Component {
   }
 
   render() {
-    return <Subscribe to={[EventsContainer]}>{(eventStore) => <EventsStack navigation={this.props.navigation} screenProps={{store: eventStore}} />}</Subscribe>
+    return (
+      <Subscribe to={[EventsContainer, TicketsContainer]}>
+        {(eventStore, ticketStore) => (
+          <EventsStack
+            navigation={this.props.navigation}
+            screenProps={{store: eventStore, addPurchasedTicket: ticketStore.setPurchasedTicket}}
+          />
+        )}
+      </Subscribe>)
   }
 }
