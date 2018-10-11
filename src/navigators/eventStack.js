@@ -39,7 +39,7 @@ export default class eventStackWithStore extends Component {
         {(eventStore, ticketStore) => (
           <EventsStack
             navigation={this.props.navigation}
-            screenProps={{store: eventStore, addPurchasedTicket: ticketStore.setPurchasedTicket()}}
+            screenProps={{store: eventStore, addPurchasedTicket: ticketStore.setPurchasedTicket}}
           />
         )}
       </Subscribe>)

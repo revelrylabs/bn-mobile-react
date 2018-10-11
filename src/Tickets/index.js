@@ -110,6 +110,18 @@ export default class MyTickets extends Component {
     this.spring()
   }
 
+  componentDidUpdate(_prevProps) {
+    const {screenProps: {store: {state}}} = this.props
+
+    if (this.state.purchasedTicket !== state.purchasedTicketId) {
+
+
+      this.setState({
+        purchasedTicket: state.purchasedTicketId,
+      }, this.spring())
+    }
+  }
+
   spring() {
     this.springValue.setValue(0.3)
     Animated.spring(
@@ -167,7 +179,7 @@ export default class MyTickets extends Component {
             navigate={navigate}
             tickets={this.ticketsForActiveView}
             springValue={this.springValue}
-            purchasedTicketId={this.state.purchasedTicketId}
+            purchasedTicketId={this.state.purchasedTicket}
           />
 
         </View>

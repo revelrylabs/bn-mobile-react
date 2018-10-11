@@ -119,10 +119,13 @@ export default class EventShow extends Component {
     this.setState({showSuccessModal})
   }
 
-  addTicket(id){
-    const {screenProps: {addPurchasedTicket}} = props
+  async addTicket(id) {
+    const {screenProps: {addPurchasedTicket}} = this.props
 
-    addPurchasedTicket(id)
+    return new Promise(resolve => {
+      addPurchasedTicket(id)
+      resolve()
+    })
   }
 
   /* eslint-disable-next-line complexity */
@@ -193,22 +196,23 @@ export default class EventShow extends Component {
     return null
   }
 
-  purchaseTicket = (_purchasedTicket) => {
+  async purchaseTicket(_purchasedTicket) {
     const {navigation: {navigate}} = this.props
 
     this.setState({showLoadingModal: true})
 
     // Simulate the purchasing ticket wait
-    setTimeout(() => {
+    setTimeout(async () => {
       this.setState({
         showLoadingModal: false,
         showSuccessModal: true,
       })
 
       // Simulate a sucessful purchase
-      setTimeout(() => {
+      setTimeout(async () => {
         this.setState({showSuccessModal: false})
-        this.addTicket(1)
+        const _ticketResult = await this.addTicket(1)
+
         navigate('MyTickets')
       }, 1000)
     }, 3000)

@@ -67,6 +67,7 @@ class TicketsContainer extends Container {
 
     this.state = {
       tickets: sampleTickets,
+      purchasedTicketId: false,
     };
   }
 
