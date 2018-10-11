@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, TouchableHighlight} from 'react-native'
-import {NavigationActions, StackActions} from 'react-navigation'
+import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -9,9 +8,62 @@ import Details from './details'
 import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
+import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const modalStyles = ModalStyles.createStyles()
+
+
+const LoadingScreen = ({toggleModal, modalVisible}) => (
+  <Modal
+    onRequestClose={() => {
+      toggleModal(!modalVisible)
+    }}
+    visible={modalVisible}
+    transparent
+  >
+    <View style={modalStyles.modalContainer}>
+      <View style={styles.flexRowCenter}>
+        <View style={modalStyles.activityIndicator}>
+          <ActivityIndicator size="large" color="#FF20B1" />
+        </View>
+      </View>
+    </View>
+  </Modal>
+)
+
+LoadingScreen.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+}
+
+const SuccessScreen = ({toggleModal, modalVisible}) => (
+  <Modal
+    onRequestClose={() => {
+      toggleModal(!modalVisible)
+    }}
+    visible={modalVisible}
+    transparent
+  >
+    <View style={modalStyles.modalContainer}>
+      <View style={styles.flexRowCenter}>
+        <View style={modalStyles.activityIndicator}>
+          <Image
+            style={modalStyles.emojiActivityIndicator}
+            source={require('../../assets/emoji-loader.png')}
+          />
+        </View>
+      </View>
+    </View>
+  </Modal>
+)
+
+SuccessScreen.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+}
+
 const PaymentOptions = [
   {
     header: 'Apple Pay',
@@ -35,6 +87,8 @@ export default class EventShow extends Component {
     favorite: false,
     currentScreen: 'details',
     selectedPaymentId: 1,
+    showLoadingModal: false,
+    showSuccessModal: false,
   }
 
   scrollToTop = () => {
@@ -54,6 +108,23 @@ export default class EventShow extends Component {
     this.setState({
       selectedPaymentId,
       currentScreen: 'checkout',
+    })
+  }
+
+  toggleLoadingModal = ({showLoadingModal}) => {
+    this.setState({showLoadingModal})
+  }
+
+  toggleSuccessModal = ({showSuccessModal}) => {
+    this.setState({showSuccessModal})
+  }
+
+  async addTicket(id) {
+    const {screenProps: {addPurchasedTicket}} = this.props
+
+    return new Promise(resolve => {
+      addPurchasedTicket(id)
+      resolve()
     })
   }
 
@@ -125,11 +196,29 @@ export default class EventShow extends Component {
     return null
   }
 
-  purchaseTicket = (_purchasedTicket) => {
+  async purchaseTicket(_purchasedTicket) {
     const {navigation: {navigate}} = this.props
 
+    this.setState({showLoadingModal: true})
+
+    // Simulate the purchasing ticket wait
+    setTimeout(async () => {
+      this.setState({
+        showLoadingModal: false,
+        showSuccessModal: true,
+      })
+
+      // Simulate a sucessful purchase
+      setTimeout(async () => {
+        this.setState({showSuccessModal: false})
+        const _ticketResult = await this.addTicket(1)
+
+        navigate('MyTickets')
+      }, 1000)
+    }, 3000)
+
     // @TODO: Set a "purchasedTicket flag in unstated so we can use it on MyTickets"
-    navigate('MyTickets')
+
   }
 
 
@@ -168,8 +257,12 @@ export default class EventShow extends Component {
   }
 
   render() {
+    const {showLoadingModal, showSuccessModal} = this.state
+
     return (
       <View style={{backgroundColor: 'white'}}>
+        <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={showLoadingModal} />
+        <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
           source={require('../../assets/video-bkgd.png')}
