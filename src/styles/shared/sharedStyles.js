@@ -37,6 +37,7 @@ export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
 export const headerFontSize = 36
+export const headerSecondaryFontSize = 24
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 16
 export const iconFontSize = 18
@@ -166,6 +167,12 @@ const SharedStyles = {
     fontSize: headerFontSize,
     paddingBottom: globalPadding,
   },
+  headerSecondary: {
+    backgroundColor: 'transparent',
+    fontFamily: globalFontBold,
+    fontSize: headerSecondaryFontSize,
+    color: textColor,
+  },
   sectionHeader: {
     backgroundColor: 'transparent',
     color: sectionHeaderColor,
@@ -211,24 +218,11 @@ const SharedStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
   },
-
-  // SUBNAV STYLES
-  subnavContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: globalPadding,
-    paddingVertical: globalPaddingSmall,
-  },
-  subnavHeader: {
-    color: sectionHeaderColor,
-    fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
-  },
-  subnavHeaderActive: {
+  linkTextDark: {
+    backgroundColor: 'transparent',
     color: textColor,
-    fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize,
   },
 
   // ICONS
@@ -283,6 +277,25 @@ const SharedStyles = {
     height: 18,
     marginRight: globalPaddingTiny,
     marginTop: -2,
+  },
+
+  // SUBNAV STYLES
+  subnavContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: globalPadding,
+    paddingVertical: globalPaddingSmall,
+  },
+  subnavHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+  },
+  subnavHeaderActive: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
   },
 
   // PRICE TAG STYLES
@@ -393,6 +406,9 @@ const SharedStyles = {
   lineHeight: {
     paddingBottom: globalPaddingTiny / 2,
   },
+  textUnderline: {
+    textDecorationLine: 'underline',
+  },
 
   // FLEX HELPER STYLES
   flexRowFlexStart: {
@@ -405,6 +421,7 @@ const SharedStyles = {
     justifyContent: 'space-between',
   },
   flexRowCenter: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -415,6 +432,10 @@ const SharedStyles = {
   flexColumnFlexStart: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
+  },
+  flexColumnSpaceBetween: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 
   // ROWS COLS
@@ -430,6 +451,12 @@ const SharedStyles = {
   },
   cols4: {
     width: fullWidth / 4,
+  },
+  flex2: {
+    flex: 2,
+  },
+  flex3: {
+    flex: 3,
   },
 }
 

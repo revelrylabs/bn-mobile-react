@@ -154,6 +154,16 @@ export default class Account extends Component {
             </View>
           </TouchableHighlight>
 
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('ManageEvents')}>
+            <View style={accountStyles.rowContainer}>
+              <View style={accountStyles.row}>
+                <Icon style={accountStyles.accountIcon} name="assignment" />
+                <Text style={accountStyles.accountHeader}>Manage Events</Text>
+              </View>
+              <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+            </View>
+          </TouchableHighlight>
+
         </View>
       </ScrollView>
     )
