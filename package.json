@@ -20,6 +20,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "bn-api-node": "^0.1.2",
     "expo": "^27.0.1",
     "prop-types": "^15.6.2",
     "react": "16.3.1",
