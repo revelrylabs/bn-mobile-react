@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
+import {Text, View, Image, TextInput, ScrollView, TouchableHighlight, AsyncStorage} from 'react-native';
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketShowStyles from '../styles/tickets/ticketShowStyles'
@@ -7,6 +7,11 @@ import TicketShowStyles from '../styles/tickets/ticketShowStyles'
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketShowStyles = TicketShowStyles.createStyles()
+
+const signOutAsync = async ({navigate}) => {
+  await AsyncStorage.clear();
+  navigate;
+};
 
 export default function AccountDetails(props) {
   const {navigation: {navigate}} = props
@@ -87,7 +92,7 @@ export default function AccountDetails(props) {
           <TouchableHighlight
             style={styles.buttonSecondary}
           >
-            <Text style={styles.buttonSecondaryText} onPress={() => navigate('SignedOut')}>Sign Out</Text>
+            <Text style={styles.buttonSecondaryText} onPress={() => signOutAsync(navigate('Auth'))}>Sign Out</Text>
           </TouchableHighlight>
         </View>
 

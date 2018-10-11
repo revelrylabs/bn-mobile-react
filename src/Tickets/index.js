@@ -71,9 +71,9 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({tickets, navigate, springValue}) => (
-  tickets.map((ticket, index) => (
-    index === 0 ?
+const TicketsView = ({tickets, navigate, springValue, purchasedTicketId}) => (
+  tickets.map((ticket) => (
+    ticket.id === purchasedTicketId ?
       <AnimatedTicket
         key={ticket.name}
         navigate={navigate}
@@ -102,7 +102,7 @@ export default class MyTickets extends Component {
     this.state = {
       activeTab: 'upcoming',
       tickets: state.tickets || [],
-      purchasedTicket: this.hasPurchasedTicket,
+      purchasedTicket: state.purchasedTicketId || false,
     }
   }
 
@@ -163,7 +163,12 @@ export default class MyTickets extends Component {
             <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
           </View>
 
-          <TicketsView navigate={navigate} tickets={this.ticketsForActiveView} springValue={this.springValue} />
+          <TicketsView
+            navigate={navigate}
+            tickets={this.ticketsForActiveView}
+            springValue={this.springValue}
+            purchasedTicketId={this.state.purchasedTicketId}
+          />
 
         </View>
 

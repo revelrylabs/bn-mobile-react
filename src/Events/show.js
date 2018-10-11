@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
-import {NavigationActions, StackActions} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -22,7 +21,7 @@ const LoadingScreen = ({toggleModal, modalVisible}) => (
       toggleModal(!modalVisible)
     }}
     visible={modalVisible}
-    transparent={true}
+    transparent
   >
     <View style={modalStyles.modalContainer}>
       <View style={styles.flexRowCenter}>
@@ -34,16 +33,33 @@ const LoadingScreen = ({toggleModal, modalVisible}) => (
   </Modal>
 )
 
-/* Emoji img that appears after the ActivityIndicator
-<Image
-  style={modalStyles.emojiActivityIndicator}
-  source={require('../../assets/emoji-loader.png')}
-/>
-*/
-
-
-
 LoadingScreen.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+}
+
+const SuccessScreen = ({toggleModal, modalVisible}) => (
+  <Modal
+    onRequestClose={() => {
+      toggleModal(!modalVisible)
+    }}
+    visible={modalVisible}
+    transparent
+  >
+    <View style={modalStyles.modalContainer}>
+      <View style={styles.flexRowCenter}>
+        <View style={modalStyles.activityIndicator}>
+          <Image
+            style={modalStyles.emojiActivityIndicator}
+            source={require('../../assets/emoji-loader.png')}
+          />
+        </View>
+      </View>
+    </View>
+  </Modal>
+)
+
+SuccessScreen.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   modalVisible: PropTypes.bool.isRequired,
 }
@@ -72,6 +88,7 @@ export default class EventShow extends Component {
     currentScreen: 'details',
     selectedPaymentId: 1,
     showLoadingModal: false,
+    showSuccessModal: false,
   }
 
   scrollToTop = () => {
@@ -94,8 +111,18 @@ export default class EventShow extends Component {
     })
   }
 
-  toggleLoadingModal = (visible) => {
-    this.setState({showLoadingModal: visible})
+  toggleLoadingModal = ({showLoadingModal}) => {
+    this.setState({showLoadingModal})
+  }
+
+  toggleSuccessModal = ({showSuccessModal}) => {
+    this.setState({showSuccessModal})
+  }
+
+  addTicket(id){
+    const {screenProps: {addPurchasedTicket}} = props
+
+    addPurchasedTicket(id)
   }
 
   /* eslint-disable-next-line complexity */
@@ -159,10 +186,6 @@ export default class EventShow extends Component {
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
-
-          <TouchableHighlight style={styles.button} onPress={() => this.toggleLoadingModal(true)}>
-            <Text style={styles.buttonText}>Modal Test</Text>
-          </TouchableHighlight>
         </View>
       )
     }
@@ -173,8 +196,25 @@ export default class EventShow extends Component {
   purchaseTicket = (_purchasedTicket) => {
     const {navigation: {navigate}} = this.props
 
+    this.setState({showLoadingModal: true})
+
+    // Simulate the purchasing ticket wait
+    setTimeout(() => {
+      this.setState({
+        showLoadingModal: false,
+        showSuccessModal: true,
+      })
+
+      // Simulate a sucessful purchase
+      setTimeout(() => {
+        this.setState({showSuccessModal: false})
+        this.addTicket(1)
+        navigate('MyTickets')
+      }, 1000)
+    }, 3000)
+
     // @TODO: Set a "purchasedTicket flag in unstated so we can use it on MyTickets"
-    navigate('MyTickets')
+
   }
 
 
@@ -213,11 +253,12 @@ export default class EventShow extends Component {
   }
 
   render() {
-    const {showLoadingModal} = this.state
+    const {showLoadingModal, showSuccessModal} = this.state
 
     return (
       <View style={{backgroundColor: 'white'}}>
         <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={showLoadingModal} />
+        <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
           source={require('../../assets/video-bkgd.png')}
