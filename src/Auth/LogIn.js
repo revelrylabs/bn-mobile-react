@@ -12,20 +12,22 @@ const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
 
 const returnToButton = (navigation) => (
-  <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+  <TouchableHighlight onPress={() => navigation.goBack()} underlayColor="rgba(0, 0, 0, 0)">
     <Icon style={loginStyles.backButton} name="arrow-back" />
   </TouchableHighlight>
 )
 
-export default class SignIn extends Component {
+export default class LogIn extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
   }
 
-  static navigationOptions = {
-    headerLeft: ({navigation}) => (returnToButton(navigation)),
-    headerStyle: loginStyles.navigationContainer,
-  };
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerLeft: returnToButton(navigation),
+      headerStyle: loginStyles.navigationContainer,
+    }
+  }
 
   _logInAsync = async () => {
     await AsyncStorage.setItem('userToken', 'abc');

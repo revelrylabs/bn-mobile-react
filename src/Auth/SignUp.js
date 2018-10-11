@@ -1,60 +1,42 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Button, Image, ScrollView, TouchableHighlight} from 'react-native'
+import {Button, View, Text, Image, TextInput, AsyncStorage, ScrollView, TouchableHighlight} from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
+import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 
 const styles = SharedStyles.createStyles()
+const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
 
-export default class LogIn extends Component {
+const returnToButton = (navigation) => (
+  <TouchableHighlight onPress={() => navigation.goBack()} underlayColor="rgba(0, 0, 0, 0)">
+    <Icon style={loginStyles.backButton} name="arrow-back" />
+  </TouchableHighlight>
+)
+
+export default class SignUp extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
   }
 
-  static navigationOptions = {
-    header: null,
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerLeft: returnToButton(navigation),
+      headerStyle: loginStyles.navigationContainer,
+    }
   };
 
   render() {
     return (
-      <View style={loginStyles.signupBkgdContainer}>
-        <Image
-          style={loginStyles.signupBkgd}
-          source={require('../../assets/login-bkgd.png')}
-        />
+      <View style={loginStyles.container}>
 
-        <View style={loginStyles.section}>
-
-          <Image
-            style={loginStyles.logo}
-            source={require('../../assets/big-neon-logo.png')}
-          />
-
-          <View>
-            <TouchableHighlight style={loginStyles.buttonContainer}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                colors={['#5491CC', '#9A68B2', '#E53D96']}
-                style={loginStyles.button}
-              >
-                  <Text style={loginStyles.buttonText}>Get Started</Text>
-              </LinearGradient>
-            </TouchableHighlight>
-
-            <View style={loginStyles.buttonContainer}>
-              <TouchableHighlight
-                underlayColor="rgba(0, 0, 0, 0)"
-                onPress={() => this.props.navigation.navigate('LogIn')}
-                style={loginStyles.buttonSecondary}
-              >
-                <Text style={loginStyles.buttonSecondaryText}>Login To Your Account</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-
+        <View>
+          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
+            Sign Up!
+          </Text>
         </View>
 
       </View>
