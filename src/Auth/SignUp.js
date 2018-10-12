@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Button, View, Text, Image, TextInput, AsyncStorage, ScrollView, TouchableHighlight} from 'react-native'
+import {View, Text, TextInput, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -29,6 +29,22 @@ export default class SignUp extends Component {
     }
   };
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      email: '',
+      password: '',
+    }
+  }
+
+  signUp = async () => {
+    const {screenProps: {auth}, navigation: {navigate}} = this.props
+    const {email, password} = this.state
+
+    await auth.signUp({email, password}, navigate('LogIn'))
+  }
+
   render() {
     return (
       <View style={loginStyles.container}>
@@ -40,14 +56,15 @@ export default class SignUp extends Component {
           <TextInput
             style={formStyles.input}
             placeholder="Email Address"
-            disabled
+            onChangeText={(email) => this.setState({email})}
           />
           <TextInput
             style={formStyles.input}
+            secureTextEntry
             placeholder="Password"
-            disabled
+            onChangeText={(password) => this.setState({password})}
           />
-          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this._logInAsync}>
+          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
             <LinearGradient
               start={{x: 0, y: 0}}
               end={{x: 1, y: 0}}
