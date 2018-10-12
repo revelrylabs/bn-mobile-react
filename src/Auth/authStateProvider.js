@@ -16,6 +16,11 @@ class AuthContainer extends Container {
     this.setState({currentUser: user})
   }
 
+  // @TODO: Implement a login that also sets AsyncStgorage user
+  // logIn = () => {
+
+  // }
+
   signUp = (formData, success) => {
     server.users.register({
       first_name: "Bob",
@@ -29,8 +34,6 @@ class AuthContainer extends Container {
     }).catch((e) => {
       console.error(e);
     });
-
-    // @TODO: add currentuser in results
   }
 }
 
