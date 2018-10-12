@@ -39,11 +39,10 @@ export default class SignUp extends Component {
   }
 
   signUp = async () => {
-    const {screenProps: {auth}} = this.props
+    const {screenProps: {auth}, navigation: {navigate}} = this.props
     const {email, password} = this.state
 
-    await auth.signUp({email, password})
-    // @TODO: maybe send a "success" navigation? Will it auto navigate if we set a user in AsyncStorage in the authStateProvider.signUp?
+    await auth.signUp({email, password}, navigate('LogIn'))
   }
 
   render() {
@@ -61,6 +60,7 @@ export default class SignUp extends Component {
           />
           <TextInput
             style={formStyles.input}
+            secureTextEntry
             placeholder="Password"
             onChangeText={(password) => this.setState({password})}
           />

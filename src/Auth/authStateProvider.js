@@ -16,17 +16,18 @@ class AuthContainer extends Container {
     this.setState({currentUser: user})
   }
 
-  signUp = (formData) => {
+  signUp = (formData, success) => {
     server.users.register({
       first_name: "Bob",
       last_name: "Smith",
       email: formData.email,
       password: formData.password,
-      phone: "55512345"
-    }).then(res => {
-        console.log(res);
-    }).catch(e => {
-        console.error(e);
+      phone: "5551234567"
+    }).then((res) => {
+      console.log(res);
+      success // should redirect to LogIn with a message
+    }).catch((e) => {
+      console.error(e);
     });
 
     // @TODO: add currentuser in results
