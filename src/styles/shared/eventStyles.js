@@ -2,7 +2,6 @@ import {
   white,
   primaryColor,
   textColor,
-  sectionHeaderFontSize,
   bodyFontSize,
   iconFontSize,
   globalFontRegular,
@@ -18,16 +17,18 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
 
 export const headerFontSize = 38
+export const sectionHeaderFontSize = 18
 
 const EventStyles = {
   // CONTAINER STYLES
   eventContainer: {
-    padding: globalPaddingSmall,
+    // padding: globalPadding,
   },
   detailsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 175,
+    height: 180,
+    padding: globalPadding,
   },
   detailsContainerBottom: {
     paddingBottom: globalPadding,
@@ -36,20 +37,19 @@ const EventStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  sectionBottom: {
-    paddingVertical: globalPadding,
-  },
 
   // TEXT STYLES
   header: {
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
     color: textColor,
+    paddingTop: globalPaddingSmall,
   },
   details: {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     color: textColor,
+    paddingTop: 2,
   },
 
   // ICON STYLES
@@ -75,7 +75,7 @@ const EventStyles = {
     color: primaryColor,
     fontSize: iconFontSize,
   },
-  
+
   // IMAGE BKGD STYLES
   eventImage: {
     height: 180,

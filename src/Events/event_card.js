@@ -32,24 +32,24 @@ export default class EventsIndex extends Component {
 
     return (
       <TouchableHighlight underlayColor="#fff" onPress={onPress}>
-        <View style={eventStyles.eventContainer}>
-          <Image
-            style={eventStyles.eventImage}
-            source={event.bgImage}
-          />
+        <View>
 
-          <View style={eventStyles.detailsContainer}>
-            <View style={eventStyles.sectionTop}>
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!favorite)}>
-                <View style={favorite ? eventStyles.iconLinkCircleContainerSmallActive : eventStyles.iconLinkCircleContainerSmall}>
-                  <Icon style={favorite ? eventStyles.iconLinkCircleSmallActive : eventStyles.iconLinkCircleSmall} name="star" />
+          <View style={eventStyles.eventContainer}>
+            <Image
+              style={eventStyles.eventImage}
+              source={event.bgImage}
+            />
+            <View style={eventStyles.detailsContainer}>
+              <View style={eventStyles.sectionTop}>
+                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!favorite)}>
+                  <View style={favorite ? eventStyles.iconLinkCircleContainerSmallActive : eventStyles.iconLinkCircleContainerSmall}>
+                    <Icon style={favorite ? eventStyles.iconLinkCircleSmallActive : eventStyles.iconLinkCircleSmall} name="star" />
+                  </View>
+                </TouchableHighlight>
+                <View style={styles.avatarContainer}>
+                  {event.avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
                 </View>
-              </TouchableHighlight>
-              <View style={styles.avatarContainer}>
-                {event.avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
               </View>
-            </View>
-            <View style={eventStyles.sectionBottom}>
               <View style={styles.priceTagContainer}>
                 <Text style={styles.priceTag}>${event.priceDollars}</Text>
               </View>
@@ -60,6 +60,7 @@ export default class EventsIndex extends Component {
             <Text style={eventStyles.header}>{event.titleText}</Text>
             <Text style={eventStyles.details}>{event.scheduleText}</Text>
           </View>
+
         </View>
       </TouchableHighlight>
     )

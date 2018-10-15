@@ -46,7 +46,7 @@ const SAMPLE_EVENTS = [
     avatarImages: SAMPLE_AVATARS,
     priceDollars: 30,
     titleText: 'River Whyless',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    scheduleText: 'Fri, July 20',
     favorite: true,
   },
   {
@@ -55,7 +55,7 @@ const SAMPLE_EVENTS = [
     avatarImages: SAMPLE_AVATARS,
     priceDollars: 30,
     titleText: 'Beyonce',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    scheduleText: 'Fri, July 20',
     favorite: false,
   },
   {
@@ -64,7 +64,7 @@ const SAMPLE_EVENTS = [
     avatarImages: SAMPLE_AVATARS,
     priceDollars: 30,
     titleText: 'Drake',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    scheduleText: 'Fri, July 20',
     favorite: false,
   },
   {
@@ -73,7 +73,7 @@ const SAMPLE_EVENTS = [
     avatarImages: SAMPLE_AVATARS,
     priceDollars: 30,
     titleText: 'Ed Sheeran',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
+    scheduleText: 'Fri, July 20',
     favorite: true,
   },
 ]
