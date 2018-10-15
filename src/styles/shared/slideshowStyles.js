@@ -1,5 +1,6 @@
 import {
   white,
+  bodyFontSize,
   globalFontSemiBold,
   globalFontRegular,
   globalPaddingJumbo,
@@ -15,8 +16,7 @@ const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(225, 225, 225, 0.8)'
 
-export const headerFontSize = 32
-export const bodyFontSize = 18
+export const headerFontSize = 30
 export const slideShowArrowFontSize = 32
 
 const SlideShowStyles = {

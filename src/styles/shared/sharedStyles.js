@@ -178,7 +178,7 @@ const SharedStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
-    paddingVertical: globalPaddingSmall,
+    paddingVertical: globalPadding - globalPaddingTiny,
   },
 
   // TEXT STYLES

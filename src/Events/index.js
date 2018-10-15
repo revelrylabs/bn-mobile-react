@@ -231,7 +231,10 @@ export default class EventsIndex extends Component {
                     <Text style={styles.priceTag}>$30</Text>
                   </View>
                   <Text style={slideshowStyles.header}>Childish Gambino</Text>
-                  <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
+                  <View style={styles.flexRowSpaceBetween}>
+                    <Text style={slideshowStyles.details}>Fox Theater  •  Oakland, CA</Text>
+                    <Text style={slideshowStyles.details}>July 15, 2018</Text>
+                  </View>
                 </View>
               </TouchableHighlight>
             </View>
