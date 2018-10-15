@@ -196,6 +196,10 @@ export default class EventsIndex extends Component {
               style={slideshowStyles.slideShowImage}
               source={require('../../assets/featured-1.png')}
             />
+            <Image
+              style={slideshowStyles.slideShowImage}
+              source={require('../../assets/featured-img-overlay.png')}
+            />
 
             <View style={slideshowStyles.detailsContainer}>
               <View style={slideshowStyles.sectionTop}>

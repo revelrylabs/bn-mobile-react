@@ -9,27 +9,27 @@ const SAMPLE_LOCATIONS = [
   },
   {
     name: 'Philadelphia, PA',
-    nickname: 'PHILLY',
+    nickname: 'Philadelphia, PA',
     id: 2,
   },
   {
     name: 'New York, NY',
-    nickname: 'NYC',
+    nickname: 'New York, NY',
     id: 3,
   },
   {
     name: 'New Orleans, LA',
-    nickname: 'NOLA',
+    nickname: 'New Orleans, LA',
     id: 4,
   },
   {
     name: 'San Francisco, CA',
-    nickname: 'SF',
+    nickname: 'San Francisco, CA',
     id: 5,
   },
   {
     name: 'Washington, D.C.',
-    nickname: 'DC',
+    nickname: 'Washington, D.C.',
     id: 6,
   },
 ]
