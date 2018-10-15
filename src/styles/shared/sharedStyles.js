@@ -47,10 +47,10 @@ const SharedStyles = {
   // CONTAINERS
   container: {
     backgroundColor: white,
-    paddingHorizontal: globalPadding,
-    paddingVertical: globalPadding,
-    width: fullWidth,
     flexDirection: 'column',
+    paddingHorizontal: globalPadding,
+    paddingTop: globalPadding,
+    paddingBottom: globalPaddingLarge,
   },
   containerDark: {
     backgroundColor: containerDarkColor,
