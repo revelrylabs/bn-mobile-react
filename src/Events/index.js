@@ -178,7 +178,10 @@ export default class EventsIndex extends Component {
           </View>
 
           <View style={formStyles.searchContainer}>
-            <Icon style={formStyles.searchIcon} name="search" />
+            <Image
+              style={formStyles.searchIcon}
+              source={require('../../assets/icon-search.png')}
+            />
             <TextInput
               style={formStyles.searchInput}
               placeholder="Search artists, shows, venues..."
