@@ -222,7 +222,7 @@ export default class EventsIndex extends Component {
               </View>
 
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
-                <View style={slideshowStyles.sectionBottom}>
+                <View>
                   <View style={styles.priceTagContainer}>
                     <Text style={styles.priceTag}>$30</Text>
                   </View>
