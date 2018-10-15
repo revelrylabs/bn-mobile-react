@@ -14,7 +14,7 @@ import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.3)'
 
 export const headerFontSize = 38
 export const sectionHeaderFontSize = 18

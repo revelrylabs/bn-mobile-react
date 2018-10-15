@@ -15,7 +15,7 @@ export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const containerDarkColor = '#F5F6F7'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
-export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.3)'
 export const disabledHeaderColor = 'rgba(64, 64, 64, 0.5)'
 
 export const globalPaddingTiny = 5
@@ -302,7 +302,7 @@ const SharedStyles = {
   priceTagContainer: {
     backgroundColor: white,
     borderRadius: 5,
-    padding: globalPaddingTiny,
+    padding: 3,
     width: 50,
   },
   priceTag: {
