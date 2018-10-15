@@ -56,6 +56,9 @@ const FormStyles = {
   },
   searchContainer: {
     backgroundColor: disabledColor,
+    borderColor: 'transparent',
+    borderRadius: 4,
+    borderWidth: 1,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -118,10 +121,10 @@ const FormStyles = {
     padding: globalPaddingSmall,
   },
   searchInput: {
-    flex: 1,
-    color: textColor,
     alignContent: 'center',
     backgroundColor: disabledColor,
+    color: textColor,
+    flex: 1,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     marginTop: globalPaddingTiny,
