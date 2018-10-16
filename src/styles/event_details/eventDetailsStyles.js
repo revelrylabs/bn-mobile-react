@@ -120,7 +120,7 @@ const EventDetailsStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontMedium,
     fontSize: sectionHeaderFontSize,
-    marginBottom: globalMargin,
+    paddingBottom: globalPaddingTiny,
     paddingTop: globalPaddingTiny,
   },
   header: {
