@@ -13,6 +13,7 @@ import {
   globalPaddingSmall,
   globalPaddingTiny,
   globalMargin,
+  globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -55,12 +56,16 @@ const FormStyles = {
     paddingTop: globalPaddingSmall,
   },
   searchContainer: {
+    alignItems: 'center',
     backgroundColor: disabledColor,
+    borderColor: 'transparent',
+    borderRadius: 7,
+    borderWidth: 1,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: globalMargin,
+    marginVertical: globalMarginSmall,
+    paddingLeft: globalPaddingSmall,
   },
 
   // TEXTAREA STYLES
@@ -113,19 +118,19 @@ const FormStyles = {
 
   // SEARCH STYLES
   searchIcon: {
-    color: searchIconColor,
-    fontSize: searchIconFontSize,
-    padding: globalPaddingSmall,
+    height: 15,
+    marginHorizontal: globalMarginSmall,
+    width: 15,
   },
   searchInput: {
-    flex: 1,
-    color: textColor,
     alignContent: 'center',
     backgroundColor: disabledColor,
+    color: textColor,
+    flex: 1,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
-    marginTop: globalPaddingTiny,
     height: 40,
+    marginTop: globalPaddingTiny,
     width: '100%',
   },
 

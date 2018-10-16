@@ -178,7 +178,10 @@ export default class EventsIndex extends Component {
           </View>
 
           <View style={formStyles.searchContainer}>
-            <Icon style={formStyles.searchIcon} name="search" />
+            <Image
+              style={formStyles.searchIcon}
+              source={require('../../assets/icon-search.png')}
+            />
             <TextInput
               style={formStyles.searchInput}
               placeholder="Search artists, shows, venues..."
@@ -192,6 +195,10 @@ export default class EventsIndex extends Component {
             <Image
               style={slideshowStyles.slideShowImage}
               source={require('../../assets/featured-1.png')}
+            />
+            <Image
+              style={slideshowStyles.slideShowImage}
+              source={require('../../assets/featured-img-overlay.png')}
             />
 
             <View style={slideshowStyles.detailsContainer}>
@@ -219,12 +226,15 @@ export default class EventsIndex extends Component {
               </View>
 
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
-                <View style={slideshowStyles.sectionBottom}>
+                <View>
                   <View style={styles.priceTagContainer}>
                     <Text style={styles.priceTag}>$30</Text>
                   </View>
                   <Text style={slideshowStyles.header}>Childish Gambino</Text>
-                  <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
+                  <View style={styles.flexRowSpaceBetween}>
+                    <Text style={slideshowStyles.details}>Fox Theater  •  Oakland, CA</Text>
+                    <Text style={slideshowStyles.details}>July 15, 2018</Text>
+                  </View>
                 </View>
               </TouchableHighlight>
             </View>

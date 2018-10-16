@@ -15,7 +15,7 @@ export const helpTextColor = '#666'
 export const borderColor = '#DCDCDC'
 export const containerDarkColor = '#F5F6F7'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
-export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.3)'
 export const disabledHeaderColor = 'rgba(64, 64, 64, 0.5)'
 
 export const globalPaddingTiny = 5
@@ -47,10 +47,10 @@ const SharedStyles = {
   // CONTAINERS
   container: {
     backgroundColor: white,
-    paddingHorizontal: globalPadding,
-    paddingVertical: globalPadding,
-    width: fullWidth,
     flexDirection: 'column',
+    paddingHorizontal: globalPadding,
+    paddingTop: globalPadding,
+    paddingBottom: globalPaddingLarge,
   },
   containerDark: {
     backgroundColor: containerDarkColor,
@@ -178,7 +178,7 @@ const SharedStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
     fontSize: sectionHeaderFontSize,
-    paddingVertical: globalPaddingSmall,
+    paddingVertical: globalPadding - globalPaddingTiny,
   },
 
   // TEXT STYLES
@@ -302,7 +302,7 @@ const SharedStyles = {
   priceTagContainer: {
     backgroundColor: white,
     borderRadius: 5,
-    padding: globalPaddingTiny,
+    padding: 3,
     width: 50,
   },
   priceTag: {
