@@ -1,7 +1,7 @@
 import {Container} from 'unstated'
 import Bigneon from 'bn-api-node'
 
-const server = new Bigneon.Server({prefix: 'https://bigneon.tarilabs.com/api'});
+const server = new Bigneon.Server({prefix: 'https://staging.bigneon.com/api'});
 
 class AuthContainer extends Container {
   constructor(props = {}) {
