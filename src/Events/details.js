@@ -18,13 +18,13 @@ export default class Details extends Component {
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
         <View style={eventDetailsStyles.mainBodyContent}>
           <View style={styles.flexRowSpaceBetween}>
-            <View style={eventDetailsStyles.calendarWrapper}>
-              <Text style={eventDetailsStyles.calendarMonth}>sept</Text>
-              <Text style={eventDetailsStyles.calendarDate}>27</Text>
-            </View>
             <View>
               <Text style={eventDetailsStyles.descriptionSubHeader}>All star promoter events presents</Text>
               <Text style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
+            </View>
+            <View style={eventDetailsStyles.calendarWrapper}>
+              <Text style={eventDetailsStyles.calendarMonth}>sept</Text>
+              <Text style={eventDetailsStyles.calendarDate}>27</Text>
             </View>
           </View>
 
