@@ -89,10 +89,11 @@ class EventsContainer extends Container {
     };
   }
 
-  changeLocation = (_index, selectedLocation) => {
-    console.log("Yes were changing?", _index, selectedLocation);
-
-    this.setState({selectedLocationId: selectedLocation.id})
+  changeLocation = (index, selectedLocation) => {
+    if (index !== '0') {
+      this.setState({selectedLocationId: selectedLocation.id})
+    }
+    return null
   }
 }
 
