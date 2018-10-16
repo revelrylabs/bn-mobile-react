@@ -70,7 +70,7 @@ export default class EventsIndex extends Component {
   }
 
   locRowOption = (rowData, rowID, _highlighted) => {
-    if (rowID === 0) {
+    if (rowID === '0') {
       return (
         <View>
           <View style={modalStyles.rowWrapper}>
