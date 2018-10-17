@@ -15,28 +15,42 @@ class AuthContainer extends Container {
     };
   }
 
-  setCurrentUser = (user) => {
-    this.setState({currentUser: user})
-  }
-
   // @TODO: Implement a login that also sets AsyncStgorage user
   logIn = async (formData, navigate) => {
     try {
+
       const resp = await server.auth.authenticate(formData)
       const {data: {access_token, refresh_token}} = resp
 
       await AsyncStorage.setItem('userToken', access_token)
       await AsyncStorage.setItem('refreshToken', refresh_token)
+      await this.getCurrentUser(access_token, refresh_token, false)
+      navigate('AuthLoading')
 
-      server.users.current().then((myUserResponse) => {
-        this.setState({currentUser: myUserResponse.data})
-      });
+    } catch(error) {
+      console.log("Log In Error:", error);
 
-    } catch {
       navigate('LogIn')
     }
+  }
 
-    navigate('AuthLoading')
+  // logOut = async() => {
+  //   // clear asyncstorage and state
+  // }
+
+  getCurrentUser = async (access_token, refresh_token, setToken = true) => {
+    if (setToken) {
+      await server.client.setToken(access_token)
+      await server.auth.refresh({refresh_token})
+    }
+
+    try {
+      const myUserResponse = await server.users.current()
+
+      this.setState({currentUser: myUserResponse.data, access_token, refresh_token})
+    } catch(error) {
+      console.log("Set Current User Error", error);
+    }
   }
 
   signUp = (formData, navigate) => {
