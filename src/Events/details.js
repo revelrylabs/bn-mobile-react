@@ -17,25 +17,25 @@ export default class Details extends Component {
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
         <View style={eventDetailsStyles.mainBodyContent}>
-          <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
+          <View style={styles.flexRowSpaceBetween}>
+            <View>
+              <Text style={eventDetailsStyles.descriptionSubHeader}>All star promoter events presents</Text>
+              <Text style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
+            </View>
             <View style={eventDetailsStyles.calendarWrapper}>
               <Text style={eventDetailsStyles.calendarMonth}>sept</Text>
               <Text style={eventDetailsStyles.calendarDate}>27</Text>
             </View>
-            <View>
-              <Text style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
-              <Text style={eventDetailsStyles.descriptionSubHeader}>By: Public Works</Text>
-            </View>
           </View>
 
-          <View style={[styles.flexRowSpaceBetween, styles.paddingVerticalSmall]}>
-            <TouchableHighlight style={eventDetailsStyles.buttonRounded}>
+          <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
+            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}>
               <View style={styles.flexRowCenter}>
                 <Icon style={eventDetailsStyles.buttonRoundedIcon} name="star" />
                 <Text style={eventDetailsStyles.buttonRoundedText}>I&apos;m Interested</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight style={eventDetailsStyles.buttonRounded}>
+            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]}>
               <View style={styles.flexRowCenter}>
                 <Icon style={eventDetailsStyles.buttonRoundedIcon} name="reply" />
                 <Text style={eventDetailsStyles.buttonRoundedText}>Share Event</Text>
