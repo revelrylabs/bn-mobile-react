@@ -111,9 +111,9 @@ const EventDetailsStyles = {
 
   // TEXT STYLES
   descriptionHeader: {
+    color: textColor,
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
-    color: textColor,
     width: 275,
   },
   descriptionSubHeader: {
@@ -240,13 +240,12 @@ const EventDetailsStyles = {
     alignItems: 'center',
     backgroundColor: white,
     borderColor: borderColor,
-    borderRadius: 45/2,
+    borderRadius: 5,
     borderWidth: 1,
     flex: 1,
     flexDirection: 'row',
     height: 40,
     justifyContent: 'center',
-    marginHorizontal: globalPaddingTiny,
   },
   buttonRoundedText: {
     color: sectionHeaderColor,
@@ -275,7 +274,7 @@ const EventDetailsStyles = {
   // CALENDAR STYLES
   calendarWrapper: {
     backgroundColor: textColor,
-    borderRadius: 5,
+    borderRadius: 4,
     height: 50,
     marginRight: globalPaddingSmall,
     padding: globalPaddingTiny,

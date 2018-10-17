@@ -403,6 +403,12 @@ const SharedStyles = {
   marginBottomTiny: {
     marginBottom: globalMarginTiny,
   },
+  marginRightTiny: {
+    marginRight: globalMarginTiny,
+  },
+  marginLeftTiny: {
+    marginLeft: globalMarginTiny,
+  },
   lineHeight: {
     paddingBottom: globalPaddingTiny / 2,
   },
