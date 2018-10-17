@@ -48,6 +48,11 @@ const TicketStyles = {
     borderTopLeftRadius: 6,
     height: 180,
     position: 'absolute',
+    width: fullWidth,
+  },
+  eventImageOverlay: {
+    height: 300,
+    position: 'absolute',
   },
 
   // TEXT STYLES

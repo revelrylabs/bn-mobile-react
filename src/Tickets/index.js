@@ -32,6 +32,10 @@ const Ticket = ({navigate, ticket}) => (
           style={ticketStyles.eventImage}
           source={ticket.image}
         />
+        <Image
+          style={ticketStyles.eventImageOverlay}
+          source={require('../../assets/event-img-overlay.png')}
+        />
         <View style={ticketStyles.detailsContainer}>
           <View>
             <View style={styles.iconLinkContainer}>
