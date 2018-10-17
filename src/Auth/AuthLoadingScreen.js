@@ -1,34 +1,65 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
-  StyleSheet,
   View,
 } from 'react-native';
+import {Subscribe} from 'unstated'
+import {AuthContainer} from './authStateProvider'
 
-export default class AuthLoadingScreen extends Component {
+class AuthStore extends Component {
+  static propTypes = {
+    navigation: PropTypes.object.isRequired,
+  }
+
   constructor(props) {
     super(props);
+
     this._bootstrapAsync();
   }
 
   // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
+  _bootstrapAsync = async () => { // eslint-disable-line complexity,space-before-function-paren
+    const {navigation: {navigate}, auth} = this.props
     const userToken = await AsyncStorage.getItem('userToken');
+    const refreshToken = await AsyncStorage.getItem('refreshToken');
 
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    if (userToken && refreshToken) {
+      const {state: {currentUser}} = auth
+
+      if (Object.keys(currentUser).length === 0) {
+        await auth.getCurrentUser(userToken, refreshToken)
+      }
+
+      navigate('App')
+    } else {
+      navigate('Auth')
+    }
   };
 
-  // Render any loading content that you like here
   render() {
     return (
       <View>
         <ActivityIndicator />
         <StatusBar barStyle="default" />
       </View>
+    );
+  }
+}
+
+export default class AuthLoadingScreen extends Component {
+  static propTypes = {
+    navigation: PropTypes.object.isRequired,
+  }
+
+  // Render any loading content that you like here
+  render() {
+    return (
+      <Subscribe to={[AuthContainer]}>
+        {(auth) => <AuthStore auth={auth} navigation={this.props.navigation} />}
+      </Subscribe>
     );
   }
 }
