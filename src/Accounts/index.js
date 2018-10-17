@@ -87,12 +87,12 @@ export default class Account extends Component {
           </View>
         </View>
 
-        <View style={styles.container}>
+        <View style={styles.headerContainer}>
           <View style={accountStyles.avatarPlaceholderContainer}>
             <Icon style={accountStyles.avatarIcon} name="person-add" />
           </View>
 
-          <View style={accountStyles.accountHeaderContainer}>
+          <View style={accountStyles.accountHeaderWrapper}>
             <View>
               <Text style={accountStyles.accountEmailHeader}>Kook McDropin</Text>
               <View style={accountStyles.emailWrapper}>
