@@ -21,9 +21,6 @@ export const sectionHeaderFontSize = 18
 
 const EventStyles = {
   // CONTAINER STYLES
-  eventContainer: {
-    // padding: globalPadding,
-  },
   detailsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',

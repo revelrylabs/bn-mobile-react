@@ -29,7 +29,7 @@ const Ticket = ({navigate, ticket}) => (
     <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
       <View style={ticketStyles.ticketContainer}>
         <Image
-          style={eventStyles.eventImage}
+          style={ticketStyles.eventImage}
           source={ticket.image}
         />
         <View style={ticketStyles.detailsContainer}>
@@ -47,7 +47,7 @@ const Ticket = ({navigate, ticket}) => (
       </View>
     </TouchableHighlight>
 
-    <View style={ticketStyles.ticketContainerBottom}>
+    <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
       <View style={ticketStyles.detailsContainerBottom}>
         <View>
           <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>

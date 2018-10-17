@@ -21,6 +21,9 @@ export const bodyFontSizeSmall = 13
 const TicketStyles = {
   // CONTAINER STYLES
   ticketContainer: {
+    borderTopRightRadius: 6,
+    borderTopLeftRadius: 6,
+    overflow: 'hidden',
     marginTop: globalMargin,
     padding: globalPadding,
   },
@@ -32,12 +35,19 @@ const TicketStyles = {
   ticketContainerBottom: {
     backgroundColor: white,
     marginTop: -10,
-    width: fullWidth - 43,
   },
   detailsContainerBottom: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: globalPaddingSmall + globalPaddingTiny,
+  },
+
+  // IMAGE BKGD STYLES
+  eventImage: {
+    borderTopRightRadius: 6,
+    borderTopLeftRadius: 6,
+    height: 180,
+    position: 'absolute',
   },
 
   // TEXT STYLES
