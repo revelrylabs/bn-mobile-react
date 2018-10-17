@@ -154,7 +154,7 @@ export default class MyTickets extends Component {
     const {navigation: {navigate}} = this.props
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.containerDark}>
 
         <View style={styles.headerContainer}>
           <View style={styles.sectionHeaderContainer}>
@@ -168,7 +168,7 @@ export default class MyTickets extends Component {
           </View>
         </View>
 
-        <View style={styles.containerDark}>
+        <View style={styles.paddingHorizontal}>
 
           <View style={styles.subnavContainer}>
             <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>Upcoming Events</Text>

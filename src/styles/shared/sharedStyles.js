@@ -54,9 +54,8 @@ const SharedStyles = {
   },
   containerDark: {
     backgroundColor: containerDarkColor,
+    flex: 1,
     flexDirection: 'column',
-    paddingBottom: globalPaddingLarge,
-    paddingHorizontal: globalPadding,
     width: fullWidth,
   },
   headerContainer: {
@@ -388,8 +387,14 @@ const SharedStyles = {
   noPaddingBottom: {
     paddingBottom: 0,
   },
+  paddingVerticalMedium: {
+    paddingVertical: globalPaddingMedium,
+  },
   paddingVerticalSmall: {
     paddingVertical: globalPaddingSmall,
+  },
+  paddingHorizontal: {
+    paddingHorizontal: globalPadding,
   },
   marginTop: {
     marginTop: globalMargin,
