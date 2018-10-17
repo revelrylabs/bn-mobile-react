@@ -4,6 +4,7 @@ import Bigneon from 'bn-api-node'
 
 const server = new Bigneon.Server({prefix: 'https://staging.bigneon.com/api'});
 
+/* eslint-disable camelcase */
 class AuthContainer extends Container {
   constructor(props = {}) {
     super(props);
@@ -16,7 +17,7 @@ class AuthContainer extends Container {
   }
 
   // @TODO: Implement a login that also sets AsyncStgorage user
-  logIn = async (formData, navigate) => {
+  logIn = async (formData, navigate) => { // eslint-disable-line space-before-function-paren
     try {
 
       const resp = await server.auth.authenticate(formData)
@@ -27,8 +28,8 @@ class AuthContainer extends Container {
       await this.getCurrentUser(access_token, refresh_token, false)
       navigate('AuthLoading')
 
-    } catch(error) {
-      console.log("Log In Error:", error);
+    } catch (error) {
+      console.log('Log In Error:', error); // eslint-disable-line no-console
 
       navigate('LogIn')
     }
@@ -38,7 +39,7 @@ class AuthContainer extends Container {
   //   // clear asyncstorage and state
   // }
 
-  getCurrentUser = async (access_token, refresh_token, setToken = true) => {
+  getCurrentUser = async (access_token, refresh_token, setToken = true) => { // eslint-disable-line space-before-function-paren
     if (setToken) {
       await server.client.setToken(access_token)
       await server.auth.refresh({refresh_token})
@@ -48,8 +49,8 @@ class AuthContainer extends Container {
       const myUserResponse = await server.users.current()
 
       this.setState({currentUser: myUserResponse.data, access_token, refresh_token})
-    } catch(error) {
-      console.log("Set Current User Error", error);
+    } catch (error) {
+      console.log('Set Current User Error', error); // eslint-disable-line no-console
     }
   }
 
@@ -61,10 +62,10 @@ class AuthContainer extends Container {
       password: formData.password,
       phone: '5551234567',
     }).then((res) => {
-      console.log(res);
+      console.log(res); // eslint-disable-line no-console
       navigate('LogIn') // should redirect to LogIn with a message
     }).catch((e) => {
-      console.error(e);
+      console.error(e); // eslint-disable-line no-console
     });
   }
 }

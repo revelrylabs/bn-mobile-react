@@ -21,16 +21,13 @@ class AuthStore extends Component {
   }
 
   // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
+  _bootstrapAsync = async () => { // eslint-disable-line complexity,space-before-function-paren
     const {navigation: {navigate}, auth} = this.props
     const userToken = await AsyncStorage.getItem('userToken');
     const refreshToken = await AsyncStorage.getItem('refreshToken');
 
     if (userToken && refreshToken) {
       const {state: {currentUser}} = auth
-
-      console.log(userToken, currentUser);
-
 
       if (Object.keys(currentUser).length === 0) {
         await auth.getCurrentUser(userToken, refreshToken)
