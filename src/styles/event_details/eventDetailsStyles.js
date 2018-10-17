@@ -159,10 +159,10 @@ const EventDetailsStyles = {
   // EVENT DETAILS/DESCRIPTION STYLES
   eventDetailsContainer: {
     flexDirection: 'row',
-    paddingVertical: globalPadding,
+    paddingVertical: globalPaddingMedium - globalPaddingTiny,
   },
   eventDescriptionContainer: {
-    paddingVertical: globalPadding,
+    paddingVertical: globalPaddingSmall,
     borderTopColor: borderColor,
     borderBottomColor: borderColor,
     borderStyle: 'solid',
@@ -276,7 +276,6 @@ const EventDetailsStyles = {
     backgroundColor: textColor,
     borderRadius: 4,
     height: 50,
-    marginRight: globalPaddingSmall,
     padding: globalPaddingTiny,
     width: 50,
   },
