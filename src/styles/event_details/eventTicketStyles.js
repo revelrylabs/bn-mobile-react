@@ -25,7 +25,7 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const headerFontSize = 30
 export const ticketPriceFontSize = 32
-export const quantityIconFontSize = 21
+export const quantityIconFontSize = 26
 
 
 const EventTicketStyles = {
@@ -140,7 +140,7 @@ const EventTicketStyles = {
   },
   iconCheck: {
     color: primaryColor,
-    fontSize: sectionHeaderFontSize,
+    fontSize: quantityIconFontSize,
   },
   removeIcon: {
     color: borderColor,
