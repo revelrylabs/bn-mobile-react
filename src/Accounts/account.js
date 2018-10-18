@@ -8,6 +8,7 @@ const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketShowStyles = TicketShowStyles.createStyles()
 
+// @TODO: Switch this to use AuthContainer.logOut
 const signOutAsync = async ({navigate}) => {
   await AsyncStorage.clear();
   navigate;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Button, View, Text, Image, TextInput, AsyncStorage, ScrollView, TouchableHighlight} from 'react-native'
+import {View, Text, Image, TextInput, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -29,9 +29,20 @@ export default class LogIn extends Component {
     }
   }
 
-  _logInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      email: '',
+      password: '',
+    }
+  }
+
+  logIn = async () => {
+    const {screenProps: {auth}, navigation: {navigate}} = this.props
+    const {email, password} = this.state
+
+    await auth.logIn({email, password}, navigate)
   }
 
   render() {
@@ -46,15 +57,16 @@ export default class LogIn extends Component {
             style={formStyles.input}
             placeholder="Email Address"
             searchIcon={{size: 24}}
-            disabled
+            onChangeText={(email) => this.setState({email})}
           />
           <TextInput
             style={formStyles.input}
             placeholder="Password"
             searchIcon={{size: 24}}
-            disabled
+            secureTextEntry
+            onChangeText={(password) => this.setState({password})}
           />
-          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this._logInAsync}>
+          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.logIn}>
             <LinearGradient
               start={{x: 0, y: 0}}
               end={{x: 1, y: 0}}

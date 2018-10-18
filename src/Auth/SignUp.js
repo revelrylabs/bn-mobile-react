@@ -42,7 +42,7 @@ export default class SignUp extends Component {
     const {screenProps: {auth}, navigation: {navigate}} = this.props
     const {email, password} = this.state
 
-    await auth.signUp({email, password}, navigate('LogIn'))
+    await auth.signUp({email, password}, navigate)
   }
 
   render() {

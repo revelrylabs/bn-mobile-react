@@ -1,18 +1,12 @@
 import React from 'react';
-import {createStackNavigator, createBottomTabNavigator} from 'react-navigation'
+import {createBottomTabNavigator} from 'react-navigation'
 import {Image} from 'react-native';
-import AccountRoutes from '../Accounts/routes'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import EventStack from './eventStack'
 import TicketStack from './ticketStack'
+import AccountsStack from './accountStack'
 
 const navigationStyles = NavigationStyles.createStyles()
-
-const AccountsStack = createStackNavigator({
-  ...AccountRoutes,
-}, {
-  initialRouteName: 'Account',
-})
 
 const tabBarOptions = {
   tabBarOptions: {

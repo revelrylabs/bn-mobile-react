@@ -60,8 +60,19 @@ export default class Account extends Component {
     navigation: PropTypes.object.isRequired,
   }
 
-  state = {
-    showQRModal: false,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      showQRModal: false,
+      user: this.setUser,
+    }
+  }
+
+  get setUser() {
+    const {screenProps: {auth: {state: {currentUser}}}} = this.props
+
+    return currentUser.user
   }
 
   toggleQRModal = (visible) => {
@@ -97,7 +108,7 @@ export default class Account extends Component {
               <Text style={accountStyles.accountEmailHeader}>Kook McDropin</Text>
               <View style={accountStyles.emailWrapper}>
                 <Icon style={accountStyles.emailIcon} name="mail" />
-                <Text style={accountStyles.accountEmail}>KOOKMCDROPZ@GMAIL.COM</Text>
+                <Text style={accountStyles.accountEmail}>{this.state.user ? this.state.user.email : 'test@example.com'}</Text>
               </View>
             </View>
             <TouchableHighlight onPress={() => this.toggleQRModal(true)}>
