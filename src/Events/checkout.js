@@ -42,7 +42,7 @@ export default class Checkout extends Component {
 
   render() {
     return (
-      <View style={eventTicketStyles.mainBody}>
+      <View style={[eventTicketStyles.mainBody, eventTicketStyles.checkoutMainBody]}>
         <View style={eventTicketStyles.mainBodyContent}>
 
           <View style={eventTicketStyles.headerWrapper}>

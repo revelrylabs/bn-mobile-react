@@ -38,6 +38,9 @@ const EventTicketStyles = {
     minHeight: '100%',
     marginTop: 240,
   },
+  checkoutMainBody: {
+    marginTop: 100,
+  },
   mainBodyContent: {
     backgroundColor: 'white',
     borderTopRightRadius: 30/2,
