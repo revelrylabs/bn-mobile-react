@@ -220,7 +220,7 @@ export default class EventShow extends Component {
           key: 'Explore',
           actions: [
             NavigationActions.navigate({routeName: 'Home'}),
-          ]
+          ],
         })
 
         this.props.navigation.dispatch(resetAction)
