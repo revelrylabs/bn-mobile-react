@@ -11,7 +11,7 @@ const accountStyles = AccountStyles.createStyles()
 const eventTicketStyles = EventTicketStyles.createStyles()
 
 // @TODO: Replace on a per-event level, I guess?
-const maxAllowed = 4
+const maxAllowed = 999999
 
 export default class Checkout extends Component {
   static propTypes = {
