@@ -38,6 +38,9 @@ const EventTicketStyles = {
     minHeight: '100%',
     marginTop: 240,
   },
+  checkoutMainBody: {
+    marginTop: 100,
+  },
   mainBodyContent: {
     backgroundColor: 'white',
     borderTopRightRadius: 30/2,
@@ -146,7 +149,15 @@ const EventTicketStyles = {
     color: primaryColor,
     fontSize: quantityIconFontSize,
   },
+  removeIconDisabled: {
+    color: borderColor,
+    fontSize: quantityIconFontSize,
+  },
   removeIcon: {
+    color: primaryColor,
+    fontSize: quantityIconFontSize,
+  },
+  addIconDisabled: {
     color: borderColor,
     fontSize: quantityIconFontSize,
   },
