@@ -4,12 +4,12 @@ import {ScrollView, Text, View, Image, Animated, TouchableHighlight} from 'react
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventStyles from '../styles/shared/eventStyles'
+import EventCardStyles from '../styles/shared/eventCardStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
+const eventCardStyles = EventCardStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
 const AnimatedTicket = ({navigate, ticket, springValue}) => (

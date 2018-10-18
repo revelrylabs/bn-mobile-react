@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import EventStyles from '../styles/shared/eventStyles'
+import EventCardStyles from '../styles/shared/eventCardStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
 import TicketShowStyles from '../styles/tickets/ticketShowStyles'
 
 const styles = SharedStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
+const eventCardStyles = EventCardStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketShowStyles = TicketShowStyles.createStyles()
 

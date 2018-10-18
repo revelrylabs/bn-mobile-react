@@ -14,7 +14,9 @@ export default function EventManager() {
     <ScrollView style={styles.containerDark}>
       <View style={styles.paddingVerticalMedium}>
 
-        <Text style={accountStyles.sectionHeader}>Events</Text>
+        <Text style={accountStyles.sectionHeader}>Live</Text>
+
+        <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Upcoming</Text>
 
       </View>
     </ScrollView>

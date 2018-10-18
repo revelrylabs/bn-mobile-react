@@ -6,14 +6,14 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import TicketShowStyles from '../styles/tickets/ticketShowStyles'
-import EventStyles from '../styles/shared/eventStyles'
+import EventCardStyles from '../styles/shared/eventCardStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketShowStyles = TicketShowStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
+const eventCardStyles = EventCardStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
 
