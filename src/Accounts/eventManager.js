@@ -16,6 +16,8 @@ export default function EventManager() {
 
         <Text style={accountStyles.sectionHeader}>Live</Text>
 
+
+
         <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Upcoming</Text>
 
       </View>

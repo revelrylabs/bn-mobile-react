@@ -5,14 +5,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
-import TicketShowStyles from '../styles/tickets/ticketShowStyles'
+import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import EventCardStyles from '../styles/shared/eventCardStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
-const ticketShowStyles = TicketShowStyles.createStyles()
+const ticketWalletStyles = TicketWalletStyles.createStyles()
 const eventCardStyles = EventCardStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
