@@ -45,7 +45,7 @@ export default class Checkout extends Component {
       <View style={eventTicketStyles.mainBody}>
         <View style={eventTicketStyles.mainBodyContent}>
 
-          <View style={styles.container}>
+          <View style={eventTicketStyles.headerWrapper}>
             <Text style={eventTicketStyles.header}>Checkout</Text>
           </View>
 

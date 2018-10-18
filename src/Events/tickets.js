@@ -20,7 +20,7 @@ export default class GetTickets extends Component {
       <View style={eventTicketStyles.mainBody}>
         <View style={eventTicketStyles.mainBodyContent}>
 
-          <View style={styles.container}>
+          <View style={eventTicketStyles.headerWrapper}>
             <Text style={eventTicketStyles.header}>Ticket Type</Text>
           </View>
 
