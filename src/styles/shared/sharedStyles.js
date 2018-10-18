@@ -415,6 +415,10 @@ const SharedStyles = {
   textUnderline: {
     textDecorationLine: 'underline',
   },
+  borderBottomRadius: {
+    borderBottomRightRadius: 6,
+    borderBottomLeftRadius: 6,
+  },
 
   // FLEX HELPER STYLES
   flexRowFlexStart: {

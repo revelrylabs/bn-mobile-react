@@ -23,43 +23,41 @@ export default class Ticket extends Component {
 
     return (
       <View>
-        <View>
-          <View style={ticketStyles.ticketContainer}>
-            <Image
-              style={eventStyles.eventImage}
-              source={ticket.image}
-            />
-            <View style={ticketStyles.detailsContainer}>
-              <View>
-                <View style={styles.iconLinkContainer}>
-                  <Image
-                    style={styles.iconImage}
-                    source={require('../../assets/heart-white.png')}
-                  />
-                </View>
+        <View style={ticketStyles.ticketContainer}>
+          <Image
+            style={ticketShowStyles.eventImage}
+            source={ticket.image}
+          />
+          <View style={ticketStyles.detailsContainer}>
+            <View>
+              <View style={styles.iconLinkContainer}>
+                <Image
+                  style={styles.iconImage}
+                  source={require('../../assets/heart-white.png')}
+                />
               </View>
-              <View>
-                <Text style={ticketStyles.header}>{ticket.name}</Text>
-                <Text style={ticketShowStyles.details}>{ticket.date} • {ticket.starts}  •  {ticket.venue}</Text>
-                <View style={styles.iconLinkContainer}>
-                  <Text style={ticketShowStyles.iconLinkText}>GET DIRECTIONS</Text>
-                  <Icon style={ticketShowStyles.iconLink} name="call-made" />
-                </View>
+            </View>
+            <View>
+              <Text style={ticketStyles.header}>{ticket.name}</Text>
+              <Text style={ticketShowStyles.details}>{ticket.date} • {ticket.starts}  •  {ticket.venue}</Text>
+              <View style={styles.iconLinkContainer}>
+                <Text style={ticketShowStyles.iconLinkText}>GET DIRECTIONS</Text>
+                <Icon style={ticketShowStyles.iconLink} name="call-made" />
               </View>
             </View>
           </View>
-          <View style={ticketStyles.ticketContainerBottom}>
-            <View style={ticketShowStyles.detailsContainerBottom}>
-              <View style={ticketShowStyles.avatarContainer}>
-                <Image
-                  style={ticketShowStyles.avatar}
-                  source={require('../../assets/avatar-female.png')}
-                />
-              </View>
-              <View>
-                <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
-                <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
-              </View>
+        </View>
+        <View style={ticketShowStyles.ticketContainerBottom}>
+          <View style={ticketShowStyles.detailsContainerBottom}>
+            <View style={ticketShowStyles.avatarContainer}>
+              <Image
+                style={ticketShowStyles.avatar}
+                source={require('../../assets/avatar-female.png')}
+              />
+            </View>
+            <View>
+              <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
+              <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
             </View>
           </View>
         </View>
