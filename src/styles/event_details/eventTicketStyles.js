@@ -84,6 +84,10 @@ const EventTicketStyles = {
   },
 
   // TEXT STYLES
+  headerWrapper: {
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingSmall,
+  },
   header: {
     backgroundColor: 'transparent',
     fontFamily: globalFontSemiBold,
