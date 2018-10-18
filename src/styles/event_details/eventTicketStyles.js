@@ -149,7 +149,15 @@ const EventTicketStyles = {
     color: primaryColor,
     fontSize: quantityIconFontSize,
   },
+  removeIconDisabled: {
+    color: borderColor,
+    fontSize: quantityIconFontSize,
+  },
   removeIcon: {
+    color: primaryColor,
+    fontSize: quantityIconFontSize,
+  },
+  addIconDisabled: {
     color: borderColor,
     fontSize: quantityIconFontSize,
   },
