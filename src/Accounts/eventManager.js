@@ -3,10 +3,11 @@ import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
-import BillingStyles from '../styles/account/billingStyles'
+import EventManagerStyles from '../styles/account/eventManagerStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
+const eventManagerStyles = EventManagerStyles.createStyles()
 
 
 export default function EventManager() {
