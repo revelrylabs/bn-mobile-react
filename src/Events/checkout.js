@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import posed, {Transition} from 'react-native-pose'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import EventTicketStyles from '../styles/event_details/eventTicketStyles'
@@ -12,6 +13,15 @@ const eventTicketStyles = EventTicketStyles.createStyles()
 
 // @TODO: Replace on a per-event level, I guess?
 const maxAllowed = 999999
+
+const PosedComponent = posed.View({
+  visible: {
+    transition: {
+      bottom: { y: -0 },
+      top: { y: 500 }
+    }
+  }
+});
 
 export default class Checkout extends Component {
   static propTypes = {
@@ -58,7 +68,7 @@ export default class Checkout extends Component {
 
   render() {
     return (
-      <View style={[eventTicketStyles.mainBody, eventTicketStyles.checkoutMainBody]}>
+      <PosedComponent pose={position} style={[eventTicketStyles.mainBody, eventTicketStyles.checkoutMainBody]}>
         <View style={eventTicketStyles.mainBodyContent}>
 
           <View style={eventTicketStyles.headerWrapper}>
@@ -139,7 +149,7 @@ export default class Checkout extends Component {
           </View>
 
         </View>
-      </View>
+      </PosedComponent>
     )
   }
 }
