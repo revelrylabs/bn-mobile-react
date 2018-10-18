@@ -18,8 +18,8 @@ export default function AccountDetails(props) {
   const {navigation: {navigate}} = props
 
   return (
-    <ScrollView>
-      <View style={accountStyles.containerDark}>
+    <ScrollView style={styles.containerDark}>
+      <View style={styles.paddingVerticalMedium}>
 
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>

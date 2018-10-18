@@ -11,8 +11,8 @@ const accountStyles = AccountStyles.createStyles()
 
 export default function EventManager() {
   return (
-    <ScrollView>
-      <View style={accountStyles.containerDark}>
+    <ScrollView style={styles.containerDark}>
+      <View style={styles.paddingVerticalMedium}>
 
         <Text style={accountStyles.sectionHeader}>Events</Text>
 
