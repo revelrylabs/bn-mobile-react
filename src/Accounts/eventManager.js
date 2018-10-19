@@ -26,7 +26,7 @@ export default function EventManager() {
               />
               <View style={styles.paddingSmall}>
                 <Text style={styles.headerSecondary}>Taylor Swift</Text>
-                <Text style={accountStyles.accountHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
+                <Text style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
               </View>
             </View>
             <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />

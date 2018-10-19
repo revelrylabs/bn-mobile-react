@@ -37,7 +37,7 @@ export default class Checkout extends Component {
   get incrementStyle() {
     const {quantity} = this.state
 
-    return quantity >= maxAllowed ? eventTicketStyles.addIconDisabled : eventTicketStyles.addIcon
+    return quantity >= maxAllowed ? checkoutStyles.addIconDisabled : checkoutStyles.addIcon
   }
 
   decrementTickets = () => {
@@ -53,13 +53,13 @@ export default class Checkout extends Component {
   get decrementStyle() {
     const {quantity} = this.state
 
-    return quantity <= 1 ? eventTicketStyles.removeIconDisabled : eventTicketStyles.removeIcon
+    return quantity <= 1 ? checkoutStyles.removeIconDisabled : checkoutStyles.removeIcon
   }
 
   render() {
     return (
-      <View style={[eventTicketStyles.mainBody, eventTicketStyles.checkoutMainBody]}>
-        <View style={eventTicketStyles.mainBodyContent}>
+      <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
+        <View style={checkoutStyles.mainBodyContent}>
 
           <View style={checkoutStyles.headerWrapper}>
             <Text style={checkoutStyles.header}>Checkout</Text>

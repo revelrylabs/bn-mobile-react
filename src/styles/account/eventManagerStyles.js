@@ -6,6 +6,7 @@ import {
   iconFontSize,
   bodyFontSize,
   globalFontRegular,
+  globalFontMedium,
   globalPadding,
   globalPaddingSmall,
   globalMarginSmall,
@@ -41,6 +42,11 @@ const EventManagerStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     marginBottom: globalMarginSmall,
+  },
+  cardSubHeader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize,
   },
 }
 
