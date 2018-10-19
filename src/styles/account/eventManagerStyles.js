@@ -32,8 +32,8 @@ const EventManagerStyles = {
   img: {
     borderTopLeftRadius: 30/2,
     borderBottomLeftRadius: 30/2,
-    height: 50,
-    width: 50,
+    height: 80,
+    width: 80,
   },
 
   // HEADER STYLES

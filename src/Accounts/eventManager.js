@@ -25,11 +25,13 @@ export default function EventManager() {
                 source={require('../../assets/doorman-event-img.png')}
               />
               <View style={styles.paddingSmall}>
-                <Text style={styles.headerSecondary}>Taylor Swift</Text>
+                <View style={styles.flexRowSpaceBetween}>
+                  <Text style={styles.headerSecondary}>Taylor Swift</Text>
+                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+                </View>
                 <Text style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
               </View>
             </View>
-            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
         </TouchableHighlight>
 
