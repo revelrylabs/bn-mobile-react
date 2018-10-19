@@ -40,6 +40,11 @@ const EventManagerStyles = {
   },
 
   // HEADER STYLES
+  cardWrapper: {
+    padding: globalPaddingSmall,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
   sectionHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
@@ -48,6 +53,8 @@ const EventManagerStyles = {
   },
   cardSubHeader: {
     color: sectionHeaderColor,
+    // flex: 1,
+    // flexWrap: 'wrap',
     fontFamily: globalFontMedium,
     fontSize: bodyFontSize,
     paddingTop: 2,

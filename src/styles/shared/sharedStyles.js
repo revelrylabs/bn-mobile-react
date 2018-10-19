@@ -471,6 +471,9 @@ const SharedStyles = {
   cols4: {
     width: fullWidth / 4,
   },
+  flex1: {
+    flex: 1,
+  },
   flex2: {
     flex: 2,
   },
