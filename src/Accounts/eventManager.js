@@ -13,24 +13,24 @@ const eventManagerStyles = EventManagerStyles.createStyles()
 export default function EventManager() {
   return (
     <ScrollView style={styles.containerDark}>
-      <View style={styles.paddingVerticalMedium}>
+      <View style={[styles.paddingVerticalMedium, styles.paddingHorizontal]}>
 
-        <Text style={accountStyles.sectionHeader}>Live</Text>
+        <Text style={eventManagerStyles.sectionHeader}>Live</Text>
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
-          <View style={accountStyles.rowContainer}>
+          <View style={eventManagerStyles.rowContainer}>
             <View style={accountStyles.row}>
-              <Icon style={accountStyles.accountIcon} name="account-circle" />
-              <Text style={accountStyles.accountHeader}>Account</Text>
+              <Image
+                style={eventManagerStyles.img}
+                source={require('../../assets/doorman-event-img.png')}
+              />
+              <Text style={accountStyles.accountHeader}>Taylor Swift</Text>
             </View>
             <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
           </View>
         </TouchableHighlight>
 
-
-
-
-        <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Upcoming</Text>
+        <Text style={[eventManagerStyles.sectionHeader, styles.marginTop]}>Upcoming</Text>
 
       </View>
     </ScrollView>
