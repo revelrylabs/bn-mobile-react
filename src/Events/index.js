@@ -30,8 +30,8 @@ export default class EventsIndex extends Component {
   /* eslint-disable-next-line complexity */
   constructor(props) {
     super(props);
-
-    const {screenProps: {store: {state}}} = props
+    const {screenProps: {store}} = props
+    const {state} = store
 
     this.state = {
       scrollY: new Animated.Value(
@@ -43,9 +43,12 @@ export default class EventsIndex extends Component {
       easing: Easing.linear,
       selectedLocationId: state.selectedLocationId || 2,
       mainFavorite: true,
-      events: state.events || [],
       locations: state.locations || [],
     };
+
+    if (this.events.length === 0) {
+      store.getEvents()
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -56,6 +59,12 @@ export default class EventsIndex extends Component {
       // also do some kind of event re-search action to load new city events
       this.setState({selectedLocationId})
     }
+  }
+
+  get events() {
+    const {screenProps: {store: {state: {events}}}} = this.props
+
+    return events
   }
 
   setFavorite = (mainFavorite) => {
@@ -92,7 +101,9 @@ export default class EventsIndex extends Component {
 
   get allEvents() {
     const {navigation: {navigate}} = this.props
-    const {events} = this.state
+    const events = this.events
+
+    if (events.length === 0) { return null }
 
     return events.map((event, index) => (
       <EventItemView

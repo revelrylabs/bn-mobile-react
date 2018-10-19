@@ -41,8 +41,15 @@ class AuthContainer extends Container {
 
   getCurrentUser = async (access_token, refresh_token, setToken = true) => { // eslint-disable-line space-before-function-paren
     if (setToken) {
+      const refreshTokenResp = await server.auth.refresh({refresh_token})
+      const {data} = refreshTokenResp
+
+      access_token = data.access_token
+      refresh_token = data.refresh_token
+
+      await AsyncStorage.setItem('userToken', access_token)
+      await AsyncStorage.setItem('refreshToken', refresh_token)
       await server.client.setToken(access_token)
-      await server.auth.refresh({refresh_token})
     }
 
     try {

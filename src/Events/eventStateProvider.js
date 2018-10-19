@@ -1,5 +1,8 @@
 import {Container} from 'unstated'
+import Bigneon from 'bn-api-node'
+import mocker from './mocker'
 
+const server = new Bigneon.Server({prefix: 'https://staging.bigneon.com/api'}, {}, mocker);
 
 const SAMPLE_LOCATIONS = [
   {
@@ -39,7 +42,8 @@ const SAMPLE_AVATARS = [
   require('../../assets/avatar-male.png'),
   require('../../assets/avatar-female.png'),
 ]
-const SAMPLE_EVENTS = [
+
+const _SAMPLE_EVENTS = [
   {
     name: 'River Whyless',
     bgImage: require('../../assets/event-smaller-1.png'),
@@ -83,10 +87,22 @@ class EventsContainer extends Container {
     super(props);
 
     this.state = {
-      events: SAMPLE_EVENTS,
+      events: [],
+      paging: {},
+      lastUpdate: null,
       locations: SAMPLE_LOCATIONS,
       selectedLocationId: 2,
     };
+  }
+
+  getEvents = async (_location = null) => {
+    const {data} = await server.events.index()
+
+    this.setState({
+      lastUpdate: new Date(),
+      events: data.data,
+      paging: data.paging
+    })
   }
 
   changeLocation = (index, selectedLocation) => {
