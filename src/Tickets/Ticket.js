@@ -39,7 +39,7 @@ export default class Ticket extends Component {
             </View>
             <View>
               <Text style={ticketStyles.header}>{ticket.name}</Text>
-              <Text style={ticketWalletStyles.details}>{ticket.date} • {ticket.starts}  •  {ticket.venue}</Text>
+              <Text style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.starts}  &bull;  {ticket.venue}</Text>
               <View style={styles.iconLinkContainer}>
                 <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
                 <Icon style={ticketWalletStyles.iconLink} name="call-made" />

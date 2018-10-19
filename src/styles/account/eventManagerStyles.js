@@ -24,17 +24,13 @@ const EventManagerStyles = {
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    overflow: 'hidden',
   },
 
   // IMAGE STYLES
   img: {
     borderTopLeftRadius: 30/2,
     borderBottomLeftRadius: 30/2,
-
     height: 50,
     width: 50,
   },

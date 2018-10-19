@@ -369,6 +369,9 @@ const SharedStyles = {
   textCenter: {
     textAlign: 'center',
   },
+  paddingSmall: {
+    padding: globalPaddingSmall,
+  },
   paddingRight: {
     paddingRight: globalPadding,
   },
