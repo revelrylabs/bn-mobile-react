@@ -18,13 +18,13 @@ export default function EventManager() {
         <Text style={eventManagerStyles.sectionHeader}>Live</Text>
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
-          <View style={eventManagerStyles.rowContainer}>
+          <View style={eventManagerStyles.cardContainer}>
             <View style={accountStyles.row}>
               <Image
-                style={eventManagerStyles.img}
-                source={require('../../assets/doorman-event-img.png')}
+                style={eventManagerStyles.cardImage}
+                source={require('../../assets/doorman-event-img-3.png')}
               />
-              <View style={styles.paddingSmall}>
+              <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
                 <View style={styles.flexRowSpaceBetween}>
                   <Text style={styles.headerSecondary}>Taylor Swift</Text>
                   <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
@@ -36,6 +36,60 @@ export default function EventManager() {
         </TouchableHighlight>
 
         <Text style={[eventManagerStyles.sectionHeader, styles.marginTop]}>Upcoming</Text>
+
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+          <View style={eventManagerStyles.cardContainer}>
+            <View style={accountStyles.row}>
+              <Image
+                style={eventManagerStyles.cardImage}
+                source={require('../../assets/doorman-event-img-3.png')}
+              />
+              <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
+                <View style={styles.flexRowSpaceBetween}>
+                  <Text style={styles.headerSecondary}>Taylor Swift</Text>
+                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+                </View>
+                <Text style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
+              </View>
+            </View>
+          </View>
+        </TouchableHighlight>
+
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+          <View style={eventManagerStyles.cardContainer}>
+            <View style={accountStyles.row}>
+              <Image
+                style={eventManagerStyles.cardImage}
+                source={require('../../assets/doorman-event-img-3.png')}
+              />
+              <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
+                <View style={styles.flexRowSpaceBetween}>
+                  <Text style={styles.headerSecondary}>Taylor Swift</Text>
+                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+                </View>
+                <Text style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
+              </View>
+            </View>
+          </View>
+        </TouchableHighlight>
+
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+          <View style={eventManagerStyles.cardContainer}>
+            <View style={accountStyles.row}>
+              <Image
+                style={eventManagerStyles.cardImage}
+                source={require('../../assets/doorman-event-img-3.png')}
+              />
+              <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
+                <View style={styles.flexRowSpaceBetween}>
+                  <Text style={styles.headerSecondary}>Taylor Swift</Text>
+                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+                </View>
+                <Text style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
+              </View>
+            </View>
+          </View>
+        </TouchableHighlight>
 
       </View>
     </ScrollView>

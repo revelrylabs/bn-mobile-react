@@ -9,6 +9,7 @@ import {
   globalFontMedium,
   globalPadding,
   globalPaddingSmall,
+  globalPaddingTiny,
   globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
@@ -17,7 +18,7 @@ const fullWidth = Dimensions.get('window').width
 
 const EventManagerStyles = {
   // ROW STYLES
-  rowContainer: {
+  cardContainer: {
     alignItems: 'center',
     backgroundColor: white,
     borderColor: 'transparent',
@@ -29,7 +30,7 @@ const EventManagerStyles = {
   },
 
   // IMAGE STYLES
-  img: {
+  cardImage: {
     borderTopLeftRadius: 30/2,
     borderBottomLeftRadius: 30/2,
     height: 80,
@@ -47,6 +48,7 @@ const EventManagerStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontMedium,
     fontSize: bodyFontSize,
+    paddingTop: 2,
   },
 }
 
