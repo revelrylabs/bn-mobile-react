@@ -10,6 +10,9 @@ const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
 
+// @TODO: Replace on a per-event level, I guess?
+const maxAllowed = 999999
+
 export default class Checkout extends Component {
   static propTypes = {
     changeScreen: PropTypes.func,
@@ -26,8 +29,15 @@ export default class Checkout extends Component {
   incrementTickets = () => {
     const {quantity} = this.state
 
-    // @TODO: Add a check for max tickets allowed
+    if (quantity >= maxAllowed) { return null }
+
     this.setState({quantity: quantity + 1})
+  }
+
+  get incrementStyle() {
+    const {quantity} = this.state
+
+    return quantity >= maxAllowed ? eventTicketStyles.addIconDisabled : eventTicketStyles.addIcon
   }
 
   decrementTickets = () => {
@@ -40,10 +50,16 @@ export default class Checkout extends Component {
     this.setState({quantity: quantity - 1})
   }
 
+  get decrementStyle() {
+    const {quantity} = this.state
+
+    return quantity <= 1 ? eventTicketStyles.removeIconDisabled : eventTicketStyles.removeIcon
+  }
+
   render() {
     return (
-      <View style={checkoutStyles.mainBody}>
-        <View style={checkoutStyles.mainBodyContent}>
+      <View style={[eventTicketStyles.mainBody, eventTicketStyles.checkoutMainBody]}>
+        <View style={eventTicketStyles.mainBodyContent}>
 
           <View style={checkoutStyles.headerWrapper}>
             <Text style={checkoutStyles.header}>Checkout</Text>
@@ -58,11 +74,11 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.decrementTickets()}>
-                <Icon style={checkoutStyles.removeIcon} name="remove-circle" />
+                <Icon style={this.decrementStyle} name="remove-circle" />
               </TouchableHighlight>
               <Text style={checkoutStyles.quantityPrice}>{this.state.quantity}</Text>
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.incrementTickets()}>
-                <Icon style={checkoutStyles.addIcon} name="add-circle" />
+                <Icon style={this.incrementStyle} name="add-circle" />
               </TouchableHighlight>
             </View>
           </View>
