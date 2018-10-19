@@ -168,6 +168,7 @@ const SharedStyles = {
   },
   headerSecondary: {
     backgroundColor: 'transparent',
+    flex: 1,
     fontFamily: globalFontBold,
     fontSize: headerSecondaryFontSize,
     color: textColor,

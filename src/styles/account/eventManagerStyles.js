@@ -10,6 +10,7 @@ import {
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
+  globalMargin,
   globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
@@ -26,6 +27,7 @@ const EventManagerStyles = {
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: globalMargin,
     overflow: 'hidden',
   },
 
