@@ -32,7 +32,7 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 export const bodyFontSizeSmall = 14
 export const closeModalHeaderSize = 21
 
-const TicketShowStyles = {
+const TicketWalletStyles = {
   // CONTAINER STYLES
   modalContainer: {
     flexDirection: 'column',
@@ -158,7 +158,7 @@ const TicketShowStyles = {
 }
 
 function createStyles(overrides = {}) {
-  return StyleSheet.create({...TicketShowStyles, ...overrides})
+  return StyleSheet.create({...TicketWalletStyles, ...overrides})
 }
 
 export default {

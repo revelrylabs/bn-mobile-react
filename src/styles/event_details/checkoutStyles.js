@@ -28,7 +28,7 @@ export const ticketPriceFontSize = 32
 export const quantityIconFontSize = 26
 
 
-const EventTicketStyles = {
+const CheckoutStyles = {
   // MAIN BODY STYLES
   mainBody: {
     backgroundColor: 'transparent',
@@ -181,7 +181,7 @@ const EventTicketStyles = {
 }
 
 function createStyles(overrides = {}) {
-  return StyleSheet.create({...EventTicketStyles, ...overrides})
+  return StyleSheet.create({...CheckoutStyles, ...overrides})
 }
 
 export default {

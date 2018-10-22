@@ -4,11 +4,11 @@ import {Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
-import EventTicketStyles from '../styles/event_details/eventTicketStyles'
+import CheckoutStyles from '../styles/event_details/checkoutStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
-const eventTicketStyles = EventTicketStyles.createStyles()
+const checkoutStyles = CheckoutStyles.createStyles()
 
 // @TODO: Replace on a per-event level, I guess?
 const maxAllowed = 999999
@@ -37,7 +37,7 @@ export default class Checkout extends Component {
   get incrementStyle() {
     const {quantity} = this.state
 
-    return quantity >= maxAllowed ? eventTicketStyles.addIconDisabled : eventTicketStyles.addIcon
+    return quantity >= maxAllowed ? checkoutStyles.addIconDisabled : checkoutStyles.addIcon
   }
 
   decrementTickets = () => {
@@ -53,56 +53,56 @@ export default class Checkout extends Component {
   get decrementStyle() {
     const {quantity} = this.state
 
-    return quantity <= 1 ? eventTicketStyles.removeIconDisabled : eventTicketStyles.removeIcon
+    return quantity <= 1 ? checkoutStyles.removeIconDisabled : checkoutStyles.removeIcon
   }
 
   render() {
     return (
-      <View style={[eventTicketStyles.mainBody, eventTicketStyles.checkoutMainBody]}>
-        <View style={eventTicketStyles.mainBodyContent}>
+      <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
+        <View style={checkoutStyles.mainBodyContent}>
 
-          <View style={eventTicketStyles.headerWrapper}>
-            <Text style={eventTicketStyles.header}>Checkout</Text>
+          <View style={checkoutStyles.headerWrapper}>
+            <Text style={checkoutStyles.header}>Checkout</Text>
           </View>
 
-          <View style={eventTicketStyles.rowContainer}>
-            <View style={eventTicketStyles.row}>
+          <View style={checkoutStyles.rowContainer}>
+            <View style={checkoutStyles.row}>
               <View>
-                <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
-                <Text style={eventTicketStyles.ticketSubHeader}>General Admission</Text>
+                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>General Admission</Text>
               </View>
             </View>
-            <View style={eventTicketStyles.row}>
+            <View style={checkoutStyles.row}>
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.decrementTickets()}>
                 <Icon style={this.decrementStyle} name="remove-circle" />
               </TouchableHighlight>
-              <Text style={eventTicketStyles.quantityPrice}>{this.state.quantity}</Text>
+              <Text style={checkoutStyles.quantityPrice}>{this.state.quantity}</Text>
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.incrementTickets()}>
                 <Icon style={this.incrementStyle} name="add-circle" />
               </TouchableHighlight>
             </View>
           </View>
 
-          <View style={eventTicketStyles.rowContainer}>
-            <View style={eventTicketStyles.row}>
+          <View style={checkoutStyles.rowContainer}>
+            <View style={checkoutStyles.row}>
               <View>
-                <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Taylor Swift</Text>
-                <Text style={eventTicketStyles.ticketSubHeader}>Friday, July 20 - 8:50 pm - The Warfield</Text>
+                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Taylor Swift</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>Friday, July 20 - 8:50 pm - The Warfield</Text>
               </View>
             </View>
           </View>
 
           <TouchableHighlight onPress={() => this.props.changeScreen('payment')}>
-            <View style={eventTicketStyles.rowContainer}>
-              <View style={eventTicketStyles.row}>
+            <View style={checkoutStyles.rowContainer}>
+              <View style={checkoutStyles.row}>
                 <View>
-                  <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Payment</Text>
+                  <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Payment</Text>
                   <View style={styles.flexRowFlexStart}>
                     <Image
-                      style={eventTicketStyles.iconPaymentSmall}
+                      style={checkoutStyles.iconPaymentSmall}
                       source={require('../../assets/icon-visa-pay.png')}
                     />
-                    <Text style={eventTicketStyles.ticketSubHeaderPink}>**** **** **** 4455</Text>
+                    <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** 4455</Text>
                   </View>
                 </View>
               </View>
@@ -110,30 +110,30 @@ export default class Checkout extends Component {
             </View>
           </TouchableHighlight>
 
-          <View style={eventTicketStyles.rowContainer}>
-            <View style={eventTicketStyles.row}>
+          <View style={checkoutStyles.rowContainer}>
+            <View style={checkoutStyles.row}>
               <View>
-                <Text style={[eventTicketStyles.ticketHeader, styles.marginBottomTiny]}>Sub Total</Text>
-                <Text style={eventTicketStyles.ticketHeader}>Fees</Text>
+                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Sub Total</Text>
+                <Text style={checkoutStyles.ticketHeader}>Fees</Text>
               </View>
             </View>
-            <View style={eventTicketStyles.row}>
+            <View style={checkoutStyles.row}>
               <View>
-                <Text style={[eventTicketStyles.ticketSubHeader, styles.marginBottomSmall]}>$30.00 USD</Text>
-                <Text style={eventTicketStyles.ticketSubHeader}>$5.00 USD</Text>
+                <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>$30.00 USD</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>$5.00 USD</Text>
               </View>
             </View>
           </View>
 
-          <View style={eventTicketStyles.rowContainer}>
-            <View style={eventTicketStyles.row}>
+          <View style={checkoutStyles.rowContainer}>
+            <View style={checkoutStyles.row}>
               <View>
-                <Text style={eventTicketStyles.ticketHeader}>Total</Text>
+                <Text style={checkoutStyles.ticketHeader}>Total</Text>
               </View>
             </View>
-            <View style={eventTicketStyles.row}>
+            <View style={checkoutStyles.row}>
               <View>
-                <Text style={eventTicketStyles.ticketHeader}>$35.00 USD</Text>
+                <Text style={checkoutStyles.ticketHeader}>$35.00 USD</Text>
               </View>
             </View>
           </View>

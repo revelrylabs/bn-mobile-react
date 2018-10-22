@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
-import EventStyles from '../styles/shared/eventStyles'
+import EventCardStyles from '../styles/shared/eventCardStyles'
 
 const styles = SharedStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
+const eventCardStyles = EventCardStyles.createStyles()
 
 export default class EventsIndex extends Component {
   static propTypes = {
@@ -34,16 +34,16 @@ export default class EventsIndex extends Component {
       <TouchableHighlight underlayColor="#fff" onPress={onPress}>
         <View>
 
-          <View style={eventStyles.eventContainer}>
+          <View style={eventCardStyles.eventContainer}>
             <Image
-              style={eventStyles.eventImage}
+              style={eventCardStyles.eventImage}
               source={event.bgImage}
             />
-            <View style={eventStyles.detailsContainer}>
-              <View style={eventStyles.sectionTop}>
+            <View style={eventCardStyles.detailsContainer}>
+              <View style={eventCardStyles.sectionTop}>
                 <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!favorite)}>
-                  <View style={favorite ? eventStyles.iconLinkCircleContainerSmallActive : eventStyles.iconLinkCircleContainerSmall}>
-                    <Icon style={favorite ? eventStyles.iconLinkCircleSmallActive : eventStyles.iconLinkCircleSmall} name="star" />
+                  <View style={favorite ? eventCardStyles.iconLinkCircleContainerSmallActive : eventCardStyles.iconLinkCircleContainerSmall}>
+                    <Icon style={favorite ? eventCardStyles.iconLinkCircleSmallActive : eventCardStyles.iconLinkCircleSmall} name="star" />
                   </View>
                 </TouchableHighlight>
                 <View style={styles.avatarContainer}>
@@ -56,9 +56,9 @@ export default class EventsIndex extends Component {
             </View>
           </View>
 
-          <View style={eventStyles.detailsContainerBottom}>
-            <Text style={eventStyles.header}>{event.titleText}</Text>
-            <Text style={eventStyles.details}>{event.scheduleText}</Text>
+          <View style={eventCardStyles.detailsContainerBottom}>
+            <Text style={eventCardStyles.header}>{event.titleText}</Text>
+            <Text style={eventCardStyles.details}>{event.scheduleText}</Text>
           </View>
 
         </View>

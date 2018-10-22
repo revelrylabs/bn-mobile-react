@@ -19,7 +19,7 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.3)'
 export const headerFontSize = 38
 export const sectionHeaderFontSize = 18
 
-const EventStyles = {
+const EventCardStyles = {
   // CONTAINER STYLES
   detailsContainer: {
     flexDirection: 'column',
@@ -82,7 +82,7 @@ const EventStyles = {
 }
 
 function createStyles(overrides = {}) {
-  return StyleSheet.create({...EventStyles, ...overrides})
+  return StyleSheet.create({...EventCardStyles, ...overrides})
 }
 
 export default {

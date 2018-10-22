@@ -168,6 +168,7 @@ const SharedStyles = {
   },
   headerSecondary: {
     backgroundColor: 'transparent',
+    flex: 1,
     fontFamily: globalFontBold,
     fontSize: headerSecondaryFontSize,
     color: textColor,
@@ -369,6 +370,9 @@ const SharedStyles = {
   textCenter: {
     textAlign: 'center',
   },
+  paddingSmall: {
+    padding: globalPaddingSmall,
+  },
   paddingRight: {
     paddingRight: globalPadding,
   },
@@ -466,6 +470,9 @@ const SharedStyles = {
   },
   cols4: {
     width: fullWidth / 4,
+  },
+  flex1: {
+    flex: 1,
   },
   flex2: {
     flex: 2,

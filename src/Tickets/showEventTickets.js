@@ -5,11 +5,11 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Ticket from './Ticket'
 import SharedStyles from '../styles/shared/sharedStyles'
-import TicketShowStyles from '../styles/tickets/ticketShowStyles'
+import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 
 const styles = SharedStyles.createStyles()
 
-const ticketShowStyles = TicketShowStyles.createStyles()
+const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 const ticketData = [
   {
@@ -58,7 +58,7 @@ export default class EventsTicket extends Component {
 
   render() {
     const {navigation} = this.props
-    const {fullWidth, itemWidth} = TicketShowStyles
+    const {fullWidth, itemWidth} = TicketWalletStyles
     const {activeSlide} = this.state
 
     return (
@@ -68,14 +68,14 @@ export default class EventsTicket extends Component {
         }}
       >
         <ScrollView>
-          <View style={ticketShowStyles.modalContainer}>
+          <View style={ticketWalletStyles.modalContainer}>
             <Image
-              style={ticketShowStyles.modalBkgdImage}
+              style={ticketWalletStyles.modalBkgdImage}
               source={require('../../assets/modal-bkgd.jpg')}
             />
 
             <View>
-              <View style={ticketShowStyles.closeModalContainer}>
+              <View style={ticketWalletStyles.closeModalContainer}>
                 <Icon
                   style={styles.iconLinkCircle}
                   name="close"
@@ -83,7 +83,7 @@ export default class EventsTicket extends Component {
                     navigation.goBack()
                   }}
                 />
-                <Text style={ticketShowStyles.closeModalHeader}>Ticket {activeSlide + 1} of {ticketData.length}</Text>
+                <Text style={ticketWalletStyles.closeModalHeader}>Ticket {activeSlide + 1} of {ticketData.length}</Text>
                 <Text>&nbsp;</Text>
               </View>
               <Carousel
@@ -94,7 +94,7 @@ export default class EventsTicket extends Component {
                 renderItem={this._renderItem}
                 sliderWidth={fullWidth}
                 itemWidth={itemWidth}
-                slideStyle={ticketShowStyles.slideWrapper}
+                slideStyle={ticketWalletStyles.slideWrapper}
                 onSnapToItem={(index) => this.setState({activeSlide: index})}
               />
               <Pagination

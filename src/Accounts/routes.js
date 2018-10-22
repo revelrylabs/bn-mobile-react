@@ -69,7 +69,7 @@ const ROUTES = {
   },
   ManageEvents: {
     screen: EventManager,
-    navigationOptions: ({navigation}) => (defaultNavOptions('Manage Events', navigation)),
+    navigationOptions: ({navigation}) => (defaultNavOptions('My Events', navigation)),
   },
 }
 

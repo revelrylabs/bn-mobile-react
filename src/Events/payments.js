@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
-import EventTicketStyles from '../styles/event_details/eventTicketStyles'
+import CheckoutStyles from '../styles/event_details/checkoutStyles'
 
 const styles = SharedStyles.createStyles()
-const eventTicketStyles = EventTicketStyles.createStyles()
+const checkoutStyles = CheckoutStyles.createStyles()
 
 export default class PaymentTypes extends Component {
   static propTypes = {
@@ -22,19 +22,19 @@ export default class PaymentTypes extends Component {
     return paymentOptions.map((payment) => {
       const selected = payment.id === selectedPaymentId
       const rightIcon = selected ?
-        <Icon style={eventTicketStyles.iconCheck} name="check-circle" /> : null
+        <Icon style={checkoutStyles.iconCheck} name="check-circle" /> : null
 
       return (
         <TouchableHighlight key={payment.id} onPress={() => selectPayment(payment.id)}>
-          <View style={selected ? eventTicketStyles.rowContainerActive : eventTicketStyles.rowContainer}>
-            <View style={eventTicketStyles.row}>
+          <View style={selected ? checkoutStyles.rowContainerActive : checkoutStyles.rowContainer}>
+            <View style={checkoutStyles.row}>
               <Image
-                style={eventTicketStyles.iconPayment}
+                style={checkoutStyles.iconPayment}
                 source={payment.icon}
               />
               <View>
-                <Text style={eventTicketStyles.ticketHeader}>{payment.header}</Text>
-                <Text style={eventTicketStyles.ticketSubHeader}>{payment.subheader || null}</Text>
+                <Text style={checkoutStyles.ticketHeader}>{payment.header}</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>{payment.subheader || null}</Text>
               </View>
             </View>
 
@@ -47,17 +47,17 @@ export default class PaymentTypes extends Component {
 
   render() {
     return (
-      <View style={eventTicketStyles.mainBody}>
-        <View style={eventTicketStyles.mainBodyContent}>
+      <View style={checkoutStyles.mainBody}>
+        <View style={checkoutStyles.mainBodyContent}>
 
           <View style={styles.container}>
-            <Text style={eventTicketStyles.header}>Payment Options</Text>
+            <Text style={checkoutStyles.header}>Payment Options</Text>
           </View>
 
           {this.options}
 
           <View style={[styles.buttonContainer, styles.paddingTop]}>
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" style={eventTicketStyles.buttonRounded}>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" style={checkoutStyles.buttonRounded}>
               <Text style={[styles.buttonSecondaryText, styles.textCenter]}>Add New Payment Method</Text>
             </TouchableHighlight>
           </View>
