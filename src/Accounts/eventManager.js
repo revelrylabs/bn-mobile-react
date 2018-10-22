@@ -82,12 +82,10 @@ export default function EventManager() {
               />
               <View style={eventManagerStyles.cardWrapper}>
                 <View style={styles.flexRowSpaceBetween}>
-                  <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambinoooooooooooooo</Text>
+                  <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambino</Text>
                   <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
                 </View>
-                <View style={styles.flex1}>
-                  <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>House of Blues Nola &bull; Oakland, CA &bull; 6/15/18</Text>
-                </View>
+                <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
               </View>
             </View>
           </View>
