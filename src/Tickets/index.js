@@ -161,8 +161,7 @@ export default class MyTickets extends Component {
       <ScrollView style={styles.containerDark}>
 
         <View style={styles.headerContainer}>
-          <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.header}>My Tickets</Text>
+          <View style={[styles.flexRowCenter, styles.paddingVertical]}>
             <View style={styles.iconLinkContainer}>
               <Image
                 style={styles.iconImage}
