@@ -291,13 +291,13 @@ const SharedStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: subnavFontSize,
-    paddingVertical: globalPadding,
+    paddingVertical: globalPadding - globalPaddingTiny,
   },
   subnavHeaderActive: {
     color: primaryColor,
     fontFamily: globalFontRegular,
     fontSize: subnavFontSize,
-    paddingVertical: globalPadding,
+    paddingVertical: globalPadding - globalPaddingTiny,
   },
   activeWrapper: {
     borderBottomColor: primaryColor,
