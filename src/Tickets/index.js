@@ -161,13 +161,11 @@ export default class MyTickets extends Component {
       <ScrollView style={styles.containerDark}>
 
         <View style={styles.headerContainer}>
-          <View style={[styles.flexRowCenter, styles.paddingVertical]}>
-            <View style={styles.iconLinkContainer}>
-              <Image
-                style={styles.iconImage}
-                source={require('../../assets/heart-large.png')}
-              />
-            </View>
+          <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
+            <Image
+              style={[styles.iconImage, styles.marginBottomSmall]}
+              source={require('../../assets/heart-large.png')}
+            />
           </View>
         </View>
 

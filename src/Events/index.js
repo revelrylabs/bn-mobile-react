@@ -154,7 +154,7 @@ export default class EventsIndex extends Component {
             y: -HEADER_MAX_HEIGHT,
           }}
         >
-          <View style={styles.sectionHeaderContainer}>
+          <View style={[styles.sectionHeaderContainer, styles.flexRowSpaceBetween]}>
             <Animated.Text style={[styles.header, {opacity}]}>Explore</Animated.Text>
             <ModalDropdown
               ref={(ref) => {
