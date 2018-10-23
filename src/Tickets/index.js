@@ -170,9 +170,11 @@ export default class MyTickets extends Component {
         </View>
 
         <View style={styles.subnavContainer}>
-          <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>Upcoming Events</Text>
-          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
-          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Transfers</Text>
+          <View style={styles.activeWrapper}>
+            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
+          </View>  
+          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
+          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>TRANSFERS</Text>
         </View>
 
         <View style={styles.paddingHorizontal}>

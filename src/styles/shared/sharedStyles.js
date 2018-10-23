@@ -40,6 +40,7 @@ export const headerFontSize = 36
 export const headerSecondaryFontSize = 24
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 16
+export const subnavFontSize = 14
 export const iconFontSize = 18
 export const iconCircleFontSize = 25
 
@@ -285,18 +286,24 @@ const SharedStyles = {
     borderStyle: 'solid',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: globalPadding,
-    paddingVertical: globalPaddingSmall,
   },
   subnavHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: subnavFontSize,
+    paddingVertical: globalPadding,
   },
   subnavHeaderActive: {
-    color: textColor,
+    color: primaryColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: subnavFontSize,
+    paddingVertical: globalPadding,
+  },
+  activeWrapper: {
+    borderBottomColor: primaryColor,
+    borderBottomWidth: 3,
+    borderStyle: 'solid',
+    // width: fullWidth - 200,
   },
 
   // PRICE TAG STYLES
