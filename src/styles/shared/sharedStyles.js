@@ -279,6 +279,7 @@ const SharedStyles = {
 
   // SUBNAV STYLES
   subnavContainer: {
+    flex: 1,
     alignItems: 'center',
     backgroundColor: white,
     borderBottomColor: borderColor,
@@ -288,16 +289,22 @@ const SharedStyles = {
     justifyContent: 'space-around',
   },
   subnavHeader: {
+    // flexGrow: 1,
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: subnavFontSize,
     paddingVertical: globalPadding - globalPaddingTiny,
+    textAlign: 'center',
+    width: 100,
   },
   subnavHeaderActive: {
+    // flexGrow: 1,
     color: primaryColor,
     fontFamily: globalFontRegular,
     fontSize: subnavFontSize,
     paddingVertical: globalPadding - globalPaddingTiny,
+    textAlign: 'center',
+    width: 100,
   },
   activeWrapper: {
     borderBottomColor: primaryColor,
