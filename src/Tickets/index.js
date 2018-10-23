@@ -169,20 +169,19 @@ export default class MyTickets extends Component {
           </View>
         </View>
 
+        <View style={styles.subnavContainer}>
+          <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>Upcoming Events</Text>
+          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
+          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Transfers</Text>
+        </View>
+
         <View style={styles.paddingHorizontal}>
-
-          <View style={styles.subnavContainer}>
-            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>Upcoming Events</Text>
-            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
-          </View>
-
           <TicketsView
             navigate={navigate}
             tickets={this.ticketsForActiveView}
             springValue={this.springValue}
             purchasedTicketId={this.state.purchasedTicket}
           />
-
         </View>
 
       </ScrollView>

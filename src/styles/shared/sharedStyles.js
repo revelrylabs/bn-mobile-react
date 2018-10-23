@@ -108,9 +108,6 @@ const SharedStyles = {
     paddingTop: globalPadding,
   },
   sectionHeaderContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingTop: globalPaddingMedium,
     paddingVertical: globalPaddingSmall,
   },
@@ -282,6 +279,10 @@ const SharedStyles = {
   // SUBNAV STYLES
   subnavContainer: {
     alignItems: 'center',
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingTop: globalPadding,
