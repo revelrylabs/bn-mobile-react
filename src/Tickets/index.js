@@ -4,12 +4,10 @@ import {ScrollView, Text, View, Image, Animated, TouchableHighlight} from 'react
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventCardStyles from '../styles/shared/eventCardStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
-const eventCardStyles = EventCardStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
 const AnimatedTicket = ({navigate, ticket, springValue}) => (
@@ -142,6 +140,10 @@ export default class MyTickets extends Component {
     return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
   }
 
+  tabWrapperStyle(viewType) {
+    return viewType === this.state.activeTab ? styles.activeWrapper : null
+  }
+
   get ticketsForActiveView() {
     const {tickets, activeTab} = this.state
 
@@ -170,11 +172,15 @@ export default class MyTickets extends Component {
         </View>
 
         <View style={styles.subnavContainer}>
-          <View style={styles.activeWrapper}>
+          <View style={this.tabWrapperStyle('upcoming')}>
             <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
-          </View>  
-          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
-          <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>TRANSFERS</Text>
+          </View>
+          <View style={this.tabWrapperStyle('past')}>
+            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
+          </View>
+          <View style={this.tabWrapperStyle('transfer')}>
+            <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
+          </View>
         </View>
 
         <View style={styles.paddingHorizontal}>
