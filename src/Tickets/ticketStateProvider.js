@@ -59,6 +59,32 @@ const sampleTickets = {
       id: 4,
     },
   ],
+  transfer: [
+    {
+      quantity: 1,
+      name: 'Tycho',
+      venue: 'Fox Theater',
+      location: 'Oakland, CA',
+      date: 'Tue, January 21st',
+      starts: '7:30pm',
+      ends: '12:30am',
+      image: sampleImages.image2,
+      qrCode: '',
+      id: 5,
+    },
+    {
+      quantity: 1,
+      name: 'Explosions In The Sky',
+      venue: 'Fox Theater',
+      location: 'Oakland, CA',
+      date: 'Tue, January 21st',
+      starts: '7:30pm',
+      ends: '12:30am',
+      image: sampleImages.image1,
+      qrCode: '',
+      id: 6,
+    },
+  ],
 }
 
 class TicketsContainer extends Container {

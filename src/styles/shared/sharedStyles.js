@@ -41,6 +41,7 @@ export const headerFontSize = 36
 export const headerSecondaryFontSize = 24
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 16
+export const subnavFontSize = 14
 export const iconFontSize = 18
 export const iconCircleFontSize = 25
 
@@ -109,9 +110,6 @@ const SharedStyles = {
     paddingTop: globalPadding,
   },
   sectionHeaderContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingTop: globalPaddingMedium,
     paddingVertical: globalPaddingSmall,
   },
@@ -282,21 +280,35 @@ const SharedStyles = {
 
   // SUBNAV STYLES
   subnavContainer: {
+    flex: 1,
     alignItems: 'center',
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: globalPadding,
-    paddingVertical: globalPaddingSmall,
   },
   subnavHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: subnavFontSize,
+    paddingVertical: globalPadding - globalPaddingTiny,
+    textAlign: 'center',
+    width: 150,
   },
   subnavHeaderActive: {
-    color: textColor,
+    color: primaryColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: subnavFontSize,
+    paddingVertical: globalPadding - globalPaddingTiny,
+    textAlign: 'center',
+    width: 150,
+  },
+  activeWrapper: {
+    borderBottomColor: primaryColor,
+    borderBottomWidth: 3,
+    borderStyle: 'solid',
   },
 
   // PRICE TAG STYLES
@@ -391,6 +403,9 @@ const SharedStyles = {
   },
   noPaddingBottom: {
     paddingBottom: 0,
+  },
+  paddingVertical: {
+    paddingVertical: globalPadding,
   },
   paddingVerticalMedium: {
     paddingVertical: globalPaddingMedium,
