@@ -88,6 +88,7 @@ const EventDetailsStyles = {
   fixedFooter: {
     position: 'absolute',
     bottom: 0,
+    width: fullWidth,
   },
   sectionBottom: {
     alignItems: 'center',
@@ -107,6 +108,10 @@ const EventDetailsStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: 300,
+  },
+  priceHeaderWrapper: {
+    backgroundColor: white,
+    paddingVertical: globalPaddingSmall,
   },
 
   // TEXT STYLES
