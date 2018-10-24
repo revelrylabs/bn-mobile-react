@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, TextInput, ScrollView, TouchableHighlight, AsyncStorage} from 'react-native';
+import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
@@ -8,14 +8,8 @@ const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
-// @TODO: Switch this to use AuthContainer.logOut
-const signOutAsync = async ({navigate}) => {
-  await AsyncStorage.clear();
-  navigate;
-};
-
 export default function AccountDetails(props) {
-  const {navigation: {navigate}} = props
+  const {navigation: {navigate}, screenProps: {auth: {logOut}}} = props
 
   return (
     <ScrollView style={styles.containerDark}>
@@ -93,7 +87,7 @@ export default function AccountDetails(props) {
           <TouchableHighlight
             style={styles.buttonSecondary}
           >
-            <Text style={styles.buttonSecondaryText} onPress={() => signOutAsync(navigate('Auth'))}>Sign Out</Text>
+            <Text style={styles.buttonSecondaryText} onPress={() => logOut(navigate)}>Sign Out</Text>
           </TouchableHighlight>
         </View>
 
