@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl, Easing} from 'react-native';
+import {NavigationEvents} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import ModalDropdown from 'react-native-modal-dropdown';
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -9,6 +10,7 @@ import SlideShowStyles from '../styles/shared/slideshowStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import EventItemView from './event_card'
+import {DateTime} from 'luxon';
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -45,10 +47,6 @@ export default class EventsIndex extends Component {
       mainFavorite: true,
       locations: state.locations || [],
     };
-
-    if (this.events.length === 0) {
-      store.getEvents()
-    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -59,6 +57,20 @@ export default class EventsIndex extends Component {
       // also do some kind of event re-search action to load new city events
       this.setState({selectedLocationId})
     }
+  }
+
+  loadEvents() {
+    const {screenProps: {store}} = this.props
+
+    if (this.events.length === 0 || this.eventsRefresh) {
+      store.getEvents()
+    }
+  }
+
+  get eventsRefresh() {
+    const {screenProps: {store: {state: {lastUpdate}}}} = this.props
+
+    return !lastUpdate || lastUpdate.plus({minutes: 15}) < DateTime.local()
   }
 
   get events() {
@@ -140,6 +152,9 @@ export default class EventsIndex extends Component {
 
     return (
       <View>
+        <NavigationEvents
+          onWillFocus={() => this.loadEvents()}
+        />
         <ScrollView
           style={styles.container}
           scrollEventThrottle={16}
