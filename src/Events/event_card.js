@@ -4,6 +4,8 @@ import {Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventCardStyles from '../styles/shared/eventCardStyles'
+import {flatMap, min} from 'lodash'
+import {DateTime} from 'luxon'
 
 const styles = SharedStyles.createStyles()
 const eventCardStyles = EventCardStyles.createStyles()
@@ -26,6 +28,24 @@ export default class EventsIndex extends Component {
     this.setState({favorite})
   }
 
+  get lowestPrice() {
+    const {event: {ticket_types}} = this.props
+    const price_points = flatMap(ticket_types, (tt) => (
+      flatMap(tt.price_points, (pp) => (pp.price_in_cents))
+    ))
+
+    return min(price_points) / 100
+  }
+
+  get scheduleText() {
+    const {event} = this.props
+
+    // @TODO: toISOString might not be required... a string might be returned, not a real js date
+    const time = event.door_time instanceof Date ? event.door_time.toISOString() : event.door_time
+
+    return DateTime.fromISO(time).toFormat('ccc, LLLL d')
+  }
+
   render() {
     const {onPress, event} = this.props
     const {favorite} = this.state
@@ -37,7 +57,7 @@ export default class EventsIndex extends Component {
           <View style={eventCardStyles.eventContainer}>
             <Image
               style={eventCardStyles.eventImage}
-              source={event.bgImage}
+              source={{uri: event.promo_image_url}}
             />
             <View style={eventCardStyles.detailsContainer}>
               <View style={eventCardStyles.sectionTop}>
@@ -47,18 +67,20 @@ export default class EventsIndex extends Component {
                   </View>
                 </TouchableHighlight>
                 <View style={styles.avatarContainer}>
-                  {event.avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
+                  {
+                    null // event.avatarImages.map((source, key) => <Image style={styles.avatarSmall} source={source} key={key} />)}
+                  }
                 </View>
               </View>
               <View style={styles.priceTagContainer}>
-                <Text style={styles.priceTag}>${event.priceDollars}</Text>
+                <Text style={styles.priceTag}>${this.lowestPrice}</Text>
               </View>
             </View>
           </View>
 
           <View style={eventCardStyles.detailsContainerBottom}>
-            <Text style={eventCardStyles.header}>{event.titleText}</Text>
-            <Text style={eventCardStyles.details}>{event.scheduleText}</Text>
+            <Text style={eventCardStyles.header}>{event.name}</Text>
+            <Text style={eventCardStyles.details}>{this.scheduleText}</Text>
           </View>
 
         </View>

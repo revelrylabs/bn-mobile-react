@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl, Easing} from 'react-native';
+import {NavigationEvents} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import ModalDropdown from 'react-native-modal-dropdown';
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -9,6 +10,7 @@ import SlideShowStyles from '../styles/shared/slideshowStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import EventItemView from './event_card'
+import {DateTime} from 'luxon';
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -30,8 +32,8 @@ export default class EventsIndex extends Component {
   /* eslint-disable-next-line complexity */
   constructor(props) {
     super(props);
-
-    const {screenProps: {store: {state}}} = props
+    const {screenProps: {store}} = props
+    const {state} = store
 
     this.state = {
       scrollY: new Animated.Value(
@@ -43,7 +45,6 @@ export default class EventsIndex extends Component {
       easing: Easing.linear,
       selectedLocationId: state.selectedLocationId || 2,
       mainFavorite: true,
-      events: state.events || [],
       locations: state.locations || [],
     };
   }
@@ -56,6 +57,26 @@ export default class EventsIndex extends Component {
       // also do some kind of event re-search action to load new city events
       this.setState({selectedLocationId})
     }
+  }
+
+  loadEvents() {
+    const {screenProps: {store}} = this.props
+
+    if (this.events.length === 0 || this.eventsRefresh) {
+      store.getEvents()
+    }
+  }
+
+  get eventsRefresh() {
+    const {screenProps: {store: {state: {lastUpdate}}}} = this.props
+
+    return !lastUpdate || lastUpdate.plus({minutes: 15}) < DateTime.local()
+  }
+
+  get events() {
+    const {screenProps: {store: {state: {events}}}} = this.props
+
+    return events
   }
 
   setFavorite = (mainFavorite) => {
@@ -92,7 +113,9 @@ export default class EventsIndex extends Component {
 
   get allEvents() {
     const {navigation: {navigate}} = this.props
-    const {events} = this.state
+    const events = this.events
+
+    if (events.length === 0) { return null }
 
     return events.map((event, index) => (
       <EventItemView
@@ -129,6 +152,9 @@ export default class EventsIndex extends Component {
 
     return (
       <View>
+        <NavigationEvents
+          onWillFocus={() => this.loadEvents()}
+        />
         <ScrollView
           style={styles.container}
           scrollEventThrottle={16}

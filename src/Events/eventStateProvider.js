@@ -1,5 +1,9 @@
 import {Container} from 'unstated'
+import Bigneon from 'bn-api-node'
+import mocker from './mocker'
+import {DateTime} from 'luxon'
 
+const server = new Bigneon.Server({prefix: 'https://staging.bigneon.com/api'}, {}, mocker);
 
 const SAMPLE_LOCATIONS = [
   {
@@ -34,48 +38,10 @@ const SAMPLE_LOCATIONS = [
   },
 ]
 
-const SAMPLE_AVATARS = [
+const _SAMPLE_AVATARS = [
   require('../../assets/avatar-female.png'),
   require('../../assets/avatar-male.png'),
   require('../../assets/avatar-female.png'),
-]
-const SAMPLE_EVENTS = [
-  {
-    name: 'River Whyless',
-    bgImage: require('../../assets/event-smaller-1.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'River Whyless',
-    scheduleText: 'Fri, July 20',
-    favorite: true,
-  },
-  {
-    name: 'Beyonce',
-    bgImage: require('../../assets/event-smaller-2.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Beyonce',
-    scheduleText: 'Fri, July 20',
-    favorite: false,
-  },
-  {
-    name: 'Drake',
-    bgImage: require('../../assets/event-smaller-3.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Drake',
-    scheduleText: 'Fri, July 20',
-    favorite: false,
-  },
-  {
-    name: 'Ed Sheeran',
-    bgImage: require('../../assets/event-smaller-4.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Ed Sheeran',
-    scheduleText: 'Fri, July 20',
-    favorite: true,
-  },
 ]
 
 class EventsContainer extends Container {
@@ -83,10 +49,22 @@ class EventsContainer extends Container {
     super(props);
 
     this.state = {
-      events: SAMPLE_EVENTS,
+      events: [],
+      paging: {},
+      lastUpdate: null,
       locations: SAMPLE_LOCATIONS,
       selectedLocationId: 2,
     };
+  }
+
+  getEvents = async (_location = null) => {
+    const {data} = await server.events.index()
+
+    this.setState({
+      lastUpdate: DateTime.local(),
+      events: data.data,
+      paging: data.paging,
+    })
   }
 
   changeLocation = (index, selectedLocation) => {
