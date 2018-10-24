@@ -17,10 +17,10 @@ export default class Details extends Component {
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
         <View style={eventDetailsStyles.mainBodyContent}>
+          <Text style={eventDetailsStyles.descriptionSubHeader}>All star promoter events presents</Text>
           <View style={styles.flexRowSpaceBetween}>
             <View>
-              <Text style={eventDetailsStyles.descriptionSubHeader}>All star promoter events presents</Text>
-              <Text style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
+              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
             </View>
             <View style={eventDetailsStyles.calendarWrapper}>
               <Text style={eventDetailsStyles.calendarMonth}>sept</Text>

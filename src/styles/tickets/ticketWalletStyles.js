@@ -32,7 +32,7 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 export const bodyFontSizeSmall = 14
 export const closeModalHeaderSize = 21
 
-const TicketShowStyles = {
+const TicketWalletStyles = {
   // CONTAINER STYLES
   modalContainer: {
     flexDirection: 'column',
@@ -50,6 +50,11 @@ const TicketShowStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  ticketContainerBottom: {
+    backgroundColor: white,
+    marginTop: -10,
+    width: fullWidth - 43,
+  },
   detailsContainerBottom: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -57,7 +62,14 @@ const TicketShowStyles = {
     paddingVertical: globalPaddingSmall,
   },
 
-  // IMAGE BKGD STYLES
+  // IMAGE STYLES
+  eventImage: {
+    borderTopRightRadius: 6,
+    borderTopLeftRadius: 6,
+    height: 180,
+    position: 'absolute',
+    width: fullWidth - 43,
+  },
   modalBkgdImage: {
     height: fullHeight,
     width: fullWidth,
@@ -146,7 +158,7 @@ const TicketShowStyles = {
 }
 
 function createStyles(overrides = {}) {
-  return StyleSheet.create({...TicketShowStyles, ...overrides})
+  return StyleSheet.create({...TicketWalletStyles, ...overrides})
 }
 
 export default {

@@ -15,23 +15,24 @@ const EventsStack = createStackNavigator({
   },
 })
 
-EventsStack.navigationOptions = ({navigation}) => {
-  let tabBarVisible = true;
-
-  if (navigation.state.index > 0) {
-    tabBarVisible = false;
-  }
-
-  return {
-    tabBarVisible,
-  };
-};
-
 export default class eventStackWithStore extends Component {
   static router = EventsStack.router;
   static propTypes = {
     navigation: PropTypes.object.isRequired,
   }
+
+  // Hide bottom tab bar on any Event page that isnt the index
+  static navigationOptions = ({navigation}) => {
+    let tabBarVisible = true;
+
+    if (navigation.state.index > 0) {
+      tabBarVisible = false;
+    }
+
+    return {
+      tabBarVisible,
+    };
+  };
 
   render() {
     return (

@@ -2,11 +2,11 @@ import React from 'react';
 import {Text, View, Image, TextInput, ScrollView, TouchableHighlight, AsyncStorage} from 'react-native';
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
-import TicketShowStyles from '../styles/tickets/ticketShowStyles'
+import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
-const ticketShowStyles = TicketShowStyles.createStyles()
+const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 // @TODO: Switch this to use AuthContainer.logOut
 const signOutAsync = async ({navigate}) => {
@@ -18,14 +18,14 @@ export default function AccountDetails(props) {
   const {navigation: {navigate}} = props
 
   return (
-    <ScrollView>
-      <View style={accountStyles.containerDark}>
+    <ScrollView style={styles.containerDark}>
+      <View style={styles.paddingVerticalMedium}>
 
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>
-            <View style={[ticketShowStyles.avatarContainer, accountStyles.avatarContainer]}>
+            <View style={[ticketWalletStyles.avatarContainer, accountStyles.avatarContainer]}>
               <Image
-                style={ticketShowStyles.avatar}
+                style={ticketWalletStyles.avatar}
                 source={require('../../assets/avatar-female.png')}
               />
             </View>

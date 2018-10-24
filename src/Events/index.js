@@ -243,7 +243,7 @@ export default class EventsIndex extends Component {
                   </View>
                   <Text style={slideshowStyles.header}>Childish Gambino</Text>
                   <View style={styles.flexRowSpaceBetween}>
-                    <Text style={slideshowStyles.details}>Fox Theater  •  Oakland, CA</Text>
+                    <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
                     <Text style={slideshowStyles.details}>July 15, 2018</Text>
                   </View>
                 </View>

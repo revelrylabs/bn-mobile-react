@@ -54,9 +54,8 @@ const SharedStyles = {
   },
   containerDark: {
     backgroundColor: containerDarkColor,
+    flex: 1,
     flexDirection: 'column',
-    paddingBottom: globalPaddingLarge,
-    paddingHorizontal: globalPadding,
     width: fullWidth,
   },
   headerContainer: {
@@ -169,6 +168,7 @@ const SharedStyles = {
   },
   headerSecondary: {
     backgroundColor: 'transparent',
+    flex: 1,
     fontFamily: globalFontBold,
     fontSize: headerSecondaryFontSize,
     color: textColor,
@@ -370,6 +370,9 @@ const SharedStyles = {
   textCenter: {
     textAlign: 'center',
   },
+  paddingSmall: {
+    padding: globalPaddingSmall,
+  },
   paddingRight: {
     paddingRight: globalPadding,
   },
@@ -388,8 +391,14 @@ const SharedStyles = {
   noPaddingBottom: {
     paddingBottom: 0,
   },
+  paddingVerticalMedium: {
+    paddingVertical: globalPaddingMedium,
+  },
   paddingVerticalSmall: {
     paddingVertical: globalPaddingSmall,
+  },
+  paddingHorizontal: {
+    paddingHorizontal: globalPadding,
   },
   marginTop: {
     marginTop: globalMargin,
@@ -414,6 +423,10 @@ const SharedStyles = {
   },
   textUnderline: {
     textDecorationLine: 'underline',
+  },
+  borderBottomRadius: {
+    borderBottomRightRadius: 6,
+    borderBottomLeftRadius: 6,
   },
 
   // FLEX HELPER STYLES
@@ -457,6 +470,9 @@ const SharedStyles = {
   },
   cols4: {
     width: fullWidth / 4,
+  },
+  flex1: {
+    flex: 1,
   },
   flex2: {
     flex: 2,

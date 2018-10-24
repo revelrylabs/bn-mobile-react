@@ -4,12 +4,12 @@ import {ScrollView, Text, View, Image, Animated, TouchableHighlight} from 'react
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventStyles from '../styles/shared/eventStyles'
+import EventCardStyles from '../styles/shared/eventCardStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
+const eventCardStyles = EventCardStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
 const AnimatedTicket = ({navigate, ticket, springValue}) => (
@@ -29,8 +29,12 @@ const Ticket = ({navigate, ticket}) => (
     <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
       <View style={ticketStyles.ticketContainer}>
         <Image
-          style={eventStyles.eventImage}
+          style={ticketStyles.eventImage}
           source={ticket.image}
+        />
+        <Image
+          style={ticketStyles.eventImageOverlay}
+          source={require('../../assets/event-img-overlay.png')}
         />
         <View style={ticketStyles.detailsContainer}>
           <View>
@@ -47,7 +51,7 @@ const Ticket = ({navigate, ticket}) => (
       </View>
     </TouchableHighlight>
 
-    <View style={ticketStyles.ticketContainerBottom}>
+    <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
       <View style={ticketStyles.detailsContainerBottom}>
         <View>
           <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
@@ -154,7 +158,7 @@ export default class MyTickets extends Component {
     const {navigation: {navigate}} = this.props
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.containerDark}>
 
         <View style={styles.headerContainer}>
           <View style={styles.sectionHeaderContainer}>
@@ -168,7 +172,7 @@ export default class MyTickets extends Component {
           </View>
         </View>
 
-        <View style={styles.containerDark}>
+        <View style={styles.paddingHorizontal}>
 
           <View style={styles.subnavContainer}>
             <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>Upcoming Events</Text>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import {NavigationActions, StackActions} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -122,7 +123,7 @@ export default class EventShow extends Component {
   async addTicket(id) {
     const {screenProps: {addPurchasedTicket}} = this.props
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       addPurchasedTicket(id)
       resolve()
     })
@@ -213,6 +214,18 @@ export default class EventShow extends Component {
         this.setState({showSuccessModal: false})
         const _ticketResult = await this.addTicket(1)
 
+        // Reset the Explore Tab Stack
+        const resetAction = StackActions.reset({
+          index: 0,
+          key: 'Explore',
+          actions: [
+            NavigationActions.navigate({routeName: 'Home'}),
+          ],
+        })
+
+        this.props.navigation.dispatch(resetAction)
+
+        // Navigate to the tickets tab to see the new ticket
         navigate('MyTickets')
       }, 1000)
     }, 3000)

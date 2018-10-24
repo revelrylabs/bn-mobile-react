@@ -74,10 +74,11 @@ const AccountStyles = {
   },
 
   // ACCOUNT INFO STYLES
-  accountHeaderContainer: {
+  accountHeaderWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: globalPaddingSmall,
+    paddingBottom: globalPadding,
+    paddingTop: globalPaddingSmall,
   },
   accountEmailHeader: {
     color: textColor,
@@ -105,13 +106,6 @@ const AccountStyles = {
   },
 
   // CONTAINER STYLES
-  containerDark: {
-    backgroundColor: containerDarkColor,
-    flexDirection: 'column',
-    height: fullHeight,
-    paddingVertical: globalPaddingMedium,
-    width: fullWidth,
-  },
   sectionHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
