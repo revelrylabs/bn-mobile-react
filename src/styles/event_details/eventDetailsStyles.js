@@ -81,7 +81,7 @@ const EventDetailsStyles = {
     zIndex: 10,
   },
   spacerFooter: {
-    height: 60,
+    height: 100,
   },
 
   // CONTAINER STYLES
@@ -111,7 +111,10 @@ const EventDetailsStyles = {
   },
   priceHeaderWrapper: {
     backgroundColor: white,
-    paddingVertical: globalPaddingSmall,
+    borderTopColor: borderColor,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    paddingVertical: globalPadding - globalPaddingTiny,
   },
 
   // TEXT STYLES
@@ -157,7 +160,6 @@ const EventDetailsStyles = {
     color: textColor,
     fontFamily: globalFontBold,
     fontSize: sectionHeaderFontSize,
-    paddingBottom: globalPaddingSmall,
     textAlign: 'center',
   },
 
