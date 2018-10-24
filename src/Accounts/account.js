@@ -33,9 +33,8 @@ export default function AccountDetails(props) {
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
             <TextInput
-              style={styles.flexColumnCenter}
               placeholder="Kook"
-              placeholderTextColor='black'
+              placeholderTextColor='gray'
             />
           </View>
         </View>
@@ -44,9 +43,8 @@ export default function AccountDetails(props) {
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Last Name</Text>
             <TextInput
-              style={styles.flexColumnCenter}
               placeholder="McDropin"
-              placeholderTextColor='black'
+              placeholderTextColor='gray'
             />
           </View>
         </View>
@@ -55,9 +53,8 @@ export default function AccountDetails(props) {
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
-              style={styles.flexColumnCenter}
               placeholder="504-000-0000"
-              placeholderTextColor='black'
+              placeholderTextColor='gray'
             />
           </View>
         </View>
@@ -66,9 +63,8 @@ export default function AccountDetails(props) {
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
             <TextInput
-              style={styles.flexColumnCenter}
               placeholder="kookmcdropz@gmail.com"
-              placeholderTextColor='black'
+              placeholderTextColor='gray'
             />
           </View>
         </View>
@@ -77,9 +73,8 @@ export default function AccountDetails(props) {
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Password</Text>
             <TextInput
-              style={styles.flexColumnCenter}
               placeholder="password"
-              placeholderTextColor='black'
+              placeholderTextColor='gray'
             />
           </View>
         </View>
