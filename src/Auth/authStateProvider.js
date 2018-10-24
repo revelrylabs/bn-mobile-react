@@ -9,11 +9,15 @@ class AuthContainer extends Container {
   constructor(props = {}) {
     super(props);
 
-    this.state = {
+    this.state = this.defaultState
+  }
+
+  get defaultState() {
+    return {
       currentUser: {},
       access_token: null,
       refresh_tokn: null,
-    };
+    }
   }
 
   // @TODO: Implement a login that also sets AsyncStgorage user
@@ -25,7 +29,7 @@ class AuthContainer extends Container {
 
       await AsyncStorage.setItem('userToken', access_token)
       await AsyncStorage.setItem('refreshToken', refresh_token)
-      await this.getCurrentUser(access_token, refresh_token, false)
+      await this.getCurrentUser(navigate, access_token, refresh_token, false)
       navigate('AuthLoading')
 
     } catch (error) {
@@ -35,21 +39,30 @@ class AuthContainer extends Container {
     }
   }
 
-  // logOut = async() => {
-  //   // clear asyncstorage and state
-  // }
+  logOut = async (navigate) => { // eslint-disable-line space-before-function-paren
+    await AsyncStorage.clear();
+    this.setState(this.defaultState, () => {
+      navigate('AuthLoading')
+    })
+  }
 
-  getCurrentUser = async (access_token, refresh_token, setToken = true) => { // eslint-disable-line space-before-function-paren
+  // eslint-disable-next-line complexity
+  getCurrentUser = async (navigate, access_token, refresh_token, setToken = true) => { // eslint-disable-line space-before-function-paren
     if (setToken) {
-      const refreshTokenResp = await server.auth.refresh({refresh_token})
-      const {data} = refreshTokenResp
+      try {
+        const refreshTokenResp = await server.auth.refresh({refresh_token})
+        const {data} = refreshTokenResp
 
-      access_token = data.access_token
-      refresh_token = data.refresh_token
+        access_token = data.access_token
+        refresh_token = data.refresh_token
 
-      await AsyncStorage.setItem('userToken', access_token)
-      await AsyncStorage.setItem('refreshToken', refresh_token)
-      await server.client.setToken(access_token)
+        await AsyncStorage.setItem('userToken', access_token)
+        await AsyncStorage.setItem('refreshToken', refresh_token)
+        await server.client.setToken(access_token)
+      } catch (error) {
+        console.log('TOKEN ERROR', error) // eslint-disable-line no-console
+        this.logOut(navigate)
+      }
     }
 
     try {
@@ -58,6 +71,7 @@ class AuthContainer extends Container {
       this.setState({currentUser: myUserResponse.data, access_token, refresh_token})
     } catch (error) {
       console.log('Set Current User Error', error); // eslint-disable-line no-console
+      this.logOut(navigate)
     }
   }
 
