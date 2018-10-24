@@ -29,52 +29,57 @@ export default function AccountDetails(props) {
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
             <TextInput
+              style={accountStyles.accountInputHeader}
               placeholder="Kook"
-              placeholderTextColor='gray'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Last Name</Text>
             <TextInput
+              style={accountStyles.accountInputHeader}
               placeholder="McDropin"
-              placeholderTextColor='gray'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={[accountStyles.rowContainer, styles.marginTop]}>
+        <View style={[accountStyles.inputContainer, styles.marginTop]}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
+              style={accountStyles.accountInputHeader}
               placeholder="504-000-0000"
-              placeholderTextColor='gray'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
             <TextInput
+              style={accountStyles.accountInputHeader}
               placeholder="kookmcdropz@gmail.com"
-              placeholderTextColor='gray'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Password</Text>
             <TextInput
+              style={accountStyles.accountInputHeader}
               placeholder="password"
-              placeholderTextColor='gray'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
