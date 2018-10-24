@@ -30,7 +30,7 @@ class AuthStore extends Component {
       const {state: {currentUser}} = auth
 
       if (Object.keys(currentUser).length === 0) {
-        await auth.getCurrentUser(userToken, refreshToken)
+        await auth.getCurrentUser(navigate, userToken, refreshToken)
       }
 
       navigate('App')
