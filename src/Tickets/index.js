@@ -160,8 +160,7 @@ export default class MyTickets extends Component {
     const {navigation: {navigate}} = this.props
 
     return (
-      <ScrollView style={styles.containerDark}>
-
+      <View  style={styles.containerDark}>
         <View style={styles.headerContainer}>
           <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
             <Image
@@ -170,29 +169,30 @@ export default class MyTickets extends Component {
             />
           </View>
         </View>
-
-        <View style={styles.subnavContainer}>
-          <View style={this.tabWrapperStyle('upcoming')}>
-            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
+        <ScrollView>
+          <View style={styles.subnavContainer}>
+            <View style={this.tabWrapperStyle('upcoming')}>
+              <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
+            </View>
+            <View style={this.tabWrapperStyle('past')}>
+              <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
+            </View>
+            <View style={this.tabWrapperStyle('transfer')}>
+              <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
+            </View>
           </View>
-          <View style={this.tabWrapperStyle('past')}>
-            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
-          </View>
-          <View style={this.tabWrapperStyle('transfer')}>
-            <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
-          </View>
-        </View>
 
-        <View style={styles.paddingHorizontal}>
-          <TicketsView
-            navigate={navigate}
-            tickets={this.ticketsForActiveView}
-            springValue={this.springValue}
-            purchasedTicketId={this.state.purchasedTicket}
-          />
-        </View>
+          <View style={styles.paddingHorizontal}>
+            <TicketsView
+              navigate={navigate}
+              tickets={this.ticketsForActiveView}
+              springValue={this.springValue}
+              purchasedTicketId={this.state.purchasedTicket}
+            />
+          </View>
 
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }
