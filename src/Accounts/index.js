@@ -1,19 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {ScrollView, Modal, Text, View, Image, TouchableHighlight, Button} from 'react-native';
+import {ScrollView, Modal, Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
-import TicketStyles from '../styles/tickets/ticketStyles'
-import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
-import EventCardStyles from '../styles/shared/eventCardStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
-const ticketStyles = TicketStyles.createStyles()
-const ticketWalletStyles = TicketWalletStyles.createStyles()
-const eventCardStyles = EventCardStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
 
@@ -23,7 +17,7 @@ const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
       toggleModal(!modalVisible)
     }}
     visible={modalVisible}
-    transparent={true}
+    transparent
   >
     <View style={modalStyles.modalContainer}>
       <View style={modalStyles.contentWrapper}>
@@ -58,6 +52,7 @@ QRCode.propTypes = {
 export default class Account extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
   constructor(props) {
