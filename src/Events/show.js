@@ -159,13 +159,18 @@ export default class EventShow extends Component {
 
     if (currentScreen === 'details') {
       return (
-        <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.changeScreen('tickets')}
-          >
-            <Text style={styles.buttonText}>Get Tickets</Text>
-          </TouchableHighlight>
+        <View style={eventDetailsStyles.fixedFooter}>
+          <View style={eventDetailsStyles.priceHeaderWrapper}>
+            <Text style={eventDetailsStyles.priceHeader}>$30 to $55</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={() => this.changeScreen('tickets')}
+            >
+              <Text style={styles.buttonText}>Get Tickets</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       )
     }
