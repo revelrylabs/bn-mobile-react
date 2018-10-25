@@ -69,7 +69,7 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={styles.paddingRight}
+              style={accountStyles.accountInputHeader}
               placeholder="kookster9000@hottopic.com"
               placeholderTextColor='black'
             />
