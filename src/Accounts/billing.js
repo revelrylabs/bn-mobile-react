@@ -16,7 +16,7 @@ export default function Billing() {
 
         <Text style={accountStyles.sectionHeader}>Credit Cards</Text>
 
-        <View style={billingStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={billingStyles.row}>
             <View style={billingStyles.imageWrapper}>
               <Image
@@ -37,7 +37,7 @@ export default function Billing() {
           </View>
         </View>
 
-        <View style={billingStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={billingStyles.row}>
             <View style={billingStyles.imageWrapper}>
               <Image
@@ -60,7 +60,7 @@ export default function Billing() {
 
         <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
 
-        <View style={billingStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={billingStyles.row}>
             <View style={billingStyles.imageWrapper}>
               <Image
