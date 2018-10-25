@@ -308,6 +308,7 @@ const SharedStyles = {
     borderBottomColor: primaryColor,
     borderBottomWidth: 3,
     borderStyle: 'solid',
+    marginBottom: -2,
   },
 
   // PRICE TAG STYLES
