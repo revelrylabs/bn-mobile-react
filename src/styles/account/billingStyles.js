@@ -53,7 +53,9 @@ const BillingStyles = {
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
     paddingRight: globalPadding,
-    // width: fullWidth,
+  },
+  billingInputLast: {
+    width: fullWidth,
   },
 }
 

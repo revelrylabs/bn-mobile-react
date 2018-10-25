@@ -30,7 +30,7 @@ export default function Billing() {
               placeholderTextColor='black'
             />
             <TextInput
-              style={styles.paddingRight}
+              style={[billingStyles.billingInput, billingStyles.billingInputLast]}
               placeholder="12/24"
               placeholderTextColor='black'
             />
@@ -46,12 +46,12 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={styles.paddingRight}
+              style={billingStyles.billingInput}
               placeholder="**** **** **** 2595"
               placeholderTextColor='black'
             />
             <TextInput
-              style={styles.paddingRight}
+              style={[billingStyles.billingInput, billingStyles.billingInputLast]}
               placeholder="04/21"
               placeholderTextColor='black'
             />
