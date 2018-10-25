@@ -280,7 +280,6 @@ const SharedStyles = {
 
   // SUBNAV STYLES
   subnavContainer: {
-    flex: 1,
     alignItems: 'center',
     backgroundColor: white,
     borderBottomColor: borderColor,
