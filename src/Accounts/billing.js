@@ -25,7 +25,7 @@ export default function Billing() {
               />
             </View>
             <TextInput
-              style={styles.paddingRight}
+              style={billingStyles.billingInput}
               placeholder="**** **** **** 2386"
               placeholderTextColor='black'
             />
