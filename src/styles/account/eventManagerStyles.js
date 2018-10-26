@@ -23,20 +23,28 @@ const EventManagerStyles = {
     alignItems: 'center',
     backgroundColor: white,
     borderColor: 'transparent',
-    borderRadius: 30/2,
+    borderRadius: 25/2,
     borderWidth: 1,
     flexDirection: 'row',
+    height: 95,
     justifyContent: 'space-between',
     marginBottom: globalMargin,
     overflow: 'hidden',
   },
 
   // IMAGE STYLES
+  cardImageWrapper: {
+    height: 90,
+    width: 90,
+    overflow: 'hidden',
+  },
   cardImage: {
-    borderTopLeftRadius: 30/2,
-    borderBottomLeftRadius: 30/2,
-    height: 80,
-    width: 80,
+    // borderColor: 'transparent',
+    // borderTopLeftRadius: 20/2,
+    // borderBottomLeftRadius: 20/2,
+    // borderWidth: 1,
+    height: 115,
+    // width: 115,
   },
 
   // HEADER STYLES

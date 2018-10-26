@@ -20,10 +20,12 @@ export default function EventManager() {
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={eventManagerStyles.cardContainer}>
             <View style={accountStyles.row}>
-              <Image
-                style={eventManagerStyles.cardImage}
-                source={require('../../assets/doorman-event-img-3.png')}
-              />
+              <View style={eventManagerStyles.cardImageWrapper}>
+                <Image
+                  style={eventManagerStyles.cardImage}
+                  source={require('../../assets/doorman-event-img-3.png')}
+                />
+              </View>
               <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
                 <View style={styles.flexRowSpaceBetween}>
                   <Text numberOfLines={1} style={styles.headerSecondary}>Taylor Swift</Text>
