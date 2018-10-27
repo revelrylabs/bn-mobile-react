@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
-import {NavigationActions, StackActions} from 'react-navigation'
+import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -82,14 +82,43 @@ const PaymentOptions = [
 export default class EventShow extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
-  state = {
-    favorite: false,
-    currentScreen: 'details',
-    selectedPaymentId: 1,
-    showLoadingModal: false,
-    showSuccessModal: false,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      event: props.navigation.getParam('event', {}),
+      favorite: false,
+      currentScreen: 'details',
+      selectedPaymentId: 1,
+      showLoadingModal: false,
+      showSuccessModal: false,
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    const {screenProps: {store: {state: {selectedEvent: {event}}}}} = newProps
+
+    // Do we want to check if the event id different, or just always update?
+    if (event) { this.setState({event}) }
+  }
+
+  clearEvent() {
+    const {screenProps: {store}} = this.props
+
+    store.clearEvent()
+  }
+
+  async loadEvent() {
+    const {screenProps: {store}} = this.props
+    const {event: {id}} = this.state
+
+
+    if (id) {
+      store.getEvent(id)
+    }
   }
 
   scrollToTop = () => {
@@ -131,11 +160,13 @@ export default class EventShow extends Component {
 
   /* eslint-disable-next-line complexity */
   get showScreen() {
-    const {currentScreen, selectedPaymentId} = this.state
+    const {event, currentScreen, selectedPaymentId} = this.state
+
+    if (!event) { return null }
 
     switch (currentScreen) {
     case 'details':
-      return <Details />
+      return <Details event={event} />
     case 'tickets':
       return <GetTickets changeScreen={this.changeScreen} />
     case 'checkout':
@@ -274,6 +305,10 @@ export default class EventShow extends Component {
 
     return (
       <View style={{backgroundColor: 'white'}}>
+        <NavigationEvents
+          onWillFocus={() => this.loadEvent()}
+          onDidBlur={() => this.clearEvent()}
+        />
         <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={showLoadingModal} />
         <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
         <Image

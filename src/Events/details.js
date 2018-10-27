@@ -1,30 +1,46 @@
 import React, {Component} from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import ImageGridStyles from '../styles/event_details/imageGridStyles'
+import {DateTime} from 'luxon';
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const imageGridStyles = ImageGridStyles.createStyles()
 
 export default class Details extends Component {
-  // static propTypes = {}
+  static propTypes = {
+    event: PropTypes.object.isRequired,
+  }
+
+  get presentedBy() {
+    const {event: {organization}} = this.props
+
+    if (organization && organization.name) {
+      return <Text style={eventDetailsStyles.descriptionSubHeader}>{organization.name} presents</Text>
+    }
+
+    return null
+  }
 
   render() {
+    const {event} = this.props
+    const eventStart = DateTime.fromISO(event.event_start)
+
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
         <View style={eventDetailsStyles.mainBodyContent}>
-          <Text style={eventDetailsStyles.descriptionSubHeader}>All star promoter events presents</Text>
+          {this.presentedBy}
           <View style={styles.flexRowSpaceBetween}>
             <View>
-              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>The Taylor Swift Reputation Tour Concert</Text>
+              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>{event.name}</Text>
             </View>
             <View style={eventDetailsStyles.calendarWrapper}>
-              <Text style={eventDetailsStyles.calendarMonth}>sept</Text>
-              <Text style={eventDetailsStyles.calendarDate}>27</Text>
+              <Text style={eventDetailsStyles.calendarMonth}>{eventStart.toFormat('LLL')}</Text>
+              <Text style={eventDetailsStyles.calendarDate}>{eventStart.toFormat('dd')}</Text>
             </View>
           </View>
 

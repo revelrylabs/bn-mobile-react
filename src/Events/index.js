@@ -120,7 +120,7 @@ export default class EventsIndex extends Component {
     return events.map((event, index) => (
       <EventItemView
         key={index}
-        onPress={() => navigate('EventsShow', {name: 'River Whyless'})}
+        onPress={() => navigate('EventsShow', {event})}
         event={event}
       />
     ))
