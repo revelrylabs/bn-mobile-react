@@ -19,20 +19,18 @@ export default function EventManager() {
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={eventManagerStyles.cardContainer}>
-            <View style={accountStyles.row}>
-              <View style={eventManagerStyles.cardImageWrapper}>
-                <Image
-                  style={eventManagerStyles.cardImage}
-                  source={require('../../assets/doorman-event-img-3.png')}
-                />
+            <View style={eventManagerStyles.cardImageWrapper}>
+              <Image
+                style={eventManagerStyles.cardImage}
+                source={require('../../assets/doorman-event-img-3.png')}
+              />
+            </View>
+            <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
+              <View style={styles.flexRowSpaceBetween}>
+                <Text numberOfLines={1} style={styles.headerSecondary}>Taylor Swift</Text>
+                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
               </View>
-              <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
-                <View style={styles.flexRowSpaceBetween}>
-                  <Text numberOfLines={1} style={styles.headerSecondary}>Taylor Swift</Text>
-                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-                </View>
-                <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
-              </View>
+              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
             </View>
           </View>
         </TouchableHighlight>
@@ -41,54 +39,54 @@ export default function EventManager() {
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={eventManagerStyles.cardContainer}>
-            <View style={accountStyles.row}>
+            <View style={eventManagerStyles.cardImageWrapper}>
               <Image
                 style={eventManagerStyles.cardImage}
                 source={require('../../assets/doorman-event-img.png')}
               />
-              <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
-                <View style={styles.flexRowSpaceBetween}>
-                  <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambino</Text>
-                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-                </View>
-                <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
+            </View>
+            <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
+              <View style={styles.flexRowSpaceBetween}>
+                <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambino</Text>
+                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
               </View>
+              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
             </View>
           </View>
         </TouchableHighlight>
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={eventManagerStyles.cardContainer}>
-            <View style={accountStyles.row}>
+            <View style={eventManagerStyles.cardImageWrapper}>
               <Image
                 style={eventManagerStyles.cardImage}
                 source={require('../../assets/doorman-event-img-2.png')}
               />
-              <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
-                <View style={styles.flexRowSpaceBetween}>
-                  <Text numberOfLines={1} style={styles.headerSecondary}>Taylor Swift</Text>
-                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-                </View>
-                <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
+            </View>
+            <View style={[styles.paddingSmall, styles.flexColumnCenter]}>
+              <View style={styles.flexRowSpaceBetween}>
+                <Text numberOfLines={1} style={styles.headerSecondary}>Taylor Swift</Text>
+                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
               </View>
+              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
             </View>
           </View>
         </TouchableHighlight>
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={eventManagerStyles.cardContainer}>
-            <View style={accountStyles.row}>
+            <View style={eventManagerStyles.cardImageWrapper}>
               <Image
                 style={eventManagerStyles.cardImage}
                 source={require('../../assets/doorman-event-img-4.png')}
               />
-              <View style={eventManagerStyles.cardWrapper}>
-                <View style={styles.flexRowSpaceBetween}>
-                  <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambino</Text>
-                  <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-                </View>
-                <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
+            </View>
+            <View style={eventManagerStyles.cardWrapper}>
+              <View style={styles.flexRowSpaceBetween}>
+                <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambino</Text>
+                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
               </View>
+              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
             </View>
           </View>
         </TouchableHighlight>
