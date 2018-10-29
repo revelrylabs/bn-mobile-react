@@ -28,10 +28,7 @@ const EventManagerStyles = {
     borderWidth: 1,
     flexDirection: 'row',
     height: 90,
-    // justifyContent: 'space-between',
     marginBottom: globalMargin,
-    // overflow: 'hidden',
-    // width: fullWidth,
   },
 
   // IMAGE STYLES
