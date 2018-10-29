@@ -28,9 +28,10 @@ const EventManagerStyles = {
     borderWidth: 1,
     flexDirection: 'row',
     height: 90,
-    justifyContent: 'flex-start',
+    // justifyContent: 'space-between',
     marginBottom: globalMargin,
-    overflow: 'hidden',
+    // overflow: 'hidden',
+    // width: fullWidth,
   },
 
   // IMAGE STYLES
@@ -47,10 +48,10 @@ const EventManagerStyles = {
   },
 
   // HEADER STYLES
-  cardWrapper: {
+  cardDetailsWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: globalPaddingSmall,
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
   sectionHeader: {
     color: sectionHeaderColor,
