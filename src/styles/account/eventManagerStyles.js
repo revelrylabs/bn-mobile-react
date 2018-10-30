@@ -28,7 +28,6 @@ const EventManagerStyles = {
     borderWidth: 1,
     flexDirection: 'row',
     height: 90,
-    // justifyContent: 'center',
     marginBottom: globalMargin,
     overflow: 'hidden',
   },
@@ -47,12 +46,6 @@ const EventManagerStyles = {
   },
 
   // HEADER WRAPPER STYLES
-  cardDetailsWrapper: {
-    // justifyContent: 'center',
-    // flexDirection: 'row',
-    // justifyContent: 'flex-start',
-    // padding: globalPaddingSmall,
-  },
   textWrapper: {
     flex: 1,
     flexWrap: 'wrap',
