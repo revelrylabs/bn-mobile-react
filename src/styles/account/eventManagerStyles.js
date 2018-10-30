@@ -27,8 +27,8 @@ const EventManagerStyles = {
     borderRadius: 12,
     borderWidth: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     height: 90,
+    // justifyContent: 'center',
     marginBottom: globalMargin,
     overflow: 'hidden',
   },
@@ -57,6 +57,7 @@ const EventManagerStyles = {
     flex: 1,
     flexWrap: 'wrap',
     paddingLeft: globalPaddingSmall,
+    paddingTop: globalPadding,
   },
 
   // HEADER STYLES

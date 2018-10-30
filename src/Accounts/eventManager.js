@@ -51,7 +51,7 @@ export default function EventManager() {
               <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambinoo000oo0o0o0</Text>
               <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>The House of Blues &bull; New Orleans, LA &bull; 6/15/18</Text>
             </View>
-            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+            <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
 
           </View>
         </TouchableHighlight>
