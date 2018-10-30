@@ -39,19 +39,20 @@ export default function EventManager() {
 
         <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
           <View style={eventManagerStyles.cardContainer}>
+
             <View style={eventManagerStyles.cardImageWrapper}>
               <Image
                 style={eventManagerStyles.cardImage}
                 source={require('../../assets/doorman-event-img.png')}
               />
             </View>
-            <View style={eventManagerStyles.cardDetailsWrapper}>
-              <View>
-                <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambino</Text>
-                <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
-              </View>
-              <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+
+            <View style={eventManagerStyles.textWrapper}>
+              <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambinoo000oo0o0o0</Text>
+              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>The House of Blues &bull; New Orleans, LA &bull; 6/15/18</Text>
             </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+
           </View>
         </TouchableHighlight>
 
