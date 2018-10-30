@@ -74,10 +74,12 @@ export default class Ticket extends Component {
             <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
             <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
           </View>
-          <View style={ticketWalletStyles.bottomNavLinkContainer}>
-            <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
-            <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
-          </View>
+          <TouchableHighlight onPress={() => navigate('TransferTickets')}>
+            <View style={ticketWalletStyles.bottomNavLinkContainer}>
+              <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
+              <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
+            </View>
+          </TouchableHighlight>
         </View>
       </View>
     )
