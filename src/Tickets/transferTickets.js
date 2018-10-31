@@ -38,12 +38,10 @@ export default class TransferTickets extends Component {
             />
           </View>
 
-          <View style={ticketWalletStyles.bottomNav}>
-            <View style={styles.buttonContainer}>
-              <TouchableHighlight style={styles.button}>
-                <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
-              </TouchableHighlight>
-            </View>
+          <View style={styles.buttonContainer}>
+            <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]}>
+              <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
+            </TouchableHighlight>
           </View>
         </View>
 

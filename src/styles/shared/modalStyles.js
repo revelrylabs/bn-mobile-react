@@ -42,8 +42,10 @@ const ModalStyles = {
   contentRoundedWrapper: {
     alignItems: 'center',
     backgroundColor: containerDarkColor,
-    borderTopRightRadius: 6,
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
     borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
     overflow: 'hidden',
     marginHorizontal: globalMargin,
     marginVertical: globalMargin,
@@ -107,6 +109,13 @@ const ModalStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
+  },
+
+  // BUTTON STYLES
+  bottomRadius: {
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+    overflow: 'hidden',
   },
 }
 
