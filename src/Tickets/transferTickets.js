@@ -33,7 +33,7 @@ export default class TransferTickets extends Component {
             </View>
           </View>
 
-          <View style={modalStyles.contentWrapper}>
+          <View style={modalStyles.contentRoundedWrapper}>
 
             <View style={ticketWalletStyles.qrCodeContainer}>
               <Image
@@ -43,16 +43,11 @@ export default class TransferTickets extends Component {
             </View>
 
             <View style={ticketWalletStyles.bottomNav}>
-              <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
-                <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-                <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableHighlight style={styles.button}>
+                  <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
+                </TouchableHighlight>
               </View>
-              <TouchableHighlight>
-                <View style={ticketWalletStyles.bottomNavLinkContainer}>
-                  <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
-                  <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
-                </View>
-              </TouchableHighlight>
             </View>
 
           </View>

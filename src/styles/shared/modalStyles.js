@@ -39,6 +39,14 @@ const ModalStyles = {
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingJumbo,
   },
+  contentRoundedWrapper: {
+    alignItems: 'center',
+    backgroundColor: containerDarkColor,
+    borderTopRightRadius: 6,
+    borderTopLeftRadius: 6,
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingJumbo,
+  },
   modalDropdownContainer: {
     backgroundColor: white,
     borderColor: white,
