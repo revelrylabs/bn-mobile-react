@@ -44,8 +44,9 @@ const ModalStyles = {
     backgroundColor: containerDarkColor,
     borderTopRightRadius: 6,
     borderTopLeftRadius: 6,
-    paddingHorizontal: globalPadding,
-    paddingVertical: globalPaddingJumbo,
+    overflow: 'hidden',
+    marginHorizontal: globalMargin,
+    marginVertical: globalMargin,
   },
   modalDropdownContainer: {
     backgroundColor: white,

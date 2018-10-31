@@ -15,45 +15,39 @@ export default class TransferTickets extends Component {
   render() {
 
     return (
-      <ScrollView>
-        <View style={ticketWalletStyles.modalContainer}>
-          <Image
-            style={ticketWalletStyles.modalBkgdImage}
-            source={require('../../assets/modal-bkgd.jpg')}
+      <View style={ticketWalletStyles.modalContainer}>
+        <Image
+          style={ticketWalletStyles.modalBkgdImage}
+          source={require('../../assets/modal-bkgd.jpg')}
+        />
+        <View style={ticketWalletStyles.closeModalContainer}>
+          <Icon
+            style={styles.iconLinkCircle}
+            name="close"
+            onPress={() => {
+              navigation.goBack()
+            }}
           />
-          <View>
-            <View style={ticketWalletStyles.closeModalContainer}>
-              <Icon
-                style={styles.iconLinkCircle}
-                name="close"
-                onPress={() => {
-                  navigation.goBack()
-                }}
-              />
-            </View>
-          </View>
-
-          <View style={modalStyles.contentRoundedWrapper}>
-
-            <View style={ticketWalletStyles.qrCodeContainer}>
-              <Image
-                style={ticketWalletStyles.qrCode}
-                source={require('../../assets/qr-code-placeholder.png')}
-              />
-            </View>
-
-            <View style={ticketWalletStyles.bottomNav}>
-              <View style={styles.buttonContainer}>
-                <TouchableHighlight style={styles.button}>
-                  <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
-                </TouchableHighlight>
-              </View>
-            </View>
-
-          </View>
-
         </View>
-      </ScrollView>
+
+        <View style={modalStyles.contentRoundedWrapper}>
+          <View style={ticketWalletStyles.qrCodeContainer}>
+            <Image
+              style={ticketWalletStyles.qrCode}
+              source={require('../../assets/qr-code-placeholder.png')}
+            />
+          </View>
+
+          <View style={ticketWalletStyles.bottomNav}>
+            <View style={styles.buttonContainer}>
+              <TouchableHighlight style={styles.button}>
+                <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </View>
+
+      </View>
     )
   }
 }
