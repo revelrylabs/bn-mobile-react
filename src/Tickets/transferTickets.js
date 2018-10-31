@@ -31,6 +31,7 @@ export default class TransferTickets extends Component {
         </View>
 
         <View style={modalStyles.contentRoundedWrapper}>
+          <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
           <View style={ticketWalletStyles.qrCodeContainer}>
             <Image
               style={ticketWalletStyles.qrCode}
