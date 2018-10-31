@@ -20,7 +20,8 @@ export const bodyFontSizeSmall = 13
 
 const TicketTransferStyles = {
   // CONTAINER STYLES
-  ticketContainer: {
+  cardContainer: {
+    backgroundColor: white,
     borderTopRightRadius: 6,
     borderTopLeftRadius: 6,
     overflow: 'hidden',
@@ -31,15 +32,6 @@ const TicketTransferStyles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: 145,
-  },
-  ticketContainerBottom: {
-    backgroundColor: white,
-    marginTop: -10,
-  },
-  detailsContainerBottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: globalPaddingSmall + globalPaddingTiny,
   },
 
   // TEXT STYLES
