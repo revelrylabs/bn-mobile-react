@@ -4,10 +4,12 @@ import {Modal, ScrollView, Text, View, Image, TouchableHighlight} from 'react-na
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
+import TicketTransferStyles from '../styles/tickets/ticketTransferStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
+const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
 export default class TransferTickets extends Component {
