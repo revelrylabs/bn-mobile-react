@@ -28,7 +28,9 @@ export default class Details extends Component {
 
   render() {
     const {event} = this.props
+    const {venue, artists} = event
     const eventStart = DateTime.fromISO(event.event_start)
+    const doorTime = DateTime.fromISO(event.door_time)
 
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
@@ -97,16 +99,16 @@ export default class Details extends Component {
             </View>
 
             <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-              <Text style={[styles.linkText, styles.paddingLeft]}>The Warfield</Text>
+              <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={eventDetailsStyles.bodyText}>
-              982 Market St, San Fransisco, CA 94102, USA
+              {venue.address}, {venue.city}, {venue.state} {venue.postal_code}, {venue.country}
             </Text>
             <Text style={[eventDetailsStyles.bodyText, styles.noPaddingBottom]}>
-              Thursday, September 27, 2018
+              {doorTime.toFormat('DDDD')}
             </Text>
             <Text style={eventDetailsStyles.bodyText}>
-              Doors 7:00 PM PDT - Show 8:00 PM PDT
+              Doors {doorTime.toFormat('t ZZZZ')} - Show {eventStart.toFormat('t ZZZZ')}
             </Text>
 
             <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
