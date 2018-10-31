@@ -38,17 +38,18 @@ const TicketWalletStyles = {
     flexDirection: 'column',
     height: fullHeight,
     justifyContent: 'center',
-    paddingHorizontal: globalPadding,
   },
   closeModalContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingHorizontal: globalPadding,
     paddingTop: globalPaddingLarge,
   },
   slideWrapper: {
     flexDirection: 'column',
     justifyContent: 'center',
+    paddingHorizontal: globalPadding,
   },
   ticketContainerBottom: {
     backgroundColor: white,

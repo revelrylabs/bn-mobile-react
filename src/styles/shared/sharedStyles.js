@@ -12,11 +12,12 @@ export const sectionHeaderColor = '#9DA3B4'
 export const backgroundColor = white
 export const inputBackgroundColor = '#FAFAFA'
 export const helpTextColor = '#666'
-export const borderColor = '#DCDCDC'
+export const borderColor = '#EBEBEB'
 export const containerDarkColor = '#F5F6F7'
 export const primaryTransparent = 'rgba(255, 34, 178, 0.5)'
 export const whiteTransparent = 'rgba(255, 255, 255, 0.3)'
 export const disabledHeaderColor = 'rgba(64, 64, 64, 0.5)'
+export const disabledColor = '#F7F7F7'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -40,6 +41,7 @@ export const headerFontSize = 36
 export const headerSecondaryFontSize = 24
 export const sectionHeaderFontSize = 21
 export const bodyFontSize = 16
+export const subnavFontSize = 14
 export const iconFontSize = 18
 export const iconCircleFontSize = 25
 
@@ -108,9 +110,6 @@ const SharedStyles = {
     paddingTop: globalPadding,
   },
   sectionHeaderContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingTop: globalPaddingMedium,
     paddingVertical: globalPaddingSmall,
   },
@@ -168,7 +167,6 @@ const SharedStyles = {
   },
   headerSecondary: {
     backgroundColor: 'transparent',
-    flex: 1,
     fontFamily: globalFontBold,
     fontSize: headerSecondaryFontSize,
     color: textColor,
@@ -281,21 +279,35 @@ const SharedStyles = {
 
   // SUBNAV STYLES
   subnavContainer: {
+    flex: 1,
     alignItems: 'center',
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: globalPadding,
-    paddingVertical: globalPaddingSmall,
   },
   subnavHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: subnavFontSize,
+    paddingVertical: globalPadding - globalPaddingTiny,
+    textAlign: 'center',
+    width: 150,
   },
   subnavHeaderActive: {
-    color: textColor,
+    color: primaryColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: subnavFontSize,
+    paddingVertical: globalPadding - globalPaddingTiny,
+    textAlign: 'center',
+    width: 150,
+  },
+  activeWrapper: {
+    borderBottomColor: primaryColor,
+    borderBottomWidth: 3,
+    borderStyle: 'solid',
   },
 
   // PRICE TAG STYLES
@@ -390,6 +402,9 @@ const SharedStyles = {
   },
   noPaddingBottom: {
     paddingBottom: 0,
+  },
+  paddingVertical: {
+    paddingVertical: globalPadding,
   },
   paddingVerticalMedium: {
     paddingVertical: globalPaddingMedium,

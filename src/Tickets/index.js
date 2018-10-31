@@ -4,12 +4,10 @@ import {ScrollView, Text, View, Image, Animated, TouchableHighlight} from 'react
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventCardStyles from '../styles/shared/eventCardStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
-const eventCardStyles = EventCardStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
 const AnimatedTicket = ({navigate, ticket, springValue}) => (
@@ -142,6 +140,10 @@ export default class MyTickets extends Component {
     return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
   }
 
+  tabWrapperStyle(viewType) {
+    return viewType === this.state.activeTab ? styles.activeWrapper : null
+  }
+
   get ticketsForActiveView() {
     const {tickets, activeTab} = this.state
 
@@ -158,37 +160,39 @@ export default class MyTickets extends Component {
     const {navigation: {navigate}} = this.props
 
     return (
-      <ScrollView style={styles.containerDark}>
-
+      <View  style={styles.containerDark}>
         <View style={styles.headerContainer}>
-          <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.header}>My Tickets</Text>
-            <View style={styles.iconLinkContainer}>
-              <Image
-                style={styles.iconImage}
-                source={require('../../assets/heart-large.png')}
-              />
+          <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
+            <Image
+              style={[styles.iconImage, styles.marginBottomSmall]}
+              source={require('../../assets/heart-large.png')}
+            />
+          </View>
+        </View>
+        <ScrollView>
+          <View style={styles.subnavContainer}>
+            <View style={this.tabWrapperStyle('upcoming')}>
+              <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
+            </View>
+            <View style={this.tabWrapperStyle('past')}>
+              <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
+            </View>
+            <View style={this.tabWrapperStyle('transfer')}>
+              <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
             </View>
           </View>
-        </View>
 
-        <View style={styles.paddingHorizontal}>
-
-          <View style={styles.subnavContainer}>
-            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>Upcoming Events</Text>
-            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
+          <View style={styles.paddingHorizontal}>
+            <TicketsView
+              navigate={navigate}
+              tickets={this.ticketsForActiveView}
+              springValue={this.springValue}
+              purchasedTicketId={this.state.purchasedTicket}
+            />
           </View>
 
-          <TicketsView
-            navigate={navigate}
-            tickets={this.ticketsForActiveView}
-            springValue={this.springValue}
-            purchasedTicketId={this.state.purchasedTicket}
-          />
-
-        </View>
-
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }

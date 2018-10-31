@@ -5,6 +5,7 @@ import {
   sectionHeaderColor,
   iconFontSize,
   bodyFontSize,
+  subnavFontSize,
   globalFontRegular,
   globalFontMedium,
   globalPadding,
@@ -23,27 +24,31 @@ const EventManagerStyles = {
     alignItems: 'center',
     backgroundColor: white,
     borderColor: 'transparent',
-    borderRadius: 30/2,
+    borderRadius: 12,
     borderWidth: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    height: 90,
     marginBottom: globalMargin,
-    overflow: 'hidden',
   },
 
   // IMAGE STYLES
+  cardImageWrapper: {
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 0,
+    overflow: 'hidden',
+  },
   cardImage: {
-    borderTopLeftRadius: 30/2,
-    borderBottomLeftRadius: 30/2,
-    height: 80,
-    width: 80,
+    height: 95,
+    width: 95,
   },
 
   // HEADER STYLES
-  cardWrapper: {
+  cardDetailsWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: globalPaddingSmall,
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
   sectionHeader: {
     color: sectionHeaderColor,
@@ -53,10 +58,8 @@ const EventManagerStyles = {
   },
   cardSubHeader: {
     color: sectionHeaderColor,
-    // flex: 1,
-    // flexWrap: 'wrap',
     fontFamily: globalFontMedium,
-    fontSize: bodyFontSize,
+    fontSize: subnavFontSize,
     paddingTop: 2,
   },
 }

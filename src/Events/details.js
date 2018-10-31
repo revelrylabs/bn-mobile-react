@@ -214,7 +214,6 @@ export default class Details extends Component {
             </View>
           </View>
 
-          <Text style={eventDetailsStyles.priceHeader}>$30 to $55</Text>
         </View>
         <View style={eventDetailsStyles.spacerFooter} />
       </View>
