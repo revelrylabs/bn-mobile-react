@@ -62,11 +62,7 @@ export default class EventsTicket extends Component {
     const {activeSlide} = this.state
 
     return (
-      <Modal
-        onRequestClose={() => {
-          navigation.goBack()
-        }}
-      >
+
         <ScrollView>
           <View style={ticketWalletStyles.modalContainer}>
             <Image
@@ -113,7 +109,6 @@ export default class EventsTicket extends Component {
 
           </View>
         </ScrollView>
-      </Modal>
     )
   }
 }
