@@ -169,19 +169,18 @@ export default class MyTickets extends Component {
             />
           </View>
         </View>
-        <ScrollView>
-          <View style={styles.subnavContainer}>
-            <View style={this.tabWrapperStyle('upcoming')}>
-              <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
-            </View>
-            <View style={this.tabWrapperStyle('past')}>
-              <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
-            </View>
-            <View style={this.tabWrapperStyle('transfer')}>
-              <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
-            </View>
+        <View style={styles.subnavContainer}>
+          <View style={this.tabWrapperStyle('upcoming')}>
+            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
           </View>
-
+          <View style={this.tabWrapperStyle('past')}>
+            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
+          </View>
+          <View style={this.tabWrapperStyle('transfer')}>
+            <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
+          </View>
+        </View>
+        <ScrollView>
           <View style={styles.paddingHorizontal}>
             <TicketsView
               navigate={navigate}
