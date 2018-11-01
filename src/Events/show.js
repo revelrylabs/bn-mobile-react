@@ -162,27 +162,17 @@ export default class EventShow extends Component {
   }
 
   lowestPrice(ticket_types) {
-    console.log("Low TT");
-
-
     const ticket_pricing = flatMap(ticket_types, (tt) => (
       flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
     ))
-
-    console.log("Low TT", ticket_pricing);
 
     return min(ticket_pricing) / 100
   }
 
   highestPrice(ticket_types) {
-    console.log("HIGH TT");
-
-
     const ticket_pricing = flatMap(ticket_types, (tt) => (
       flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
     ))
-
-    console.log("HIGH TT", ticket_pricing);
 
     return max(ticket_pricing) / 100
   }
