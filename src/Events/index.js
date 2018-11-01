@@ -120,7 +120,7 @@ export default class EventsIndex extends Component {
     return events.map((event, index) => (
       <EventItemView
         key={index}
-        onPress={() => navigate('EventsShow', {event})}
+        onPress={() => navigate('EventsShow', {eventId: event.id})}
         event={event}
       />
     ))
@@ -180,7 +180,7 @@ export default class EventsIndex extends Component {
             y: -HEADER_MAX_HEIGHT,
           }}
         >
-          <View style={styles.sectionHeaderContainer}>
+          <View style={[styles.sectionHeaderContainer, styles.flexRowSpaceBetween]}>
             <Animated.Text style={[styles.header, {opacity}]}>Explore</Animated.Text>
             <ModalDropdown
               ref={(ref) => {
@@ -217,54 +217,55 @@ export default class EventsIndex extends Component {
           </View>
           <Text style={styles.sectionHeader}>Hot This Week</Text>
 
-          <View style={slideshowStyles.slideshowContainer}>
-            <Image
-              style={slideshowStyles.slideShowImage}
-              source={require('../../assets/featured-1.png')}
-            />
-            <Image
-              style={slideshowStyles.slideShowImage}
-              source={require('../../assets/featured-img-overlay.png')}
-            />
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
+            <View style={slideshowStyles.slideshowContainer}>
+              <Image
+                style={slideshowStyles.slideShowImage}
+                source={require('../../assets/featured-1.png')}
+              />
+              <Image
+                style={slideshowStyles.slideShowImage}
+                source={require('../../assets/featured-img-overlay.png')}
+              />
 
-            <View style={slideshowStyles.detailsContainer}>
-              <View style={slideshowStyles.sectionTop}>
-                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!mainFavorite)}>
-                  <View style={mainFavorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                    <Icon style={mainFavorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
-                  </View>
-                </TouchableHighlight>
-                <View style={styles.avatarContainer}>
-                  <Image
-                    style={styles.avatar}
-                    source={require('../../assets/avatar-male.png')}
-                  />
-                  <Image
-                    style={styles.avatar}
-                    source={require('../../assets/avatar-female.png')}
-                  />
-                </View>
-              </View>
-
-              <View style={slideshowStyles.sectionMiddle}>
-                <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
-                <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
-              </View>
-
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
-                <View>
-                  <View style={styles.priceTagContainer}>
-                    <Text style={styles.priceTag}>$30</Text>
-                  </View>
-                  <Text style={slideshowStyles.header}>Childish Gambino</Text>
-                  <View style={styles.flexRowSpaceBetween}>
-                    <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
-                    <Text style={slideshowStyles.details}>July 15, 2018</Text>
+              <View style={slideshowStyles.detailsContainer}>
+                <View style={slideshowStyles.sectionTop}>
+                  <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!mainFavorite)}>
+                    <View style={mainFavorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
+                      <Icon style={mainFavorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
+                    </View>
+                  </TouchableHighlight>
+                  <View style={styles.avatarContainer}>
+                    <Image
+                      style={styles.avatar}
+                      source={require('../../assets/avatar-male.png')}
+                    />
+                    <Image
+                      style={styles.avatar}
+                      source={require('../../assets/avatar-female.png')}
+                    />
                   </View>
                 </View>
-              </TouchableHighlight>
+
+                <View style={slideshowStyles.sectionMiddle}>
+                  <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
+                  <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
+                </View>
+
+
+                  <View>
+                    <View style={styles.priceTagContainer}>
+                      <Text style={styles.priceTag}>$30</Text>
+                    </View>
+                    <Text style={slideshowStyles.header}>Childish Gambino</Text>
+                    <View style={styles.flexRowSpaceBetween}>
+                      <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
+                      <Text style={slideshowStyles.details}>July 15, 2018</Text>
+                    </View>
+                  </View>
+              </View>
             </View>
-          </View>
+          </TouchableHighlight>
 
           <Text style={styles.sectionHeader}>Upcoming</Text>
 

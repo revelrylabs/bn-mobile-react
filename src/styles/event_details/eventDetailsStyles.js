@@ -81,13 +81,14 @@ const EventDetailsStyles = {
     zIndex: 10,
   },
   spacerFooter: {
-    height: 60,
+    height: 100,
   },
 
   // CONTAINER STYLES
   fixedFooter: {
     position: 'absolute',
     bottom: 0,
+    width: fullWidth,
   },
   sectionBottom: {
     alignItems: 'center',
@@ -107,6 +108,13 @@ const EventDetailsStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: 300,
+  },
+  priceHeaderWrapper: {
+    backgroundColor: white,
+    borderTopColor: borderColor,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    paddingVertical: globalPadding - globalPaddingTiny,
   },
 
   // TEXT STYLES
@@ -152,7 +160,6 @@ const EventDetailsStyles = {
     color: textColor,
     fontFamily: globalFontBold,
     fontSize: sectionHeaderFontSize,
-    paddingBottom: globalPaddingSmall,
     textAlign: 'center',
   },
 

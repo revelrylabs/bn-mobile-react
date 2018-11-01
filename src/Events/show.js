@@ -10,6 +10,7 @@ import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
+import {flatMap, min, max} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -89,13 +90,16 @@ export default class EventShow extends Component {
     super(props)
 
     this.state = {
-      event: props.navigation.getParam('event', {}),
+      event: false,
+      eventId: props.navigation.getParam('eventId', false),
       favorite: false,
       currentScreen: 'details',
       selectedPaymentId: 1,
       showLoadingModal: false,
       showSuccessModal: false,
     }
+
+    this.loadEvent()
   }
 
   componentWillReceiveProps(newProps) {
@@ -113,11 +117,10 @@ export default class EventShow extends Component {
 
   async loadEvent() {
     const {screenProps: {store}} = this.props
-    const {event: {id}} = this.state
+    const {eventId} = this.state
 
-
-    if (id) {
-      store.getEvent(id)
+    if (eventId) {
+      store.getEvent(eventId)
     }
   }
 
@@ -158,6 +161,37 @@ export default class EventShow extends Component {
     })
   }
 
+  lowestPrice(ticket_types) {
+    const ticket_pricing = flatMap(ticket_types, (tt) => (
+      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
+    ))
+
+    return min(ticket_pricing) / 100
+  }
+
+  highestPrice(ticket_types) {
+    const ticket_pricing = flatMap(ticket_types, (tt) => (
+      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
+    ))
+
+    return max(ticket_pricing) / 100
+  }
+
+  get ticketRange() {
+    const {event: {ticket_types}} = this.state
+
+    if (!ticket_types) { return null }
+
+    return (
+      <View style={eventDetailsStyles.priceHeaderWrapper}>
+        <Text style={eventDetailsStyles.priceHeader}>
+          ${this.lowestPrice(ticket_types)} - ${this.highestPrice(ticket_types)}
+        </Text>
+      </View>
+    )
+  }
+
+
   /* eslint-disable-next-line complexity */
   get showScreen() {
     const {event, currentScreen, selectedPaymentId} = this.state
@@ -190,13 +224,16 @@ export default class EventShow extends Component {
 
     if (currentScreen === 'details') {
       return (
-        <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.changeScreen('tickets')}
-          >
-            <Text style={styles.buttonText}>Get Tickets</Text>
-          </TouchableHighlight>
+        <View style={eventDetailsStyles.fixedFooter}>
+          {this.ticketRange}
+          <View style={styles.buttonContainer}>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={() => this.changeScreen('tickets')}
+            >
+              <Text style={styles.buttonText}>Get Tickets</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       )
     }
@@ -301,7 +338,9 @@ export default class EventShow extends Component {
   }
 
   render() {
-    const {showLoadingModal, showSuccessModal} = this.state
+    const {event, showLoadingModal, showSuccessModal} = this.state
+
+    if (!event) { return null }
 
     return (
       <View style={{backgroundColor: 'white'}}>
@@ -313,7 +352,7 @@ export default class EventShow extends Component {
         <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
-          source={require('../../assets/video-bkgd.png')}
+          source={{uri: event.promo_image_url}}
         />
 
         <ScrollView>

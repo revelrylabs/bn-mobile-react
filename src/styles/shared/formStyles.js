@@ -5,6 +5,7 @@ import {
   borderColor,
   searchIconColor,
   inputBackgroundColor,
+  disabledColor,
   globalFontRegular,
   globalFontSemiBold,
   iconFontSize,
@@ -18,8 +19,6 @@ import {
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
-
-export const disabledColor = '#F7F7F7'
 
 export const bodyFontSize = 18
 export const searchIconFontSize = 21

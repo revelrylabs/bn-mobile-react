@@ -6,6 +6,7 @@ import {
   borderColor,
   containerDarkColor,
   disabledHeaderColor,
+  disabledColor,
   bodyFontSize,
   iconFontSize,
   globalFontRegular,
@@ -153,9 +154,22 @@ const AccountStyles = {
   },
 
   // INPUT STYLES
+  inputContainer: {
+    alignItems: 'center',
+    backgroundColor: white,
+    borderBottomColor: borderColor,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    height: 45,
+    justifyContent: 'space-between',
+    paddingHorizontal: globalPadding,
+    width: fullWidth,
+  },
   accountInputHeader: {
-    flexDirection: 'column',
-    justifyContent: 'center',
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
+    width: fullWidth,
   },
   accountInputHeaderDisabled: {
     color: disabledHeaderColor,
