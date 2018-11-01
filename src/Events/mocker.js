@@ -239,7 +239,7 @@ const MOCK_EVENT = {
   "publish_date": "2018-10-25T16:41:14.640891",
   "promo_image_url": "https://res.cloudinary.com/bigneon-dev/image/upload/v1537953516/bigneon/ksxxzgt72s6o6dphlmf4.jpg",
   "additional_info": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.',
-  "top_line_info": null,
+  "top_line_info": "PepsiCo International presents",
   "age_limit": 21,
   "organization": {
     "id": "bb5c0fbb-0b13-4550-bedd-46462f79cda4",

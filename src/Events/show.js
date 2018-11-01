@@ -352,7 +352,7 @@ export default class EventShow extends Component {
         <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
-          source={require('../../assets/video-bkgd.png')}
+          source={{uri: event.promo_image_url}}
         />
 
         <ScrollView>

@@ -23,11 +23,11 @@ export default class Details extends Component {
     event: PropTypes.object.isRequired,
   }
 
-  get presentedBy() {
-    const {event: {organization}} = this.props
+  get topLineInfo() {
+    const {event: {top_line_info}} = this.props
 
-    if (organization && organization.name) {
-      return <Text style={eventDetailsStyles.descriptionSubHeader}>{organization.name} presents</Text>
+    if (top_line_info) {
+      return <Text style={eventDetailsStyles.descriptionSubHeader}>{top_line_info}</Text>
     }
 
     return null
@@ -49,6 +49,143 @@ export default class Details extends Component {
     return 'This event is for all ages.'
   }
 
+  get youtube() {
+    return null
+
+    // return (
+    //   <View>
+    //     <View style={eventDetailsStyles.iconSectionHeaderContainer}>
+    //       <Image
+    //         style={eventDetailsStyles.iconYoutube}
+    //         source={require('../../assets/icon-youtube.png')}
+    //       />
+    //       <Text style={eventDetailsStyles.iconSectionHeader}>YOUTUBE</Text>
+    //     </View>
+
+    //     <View style={eventDetailsStyles.youtubeVideoContainer}>
+    //       <Image
+    //         style={eventDetailsStyles.videoBkgd}
+    //         source={require('../../assets/video-youtube-bkgd.png')}
+    //       />
+    //       <Image
+    //         style={eventDetailsStyles.videoBkgd}
+    //         source={require('../../assets/video-bkgd-overlay.png')}
+    //       />
+    //       <Icon style={eventDetailsStyles.iconPlayLink} name="play-circle-outline" />
+    //     </View>
+    //   </View>
+    // )
+  }
+
+  get interested() {
+    return null
+
+    // return (
+    //   <View style={eventDetailsStyles.eventDetailsContainer}>
+    //     <View style={eventDetailsStyles.eventDetailsLeft}>
+    //       <View style={eventDetailsStyles.avatarContainer}>
+    //         <Image
+    //           style={eventDetailsStyles.avatar}
+    //           source={require('../../assets/avatar-male.png')}
+    //         />
+    //         <Image
+    //           style={eventDetailsStyles.avatar}
+    //           source={require('../../assets/avatar-female-2.png')}
+    //         />
+    //         <Image
+    //           style={eventDetailsStyles.avatar}
+    //           source={require('../../assets/avatar-male-2.png')}
+    //         />
+    //         <Image
+    //           style={eventDetailsStyles.avatar}
+    //           source={require('../../assets/avatar-female-3.png')}
+    //         />
+    //         <Image
+    //           style={eventDetailsStyles.avatar}
+    //           source={require('../../assets/avatar-female.png')}
+    //         />
+    //         <View style={eventDetailsStyles.attendeeContainer}>
+    //           <Text style={eventDetailsStyles.attendeeNumber}>+{event.total_interest}</Text>
+    //         </View>
+    //       </View>
+    //     </View>
+    //   </View>
+    // )
+  }
+
+  get instagram() {
+    return null
+
+    // return  (
+    //   <View>
+    //     <View style={eventDetailsStyles.iconSectionHeaderContainer}>
+    //       <Image
+    //         style={eventDetailsStyles.iconInstagram}
+    //         source={require('../../assets/icon-instagram.png')}
+    //       />
+    //       <Text style={eventDetailsStyles.iconSectionHeader}>INSTAGRAM</Text>
+    //     </View>
+
+    //     <View style={imageGridStyles.imageGridContainer}>
+    //       <Image
+    //         style={imageGridStyles.image}
+    //         source={require('../../assets/image-grid-1.png')}
+    //       />
+    //       <Image
+    //         style={imageGridStyles.image}
+    //         source={require('../../assets/image-grid-2.png')}
+    //       />
+    //       <Image
+    //         style={imageGridStyles.image}
+    //         source={require('../../assets/image-grid-3.png')}
+    //       />
+    //     </View>
+    //     <View style={imageGridStyles.imageGridContainer}>
+    //       <Image
+    //         style={imageGridStyles.image}
+    //         source={require('../../assets/image-grid-1.png')}
+    //       />
+    //       <Image
+    //         style={imageGridStyles.image}
+    //         source={require('../../assets/image-grid-2.png')}
+    //       />
+    //       <Image
+    //         style={imageGridStyles.image}
+    //         source={require('../../assets/image-grid-3.png')}
+    //       />
+    //     </View>
+    //   </View>
+    // )
+  }
+
+  get spotify() {
+    return null
+
+    // return (
+    //   <View>
+    //     <View style={eventDetailsStyles.iconSectionHeaderContainer}>
+    //       <Image
+    //         style={eventDetailsStyles.iconSpotify}
+    //         source={require('../../assets/icon-spotify.png')}
+    //       />
+    //       <Text style={eventDetailsStyles.iconSectionHeader}>SPOTIFY</Text>
+    //     </View>
+
+    //     <View style={eventDetailsStyles.imagePlaceholderContainer}>
+    //       <Image
+    //         style={eventDetailsStyles.imagePlaceholder}
+    //         source={require('../../assets/spotify-placeholder.png')}
+    //       />
+    //       <View style={eventDetailsStyles.sliderArrowContainer}>
+    //         <Icon style={eventDetailsStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
+    //         <Icon style={eventDetailsStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
+    //       </View>
+    //     </View>
+
+    //   </View>
+    // )
+  }
+
   render() {
     const {event} = this.props
     const {venue} = event
@@ -58,7 +195,7 @@ export default class Details extends Component {
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
         <View style={eventDetailsStyles.mainBodyContent}>
-          {this.presentedBy}
+          {this.topLineInfo}
           <View style={styles.flexRowSpaceBetween}>
             <View>
               <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>{event.name}</Text>
@@ -84,35 +221,7 @@ export default class Details extends Component {
             </TouchableHighlight>
           </View>
 
-          <View style={eventDetailsStyles.eventDetailsContainer}>
-            <View style={eventDetailsStyles.eventDetailsLeft}>
-              <View style={eventDetailsStyles.avatarContainer}>
-                <Image
-                  style={eventDetailsStyles.avatar}
-                  source={require('../../assets/avatar-male.png')}
-                />
-                <Image
-                  style={eventDetailsStyles.avatar}
-                  source={require('../../assets/avatar-female-2.png')}
-                />
-                <Image
-                  style={eventDetailsStyles.avatar}
-                  source={require('../../assets/avatar-male-2.png')}
-                />
-                <Image
-                  style={eventDetailsStyles.avatar}
-                  source={require('../../assets/avatar-female-3.png')}
-                />
-                <Image
-                  style={eventDetailsStyles.avatar}
-                  source={require('../../assets/avatar-female.png')}
-                />
-                <View style={eventDetailsStyles.attendeeContainer}>
-                  <Text style={eventDetailsStyles.attendeeNumber}>+{event.total_interest}</Text>
-                </View>
-              </View>
-            </View>
-          </View>
+          {this.interested}
 
           <View style={eventDetailsStyles.eventDescriptionContainer}>
 
@@ -160,84 +269,9 @@ export default class Details extends Component {
 
           </View>
 
-
-          <View style={eventDetailsStyles.iconSectionHeaderContainer}>
-            <Image
-              style={eventDetailsStyles.iconYoutube}
-              source={require('../../assets/icon-youtube.png')}
-            />
-            <Text style={eventDetailsStyles.iconSectionHeader}>YOUTUBE</Text>
-          </View>
-
-          <View style={eventDetailsStyles.youtubeVideoContainer}>
-            <Image
-              style={eventDetailsStyles.videoBkgd}
-              source={require('../../assets/video-youtube-bkgd.png')}
-            />
-            <Image
-              style={eventDetailsStyles.videoBkgd}
-              source={require('../../assets/video-bkgd-overlay.png')}
-            />
-            <Icon style={eventDetailsStyles.iconPlayLink} name="play-circle-outline" />
-          </View>
-
-
-          <View style={eventDetailsStyles.iconSectionHeaderContainer}>
-            <Image
-              style={eventDetailsStyles.iconInstagram}
-              source={require('../../assets/icon-instagram.png')}
-            />
-            <Text style={eventDetailsStyles.iconSectionHeader}>INSTAGRAM</Text>
-          </View>
-
-          <View style={imageGridStyles.imageGridContainer}>
-            <Image
-              style={imageGridStyles.image}
-              source={require('../../assets/image-grid-1.png')}
-            />
-            <Image
-              style={imageGridStyles.image}
-              source={require('../../assets/image-grid-2.png')}
-            />
-            <Image
-              style={imageGridStyles.image}
-              source={require('../../assets/image-grid-3.png')}
-            />
-          </View>
-          <View style={imageGridStyles.imageGridContainer}>
-            <Image
-              style={imageGridStyles.image}
-              source={require('../../assets/image-grid-1.png')}
-            />
-            <Image
-              style={imageGridStyles.image}
-              source={require('../../assets/image-grid-2.png')}
-            />
-            <Image
-              style={imageGridStyles.image}
-              source={require('../../assets/image-grid-3.png')}
-            />
-          </View>
-
-
-          <View style={eventDetailsStyles.iconSectionHeaderContainer}>
-            <Image
-              style={eventDetailsStyles.iconSpotify}
-              source={require('../../assets/icon-spotify.png')}
-            />
-            <Text style={eventDetailsStyles.iconSectionHeader}>SPOTIFY</Text>
-          </View>
-
-          <View style={eventDetailsStyles.imagePlaceholderContainer}>
-            <Image
-              style={eventDetailsStyles.imagePlaceholder}
-              source={require('../../assets/spotify-placeholder.png')}
-            />
-            <View style={eventDetailsStyles.sliderArrowContainer}>
-              <Icon style={eventDetailsStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
-              <Icon style={eventDetailsStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
-            </View>
-          </View>
+          {this.youtube}
+          {this.instagram}
+          {this.spotify}
 
         </View>
         <View style={eventDetailsStyles.spacerFooter} />
