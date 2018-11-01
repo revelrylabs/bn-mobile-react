@@ -30,11 +30,11 @@ export default class EventsIndex extends Component {
 
   get lowestPrice() {
     const {event: {ticket_types}} = this.props
-    const price_points = flatMap(ticket_types, (tt) => (
-      flatMap(tt.price_points, (pp) => (pp.price_in_cents))
+    const ticket_pricing = flatMap(ticket_types, (tt) => (
+      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
     ))
 
-    return min(price_points) / 100
+    return min(ticket_pricing) / 100
   }
 
   get scheduleText() {

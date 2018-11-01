@@ -5,11 +5,18 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import ImageGridStyles from '../styles/event_details/imageGridStyles'
-import {DateTime} from 'luxon';
+import {DateTime} from 'luxon'
+import {map} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const imageGridStyles = ImageGridStyles.createStyles()
+
+function toSentence(arr) {
+  return arr.slice(0, -2).join(', ') +
+    (arr.slice(0, -2).length ? ', ' : '') +
+    arr.slice(-2).join(arr.length === 2 ? ' and ' : ', and ');
+}
 
 export default class Details extends Component {
   static propTypes = {
@@ -26,9 +33,25 @@ export default class Details extends Component {
     return null
   }
 
+  get artistNames() {
+    const {event: {artists}} = this.props
+
+    return toSentence(map(artists, (artist) => artist.name))
+  }
+
+  get ageLimit() {
+    const {event: {age_limit}} = this.props
+
+    if (age_limit) {
+      return `You must be ${age_limit} to enter this event.`
+    }
+
+    return 'This event is for all ages.'
+  }
+
   render() {
     const {event} = this.props
-    const {venue, artists} = event
+    const {venue} = event
     const eventStart = DateTime.fromISO(event.event_start)
     const doorTime = DateTime.fromISO(event.door_time)
 
@@ -85,7 +108,7 @@ export default class Details extends Component {
                   source={require('../../assets/avatar-female.png')}
                 />
                 <View style={eventDetailsStyles.attendeeContainer}>
-                  <Text style={eventDetailsStyles.attendeeNumber}>+327</Text>
+                  <Text style={eventDetailsStyles.attendeeNumber}>+{event.total_interest}</Text>
                 </View>
               </View>
             </View>
@@ -116,7 +139,7 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>PERFORMING ARTISTS</Text>
             </View>
             <Text style={eventDetailsStyles.bodyText}>
-              Taylor Swift, Kanye West, Drake, Beyonce, Ed Sheeran, Elton John, Eminem, Paul McCartney, Flordia Georgia Line, Coldplay, Maroon 5 and Carrie Underwood.
+              {this.artistNames}
             </Text>
 
             <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
@@ -124,14 +147,16 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>AGE RESTRICTIONS</Text>
             </View>
             <Text style={eventDetailsStyles.bodyText}>
-              This event is for all ages.
+              {this.ageLimit}
             </Text>
 
             <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
               <Icon style={eventDetailsStyles.iconEventDescription} name="music-note" />
               <Text style={eventDetailsStyles.sectionHeader}>EVENT DESCRIPTION</Text>
             </View>
-            <Text style={eventDetailsStyles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in lacus non magna tincidunt lacinia. Donec ut quam nec sapien tempus luctus id quis magna.</Text>
+            <Text style={eventDetailsStyles.bodyText}>
+              {event.additional_info}
+            </Text>
 
           </View>
 
