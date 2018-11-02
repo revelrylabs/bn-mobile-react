@@ -5,8 +5,12 @@ node_js:
 cache:
   directories:
     - ~/.npm
+before_install:
+  - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
 before_script:
-  - npm install -g npm@latest
+  - bundle install
+  - npm i -g npm@latest
+  - npm i -g exp
 script:
   - npm ci
   - npx jest --ci
