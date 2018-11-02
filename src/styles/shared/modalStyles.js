@@ -45,15 +45,11 @@ const ModalStyles = {
   contentRoundedWrapper: {
     alignItems: 'center',
     backgroundColor: containerDarkColor,
-    borderRadius: 6,
-    elevation: 8,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
     overflow: 'hidden',
     marginHorizontal: globalMargin,
-    marginVertical: globalMargin,
-    shadowColor: boxShadowColor,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.7,
-    shadowRadius: 3,
+    marginTop: globalMargin,
   },
   modalDropdownContainer: {
     backgroundColor: white,

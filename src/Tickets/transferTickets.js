@@ -88,11 +88,35 @@ export default class TransferTickets extends Component {
             </View>
           </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]}>
-              <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
-            </TouchableHighlight>
+          <View style={ticketTransferStyles.cardContainer}>
+            <View style={styles.flexRowFlexStart}>
+              <RadioForm
+                radio_props={radio_props}
+                initial={0}
+                formHorizontal={false}
+                labelHorizontal={true}
+                buttonColor={'#FF20B1'}
+                selectedButtonColor={'#FF20B1'}
+                buttonOuterColor={'#EBEBEB'}
+                buttonSize={15}
+                buttonOuterSize={30}
+                isSelected={true}
+                animation={true}
+                onPress={(value) => {this.setState({value:value})}}
+              />
+              <View>
+                <Text style={ticketStyles.ticketHolderHeader}>Alexandra Reallyreallylonglastname</Text>
+                <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              </View>
+            </View>
           </View>
+
+        </View>
+
+        <View style={[styles.buttonContainer, styles.marginHorizontal]}>
+          <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]}>
+            <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
+          </TouchableHighlight>
         </View>
 
       </View>
