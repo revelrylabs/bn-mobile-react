@@ -22,10 +22,9 @@ const TicketTransferStyles = {
   // CONTAINER STYLES
   cardContainer: {
     backgroundColor: white,
-    borderTopRightRadius: 6,
-    borderTopLeftRadius: 6,
+    borderRadius: 6,
     overflow: 'hidden',
-    marginTop: globalMargin,
+    marginBottom: globalMargin,
     padding: globalPadding,
   },
   detailsContainer: {
