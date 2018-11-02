@@ -3,18 +3,20 @@ set -e # exit entire script when command exits with non-zero status
 
 npm install
 
+# @TODO: Write script to bump version numbers
+
 exp publish --release-channel production --non-interactive
 
 # Start building standalone android build using `production` release channel
-exp build:android --release-channel production --non-interactive --no-publish
+# exp build:android --release-channel production --non-interactive --no-publish
 
 # Download the built android binary
-curl -o app.apk "$(exp url:apk --non-interactive)"
+# curl -o app.apk "$(exp url:apk --non-interactive)"
 
 # Use fastlane to upload your current standalone android build
 # Customize this to fit your needs. Take note of env variables.
 # Check out https://docs.fastlane.tools for more info.
-fastlane supply --track 'alpha' --json_key '/Users/daybreaker/Downloads/api-5703996670531471288-735731-365ec0cf004c.json' --package_name "com.revelrylabs.bigneon" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
+# fastlane supply --track 'alpha' --json_key '/Users/daybreaker/Downloads/api-5703996670531471288-735731-365ec0cf004c.json' --package_name "com.revelrylabs.bigneon" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
 
 
 # Start building standalone ios build using `production` release channel
@@ -24,4 +26,5 @@ exp build:ios --release-channel production --non-interactive --no-publish
 curl -o app.ipa "$(exp url:ipa --non-interactive)"
 
 # Use fastlane to upload your current standalone iOS build to test flight on iTunes Connect.
+match appstore --app_identifier com.revelrylabs.bigneon --readonly --team_id M2C9MHL336
 fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata
