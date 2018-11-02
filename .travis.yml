@@ -10,8 +10,10 @@ before_install:
   >> ~/.netrc
 before_script:
 - bundle install
+- npm install -g expo-cli
 - npm i -g npm@latest
 script:
+- npm install -g expo-cli
 - npm ci
 - npx jest --ci
 jobs:
@@ -21,7 +23,7 @@ jobs:
     node_js: lts/*
     script:
     - npm ci
-    - npm i -g exp
+    - npm install -g expo-cli
     - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - "./deploy"
 env:
