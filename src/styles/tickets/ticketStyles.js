@@ -42,6 +42,10 @@ const TicketStyles = {
     justifyContent: 'space-between',
     padding: globalPaddingSmall + globalPaddingTiny,
   },
+  ticketHolderWrapper: {
+    flex: 1,
+    flexWrap: 'wrap',
+  },
 
   // IMAGE BKGD STYLES
   eventImage: {
