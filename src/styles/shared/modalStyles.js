@@ -6,7 +6,7 @@ import {
   globalFontRegular,
   globalFontSemiBold,
   containerDarkColor,
-  headerSecondaryFontSize,
+  sectionHeaderFontSize,
   iconFontSize,
   globalPaddingTiny,
   globalPaddingSmall,
@@ -15,6 +15,7 @@ import {
   globalPaddingLarge,
   globalPaddingJumbo,
   globalMargin,
+  globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -43,10 +44,7 @@ const ModalStyles = {
   contentRoundedWrapper: {
     alignItems: 'center',
     backgroundColor: containerDarkColor,
-    borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6,
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
+    borderRadius: 6,
     overflow: 'hidden',
     marginHorizontal: globalMargin,
     marginVertical: globalMargin,
@@ -104,7 +102,7 @@ const ModalStyles = {
   headerSecondary: {
     color: textColor,
     fontFamily: globalFontRegular,
-    fontSize: headerSecondaryFontSize,
+    fontSize: sectionHeaderFontSize,
     paddingHorizontal: globalPaddingLarge,
     paddingVertical: globalPaddingLarge,
     textAlign: 'center',

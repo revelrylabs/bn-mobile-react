@@ -82,7 +82,7 @@ export default class TransferTickets extends Component {
                 onPress={(value) => {this.setState({value:value})}}
               />
               <View>
-                <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
+                <Text style={ticketStyles.detailsBottomText}>Brittany Gay</Text>
                 <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
               </View>
             </View>
