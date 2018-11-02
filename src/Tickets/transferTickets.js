@@ -44,7 +44,6 @@ export default class TransferTickets extends Component {
 
           <View style={ticketTransferStyles.cardContainer}>
             <View style={ticketWalletStyles.detailsContainerBottom}>
-
               <RadioForm
                 radio_props={radio_props}
                 initial={0}
@@ -59,7 +58,29 @@ export default class TransferTickets extends Component {
                 animation={true}
                 onPress={(value) => {this.setState({value:value})}}
               />
+              <View>
+                <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
+                <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
+              </View>
+            </View>
+          </View>
 
+          <View style={ticketTransferStyles.cardContainer}>
+            <View style={ticketWalletStyles.detailsContainerBottom}>
+              <RadioForm
+                radio_props={radio_props}
+                initial={0}
+                formHorizontal={false}
+                labelHorizontal={true}
+                buttonColor={'#FF20B1'}
+                selectedButtonColor={'#FF20B1'}
+                buttonOuterColor={'#EBEBEB'}
+                buttonSize={15}
+                buttonOuterSize={30}
+                isSelected={true}
+                animation={true}
+                onPress={(value) => {this.setState({value:value})}}
+              />
               <View>
                 <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
                 <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>

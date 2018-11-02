@@ -1,5 +1,6 @@
 import {
   white,
+  boxShadowColor,
   sectionHeaderColor,
   globalFontRegular,
   bodyFontSize,
@@ -23,9 +24,14 @@ const TicketTransferStyles = {
   cardContainer: {
     backgroundColor: white,
     borderRadius: 6,
-    overflow: 'hidden',
+    elevation: 8,
+    // overflow: 'hidden',
     marginBottom: globalMargin,
     padding: globalPadding,
+    shadowColor: boxShadowColor,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.7,
+    shadowRadius: 3,
   },
   detailsContainer: {
     flexDirection: 'column',
