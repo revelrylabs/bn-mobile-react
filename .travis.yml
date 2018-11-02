@@ -11,6 +11,7 @@ before_script:
   - bundle install
   - npm i -g npm@latest
   - npm i -g exp
+  - exp login -u $EXPO_USERNAME -p $EXPO_PASSWORD
 script:
   - npm ci
   - npx jest --ci
