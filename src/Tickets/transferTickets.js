@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
 import {Modal, ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
@@ -39,12 +40,16 @@ export default class TransferTickets extends Component {
 
           <View style={ticketTransferStyles.cardContainer}>
             <View style={ticketWalletStyles.detailsContainerBottom}>
-              <View style={ticketWalletStyles.avatarContainer}>
-                <Image
-                  style={ticketWalletStyles.avatar}
-                  source={require('../../assets/avatar-female.png')}
-                />
-              </View>
+
+              <RadioForm
+                initial={0}
+                formHorizontal={false}
+                labelHorizontal={true}
+                buttonColor={'#2196f3'}
+                animation={true}
+                onPress={(value) => {this.setState({value:value})}}
+              />
+
               <View>
                 <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
                 <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
