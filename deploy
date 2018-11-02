@@ -5,10 +5,10 @@ npm install
 
 # @TODO: Write script to bump version numbers
 
-exp publish --release-channel production --non-interactive
+expo publish --release-channel production --non-interactive
 
 # Start building standalone android build using `production` release channel
-# exp build:android --release-channel production --non-interactive --no-publish
+# expo build:android --release-channel production --non-interactive --no-publish
 
 # Download the built android binary
 # curl -o app.apk "$(exp url:apk --non-interactive)"
@@ -20,7 +20,7 @@ exp publish --release-channel production --non-interactive
 
 
 # Start building standalone ios build using `production` release channel
-exp build:ios --release-channel production --non-interactive --no-publish
+expo build:ios --release-channel production --non-interactive --no-publish
 
 # Download the artifact to current directory as `app.ipa`
 curl -o app.ipa "$(exp url:ipa --non-interactive)"
