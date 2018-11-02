@@ -15,6 +15,10 @@ const ticketWalletStyles = TicketWalletStyles.createStyles()
 const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
+var radio_props = [
+  {value: 0 },
+];
+
 export default class TransferTickets extends Component {
 
   render() {
@@ -42,10 +46,16 @@ export default class TransferTickets extends Component {
             <View style={ticketWalletStyles.detailsContainerBottom}>
 
               <RadioForm
+                radio_props={radio_props}
                 initial={0}
                 formHorizontal={false}
                 labelHorizontal={true}
-                buttonColor={'#2196f3'}
+                buttonColor={'#FF20B1'}
+                selectedButtonColor={'#FF20B1'}
+                buttonOuterColor={'#EBEBEB'}
+                buttonSize={15}
+                buttonOuterSize={30}
+                isSelected={true}
                 animation={true}
                 onPress={(value) => {this.setState({value:value})}}
               />
