@@ -11,7 +11,6 @@ before_install:
 before_script:
 - bundle install
 - npm i -g npm@latest
-- npm i -g exp
 script:
 - npm ci
 - npx jest --ci
@@ -22,6 +21,7 @@ jobs:
     node_js: lts/*
     script:
     - npm ci
+    - npm i -g exp
     - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - "./deploy"
 env:
