@@ -383,6 +383,9 @@ const SharedStyles = {
   textCenter: {
     textAlign: 'center',
   },
+  padding: {
+    padding: globalPadding,
+  },
   paddingSmall: {
     padding: globalPaddingSmall,
   },
@@ -447,6 +450,11 @@ const SharedStyles = {
 
   // FLEX HELPER STYLES
   flexRowFlexStart: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  flexRowFlexStartCenter: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },

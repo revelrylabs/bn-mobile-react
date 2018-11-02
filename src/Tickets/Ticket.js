@@ -48,7 +48,7 @@ export default class Ticket extends Component {
           </View>
         </View>
         <View style={ticketWalletStyles.ticketContainerBottom}>
-          <View style={ticketWalletStyles.detailsContainerBottom}>
+          <View style={[styles.flexRowFlexStartCenter, styles.padding]}>
             <View style={ticketWalletStyles.avatarContainer}>
               <Image
                 style={ticketWalletStyles.avatar}
@@ -56,8 +56,8 @@ export default class Ticket extends Component {
               />
             </View>
             <View>
-              <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
-              <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
+              <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
             </View>
           </View>
         </View>

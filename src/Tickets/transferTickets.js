@@ -43,7 +43,7 @@ export default class TransferTickets extends Component {
           <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
 
           <View style={ticketTransferStyles.cardContainer}>
-            <View style={ticketWalletStyles.detailsContainerBottom}>
+            <View style={styles.flexRowFlexStart}>
               <RadioForm
                 radio_props={radio_props}
                 initial={0}
@@ -59,14 +59,14 @@ export default class TransferTickets extends Component {
                 onPress={(value) => {this.setState({value:value})}}
               />
               <View>
-                <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
-                <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
+                <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
+                <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
               </View>
             </View>
           </View>
 
           <View style={ticketTransferStyles.cardContainer}>
-            <View style={ticketWalletStyles.detailsContainerBottom}>
+            <View style={styles.flexRowFlexStart}>
               <RadioForm
                 radio_props={radio_props}
                 initial={0}
@@ -82,8 +82,8 @@ export default class TransferTickets extends Component {
                 onPress={(value) => {this.setState({value:value})}}
               />
               <View>
-                <Text style={ticketStyles.detailsBottomText}>Brittany Gay</Text>
-                <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
+                <Text style={ticketStyles.ticketHolderHeader}>Brittany Gay</Text>
+                <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
               </View>
             </View>
           </View>

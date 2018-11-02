@@ -37,6 +37,7 @@ const TicketStyles = {
     marginTop: -10,
   },
   detailsContainerBottom: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: globalPaddingSmall + globalPaddingTiny,
@@ -74,6 +75,16 @@ const TicketStyles = {
   },
   detailsLast: {
     textAlign: 'right',
+  },
+  ticketHolderHeader: {
+    fontSize: bodyFontSize,
+    paddingBottom: 2,
+  },
+  ticketHolderSubheader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSizeSmall,
+    letterSpacing: 0.5,
   },
 
   // ICON STYLES
