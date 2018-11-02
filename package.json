@@ -14,13 +14,13 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest",
-    "debug": "open \"rndebugger://set-debugger-loc?host=localhost&port=19001\""
+    "debug": "open \"rndebugger://set-debugger-loc?host=localhost&port=19003\""
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
-    "bn-api-node": "^0.2.0",
+    "bn-api-node": "^0.2.8",
     "expo": "^27.0.1",
     "lodash": "^4.17.11",
     "luxon": "^1.4.4",

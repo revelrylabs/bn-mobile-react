@@ -54,6 +54,7 @@ class EventsContainer extends Container {
       lastUpdate: null,
       locations: SAMPLE_LOCATIONS,
       selectedLocationId: 2,
+      selectedEvent: {},
     };
   }
 
@@ -64,6 +65,18 @@ class EventsContainer extends Container {
       lastUpdate: DateTime.local(),
       events: data.data,
       paging: data.paging,
+    })
+  }
+
+  clearEvent = () => {
+    this.setState({selectedEvent: {}})
+  }
+
+  getEvent = async (id) => {
+    const {data} = await server.events.read({id})
+
+    this.setState({
+      selectedEvent: {...data}
     })
   }
 

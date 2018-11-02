@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
-import {NavigationActions, StackActions} from 'react-navigation'
+import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -10,6 +10,7 @@ import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
+import {flatMap, min, max} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -82,14 +83,45 @@ const PaymentOptions = [
 export default class EventShow extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
-  state = {
-    favorite: false,
-    currentScreen: 'details',
-    selectedPaymentId: 1,
-    showLoadingModal: false,
-    showSuccessModal: false,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      event: false,
+      eventId: props.navigation.getParam('eventId', false),
+      favorite: false,
+      currentScreen: 'details',
+      selectedPaymentId: 1,
+      showLoadingModal: false,
+      showSuccessModal: false,
+    }
+
+    this.loadEvent()
+  }
+
+  componentWillReceiveProps(newProps) {
+    const {screenProps: {store: {state: {selectedEvent: {event}}}}} = newProps
+
+    // Do we want to check if the event id different, or just always update?
+    if (event) { this.setState({event}) }
+  }
+
+  clearEvent() {
+    const {screenProps: {store}} = this.props
+
+    store.clearEvent()
+  }
+
+  async loadEvent() {
+    const {screenProps: {store}} = this.props
+    const {eventId} = this.state
+
+    if (eventId) {
+      store.getEvent(eventId)
+    }
   }
 
   scrollToTop = () => {
@@ -129,13 +161,46 @@ export default class EventShow extends Component {
     })
   }
 
+  lowestPrice(ticket_types) {
+    const ticket_pricing = flatMap(ticket_types, (tt) => (
+      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
+    ))
+
+    return min(ticket_pricing) / 100
+  }
+
+  highestPrice(ticket_types) {
+    const ticket_pricing = flatMap(ticket_types, (tt) => (
+      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
+    ))
+
+    return max(ticket_pricing) / 100
+  }
+
+  get ticketRange() {
+    const {event: {ticket_types}} = this.state
+
+    if (!ticket_types) { return null }
+
+    return (
+      <View style={eventDetailsStyles.priceHeaderWrapper}>
+        <Text style={eventDetailsStyles.priceHeader}>
+          ${this.lowestPrice(ticket_types)} - ${this.highestPrice(ticket_types)}
+        </Text>
+      </View>
+    )
+  }
+
+
   /* eslint-disable-next-line complexity */
   get showScreen() {
-    const {currentScreen, selectedPaymentId} = this.state
+    const {event, currentScreen, selectedPaymentId} = this.state
+
+    if (!event) { return null }
 
     switch (currentScreen) {
     case 'details':
-      return <Details />
+      return <Details event={event} />
     case 'tickets':
       return <GetTickets changeScreen={this.changeScreen} />
     case 'checkout':
@@ -160,9 +225,7 @@ export default class EventShow extends Component {
     if (currentScreen === 'details') {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
-          <View style={eventDetailsStyles.priceHeaderWrapper}>
-            <Text style={eventDetailsStyles.priceHeader}>$30 to $55</Text>
-          </View>
+          {this.ticketRange}
           <View style={styles.buttonContainer}>
             <TouchableHighlight
               style={styles.button}
@@ -275,15 +338,21 @@ export default class EventShow extends Component {
   }
 
   render() {
-    const {showLoadingModal, showSuccessModal} = this.state
+    const {event, showLoadingModal, showSuccessModal} = this.state
+
+    if (!event) { return null }
 
     return (
       <View style={{backgroundColor: 'white'}}>
+        <NavigationEvents
+          onWillFocus={() => this.loadEvent()}
+          onDidBlur={() => this.clearEvent()}
+        />
         <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={showLoadingModal} />
         <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
-          source={require('../../assets/video-bkgd.png')}
+          source={{uri: event.promo_image_url}}
         />
 
         <ScrollView>
