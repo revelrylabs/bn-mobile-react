@@ -19,4 +19,4 @@ deploy:
   provider: script
   script: ./deploy
   on:
-    branch: 172-deplo
+    branch: 172-deploy
