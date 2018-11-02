@@ -10,3 +10,8 @@ before_script:
 script:
   - npm ci
   - npx jest --ci
+deploy:
+  provider: script
+  script: ./deploy
+  on:
+    branch: 172-deploy
