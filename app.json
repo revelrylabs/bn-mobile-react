@@ -6,7 +6,8 @@
     "version": "1.0.21",
     "slug": "revelrylabs-big-neon",
     "ios": {
-      "bundleIdentifier": "com.revelrylabs.bigneon"
+      "bundleIdentifier": "com.revelrylabs.bigneon",
+      "usesNonExemptEncryption": false
     },
     "android": {
       "package": "com.revelrylabs.bigneon",
