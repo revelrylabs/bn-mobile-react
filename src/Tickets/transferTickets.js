@@ -44,123 +44,151 @@ export default class TransferTickets extends Component {
           </View>
 
           <View style={modalStyles.contentRoundedWrapper}>
-            <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
+            <ScrollView>
 
-            <View style={ticketTransferStyles.cardContainer}>
-              <View style={styles.flexRowFlexStart}>
-                <RadioForm
-                  radio_props={radio_props}
-                  initial={0}
-                  formHorizontal={false}
-                  labelHorizontal={true}
-                  buttonColor={'#FF20B1'}
-                  selectedButtonColor={'#FF20B1'}
-                  buttonOuterColor={'#EBEBEB'}
-                  buttonSize={15}
-                  buttonOuterSize={30}
-                  isSelected={true}
-                  animation={true}
-                  onPress={(value) => {this.setState({value:value})}}
-                />
-                <View>
-                  <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                  <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
+
+              <View style={styles.flexRowCenter}>
+                <View style={ticketTransferStyles.cardContainer}>
+                  <View style={styles.flexRowFlexStart}>
+                    <RadioForm
+                      radio_props={radio_props}
+                      initial={0}
+                      formHorizontal={false}
+                      labelHorizontal={true}
+                      buttonColor={'#FF20B1'}
+                      selectedButtonColor={'#FF20B1'}
+                      buttonOuterColor={'#EBEBEB'}
+                      buttonSize={15}
+                      buttonOuterSize={30}
+                      isSelected={true}
+                      animation={true}
+                      onPress={(value) => {this.setState({value:value})}}
+                    />
+                    <View>
+                      <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
+                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+                    </View>
+                  </View>
                 </View>
               </View>
-            </View>
 
-            <View style={ticketTransferStyles.cardContainer}>
-              <View style={styles.flexRowFlexStart}>
-                <RadioForm
-                  radio_props={radio_props}
-                  initial={0}
-                  formHorizontal={false}
-                  labelHorizontal={true}
-                  buttonColor={'#FF20B1'}
-                  selectedButtonColor={'#FF20B1'}
-                  buttonOuterColor={'#EBEBEB'}
-                  buttonSize={15}
-                  buttonOuterSize={30}
-                  isSelected={true}
-                  animation={true}
-                  onPress={(value) => {this.setState({value:value})}}
-                />
-                <View>
-                  <Text style={ticketStyles.ticketHolderHeader}>Brittany Gay</Text>
-                  <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              <View style={ticketTransferStyles.cardContainer}>
+                <View style={styles.flexRowFlexStart}>
+                  <RadioForm
+                    radio_props={radio_props}
+                    initial={0}
+                    formHorizontal={false}
+                    labelHorizontal={true}
+                    buttonColor={'#FF20B1'}
+                    selectedButtonColor={'#FF20B1'}
+                    buttonOuterColor={'#EBEBEB'}
+                    buttonSize={15}
+                    buttonOuterSize={30}
+                    isSelected={true}
+                    animation={true}
+                    onPress={(value) => {this.setState({value:value})}}
+                  />
+                  <View>
+                    <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
+                    <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+                  </View>
                 </View>
               </View>
-            </View>
 
-            <View style={ticketTransferStyles.cardContainer}>
-              <View style={styles.flexRowFlexStart}>
-                <RadioForm
-                  radio_props={radio_props}
-                  initial={0}
-                  formHorizontal={false}
-                  labelHorizontal={true}
-                  buttonColor={'#FF20B1'}
-                  selectedButtonColor={'#FF20B1'}
-                  buttonOuterColor={'#EBEBEB'}
-                  buttonSize={15}
-                  buttonOuterSize={30}
-                  isSelected={true}
-                  animation={true}
-                  onPress={(value) => {this.setState({value:value})}}
-                />
-                <View style={ticketStyles.ticketHolderWrapper}>
-                  <Text numberOfLines={1} style={ticketStyles.ticketHolderHeader}>Alexandra ReallyLongLastName</Text>
-                  <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              <View style={ticketTransferStyles.cardContainer}>
+                <View style={styles.flexRowFlexStart}>
+                  <RadioForm
+                    radio_props={radio_props}
+                    initial={0}
+                    formHorizontal={false}
+                    labelHorizontal={true}
+                    buttonColor={'#FF20B1'}
+                    selectedButtonColor={'#FF20B1'}
+                    buttonOuterColor={'#EBEBEB'}
+                    buttonSize={15}
+                    buttonOuterSize={30}
+                    isSelected={true}
+                    animation={true}
+                    onPress={(value) => {this.setState({value:value})}}
+                  />
+                  <View>
+                    <Text style={ticketStyles.ticketHolderHeader}>Brittany Gay</Text>
+                    <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+                  </View>
                 </View>
               </View>
-            </View>
 
-            <View style={ticketTransferStyles.cardContainer}>
-              <View style={styles.flexRowFlexStart}>
-                <RadioForm
-                  radio_props={radio_props}
-                  initial={0}
-                  formHorizontal={false}
-                  labelHorizontal={true}
-                  buttonColor={'#FF20B1'}
-                  selectedButtonColor={'#FF20B1'}
-                  buttonOuterColor={'#EBEBEB'}
-                  buttonSize={15}
-                  buttonOuterSize={30}
-                  isSelected={true}
-                  animation={true}
-                  onPress={(value) => {this.setState({value:value})}}
-                />
-                <View>
-                  <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                  <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              <View style={ticketTransferStyles.cardContainer}>
+                <View style={styles.flexRowFlexStart}>
+                  <RadioForm
+                    radio_props={radio_props}
+                    initial={0}
+                    formHorizontal={false}
+                    labelHorizontal={true}
+                    buttonColor={'#FF20B1'}
+                    selectedButtonColor={'#FF20B1'}
+                    buttonOuterColor={'#EBEBEB'}
+                    buttonSize={15}
+                    buttonOuterSize={30}
+                    isSelected={true}
+                    animation={true}
+                    onPress={(value) => {this.setState({value:value})}}
+                  />
+                  <View style={ticketStyles.ticketHolderWrapper}>
+                    <Text numberOfLines={1} style={ticketStyles.ticketHolderHeader}>Alexandra ReallyLongLastName</Text>
+                    <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+                  </View>
                 </View>
               </View>
-            </View>
 
-            <View style={ticketTransferStyles.cardContainer}>
-              <View style={styles.flexRowFlexStart}>
-                <RadioForm
-                  radio_props={radio_props}
-                  initial={0}
-                  formHorizontal={false}
-                  labelHorizontal={true}
-                  buttonColor={'#FF20B1'}
-                  selectedButtonColor={'#FF20B1'}
-                  buttonOuterColor={'#EBEBEB'}
-                  buttonSize={15}
-                  buttonOuterSize={30}
-                  isSelected={true}
-                  animation={true}
-                  onPress={(value) => {this.setState({value:value})}}
-                />
-                <View>
-                  <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                  <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              <View style={ticketTransferStyles.cardContainer}>
+                <View style={styles.flexRowFlexStart}>
+                  <RadioForm
+                    radio_props={radio_props}
+                    initial={0}
+                    formHorizontal={false}
+                    labelHorizontal={true}
+                    buttonColor={'#FF20B1'}
+                    selectedButtonColor={'#FF20B1'}
+                    buttonOuterColor={'#EBEBEB'}
+                    buttonSize={15}
+                    buttonOuterSize={30}
+                    isSelected={true}
+                    animation={true}
+                    onPress={(value) => {this.setState({value:value})}}
+                  />
+                  <View>
+                    <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
+                    <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+                  </View>
                 </View>
               </View>
-            </View>
 
+              <View style={ticketTransferStyles.cardContainer}>
+                <View style={styles.flexRowFlexStart}>
+                  <RadioForm
+                    radio_props={radio_props}
+                    initial={0}
+                    formHorizontal={false}
+                    labelHorizontal={true}
+                    buttonColor={'#FF20B1'}
+                    selectedButtonColor={'#FF20B1'}
+                    buttonOuterColor={'#EBEBEB'}
+                    buttonSize={15}
+                    buttonOuterSize={30}
+                    isSelected={true}
+                    animation={true}
+                    onPress={(value) => {this.setState({value:value})}}
+                  />
+                  <View>
+                    <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
+                    <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+                  </View>
+                </View>
+              </View>
+
+            </ScrollView>
           </View>
 
           <View style={[styles.buttonContainer, styles.marginHorizontal]}>
