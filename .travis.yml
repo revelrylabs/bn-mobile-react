@@ -17,8 +17,10 @@ jobs:
   - stage: deploy
     if: branch = 172-deploy
     node_js: lts/*
-    script:
+    before_script:
+    - sudo gem install bundler
     - sudo bundle install
+    script:
     - npm ci
     - npm install -g expo-cli
     - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
