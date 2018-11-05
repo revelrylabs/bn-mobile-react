@@ -18,8 +18,7 @@ jobs:
     if: branch = 172-deploy
     node_js: lts/*
     before_script:
-    - sudo gem install bundler
-    - sudo bundle install
+    - bundle install
     script:
     - npm ci
     - npm install -g expo-cli
