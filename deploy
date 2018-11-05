@@ -5,8 +5,10 @@ npm install
 bundle update
 bundle install
 
+cd fastlane
 bundle exec fastlane setup_travis
 bundle exec fastlane match appstore --app_identifier com.revelrylabs.bigneon --readonly --team_id M2C9MHL336
+cd ..
 
 expo publish --release-channel production --non-interactive
 
