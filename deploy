@@ -11,7 +11,7 @@ expo publish --release-channel production --non-interactive
 # expo build:android --release-channel production --non-interactive --no-publish
 
 # Download the built android binary
-# curl -o app.apk "$(exp url:apk --non-interactive)"
+# curl -o app.apk "$(exp0 url:apk --non-interactive)"
 
 # Use fastlane to upload your current standalone android build
 # Customize this to fit your needs. Take note of env variables.
@@ -23,7 +23,7 @@ expo publish --release-channel production --non-interactive
 expo build:ios --release-channel production --non-interactive --no-publish
 
 # Download the artifact to current directory as `app.ipa`
-curl -o app.ipa "$(exp url:ipa --non-interactive)"
+curl -o app.ipa "$(expo url:ipa --non-interactive)"
 
 # Use fastlane to upload your current standalone iOS build to test flight on iTunes Connect.
 fastlane match appstore --app_identifier com.revelrylabs.bigneon --readonly --team_id M2C9MHL336

@@ -14,7 +14,7 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest",
-    "debug": "open \"rndebugger://set-debugger-loc?host=localhost&port=19003\""
+    "debug": "open \"rndebugger://set-debugger-loc?host=localhost&port=19001\""
   },
   "jest": {
     "preset": "jest-expo"
