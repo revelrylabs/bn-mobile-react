@@ -3,7 +3,7 @@ set -e # exit entire script when command exits with non-zero status
 
 npm install
 
-bundle exec fastlane match appstore --app_identifier com.revelrylabs.bigneon --team_id M2C9MHL336
+bundle exec fastlane match appstore --app_identifier com.revelrylabs.bigneon --readonly --team_id M2C9MHL336
 
 expo publish --release-channel production --non-interactive
 
