@@ -16,7 +16,7 @@ const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
 var radio_props = [
-  {value: 0 },
+  {value: -1 },
 ];
 
 export default class TransferTickets extends Component {
@@ -51,7 +51,7 @@ export default class TransferTickets extends Component {
                   <View style={styles.flexRowFlexStart}>
                     <RadioForm
                       radio_props={radio_props}
-                      initial={0}
+                      initial={-1}
                       formHorizontal={false}
                       labelHorizontal={true}
                       buttonColor={'#FF20B1'}
@@ -59,8 +59,7 @@ export default class TransferTickets extends Component {
                       buttonOuterColor={'#EBEBEB'}
                       buttonSize={15}
                       buttonOuterSize={30}
-                      isSelected={true}
-                      animation={true}
+                      isSelected={false}
                       onPress={(value) => {this.setState({value:value})}}
                     />
                     <View>
@@ -76,7 +75,7 @@ export default class TransferTickets extends Component {
                   <View style={styles.flexRowFlexStart}>
                     <RadioForm
                       radio_props={radio_props}
-                      initial={0}
+                      initial={-1}
                       formHorizontal={false}
                       labelHorizontal={true}
                       buttonColor={'#FF20B1'}
@@ -84,8 +83,7 @@ export default class TransferTickets extends Component {
                       buttonOuterColor={'#EBEBEB'}
                       buttonSize={15}
                       buttonOuterSize={30}
-                      isSelected={true}
-                      animation={true}
+                      isSelected={false}
                       onPress={(value) => {this.setState({value:value})}}
                     />
                     <View>
@@ -101,7 +99,7 @@ export default class TransferTickets extends Component {
                   <View style={styles.flexRowFlexStart}>
                     <RadioForm
                       radio_props={radio_props}
-                      initial={0}
+                      initial={-1}
                       formHorizontal={false}
                       labelHorizontal={true}
                       buttonColor={'#FF20B1'}
@@ -110,7 +108,6 @@ export default class TransferTickets extends Component {
                       buttonSize={15}
                       buttonOuterSize={30}
                       isSelected={true}
-                      animation={true}
                       onPress={(value) => {this.setState({value:value})}}
                     />
                     <View>
@@ -126,7 +123,7 @@ export default class TransferTickets extends Component {
                   <View style={styles.flexRowFlexStart}>
                     <RadioForm
                       radio_props={radio_props}
-                      initial={0}
+                      initial={-1}
                       formHorizontal={false}
                       labelHorizontal={true}
                       buttonColor={'#FF20B1'}
@@ -135,7 +132,6 @@ export default class TransferTickets extends Component {
                       buttonSize={15}
                       buttonOuterSize={30}
                       isSelected={true}
-                      animation={true}
                       onPress={(value) => {this.setState({value:value})}}
                     />
                     <View style={ticketStyles.ticketHolderWrapper}>
@@ -151,7 +147,7 @@ export default class TransferTickets extends Component {
                   <View style={styles.flexRowFlexStart}>
                     <RadioForm
                       radio_props={radio_props}
-                      initial={0}
+                      initial={-1}
                       formHorizontal={false}
                       labelHorizontal={true}
                       buttonColor={'#FF20B1'}
@@ -160,7 +156,6 @@ export default class TransferTickets extends Component {
                       buttonSize={15}
                       buttonOuterSize={30}
                       isSelected={true}
-                      animation={true}
                       onPress={(value) => {this.setState({value:value})}}
                     />
                     <View>
@@ -176,7 +171,7 @@ export default class TransferTickets extends Component {
                   <View style={styles.flexRowFlexStart}>
                     <RadioForm
                       radio_props={radio_props}
-                      initial={0}
+                      initial={-1}
                       formHorizontal={false}
                       labelHorizontal={true}
                       buttonColor={'#FF20B1'}
@@ -185,7 +180,6 @@ export default class TransferTickets extends Component {
                       buttonSize={15}
                       buttonOuterSize={30}
                       isSelected={true}
-                      animation={true}
                       onPress={(value) => {this.setState({value:value})}}
                     />
                     <View>
