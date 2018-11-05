@@ -1,12 +1,14 @@
+---
 language: node_js
 node_js:
-- node
-- lts/*
+  - node
+  - lts/*
 cache:
   directories:
-  - "~/.npm"
+    - ~/.npm
+    - .jest
 before_install:
- - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
+  - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
 before_script:
 - npm i -g npm@latest
 script:
@@ -18,7 +20,6 @@ jobs:
     if: branch = 172-deploy
     node_js: lts/*
     script:
-    - npm ci
-    - npm install -g expo-cli
-    - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-    - "./deploy"
+      - npm ci
+      - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+      - "./deploy"
