@@ -8,7 +8,6 @@ cache:
 before_install:
  - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
 before_script:
-- bundle install
 - npm i -g npm@latest
 script:
 - npm ci
@@ -19,6 +18,7 @@ jobs:
     if: branch = 172-deploy
     node_js: lts/*
     script:
+    - sudo bundle install
     - npm ci
     - npm install -g expo-cli
     - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
