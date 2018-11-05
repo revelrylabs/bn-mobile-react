@@ -17,8 +17,6 @@ jobs:
   - stage: deploy
     if: branch = 172-deploy
     node_js: lts/*
-    before_script:
-    - bundle install
     script:
     - npm ci
     - npm install -g expo-cli
