@@ -29,6 +29,6 @@ curl -o app.ipa "$(expo url:ipa --non-interactive)"
 # Use fastlane to upload your current standalone iOS build to test flight on iTunes Connect.
 
 # fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata
-fastline pilot upload --verbose --ipa "app.ipa"
+fastlane pilot upload --verbose --ipa "app.ipa"
 
 
