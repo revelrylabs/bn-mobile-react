@@ -3,6 +3,8 @@ set -e # exit entire script when command exits with non-zero status
 
 npm install
 
+fastlane setup_travis
+
 fastlane match appstore --app_identifier com.revelrylabs.bigneon --readonly --team_id M2C9MHL336
 # @TODO: Write script to bump version numbers
 
