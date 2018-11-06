@@ -3,9 +3,11 @@ import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
+import EventScannerStyles from '../styles/account/eventScannerStyles'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const eventScannerStyles = EventScannerStyles.createStyles()
 
 
 export default function EventScanner(props) {
@@ -29,16 +31,24 @@ export default function EventScanner(props) {
         </View>
       </ScrollView>
 
-      <View style={eventDetailsStyles.backArrowWrapper}>
-        <View style={eventDetailsStyles.backArrowCircleContainer}>
-          <Icon
-            style={eventDetailsStyles.backArrow}
-            name="close"
-            onPress={() => {
-              navigate('ManageEvents')
-            }}
-          />
+      <View>
+        <View style={eventDetailsStyles.backArrowWrapper}>
+          <View style={eventDetailsStyles.backArrowCircleContainer}>
+            <Icon
+              style={eventDetailsStyles.backArrow}
+              name="close"
+              onPress={() => {
+                navigate('ManageEvents')
+              }}
+            />
+          </View>
         </View>
+        <TouchableHighlight style={eventScannerStyles.pillContainer}>
+          <View style={styles.flexRowCenter}>
+            <Text style={[eventScannerStyles.pillText, styles.marginRightTiny]}>Check-in Mode:</Text>
+            <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
+          </View>
+        </TouchableHighlight>
       </View>
 
     </View>
