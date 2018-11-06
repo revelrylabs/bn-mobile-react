@@ -11,7 +11,7 @@ end
 
 lane :beta do
   pilot(
-    ipa: "../app.ipa",
+    ipa: "app.ipa",
     skip_waiting_for_build_processing: true
   )
 end
@@ -19,7 +19,7 @@ end
 lane :deploy do
   deliver(
     verbose: true,
-    ipa: "../app.ipa",
+    ipa: "app.ipa",
     skip_screenshots: true,
     skip_metadata: true
   )
