@@ -57,7 +57,7 @@ export default function EventManager(props) {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
           <View style={eventManagerStyles.cardContainer}>
             <View style={eventManagerStyles.cardImageWrapper}>
               <Image
@@ -75,7 +75,7 @@ export default function EventManager(props) {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
           <View style={eventManagerStyles.cardContainer}>
             <View style={eventManagerStyles.cardImageWrapper}>
               <Image
