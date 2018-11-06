@@ -24,7 +24,12 @@
         if: branch = 172-deploy
         node_js: lts/*
         script:
+          - npm install
           - npm ci
           - npm install -g expo-cli
           - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-          - "./deploy"
+          - fastlane setup_env
+          - expo publish --release-channel production --non-interactive
+          - expo build:ios --release-channel production --non-interactive --no-publish
+          - curl -o app.ipa "$(expo url:ipa --non-interactive)"
+          - fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata

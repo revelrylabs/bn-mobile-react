@@ -1,1 +1,10 @@
-setup_travis
+lane :setup_env do
+  setup_travis
+
+  match(
+    type: appstore,
+    app_identifier: com.revelrylabs.bigneon,
+    readonly: true,
+    team_id: M2C9MHL336
+  )
+end
