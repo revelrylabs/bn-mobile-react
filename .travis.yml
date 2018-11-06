@@ -8,6 +8,7 @@ cache:
 before_install:
  - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
 before_script:
+- bundle update
 - bundle install
 - npm i -g npm@latest
 script:
