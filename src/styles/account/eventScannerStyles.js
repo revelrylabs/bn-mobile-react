@@ -6,12 +6,22 @@ import {
   bodyFontSize,
   globalFontSemiBold,
   globalPadding,
+  globalPaddingLarge,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 const EventScannerStyles = {
+  // CONTAINERS
+  headerActionsWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingLarge,
+  },
+
   // PILLS
   pillContainer: {
     alignItems: 'center',
@@ -19,7 +29,6 @@ const EventScannerStyles = {
     borderColor: 'transparent',
     borderRadius: 100/2,
     borderWidth: 1,
-    // flex: 1,
     flexDirection: 'row',
     height: 40,
     justifyContent: 'center',
@@ -28,13 +37,11 @@ const EventScannerStyles = {
     color: white,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
-    // textAlign: 'center',
   },
   pillTextPrimary: {
     color: primaryColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
-    // textAlign: 'center',
   },
 }
 

@@ -20,6 +20,24 @@ export default function EventScanner(props) {
         source={require('../../assets/phone-scanner.png')}
       />
 
+      <View style={eventScannerStyles.headerActionsWrapper}>
+        <View style={eventDetailsStyles.backArrowCircleContainer}>
+          <Icon
+            style={eventDetailsStyles.backArrow}
+            name="close"
+            onPress={() => {
+              navigate('ManageEvents')
+            }}
+          />
+        </View>
+        <TouchableHighlight style={eventScannerStyles.pillContainer}>
+          <View style={styles.flexRowCenter}>
+            <Text style={[eventScannerStyles.pillText, styles.marginRightTiny]}>Check-in Mode:</Text>
+            <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
+          </View>
+        </TouchableHighlight>
+      </View>
+
       <ScrollView>
         <View style={[styles.container, eventDetailsStyles.mainBody]}>
           <View style={eventDetailsStyles.mainBodyContent}>
@@ -30,26 +48,6 @@ export default function EventScanner(props) {
           </View>
         </View>
       </ScrollView>
-
-      <View>
-        <View style={eventDetailsStyles.backArrowWrapper}>
-          <View style={eventDetailsStyles.backArrowCircleContainer}>
-            <Icon
-              style={eventDetailsStyles.backArrow}
-              name="close"
-              onPress={() => {
-                navigate('ManageEvents')
-              }}
-            />
-          </View>
-        </View>
-        <TouchableHighlight style={eventScannerStyles.pillContainer}>
-          <View style={styles.flexRowCenter}>
-            <Text style={[eventScannerStyles.pillText, styles.marginRightTiny]}>Check-in Mode:</Text>
-            <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
-          </View>
-        </TouchableHighlight>
-      </View>
 
     </View>
   );
