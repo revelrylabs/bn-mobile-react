@@ -74,7 +74,9 @@ const ROUTES = {
   },
   EventScanner: {
     screen: EventScanner,
-    navigationOptions: ({navigation}) => (defaultNavOptions('Event Scanner', navigation)),
+    navigationOptions: {
+      header: null,
+    },
   },
 }
 

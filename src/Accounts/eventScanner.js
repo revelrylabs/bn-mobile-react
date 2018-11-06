@@ -13,14 +13,34 @@ export default function EventScanner(props) {
 
   return (
     <View>
+      <Image
+        style={eventDetailsStyles.videoBkgd}
+        source={require('../../assets/phone-scanner.png')}
+      />
+
+      <ScrollView>
+        <View style={[styles.container, eventDetailsStyles.mainBody]}>
+          <View style={eventDetailsStyles.mainBodyContent}>
+            <View style={styles.flexRowSpaceBetween}>
+              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>All Guests</Text>
+              <Text style={eventDetailsStyles.calendarMonth}>icon</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+
       <View style={eventDetailsStyles.backArrowWrapper}>
         <View style={eventDetailsStyles.backArrowCircleContainer}>
           <Icon
             style={eventDetailsStyles.backArrow}
             name="close"
+            onPress={() => {
+              navigate('ManageEvents')
+            }}
           />
         </View>
       </View>
+
     </View>
   );
 }
