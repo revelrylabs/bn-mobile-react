@@ -10,14 +10,16 @@ const accountStyles = AccountStyles.createStyles()
 const eventManagerStyles = EventManagerStyles.createStyles()
 
 
-export default function EventManager() {
+export default function EventManager(props) {
+  const {navigation: {navigate}} = props
+
   return (
     <ScrollView style={styles.containerDark}>
       <View style={[styles.paddingVerticalMedium, styles.paddingHorizontal]}>
 
         <Text style={eventManagerStyles.sectionHeader}>Live</Text>
 
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
           <View style={eventManagerStyles.cardContainer}>
             <View style={eventManagerStyles.cardImageWrapper}>
               <Image
@@ -37,7 +39,7 @@ export default function EventManager() {
 
         <Text style={[eventManagerStyles.sectionHeader, styles.paddingVerticalSmall]}>Upcoming</Text>
 
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('AccountDetails')}>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
           <View style={eventManagerStyles.cardContainer}>
             <View style={eventManagerStyles.cardImageWrapper}>
               <Image
