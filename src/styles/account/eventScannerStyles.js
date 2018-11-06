@@ -5,6 +5,7 @@ import {
   pillContainerColor,
   bodyFontSize,
   globalFontSemiBold,
+  globalPaddingTiny,
   globalPadding,
   globalPaddingLarge,
 } from '../shared/sharedStyles'
@@ -17,7 +18,7 @@ const EventScannerStyles = {
   headerActionsWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingLarge,
   },
@@ -32,6 +33,7 @@ const EventScannerStyles = {
     flexDirection: 'row',
     height: 40,
     justifyContent: 'center',
+    paddingHorizontal: globalPadding,
   },
   pillText: {
     color: white,
@@ -42,6 +44,13 @@ const EventScannerStyles = {
     color: primaryColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
+  },
+
+  // IMAGES
+  scannerBkgdImage: {
+    height: fullHeight,
+    width: fullWidth,
+    position: 'absolute',
   },
 }
 

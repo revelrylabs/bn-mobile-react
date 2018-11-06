@@ -16,7 +16,7 @@ export default function EventScanner(props) {
   return (
     <View>
       <Image
-        style={eventDetailsStyles.videoBkgd}
+        style={eventScannerStyles.scannerBkgdImage}
         source={require('../../assets/phone-scanner.png')}
       />
 
@@ -36,6 +36,7 @@ export default function EventScanner(props) {
             <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
           </View>
         </TouchableHighlight>
+        <Text>&nbsp; &nbsp; &nbsp;</Text>
       </View>
 
       <ScrollView>
