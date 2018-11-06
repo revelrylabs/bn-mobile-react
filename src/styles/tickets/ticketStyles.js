@@ -37,9 +37,14 @@ const TicketStyles = {
     marginTop: -10,
   },
   detailsContainerBottom: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: globalPaddingSmall + globalPaddingTiny,
+  },
+  ticketHolderWrapper: {
+    flex: 1,
+    flexWrap: 'wrap',
   },
 
   // IMAGE BKGD STYLES
@@ -74,6 +79,16 @@ const TicketStyles = {
   },
   detailsLast: {
     textAlign: 'right',
+  },
+  ticketHolderHeader: {
+    fontSize: bodyFontSize,
+    paddingBottom: 2,
+  },
+  ticketHolderSubheader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSizeSmall,
+    letterSpacing: 0.5,
   },
 
   // ICON STYLES

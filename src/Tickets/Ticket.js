@@ -48,7 +48,7 @@ export default class Ticket extends Component {
           </View>
         </View>
         <View style={ticketWalletStyles.ticketContainerBottom}>
-          <View style={ticketWalletStyles.detailsContainerBottom}>
+          <View style={[styles.flexRowFlexStartCenter, styles.padding]}>
             <View style={ticketWalletStyles.avatarContainer}>
               <Image
                 style={ticketWalletStyles.avatar}
@@ -56,8 +56,8 @@ export default class Ticket extends Component {
               />
             </View>
             <View>
-              <Text style={ticketStyles.detailsBottomText}>Anna Behrensmeyer</Text>
-              <Text style={ticketStyles.detailsBottomHeader}>GENERAL ADMISSION</Text>
+              <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
             </View>
           </View>
         </View>
@@ -74,10 +74,12 @@ export default class Ticket extends Component {
             <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
             <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
           </View>
-          <View style={ticketWalletStyles.bottomNavLinkContainer}>
-            <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
-            <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
-          </View>
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('TransferTickets')}>
+            <View style={ticketWalletStyles.bottomNavLinkContainer}>
+              <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
+              <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
+            </View>
+          </TouchableHighlight>
         </View>
       </View>
     )

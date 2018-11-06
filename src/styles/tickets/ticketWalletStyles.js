@@ -44,7 +44,6 @@ const TicketWalletStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
-    paddingTop: globalPaddingLarge,
   },
   slideWrapper: {
     flexDirection: 'column',

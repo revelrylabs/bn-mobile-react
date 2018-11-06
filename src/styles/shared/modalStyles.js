@@ -3,9 +3,11 @@ import {
   primaryColor,
   textColor,
   sectionHeaderColor,
+  boxShadowColor,
   globalFontRegular,
   globalFontSemiBold,
   containerDarkColor,
+  sectionHeaderFontSize,
   iconFontSize,
   globalPaddingTiny,
   globalPaddingSmall,
@@ -14,6 +16,7 @@ import {
   globalPaddingLarge,
   globalPaddingJumbo,
   globalMargin,
+  globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -38,6 +41,15 @@ const ModalStyles = {
     backgroundColor: containerDarkColor,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingJumbo,
+  },
+  contentRoundedWrapper: {
+    backgroundColor: containerDarkColor,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
+    height: fullHeight - 325,
+    marginHorizontal: globalMargin,
+    marginTop: globalMargin,
+    overflow: 'hidden',
   },
   modalDropdownContainer: {
     backgroundColor: white,
@@ -89,6 +101,14 @@ const ModalStyles = {
     paddingVertical: globalPaddingLarge,
     textAlign: 'center',
   },
+  headerSecondary: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+    paddingHorizontal: globalPaddingLarge,
+    paddingVertical: globalPaddingLarge,
+    textAlign: 'center',
+  },
   locationText: {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
@@ -98,6 +118,13 @@ const ModalStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
+  },
+
+  // BUTTON STYLES
+  bottomRadius: {
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+    overflow: 'hidden',
   },
 }
 
