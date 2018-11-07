@@ -3,7 +3,7 @@
     "sdkVersion": "27.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
-    "version": "1.0.21",
+    "version": "1.0.22",
     "slug": "revelrylabs-big-neon",
     "ios": {
       "bundleIdentifier": "com.revelrylabs.bigneon",
@@ -11,7 +11,7 @@
     },
     "android": {
       "package": "com.revelrylabs.bigneon",
-      "versionCode": 21
+      "versionCode": 22
     }
   }
 }
