@@ -18,7 +18,7 @@ const EventScannerStyles = {
   headerActionsWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingLarge,
   },

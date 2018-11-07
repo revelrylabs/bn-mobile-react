@@ -4,10 +4,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
+import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const eventScannerStyles = EventScannerStyles.createStyles()
+const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 
 export default function EventScanner(props) {
@@ -36,7 +38,23 @@ export default function EventScanner(props) {
             <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
           </View>
         </TouchableHighlight>
-        <Text>&nbsp; &nbsp; &nbsp;</Text>
+      </View>
+
+      <View style={styles.flexRowCenter}>
+        <TouchableHighlight style={eventScannerStyles.pillContainer}>
+          <View style={styles.flexRowFlexStartCenter}>
+            <View style={ticketWalletStyles.avatarContainer}>
+              <Image
+                style={ticketWalletStyles.avatar}
+                source={require('../../assets/avatar-female.png')}
+              />
+            </View>
+            <View>
+              <Text style={eventScannerStyles.pillText}>Anna Behrensmeyer</Text>
+              <Text style={eventScannerStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+            </View>
+          </View>
+        </TouchableHighlight>
       </View>
 
       <ScrollView>
