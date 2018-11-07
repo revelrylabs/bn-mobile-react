@@ -22,42 +22,45 @@ export default function EventScanner(props) {
         source={require('../../assets/phone-scanner.png')}
       />
 
-      <View style={eventScannerStyles.headerActionsWrapper}>
-        <View style={eventDetailsStyles.backArrowCircleContainer}>
-          <Icon
-            style={eventDetailsStyles.backArrow}
-            name="close"
-            onPress={() => {
-              navigate('ManageEvents')
-            }}
-          />
-        </View>
-        <TouchableHighlight style={eventScannerStyles.pillContainer}>
-          <View style={styles.flexRowCenter}>
-            <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
-            <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
+      <View style={eventScannerStyles.actionsContainer}>
+
+        <View style={[eventScannerStyles.headerActionsWrapper, styles.flexRowSpaceBetween]}>
+          <View style={eventDetailsStyles.backArrowCircleContainer}>
+            <Icon
+              style={eventDetailsStyles.backArrow}
+              name="close"
+              onPress={() => {
+                navigate('ManageEvents')
+              }}
+            />
           </View>
-        </TouchableHighlight>
-      </View>
-
-      <View style={eventScannerStyles.headerActionsWrapper}>
-        <View style={eventScannerStyles.pillContainer}>
-
-          <View style={styles.flexRowFlexStartCenter}>
-            <View style={ticketWalletStyles.avatarContainer}>
-              <Image
-                style={ticketWalletStyles.avatar}
-                source={require('../../assets/avatar-female.png')}
-              />
+          <TouchableHighlight style={eventScannerStyles.pillContainer}>
+            <View style={styles.flexRowCenter}>
+              <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
+              <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
             </View>
-            <View>
-              <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
-              <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
-            </View>
-            <Icon style={eventScannerStyles.checkIcon} name="check-circle" />
-          </View>
-
+          </TouchableHighlight>
+          <Text>&nbsp; &nbsp; &nbsp;</Text>
         </View>
+
+        <View style={eventScannerStyles.headerActionsWrapper}>
+          <View style={eventScannerStyles.pillContainer}>
+            <View style={styles.flexRowFlexStartCenter}>
+              <View style={ticketWalletStyles.avatarContainer}>
+                <Image
+                  style={ticketWalletStyles.avatar}
+                  source={require('../../assets/avatar-female.png')}
+                />
+              </View>
+              <View>
+                <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
+                <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
+              </View>
+              <Icon style={eventScannerStyles.checkIcon} name="check-circle" />
+            </View>
+          </View>
+        </View>
+
       </View>
 
       <ScrollView>
