@@ -20,6 +20,7 @@ export const disabledHeaderColor = 'rgba(64, 64, 64, 0.5)'
 export const boxShadowColor = 'rgba(36, 36, 40, 0.08)'
 export const pillContainerColor = 'rgba(0, 0, 0, 0.6)'
 export const disabledColor = '#F7F7F7'
+export const successColor = '#A1F44D'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10

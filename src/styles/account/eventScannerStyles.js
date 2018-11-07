@@ -4,6 +4,7 @@ import {
   textColor,
   pillContainerColor,
   sectionHeaderColor,
+  successColor,
   bodyFontSize,
   subnavFontSize,
   globalFontSemiBold,
@@ -16,6 +17,8 @@ import {
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
+
+export const iconFontSize = 32
 
 const EventScannerStyles = {
   // CONTAINERS
@@ -60,6 +63,13 @@ const EventScannerStyles = {
     height: fullHeight,
     width: fullWidth,
     position: 'absolute',
+  },
+
+  // ICONS
+  checkIcon: {
+    color: successColor,
+    fontSize: iconFontSize,
+    paddingHorizontal: globalPaddingSmall,
   },
 }
 

@@ -41,7 +41,8 @@ export default function EventScanner(props) {
       </View>
 
       <View style={eventScannerStyles.headerActionsWrapper}>
-        <TouchableHighlight style={eventScannerStyles.pillContainer}>
+        <View style={eventScannerStyles.pillContainer}>
+
           <View style={styles.flexRowFlexStartCenter}>
             <View style={ticketWalletStyles.avatarContainer}>
               <Image
@@ -53,8 +54,10 @@ export default function EventScanner(props) {
               <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
               <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
             </View>
+            <Icon style={eventScannerStyles.checkIcon} name="check-circle" />
           </View>
-        </TouchableHighlight>
+
+        </View>
       </View>
 
       <ScrollView>
