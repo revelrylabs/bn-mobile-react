@@ -21,7 +21,7 @@ const fullWidth = Dimensions.get('window').width
 const EventManagerStyles = {
   // ROW STYLES
   cardContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: white,
     borderColor: 'transparent',
     borderRadius: 12,
@@ -29,6 +29,7 @@ const EventManagerStyles = {
     flexDirection: 'row',
     height: 90,
     marginBottom: globalMargin,
+    overflow: 'hidden',
   },
 
   // IMAGE STYLES
@@ -44,12 +45,15 @@ const EventManagerStyles = {
     width: 95,
   },
 
-  // HEADER STYLES
-  cardDetailsWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: globalPaddingSmall,
+  // HEADER WRAPPER STYLES
+  textWrapper: {
+    flex: 1,
+    flexWrap: 'wrap',
+    paddingLeft: globalPaddingSmall,
+    paddingTop: globalPadding,
   },
+
+  // HEADER STYLES
   sectionHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
