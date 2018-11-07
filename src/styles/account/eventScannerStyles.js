@@ -22,15 +22,23 @@ export const iconFontSize = 32
 
 const EventScannerStyles = {
   // CONTAINERS
-  actionsContainer: {
+  eventScannerContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: fullHeight - 150,
+    height: fullHeight,
   },
   headerActionsWrapper: {
     alignItems: 'center',
     paddingHorizontal: globalPadding,
     paddingTop: globalPaddingLarge,
+  },
+
+  // MAIN BODY STYLES
+  mainBody: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingHorizontal: 0,
   },
 
   // PILLS

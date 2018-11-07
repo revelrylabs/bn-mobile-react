@@ -22,7 +22,7 @@ export default function EventScanner(props) {
         source={require('../../assets/phone-scanner.png')}
       />
 
-      <View style={eventScannerStyles.actionsContainer}>
+      <View style={eventScannerStyles.eventScannerContainer}>
 
         <View style={[eventScannerStyles.headerActionsWrapper, styles.flexRowSpaceBetween]}>
           <View style={eventDetailsStyles.backArrowCircleContainer}>
@@ -43,36 +43,38 @@ export default function EventScanner(props) {
           <Text>&nbsp; &nbsp; &nbsp;</Text>
         </View>
 
-        <View style={eventScannerStyles.headerActionsWrapper}>
-          <View style={eventScannerStyles.pillContainer}>
-            <View style={styles.flexRowFlexStartCenter}>
-              <View style={ticketWalletStyles.avatarContainer}>
-                <Image
-                  style={ticketWalletStyles.avatar}
-                  source={require('../../assets/avatar-female.png')}
-                />
+        <View>
+          <View style={eventScannerStyles.headerActionsWrapper}>
+            <View style={eventScannerStyles.pillContainer}>
+              <View style={styles.flexRowFlexStartCenter}>
+                <View style={ticketWalletStyles.avatarContainer}>
+                  <Image
+                    style={ticketWalletStyles.avatar}
+                    source={require('../../assets/avatar-female.png')}
+                  />
+                </View>
+                <View>
+                  <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
+                  <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
+                </View>
+                <Icon style={eventScannerStyles.checkIcon} name="check-circle" />
               </View>
-              <View>
-                <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
-                <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
-              </View>
-              <Icon style={eventScannerStyles.checkIcon} name="check-circle" />
             </View>
           </View>
+
+          <ScrollView>
+            <View style={[styles.container, eventScannerStyles.mainBody]}>
+              <View style={eventDetailsStyles.mainBodyContent}>
+                <View style={styles.flexRowSpaceBetween}>
+                  <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>All Guests</Text>
+                  <Text style={eventDetailsStyles.calendarMonth}>icon</Text>
+                </View>
+              </View>
+            </View>
+          </ScrollView>
         </View>
 
       </View>
-
-      <ScrollView>
-        <View style={[styles.container, eventDetailsStyles.mainBody]}>
-          <View style={eventDetailsStyles.mainBodyContent}>
-            <View style={styles.flexRowSpaceBetween}>
-              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>All Guests</Text>
-              <Text style={eventDetailsStyles.calendarMonth}>icon</Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
 
     </View>
   );
