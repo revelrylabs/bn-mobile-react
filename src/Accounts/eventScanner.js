@@ -34,13 +34,13 @@ export default function EventScanner(props) {
         </View>
         <TouchableHighlight style={eventScannerStyles.pillContainer}>
           <View style={styles.flexRowCenter}>
-            <Text style={[eventScannerStyles.pillText, styles.marginRightTiny]}>Check-in Mode:</Text>
+            <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
             <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
           </View>
         </TouchableHighlight>
       </View>
 
-      <View style={styles.flexRowCenter}>
+      <View style={eventScannerStyles.headerActionsWrapper}>
         <TouchableHighlight style={eventScannerStyles.pillContainer}>
           <View style={styles.flexRowFlexStartCenter}>
             <View style={ticketWalletStyles.avatarContainer}>
@@ -50,8 +50,8 @@ export default function EventScanner(props) {
               />
             </View>
             <View>
-              <Text style={eventScannerStyles.pillText}>Anna Behrensmeyer</Text>
-              <Text style={eventScannerStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
+              <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
             </View>
           </View>
         </TouchableHighlight>

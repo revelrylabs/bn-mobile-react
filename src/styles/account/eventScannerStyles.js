@@ -3,9 +3,13 @@ import {
   white,
   textColor,
   pillContainerColor,
+  sectionHeaderColor,
   bodyFontSize,
+  subnavFontSize,
   globalFontSemiBold,
+  globalFontRegular,
   globalPaddingTiny,
+  globalPaddingSmall,
   globalPadding,
   globalPaddingLarge,
 } from '../shared/sharedStyles'
@@ -31,11 +35,11 @@ const EventScannerStyles = {
     borderRadius: 100/2,
     borderWidth: 1,
     flexDirection: 'row',
-    height: 40,
     justifyContent: 'center',
     paddingHorizontal: globalPadding,
+    paddingVertical: globalPaddingSmall,
   },
-  pillText: {
+  pillTextWhite: {
     color: white,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
@@ -44,6 +48,11 @@ const EventScannerStyles = {
     color: primaryColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
+  },
+  pillTextSubheader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: subnavFontSize,
   },
 
   // IMAGES
