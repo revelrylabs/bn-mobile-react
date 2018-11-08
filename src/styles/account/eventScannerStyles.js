@@ -52,7 +52,6 @@ const EventScannerStyles = {
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: globalMargin,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingSmall,
   },
@@ -91,8 +90,6 @@ const EventScannerStyles = {
     paddingHorizontal: globalPaddingSmall,
   },
 
-
-  // TEXT STYLES
   // TEXT STYLES
   descriptionHeader: {
     color: textColor,

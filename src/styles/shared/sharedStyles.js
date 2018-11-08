@@ -430,6 +430,9 @@ const SharedStyles = {
   marginTopSmall: {
     marginTop: globalMarginSmall,
   },
+  marginBottom: {
+    marginBottom: globalMargin,
+  },
   marginBottomSmall: {
     marginBottom: globalMarginSmall,
   },

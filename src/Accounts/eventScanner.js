@@ -96,7 +96,7 @@ export default class EventScanner extends Component {
 
           <View>
             <View style={eventScannerStyles.headerActionsWrapper}>
-              <View style={eventScannerStyles.pillContainer}>
+              <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
                 <View style={styles.flexRowFlexStartCenter}>
                   <View style={ticketWalletStyles.avatarContainer}>
                     <Image
