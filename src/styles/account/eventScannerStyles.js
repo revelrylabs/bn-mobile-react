@@ -2,7 +2,6 @@ import {
   primaryColor,
   white,
   textColor,
-  helpTextColor,
   pillContainerColor,
   sectionHeaderColor,
   successColor,
@@ -15,6 +14,7 @@ import {
   globalPaddingSmall,
   globalPadding,
   globalPaddingLarge,
+  globalMargin,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -52,6 +52,7 @@ const EventScannerStyles = {
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: globalMargin,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingSmall,
   },
@@ -85,7 +86,7 @@ const EventScannerStyles = {
     paddingHorizontal: globalPaddingSmall,
   },
   arrowUpIcon: {
-    color: helpTextColor,
+    color: sectionHeaderColor,
     fontSize: bodyFontSize,
     paddingHorizontal: globalPaddingSmall,
   },

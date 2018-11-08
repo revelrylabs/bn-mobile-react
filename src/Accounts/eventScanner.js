@@ -114,8 +114,8 @@ export default class EventScanner extends Component {
             </View>
 
             <ScrollView>
-              <View style={[styles.container, eventScannerStyles.mainBody]}>
-                <View style={eventDetailsStyles.mainBodyContent}>
+              <View style={eventScannerStyles.mainBody}>
+                <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
                   <View style={styles.flexRowSpaceBetween}>
                     <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
                     <Icon style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
