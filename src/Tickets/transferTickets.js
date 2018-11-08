@@ -63,15 +63,16 @@ export default class TransferTickets extends Component {
       <View style={styles.flexRowCenter} key={ticket.id}>
         <View style={ticketTransferStyles.cardContainer}>
           <View style={styles.flexRowFlexStart}>
+            <CircleCheckBox
+              checked={checked}
+              onToggle={this.toggleCheck(ticket.id)}
+              innerColor="#FF20B1"
+              outerColor="#FF20B1"
+              innerSize={15}
+              outerSize={29}
+              styleCheckboxContainer={styles.marginRight}
+            />
             <View>
-              <CircleCheckBox
-                checked={checked}
-                onToggle={this.toggleCheck(ticket.id)}
-                innerColor="#FF20B1"
-                outerColor="#FF20B1"
-                innerSize={15}
-                outerSize={29}
-              />
               <Text style={ticketStyles.ticketHolderHeader}>{ticket.label}</Text>
               <Text style={ticketStyles.ticketHolderSubheader}>{ticket.type}</Text>
             </View>
@@ -110,31 +111,6 @@ export default class TransferTickets extends Component {
               {tickets.map((ticket) => {
                 return this.renderCheckBox(checkboxes[ticket.id], ticket)
               })}
-
-              {/* // TODO: delete this old markup, just here for comparing old/new button for style purposes */}
-              <View style={styles.flexRowCenter}>
-                <View style={ticketTransferStyles.cardContainer}>
-                  <View style={styles.flexRowFlexStart}>
-                    <RadioForm
-                      radio_props={radio_props}
-                      initial={-1}
-                      formHorizontal={false}
-                      labelHorizontal={true}
-                      buttonColor={'#FF20B1'}
-                      selectedButtonColor={'#FF20B1'}
-                      buttonOuterColor={'#EBEBEB'}
-                      buttonSize={15}
-                      buttonOuterSize={30}
-                      isSelected={false}
-                      onPress={(value) => {this.setState({value:value})}}
-                    />
-                    <View>
-                      <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
 
             </ScrollView>
           </View>

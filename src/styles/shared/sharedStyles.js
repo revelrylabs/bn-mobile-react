@@ -431,6 +431,9 @@ const SharedStyles = {
   marginBottomTiny: {
     marginBottom: globalMarginTiny,
   },
+  marginRight: {
+    marginRight: globalMargin,
+  },
   marginRightTiny: {
     marginRight: globalMarginTiny,
   },
