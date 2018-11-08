@@ -117,8 +117,8 @@ export default class EventScanner extends Component {
               <View style={[styles.container, eventScannerStyles.mainBody]}>
                 <View style={eventDetailsStyles.mainBodyContent}>
                   <View style={styles.flexRowSpaceBetween}>
-                    <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>All Guests</Text>
-                    <Text style={eventDetailsStyles.calendarMonth}>icon</Text>
+                    <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
+                    <Icon style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
                   </View>
                 </View>
               </View>

@@ -2,11 +2,13 @@ import {
   primaryColor,
   white,
   textColor,
+  helpTextColor,
   pillContainerColor,
   sectionHeaderColor,
   successColor,
   bodyFontSize,
   subnavFontSize,
+  headerSecondaryFontSize,
   globalFontSemiBold,
   globalFontRegular,
   globalPaddingTiny,
@@ -81,6 +83,21 @@ const EventScannerStyles = {
     color: successColor,
     fontSize: iconFontSize,
     paddingHorizontal: globalPaddingSmall,
+  },
+  arrowUpIcon: {
+    color: helpTextColor,
+    fontSize: bodyFontSize,
+    paddingHorizontal: globalPaddingSmall,
+  },
+
+
+  // TEXT STYLES
+  // TEXT STYLES
+  descriptionHeader: {
+    color: textColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: headerSecondaryFontSize,
+    width: 275,
   },
 }
 
