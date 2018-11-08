@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
+import PropTypes from 'prop-types';
+import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
+import {BarCodeScanner, Permissions} from 'expo';
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
@@ -11,18 +14,63 @@ const eventDetailsStyles = EventDetailsStyles.createStyles()
 const eventScannerStyles = EventScannerStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
+function delay(time) {
+  return new Promise(((resolve, _reject) => {
+    setTimeout(() => resolve(), time);
+  }));
+}
 
 export default class EventScanner extends Component {
+  static propTypes = {
+    onScan: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
+  }
+
+  state = {
+    hasCameraPermission: null,
+    read: null,
+  }
+
+  async componentWillMount() {
+    const {status} = await Permissions.askAsync(Permissions.CAMERA)
+
+    this.setState({hasCameraPermission: status === 'granted'})
+  }
+
+  debounce = false;
+
+  handleBarCodeScanned = async ({_type, data}) => {
+    const {onScan} = () => {}// this.props;
+
+    await delay(500);
+
+    if (this.state.read === data) {
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => {
+        this.setState({read: null})
+      }, 1500);
+      return;
+    }
+    this.setState({read: data});
+
+    onScan(data, this);
+  }
 
   render() {
-
+    const {hasCameraPermission} = this.state
     const {navigation: {navigate}} = this.props
 
+    if (hasCameraPermission === null) {
+      return <Text>Requesting for camera permission</Text>;
+    }
+    if (hasCameraPermission === false) {
+      return <Text>No access to camera</Text>;
+    }
     return (
       <View>
-        <Image
-          style={eventScannerStyles.scannerBkgdImage}
-          source={require('../../assets/phone-scanner.png')}
+        <BarCodeScanner
+          onBarCodeScanned={this.handleBarCodeScanned}
+          style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
         />
 
         <View style={eventScannerStyles.eventScannerContainer}>
