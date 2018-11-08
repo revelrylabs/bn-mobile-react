@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
 import {Modal, ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
-// TODO: delete the radio imports
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import CircleCheckBox from 'react-native-circle-checkbox'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -17,10 +15,6 @@ const ticketWalletStyles = TicketWalletStyles.createStyles()
 const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
-// TODO: delete this when done comparing checkbox to radio button
-var radio_props = [
-  {value: -1 },
-];
 
 export default class TransferTickets extends Component {
   constructor(props) {
