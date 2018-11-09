@@ -19,7 +19,6 @@ const modalStyles = ModalStyles.createStyles()
 export default class TransferTickets extends Component {
   constructor(props) {
     super(props)
-    this.toggleCheck = this.toggleCheck.bind(this);
 
     this.state = {
       checkboxes: this.buildCheckBoxState(props.tickets)
@@ -31,9 +30,9 @@ export default class TransferTickets extends Component {
   static defaultProps = {
     tickets: [
       {id: 1, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
-      // {id: 2, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
-      // {id: 3, label: 'Brittany Gay', type: 'GENERAL ADMISSION'},
-      // {id: 4, label: 'Alexandra ReallyLongLastName', type: 'GENERAL ADMISSION'},
+      {id: 2, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
+      {id: 3, label: 'Brittany Gay', type: 'GENERAL ADMISSION'},
+      {id: 4, label: 'Alexandra ReallyLongLastName', type: 'GENERAL ADMISSION'},
     ],
   }
 
@@ -46,10 +45,23 @@ export default class TransferTickets extends Component {
     }, {});
   }
 
-  toggleCheck(id) {
+  toggleCheck = (id) => {
     return (checked) => {
-      this.setState({checkboxes: {[id]: checked}});
+      const {checkboxes} = this.state
+
+      this.setState({checkboxes: {...checkboxes, [id]: checked}});
     }
+  }
+
+  transferCount = () => {
+    const {checkboxes} = this.state
+
+    return Object.keys(checkboxes).reduce((acc, id) => {
+      if (checkboxes[id]) {
+        return acc += 1
+      }
+      return acc
+    }, 0)
   }
 
   renderCheckBox(checked, ticket) {
@@ -111,7 +123,7 @@ export default class TransferTickets extends Component {
 
           <View style={[styles.buttonContainer, styles.marginHorizontal]}>
             <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]}>
-              <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
+              <Text style={styles.buttonText}>Transfer {this.transferCount()} Tickets..</Text>
             </TouchableHighlight>
           </View>
 
