@@ -16,6 +16,8 @@ export default class GetTickets extends Component {
   }
 
   render() {
+    console.log("PROPSSSSS", this.props);
+    
     return (
       <View style={checkoutStyles.mainBody}>
         <View style={checkoutStyles.mainBodyContent}>

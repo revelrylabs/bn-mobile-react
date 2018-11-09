@@ -1,9 +1,6 @@
 import {Container} from 'unstated'
-import Bigneon from 'bn-api-node'
-import mocker from './mocker'
+import {server} from '../constants/Server'
 import {DateTime} from 'luxon'
-
-const server = new Bigneon.Server({prefix: 'https://staging.bigneon.com/api'})//, {}, mocker);
 
 const SAMPLE_LOCATIONS = [
   {

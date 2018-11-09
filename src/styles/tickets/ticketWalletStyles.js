@@ -96,7 +96,7 @@ const TicketWalletStyles = {
     paddingRight: globalPaddingSmall,
   },
   avatar: {
-    borderColor: white,
+    borderColor: 'transparent',
     borderRadius: 45/2,
     borderWidth: 1,
     height: 45,

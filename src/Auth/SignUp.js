@@ -35,14 +35,20 @@ export default class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
+      first_name: '',
+      last_name: '',
     }
   }
 
   signUp = async () => {
     const {screenProps: {auth}, navigation: {navigate}} = this.props
-    const {email, password} = this.state
+    const {email, password, first_name, last_name} = this.state
 
-    await auth.signUp({email, password}, navigate)
+    const signUpResp = await auth.signUp({email, password, first_name, last_name})
+
+    if (signUpResp.status === 201) {
+      auth.logIn({email, password}, navigate)
+    }
   }
 
   render() {
@@ -53,6 +59,16 @@ export default class SignUp extends Component {
           <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
             Create your account
           </Text>
+          <TextInput
+            style={formStyles.input}
+            placeholder="First Name"
+            onChangeText={(first_name) => this.setState({first_name})}
+          />
+          <TextInput
+            style={formStyles.input}
+            placeholder="Last Name"
+            onChangeText={(last_name) => this.setState({last_name})}
+          />
           <TextInput
             style={formStyles.input}
             placeholder="Email Address"
