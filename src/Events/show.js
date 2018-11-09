@@ -103,10 +103,13 @@ export default class EventShow extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const {screenProps: {store: {state: {selectedEvent: {event}}}}} = newProps
+
+    console.log("New Props:", newProps);
+
+    const {screenProps: {store: {state: {selectedEvent}}}} = newProps
 
     // Do we want to check if the event id different, or just always update?
-    if (event) { this.setState({event}) }
+    if (selectedEvent) { this.setState({event: selectedEvent}) }
   }
 
   clearEvent() {
@@ -163,7 +166,7 @@ export default class EventShow extends Component {
 
   lowestPrice(ticket_types) {
     const ticket_pricing = flatMap(ticket_types, (tt) => (
-      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
+      tt.ticket_pricing.price_in_cents
     ))
 
     return min(ticket_pricing) / 100
@@ -171,7 +174,7 @@ export default class EventShow extends Component {
 
   highestPrice(ticket_types) {
     const ticket_pricing = flatMap(ticket_types, (tt) => (
-      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
+      tt.ticket_pricing.price_in_cents
     ))
 
     return max(ticket_pricing) / 100
@@ -198,13 +201,15 @@ export default class EventShow extends Component {
 
     if (!event) { return null }
 
+    // @TODO: Add a ScrollTo initial position
+
     switch (currentScreen) {
     case 'details':
       return <Details event={event} />
     case 'tickets':
-      return <GetTickets changeScreen={this.changeScreen} />
+      return <GetTickets event={event} changeScreen={this.changeScreen} />
     case 'checkout':
-      return <Checkout changeScreen={this.changeScreen} />
+      return <Checkout event={event} changeScreen={this.changeScreen} />
     case 'payment':
       return (
         <PaymentTypes
@@ -339,6 +344,9 @@ export default class EventShow extends Component {
 
   render() {
     const {event, showLoadingModal, showSuccessModal} = this.state
+
+    console.log("Event:", event);
+
 
     if (!event) { return null }
 

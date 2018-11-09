@@ -36,7 +36,9 @@ export default class Details extends Component {
   get artistNames() {
     const {event: {artists}} = this.props
 
-    return toSentence(map(artists, (artist) => artist.name))
+    if (artists.length === 0) { return null }
+
+    return toSentence(map(artists, (eventArtist) => eventArtist.artist.name))
   }
 
   get ageLimit() {
