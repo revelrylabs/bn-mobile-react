@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {createStackNavigator} from 'react-navigation'
 import {Subscribe} from 'unstated'
-import {AuthContainer} from '../Auth/authStateProvider'
+import {AuthContainer} from '../state/authStateProvider'
 import AccountRoutes from '../Accounts/routes'
 import {last} from 'lodash'
 

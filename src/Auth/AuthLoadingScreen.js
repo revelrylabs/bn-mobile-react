@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {Subscribe} from 'unstated'
-import {AuthContainer} from './authStateProvider'
+import {AuthContainer} from '../state/authStateProvider'
 
 class AuthStore extends Component {
   static propTypes = {

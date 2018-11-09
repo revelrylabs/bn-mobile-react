@@ -5,7 +5,7 @@ import LogInScreen from '../Auth/LogIn'
 import SignUpScreen from '../Auth/SignUp'
 import IndexScreen from '../Auth/index'
 import {Subscribe} from 'unstated'
-import {AuthContainer} from '../Auth/authStateProvider'
+import {AuthContainer} from '../state/authStateProvider'
 
 const AuthStack = createStackNavigator(
   {

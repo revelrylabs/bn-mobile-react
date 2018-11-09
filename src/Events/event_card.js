@@ -4,7 +4,6 @@ import {Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventCardStyles from '../styles/shared/eventCardStyles'
-import {flatMap, min} from 'lodash'
 import {DateTime} from 'luxon'
 
 const styles = SharedStyles.createStyles()
@@ -26,15 +25,6 @@ export default class EventsIndex extends Component {
 
   setFavorite = (favorite) => {
     this.setState({favorite})
-  }
-
-  get lowestPrice() {
-    const {event: {ticket_types}} = this.props
-    const ticket_pricing = flatMap(ticket_types, (tt) => (
-      flatMap(tt.ticket_pricing, (pp) => (pp.price_in_cents))
-    ))
-
-    return min(ticket_pricing) / 100
   }
 
   get scheduleText() {
@@ -73,7 +63,7 @@ export default class EventsIndex extends Component {
                 </View>
               </View>
               <View style={styles.priceTagContainer}>
-                <Text style={styles.priceTag}>${this.lowestPrice}</Text>
+                <Text style={styles.priceTag}>${event.min_ticket_price / 100}</Text>
               </View>
             </View>
           </View>

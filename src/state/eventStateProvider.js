@@ -2,7 +2,6 @@ import {Container} from 'unstated'
 import {server} from '../constants/Server'
 import {DateTime} from 'luxon'
 
-
 const SAMPLE_LOCATIONS = [
   {
     name: 'Where are you looking for events?',
