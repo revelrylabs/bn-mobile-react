@@ -69,7 +69,7 @@ export default class EventScanner extends Component {
     return (
       <View>
         <BarCodeScanner
-          onBarCodeScanned={this.handleBarCodeScanned}
+          onBarCodeRead={this.handleBarCodeScanned}
           style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
         />
 
