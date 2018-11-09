@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import {createStackNavigator} from 'react-navigation'
 import {Subscribe} from 'unstated'
 import {MAIN_ROUTES, MODAL_ROUTES} from '../Tickets/routes'
-import {TicketsContainer} from '../Tickets/ticketStateProvider'
+import {TicketsContainer} from '../state/ticketStateProvider'
 
 const TicketsStack = createStackNavigator({
-  ...MAIN_ROUTES
+  ...MAIN_ROUTES,
 }, {
   initialRouteName: 'MyTicketList',
   navigationOptions: {

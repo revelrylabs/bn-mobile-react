@@ -1,4 +1,5 @@
 import {Container} from 'unstated'
+import {server} from '../constants/Server'
 
 // Hardcoding for now, will probably be replaced by a URL,
 // and <Image source={{uri: ticket.imageUrl}} ... />
