@@ -1,8 +1,6 @@
 import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
-import Bigneon from 'bn-api-node'
-
-const server = new Bigneon.Server({prefix: 'https://staging.bigneon.com/api'});
+import {server} from '../constants/Server'
 
 /* eslint-disable camelcase */
 class AuthContainer extends Container {

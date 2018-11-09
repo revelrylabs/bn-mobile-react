@@ -8,6 +8,7 @@ import OrderHistory from './orderHistory'
 import SignedOut from './signedOut'
 import ChangePhoto from './changePhoto'
 import EventManager from './eventManager'
+import EventScanner from './eventScanner'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import NavigationStyles from '../styles/shared/navigationStyles'
 
@@ -70,6 +71,12 @@ const ROUTES = {
   ManageEvents: {
     screen: EventManager,
     navigationOptions: ({navigation}) => (defaultNavOptions('My Events', navigation)),
+  },
+  EventScanner: {
+    screen: EventScanner,
+    navigationOptions: {
+      header: null,
+    },
   },
 }
 
