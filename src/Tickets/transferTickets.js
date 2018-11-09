@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
 import {Modal, ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import CircleCheckBox from 'react-native-circle-checkbox'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
@@ -15,14 +15,82 @@ const ticketWalletStyles = TicketWalletStyles.createStyles()
 const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
-var radio_props = [
-  {value: -1 },
-];
 
 export default class TransferTickets extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      checkboxes: this.buildCheckBoxState(props.tickets)
+    };
+  }
+
+  // this is made up ticket data that will need to be restructured and renamed
+  // for real data
+  static defaultProps = {
+    tickets: [
+      {id: 1, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
+      {id: 2, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
+      {id: 3, label: 'Brittany Gay', type: 'GENERAL ADMISSION'},
+      {id: 4, label: 'Alexandra ReallyLongLastName', type: 'GENERAL ADMISSION'},
+    ],
+  }
+
+  buildCheckBoxState(tickets) {
+    return tickets.reduce((acc, ticket) => {
+      return {
+        ...acc,
+        [ticket.id]: false,
+      };
+    }, {});
+  }
+
+  toggleCheck = (id) => {
+    return (checked) => {
+      const {checkboxes} = this.state
+
+      this.setState({checkboxes: {...checkboxes, [id]: checked}});
+    }
+  }
+
+  transferCount = () => {
+    const {checkboxes} = this.state
+
+    return Object.keys(checkboxes).reduce((acc, id) => {
+      if (checkboxes[id]) {
+        return acc += 1
+      }
+      return acc
+    }, 0)
+  }
+
+  renderCheckBox(checked, ticket) {
+    return (
+      <View style={styles.flexRowCenter} key={ticket.id}>
+        <View style={ticketTransferStyles.cardContainer}>
+          <View style={styles.flexRowFlexStart}>
+            <CircleCheckBox
+              checked={checked}
+              onToggle={this.toggleCheck(ticket.id)}
+              innerColor="#FF20B1"
+              outerColor="#FF20B1"
+              innerSize={15}
+              outerSize={29}
+              styleCheckboxContainer={styles.marginRight}
+            />
+            <View>
+              <Text style={ticketStyles.ticketHolderHeader}>{ticket.label}</Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.type}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    )
+  }
 
   render() {
-    const {navigation} = this.props
+    const {navigation, tickets} = this.props
+    const {checkboxes} = this.state
 
     return (
       <Modal>
@@ -46,156 +114,16 @@ export default class TransferTickets extends Component {
 
               <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
 
-              <View style={styles.flexRowCenter}>
-                <View style={ticketTransferStyles.cardContainer}>
-                  <View style={styles.flexRowFlexStart}>
-                    <RadioForm
-                      radio_props={radio_props}
-                      initial={-1}
-                      formHorizontal={false}
-                      labelHorizontal={true}
-                      buttonColor={'#FF20B1'}
-                      selectedButtonColor={'#FF20B1'}
-                      buttonOuterColor={'#EBEBEB'}
-                      buttonSize={15}
-                      buttonOuterSize={30}
-                      isSelected={false}
-                      onPress={(value) => {this.setState({value:value})}}
-                    />
-                    <View>
-                      <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.flexRowCenter}>
-                <View style={ticketTransferStyles.cardContainer}>
-                  <View style={styles.flexRowFlexStart}>
-                    <RadioForm
-                      radio_props={radio_props}
-                      initial={-1}
-                      formHorizontal={false}
-                      labelHorizontal={true}
-                      buttonColor={'#FF20B1'}
-                      selectedButtonColor={'#FF20B1'}
-                      buttonOuterColor={'#EBEBEB'}
-                      buttonSize={15}
-                      buttonOuterSize={30}
-                      isSelected={false}
-                      onPress={(value) => {this.setState({value:value})}}
-                    />
-                    <View>
-                      <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.flexRowCenter}>
-                <View style={ticketTransferStyles.cardContainer}>
-                  <View style={styles.flexRowFlexStart}>
-                    <RadioForm
-                      radio_props={radio_props}
-                      initial={-1}
-                      formHorizontal={false}
-                      labelHorizontal={true}
-                      buttonColor={'#FF20B1'}
-                      selectedButtonColor={'#FF20B1'}
-                      buttonOuterColor={'#EBEBEB'}
-                      buttonSize={15}
-                      buttonOuterSize={30}
-                      isSelected={true}
-                      onPress={(value) => {this.setState({value:value})}}
-                    />
-                    <View>
-                      <Text style={ticketStyles.ticketHolderHeader}>Brittany Gay</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.flexRowCenter}>
-                <View style={ticketTransferStyles.cardContainer}>
-                  <View style={styles.flexRowFlexStart}>
-                    <RadioForm
-                      radio_props={radio_props}
-                      initial={-1}
-                      formHorizontal={false}
-                      labelHorizontal={true}
-                      buttonColor={'#FF20B1'}
-                      selectedButtonColor={'#FF20B1'}
-                      buttonOuterColor={'#EBEBEB'}
-                      buttonSize={15}
-                      buttonOuterSize={30}
-                      isSelected={true}
-                      onPress={(value) => {this.setState({value:value})}}
-                    />
-                    <View style={ticketStyles.ticketHolderWrapper}>
-                      <Text numberOfLines={1} style={ticketStyles.ticketHolderHeader}>Alexandra ReallyLongLastName</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.flexRowCenter}>
-                <View style={ticketTransferStyles.cardContainer}>
-                  <View style={styles.flexRowFlexStart}>
-                    <RadioForm
-                      radio_props={radio_props}
-                      initial={-1}
-                      formHorizontal={false}
-                      labelHorizontal={true}
-                      buttonColor={'#FF20B1'}
-                      selectedButtonColor={'#FF20B1'}
-                      buttonOuterColor={'#EBEBEB'}
-                      buttonSize={15}
-                      buttonOuterSize={30}
-                      isSelected={true}
-                      onPress={(value) => {this.setState({value:value})}}
-                    />
-                    <View>
-                      <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.flexRowCenter}>
-                <View style={ticketTransferStyles.cardContainer}>
-                  <View style={styles.flexRowFlexStart}>
-                    <RadioForm
-                      radio_props={radio_props}
-                      initial={-1}
-                      formHorizontal={false}
-                      labelHorizontal={true}
-                      buttonColor={'#FF20B1'}
-                      selectedButtonColor={'#FF20B1'}
-                      buttonOuterColor={'#EBEBEB'}
-                      buttonSize={15}
-                      buttonOuterSize={30}
-                      isSelected={true}
-                      onPress={(value) => {this.setState({value:value})}}
-                    />
-                    <View>
-                      <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
+              {tickets.map((ticket) => {
+                return this.renderCheckBox(checkboxes[ticket.id], ticket)
+              })}
 
             </ScrollView>
           </View>
 
           <View style={[styles.buttonContainer, styles.marginHorizontal]}>
             <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]}>
-              <Text style={styles.buttonText}>Transfer 2 Tickets..</Text>
+              <Text style={styles.buttonText}>Transfer {this.transferCount()} Tickets..</Text>
             </TouchableHighlight>
           </View>
 

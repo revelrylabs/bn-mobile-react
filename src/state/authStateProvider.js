@@ -1,8 +1,6 @@
 import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
-import Bigneon from 'bn-api-node'
-
-const server = new Bigneon.Server({prefix: 'https://staging.bigneon.com/api'});
+import {server} from '../constants/Server'
 
 /* eslint-disable camelcase */
 class AuthContainer extends Container {
@@ -40,7 +38,9 @@ class AuthContainer extends Container {
   }
 
   logOut = async (navigate) => { // eslint-disable-line space-before-function-paren
-    await AsyncStorage.clear();
+    // await AsyncStorage.clear(); // This was maybe throwing errors when calling it on an empty asyncstorage.
+    AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove)
+
     this.setState(this.defaultState, () => {
       navigate('AuthLoading')
     })
@@ -75,16 +75,16 @@ class AuthContainer extends Container {
     }
   }
 
-  signUp = (formData, navigate) => {
-    server.users.register({
-      first_name: 'Bob',
-      last_name: 'Smith',
+  signUp = (formData) => {
+    return server.users.register({
+      first_name: formData.first_name,
+      last_name: formData.last_name,
       email: formData.email,
       password: formData.password,
       phone: '5551234567',
     }).then((res) => {
       console.log(res); // eslint-disable-line no-console
-      navigate('LogIn') // should redirect to LogIn with a message
+      return res
     }).catch((e) => {
       console.error(e); // eslint-disable-line no-console
     });
