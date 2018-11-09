@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight} from 'react-native'
+import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
-import ImageGridStyles from '../styles/event_details/imageGridStyles'
 import {DateTime} from 'luxon'
 import {map} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
-const imageGridStyles = ImageGridStyles.createStyles()
+
+/*  eslint-disable camelcase */
 
 function toSentence(arr) {
   return arr.slice(0, -2).join(', ') +
@@ -36,7 +36,9 @@ export default class Details extends Component {
   get artistNames() {
     const {event: {artists}} = this.props
 
-    if (artists.length === 0) { return null }
+    if (artists.length === 0) {
+      return null
+    }
 
     return toSentence(map(artists, (eventArtist) => eventArtist.artist.name))
   }

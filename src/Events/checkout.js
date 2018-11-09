@@ -13,25 +13,42 @@ const checkoutStyles = CheckoutStyles.createStyles()
 // @TODO: Replace on a per-event level, I guess?
 const maxAllowed = 999999
 
+/*  eslint-disable camelcase */
+
 export default class Checkout extends Component {
   static propTypes = {
     changeScreen: PropTypes.func,
+    event: PropTypes.object,
+    cart: PropTypes.object,
   }
 
   constructor(props) {
     super(props)
 
-    this. state = {
-      quantity: 1,
+    // const {cart: {state}} = props
+
+
+    this.state = {
+      quantity: 1, // @TODO: get form cart state
+      selectedTicket: this.selectedTicket,
     }
+  }
+
+  get selectedTicket() {
+    const {event: {ticket_types}, cart: {state: {ticketTypeId}}} = this.props
+
+    return ticket_types.find((ticket) => ticket.id === ticketTypeId)
   }
 
   incrementTickets = () => {
     const {quantity} = this.state
 
-    if (quantity >= maxAllowed) { return null }
+    if (quantity >= maxAllowed) {
+      return null
+    }
 
     this.setState({quantity: quantity + 1})
+    return null
   }
 
   get incrementStyle() {
@@ -44,10 +61,13 @@ export default class Checkout extends Component {
     const {quantity} = this.state
 
     // Dont decrement below one ticket
-    if (quantity <= 1) { return null }
+    if (quantity <= 1) {
+      return null
+    }
 
     // @TODO: Add a check for max tickets allowed
     this.setState({quantity: quantity - 1})
+    return null
   }
 
   get decrementStyle() {
@@ -57,6 +77,8 @@ export default class Checkout extends Component {
   }
 
   render() {
+    const {selectedTicket} = this.state
+
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
         <View style={checkoutStyles.mainBodyContent}>
@@ -69,7 +91,7 @@ export default class Checkout extends Component {
             <View style={checkoutStyles.row}>
               <View>
                 <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>General Admission</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>{selectedTicket.name}</Text>
               </View>
             </View>
             <View style={checkoutStyles.row}>

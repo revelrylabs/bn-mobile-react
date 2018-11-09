@@ -10,12 +10,13 @@ import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
-import {flatMap, min, max} from 'lodash'
+import {flatMap, min, max, isEmpty} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
+/* eslint-disable camelcase, space-before-function-paren */
 
 const LoadingScreen = ({toggleModal, modalVisible}) => (
   <Modal
@@ -103,13 +104,12 @@ export default class EventShow extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-
-    console.log("New Props:", newProps);
-
     const {screenProps: {store: {state: {selectedEvent}}}} = newProps
 
     // Do we want to check if the event id different, or just always update?
-    if (selectedEvent) { this.setState({event: selectedEvent}) }
+    if (selectedEvent) {
+      this.setState({event: selectedEvent})
+    }
   }
 
   clearEvent() {
@@ -165,16 +165,16 @@ export default class EventShow extends Component {
   }
 
   lowestPrice(ticket_types) {
-    const ticket_pricing = flatMap(ticket_types, (tt) => (
-      tt.ticket_pricing.price_in_cents
+    const ticket_pricing = flatMap(ticket_types, (ticket) => (
+      ticket.ticket_pricing.price_in_cents
     ))
 
     return min(ticket_pricing) / 100
   }
 
   highestPrice(ticket_types) {
-    const ticket_pricing = flatMap(ticket_types, (tt) => (
-      tt.ticket_pricing.price_in_cents
+    const ticket_pricing = flatMap(ticket_types, (ticket) => (
+      ticket.ticket_pricing.price_in_cents
     ))
 
     return max(ticket_pricing) / 100
@@ -183,7 +183,9 @@ export default class EventShow extends Component {
   get ticketRange() {
     const {event: {ticket_types}} = this.state
 
-    if (!ticket_types) { return null }
+    if (!ticket_types) {
+      return null
+    }
 
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
@@ -194,12 +196,21 @@ export default class EventShow extends Component {
     )
   }
 
+  onTicketSelection = async (ticketTypeId, ticketPricingId) => {
+    const {screenProps: {cart}} = this.props
+
+    await cart.selectTicket(ticketTypeId, ticketPricingId)
+    this.changeScreen('checkout')
+  }
+
 
   /* eslint-disable-next-line complexity */
   get showScreen() {
     const {event, currentScreen, selectedPaymentId} = this.state
 
-    if (!event) { return null }
+    if (!event || isEmpty(event)) {
+      return null
+    }
 
     // @TODO: Add a ScrollTo initial position
 
@@ -207,9 +218,9 @@ export default class EventShow extends Component {
     case 'details':
       return <Details event={event} />
     case 'tickets':
-      return <GetTickets event={event} changeScreen={this.changeScreen} />
+      return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
     case 'checkout':
-      return <Checkout event={event} changeScreen={this.changeScreen} />
+      return <Checkout cart={this.props.screenProps.cart} event={event} changeScreen={this.changeScreen} />
     case 'payment':
       return (
         <PaymentTypes
@@ -345,10 +356,9 @@ export default class EventShow extends Component {
   render() {
     const {event, showLoadingModal, showSuccessModal} = this.state
 
-    console.log("Event:", event);
-
-
-    if (!event) { return null }
+    if (!event) {
+      return null
+    }
 
     return (
       <View style={{backgroundColor: 'white'}}>

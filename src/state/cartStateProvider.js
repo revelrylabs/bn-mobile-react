@@ -8,10 +8,14 @@ class CartContainer extends Container {
 
     this.state = {
       eventId: '',
-      ticketId: '',
+      tickeTypeId: '',
+      ticketPricingId: '',
     }
   }
 
+  selectTicket = async (ticketTypeId, ticketPricingId) => {
+    this.setState({ticketTypeId, ticketPricingId})
+  }
 }
 
 export {
