@@ -18,7 +18,7 @@ function toSentence(arr) {
     arr.slice(-2).join(arr.length === 2 ? ' and ' : ', and ');
 }
 
-export default class Details extends Component {
+export default class VenueShow extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
     navigation: PropTypes.object.isRequired,
@@ -52,143 +52,6 @@ export default class Details extends Component {
     }
 
     return 'This event is for all ages.'
-  }
-
-  get youtube() {
-    return null
-
-    // return (
-    //   <View>
-    //     <View style={eventDetailsStyles.iconSectionHeaderContainer}>
-    //       <Image
-    //         style={eventDetailsStyles.iconYoutube}
-    //         source={require('../../assets/icon-youtube.png')}
-    //       />
-    //       <Text style={eventDetailsStyles.iconSectionHeader}>YOUTUBE</Text>
-    //     </View>
-
-    //     <View style={eventDetailsStyles.youtubeVideoContainer}>
-    //       <Image
-    //         style={eventDetailsStyles.videoBkgd}
-    //         source={require('../../assets/video-youtube-bkgd.png')}
-    //       />
-    //       <Image
-    //         style={eventDetailsStyles.videoBkgd}
-    //         source={require('../../assets/video-bkgd-overlay.png')}
-    //       />
-    //       <Icon style={eventDetailsStyles.iconPlayLink} name="play-circle-outline" />
-    //     </View>
-    //   </View>
-    // )
-  }
-
-  get interested() {
-    return null
-
-    // return (
-    //   <View style={eventDetailsStyles.eventDetailsContainer}>
-    //     <View style={eventDetailsStyles.eventDetailsLeft}>
-    //       <View style={eventDetailsStyles.avatarContainer}>
-    //         <Image
-    //           style={eventDetailsStyles.avatar}
-    //           source={require('../../assets/avatar-male.png')}
-    //         />
-    //         <Image
-    //           style={eventDetailsStyles.avatar}
-    //           source={require('../../assets/avatar-female-2.png')}
-    //         />
-    //         <Image
-    //           style={eventDetailsStyles.avatar}
-    //           source={require('../../assets/avatar-male-2.png')}
-    //         />
-    //         <Image
-    //           style={eventDetailsStyles.avatar}
-    //           source={require('../../assets/avatar-female-3.png')}
-    //         />
-    //         <Image
-    //           style={eventDetailsStyles.avatar}
-    //           source={require('../../assets/avatar-female.png')}
-    //         />
-    //         <View style={eventDetailsStyles.attendeeContainer}>
-    //           <Text style={eventDetailsStyles.attendeeNumber}>+{event.total_interest}</Text>
-    //         </View>
-    //       </View>
-    //     </View>
-    //   </View>
-    // )
-  }
-
-  get instagram() {
-    return null
-
-    // return  (
-    //   <View>
-    //     <View style={eventDetailsStyles.iconSectionHeaderContainer}>
-    //       <Image
-    //         style={eventDetailsStyles.iconInstagram}
-    //         source={require('../../assets/icon-instagram.png')}
-    //       />
-    //       <Text style={eventDetailsStyles.iconSectionHeader}>INSTAGRAM</Text>
-    //     </View>
-
-    //     <View style={imageGridStyles.imageGridContainer}>
-    //       <Image
-    //         style={imageGridStyles.image}
-    //         source={require('../../assets/image-grid-1.png')}
-    //       />
-    //       <Image
-    //         style={imageGridStyles.image}
-    //         source={require('../../assets/image-grid-2.png')}
-    //       />
-    //       <Image
-    //         style={imageGridStyles.image}
-    //         source={require('../../assets/image-grid-3.png')}
-    //       />
-    //     </View>
-    //     <View style={imageGridStyles.imageGridContainer}>
-    //       <Image
-    //         style={imageGridStyles.image}
-    //         source={require('../../assets/image-grid-1.png')}
-    //       />
-    //       <Image
-    //         style={imageGridStyles.image}
-    //         source={require('../../assets/image-grid-2.png')}
-    //       />
-    //       <Image
-    //         style={imageGridStyles.image}
-    //         source={require('../../assets/image-grid-3.png')}
-    //       />
-    //     </View>
-    //   </View>
-    // )
-  }
-
-  get spotify() {
-    return null
-
-    // return (
-    //   <View>
-    //     <View style={eventDetailsStyles.iconSectionHeaderContainer}>
-    //       <Image
-    //         style={eventDetailsStyles.iconSpotify}
-    //         source={require('../../assets/icon-spotify.png')}
-    //       />
-    //       <Text style={eventDetailsStyles.iconSectionHeader}>SPOTIFY</Text>
-    //     </View>
-
-    //     <View style={eventDetailsStyles.imagePlaceholderContainer}>
-    //       <Image
-    //         style={eventDetailsStyles.imagePlaceholder}
-    //         source={require('../../assets/spotify-placeholder.png')}
-    //       />
-    //       <View style={eventDetailsStyles.sliderArrowContainer}>
-    //         <Icon style={eventDetailsStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
-    //         <Icon style={eventDetailsStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
-    //       </View>
-    //     </View>
-
-    //   </View>
-    // )
   }
 
   render() {
@@ -227,8 +90,6 @@ export default class Details extends Component {
             </TouchableHighlight>
           </View>
 
-          {this.interested}
-
           <View style={eventDetailsStyles.eventDescriptionContainer}>
 
             <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
@@ -236,7 +97,7 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
             </View>
 
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => {navigate('VenueShow')}}>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
               <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={eventDetailsStyles.bodyText}>
@@ -274,10 +135,6 @@ export default class Details extends Component {
             </Text>
 
           </View>
-
-          {this.youtube}
-          {this.instagram}
-          {this.spotify}
 
         </View>
         <View style={eventDetailsStyles.spacerFooter} />
