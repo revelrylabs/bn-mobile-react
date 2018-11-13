@@ -242,13 +242,13 @@ export default class Details extends Component {
             <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.props.changeScreen('venueShow')}>
               <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
             </TouchableHighlight>
-            <Text style={eventDetailsStyles.bodyText}>
+            <Text style={[eventDetailsStyles.bodyText, styles.paddingLeft]}>
               {venue.address}, {venue.city}, {venue.state} {venue.postal_code}, {venue.country}
             </Text>
-            <Text style={[eventDetailsStyles.bodyText, styles.noPaddingBottom]}>
+            <Text style={[eventDetailsStyles.bodyText, styles.noPaddingBottom, styles.paddingLeft]}>
               {doorTime.toFormat('DDDD')}
             </Text>
-            <Text style={eventDetailsStyles.bodyText}>
+            <Text style={[eventDetailsStyles.bodyText, styles.paddingLeft]}>
               Doors {doorTime.toFormat('t ZZZZ')} - Show {eventStart.toFormat('t ZZZZ')}
             </Text>
 
@@ -256,7 +256,7 @@ export default class Details extends Component {
               <Icon style={eventDetailsStyles.iconEventDescription} name="person-outline" />
               <Text style={eventDetailsStyles.sectionHeader}>PERFORMING ARTISTS</Text>
             </View>
-            <Text style={eventDetailsStyles.bodyText}>
+            <Text style={[eventDetailsStyles.bodyText, styles.paddingLeft]}>
               {this.artistNames}
             </Text>
 
@@ -264,7 +264,7 @@ export default class Details extends Component {
               <Icon style={eventDetailsStyles.iconEventDescription} name="error-outline" />
               <Text style={eventDetailsStyles.sectionHeader}>AGE RESTRICTIONS</Text>
             </View>
-            <Text style={eventDetailsStyles.bodyText}>
+            <Text style={[eventDetailsStyles.bodyText, styles.paddingLeft]}>
               {this.ageLimit}
             </Text>
 
@@ -272,7 +272,7 @@ export default class Details extends Component {
               <Icon style={eventDetailsStyles.iconEventDescription} name="music-note" />
               <Text style={eventDetailsStyles.sectionHeader}>EVENT DESCRIPTION</Text>
             </View>
-            <Text style={eventDetailsStyles.bodyText}>
+            <Text style={[eventDetailsStyles.bodyText, styles.paddingLeft]}>
               {event.additional_info}
             </Text>
 

@@ -4,11 +4,14 @@ import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
+import LoginStyles from '../styles/login/loginStyles'
+import {LinearGradient} from 'expo'
 import {DateTime} from 'luxon'
 import {map} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const loginStyles = LoginStyles.createStyles()
 
 /*  eslint-disable camelcase */
 
@@ -58,7 +61,21 @@ export default class VenueShow extends Component {
           </View>
 
           <View style={styles.paddingTop}>
+            <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.logIn}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#5491CC', '#9A68B2', '#E53D96']}
+                style={loginStyles.button}
+              >
+                <Text style={loginStyles.buttonText}>Get Directions</Text>
+              </LinearGradient>
+            </TouchableHighlight>
           </View>
+
+          <Text style={eventDetailsStyles.bodyText}>
+            The Midway is a new, multifaceted creative complex, located in San Fransisco's burgeoning Dogpatch neighborhood. Equal parts creative laboratory...
+          </Text>
 
           <View style={eventDetailsStyles.eventDescriptionContainer}>
 

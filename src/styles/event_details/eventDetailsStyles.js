@@ -149,7 +149,6 @@ const EventDetailsStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     paddingBottom: globalPaddingSmall,
-    paddingLeft: globalPadding,
   },
   iconSectionHeader: {
     color: textColor,
