@@ -21,7 +21,6 @@ function toSentence(arr) {
 export default class VenueShow extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired,
   }
 
   get topLineInfo() {
@@ -59,7 +58,6 @@ export default class VenueShow extends Component {
     const {venue} = event
     const eventStart = DateTime.fromISO(event.event_start)
     const doorTime = DateTime.fromISO(event.door_time)
-    const {navigation: {navigate}} = this.props
 
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
@@ -67,7 +65,7 @@ export default class VenueShow extends Component {
           {this.topLineInfo}
           <View style={styles.flexRowSpaceBetween}>
             <View>
-              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>{event.name}</Text>
+              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>Venue Show Page</Text>
             </View>
             <View style={eventDetailsStyles.calendarWrapper}>
               <Text style={eventDetailsStyles.calendarMonth}>{eventStart.toFormat('LLL')}</Text>

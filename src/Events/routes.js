@@ -5,7 +5,6 @@ import EventsSearch from './search'
 import GetTickets from './tickets'
 import Checkout from './checkout'
 import PaymentTypes from './payments'
-import VenueShow from './venueShow'
 
 const EventsIndexRoute = {
   screen: EventsIndex,
@@ -54,13 +53,6 @@ const PaymentTypesRoute = {
   screen: PaymentTypes,
   navigationOptions: {
     title: 'PaymentTypes',
-  },
-}
-
-const VenueShowRoute = {
-  screen: VenueShow,
-  navigationOptions: {
-    header: null,
   },
 }
 

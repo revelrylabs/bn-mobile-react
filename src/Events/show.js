@@ -9,6 +9,7 @@ import Details from './details'
 import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
+import VenueShow from './venueShow'
 import ModalStyles from '../styles/shared/modalStyles'
 import {flatMap, min, max, isEmpty} from 'lodash'
 
@@ -207,6 +208,7 @@ export default class EventShow extends Component {
   /* eslint-disable-next-line complexity */
   get showScreen() {
     const {event, currentScreen, selectedPaymentId} = this.state
+    const {navigation} = this.props
 
     if (!event || isEmpty(event)) {
       return null
@@ -216,7 +218,7 @@ export default class EventShow extends Component {
 
     switch (currentScreen) {
     case 'details':
-      return <Details event={event} />
+      return <Details event={event} changeScreen={this.changeScreen} />
     case 'tickets':
       return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
     case 'checkout':
@@ -230,6 +232,8 @@ export default class EventShow extends Component {
           selectPayment={this.selectPayment}
         />
       )
+    case 'venueShow':
+      return <VenueShow event={event} changeScreen={this.changeScreen} />
     default:
       return <Details />
     }

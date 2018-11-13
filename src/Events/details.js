@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, TouchableHighlight} from 'react-native'
-import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -22,17 +21,11 @@ function toSentence(arr) {
 export default class Details extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired,
+    changeScreen: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      venueShow: props.navigation.getParam('venueShow', false),
-    }
-
-    this.loadEvent()
   }
 
   get topLineInfo() {
@@ -203,8 +196,7 @@ export default class Details extends Component {
   }
 
   render() {
-    const {navigation: {navigate}} = this.props
-    const {event} = this.props
+    const {event, changeScreen} = this.props
     const {venue} = event
     const eventStart = DateTime.fromISO(event.event_start)
     const doorTime = DateTime.fromISO(event.door_time)
@@ -247,7 +239,7 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
             </View>
 
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('VenueShow')}>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.props.changeScreen('venueShow')}>
               <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={eventDetailsStyles.bodyText}>
