@@ -23,16 +23,6 @@ export default class VenueShow extends Component {
     event: PropTypes.object.isRequired,
   }
 
-  get topLineInfo() {
-    const {event: {top_line_info}} = this.props
-
-    if (top_line_info) {
-      return <Text style={eventDetailsStyles.descriptionSubHeader}>{top_line_info}</Text>
-    }
-
-    return null
-  }
-
   get artistNames() {
     const {event: {artists}} = this.props
 
@@ -62,30 +52,12 @@ export default class VenueShow extends Component {
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
         <View style={eventDetailsStyles.mainBodyContent}>
-          {this.topLineInfo}
-          <View style={styles.flexRowSpaceBetween}>
-            <View>
-              <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>Venue Show Page</Text>
-            </View>
-            <View style={eventDetailsStyles.calendarWrapper}>
-              <Text style={eventDetailsStyles.calendarMonth}>{eventStart.toFormat('LLL')}</Text>
-              <Text style={eventDetailsStyles.calendarDate}>{eventStart.toFormat('dd')}</Text>
-            </View>
+          <View>
+            <Text numberOfLines={2} style={eventDetailsStyles.descriptionHeader}>The Midway</Text>
+            <Text style={eventDetailsStyles.descriptionSubHeader}>600 Marin St. San Fransisco, CA 94124</Text>
           </View>
 
-          <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
-            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}>
-              <View style={styles.flexRowCenter}>
-                <Icon style={eventDetailsStyles.buttonRoundedIcon} name="star" />
-                <Text style={eventDetailsStyles.buttonRoundedText}>I&apos;m Interested</Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]}>
-              <View style={styles.flexRowCenter}>
-                <Icon style={eventDetailsStyles.buttonRoundedIcon} name="reply" />
-                <Text style={eventDetailsStyles.buttonRoundedText}>Share Event</Text>
-              </View>
-            </TouchableHighlight>
+          <View style={styles.paddingTop}>
           </View>
 
           <View style={eventDetailsStyles.eventDescriptionContainer}>
