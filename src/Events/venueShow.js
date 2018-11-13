@@ -77,6 +77,10 @@ export default class VenueShow extends Component {
             The Midway is a new, multifaceted creative complex, located in San Fransisco's burgeoning Dogpatch neighborhood. Equal parts creative laboratory...
           </Text>
 
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <Text style={[styles.linkText, styles.paddingBottom]}>Read More</Text>
+          </TouchableHighlight>
+
           <View style={eventDetailsStyles.eventDescriptionContainer}>
 
             <View style={eventDetailsStyles.eventDescriptionHeaderWrapper}>
