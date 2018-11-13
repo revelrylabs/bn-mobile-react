@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, TouchableHighlight} from 'react-native'
+import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -22,6 +23,16 @@ export default class Details extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
     navigation: PropTypes.object.isRequired,
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      venueShow: props.navigation.getParam('venueShow', false),
+    }
+
+    this.loadEvent()
   }
 
   get topLineInfo() {
@@ -192,11 +203,11 @@ export default class Details extends Component {
   }
 
   render() {
+    const {navigation: {navigate}} = this.props
     const {event} = this.props
     const {venue} = event
     const eventStart = DateTime.fromISO(event.event_start)
     const doorTime = DateTime.fromISO(event.door_time)
-    const {navigation: {navigate}} = this.props
 
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
@@ -236,7 +247,7 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
             </View>
 
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => {navigate('VenueShow')}}>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('VenueShow')}>
               <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={eventDetailsStyles.bodyText}>
