@@ -20,15 +20,19 @@ function delay(time) {
   }));
 }
 
+// TODO: rework the static placeholders into pulling from state of eventManager
+// state should be eventToScan or something
 export default class EventScanner extends Component {
   static propTypes = {
-    onScan: PropTypes.func.isRequired,
+    // onScan: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
   state = {
     hasCameraPermission: null,
     read: null,
+    checkInMode: 'automatic',
   }
 
   async componentWillMount() {
@@ -39,8 +43,9 @@ export default class EventScanner extends Component {
 
   debounce = false;
 
+  // TODO: switch scan handler based on mode
   handleBarCodeScanned = async ({_type, data}) => {
-    const {onScan} = () => {}// this.props;
+    const {screenProps: {eventManager}} = this.props;
 
     await delay(500);
 
@@ -52,13 +57,15 @@ export default class EventScanner extends Component {
       return;
     }
     this.setState({read: data});
+    const parsed = JSON.parse(data);
 
-    onScan(data, this);
+    eventManager._redeem(parsed, this);
   }
 
   render() {
-    const {hasCameraPermission} = this.state
-    const {navigation: {navigate}} = this.props
+    const {hasCameraPermission, checkInMode} = this.state;
+    const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
+    const {statusMessage} = eventManager.state;
 
     if (hasCameraPermission === null) {
       return <Text>Requesting for camera permission</Text>;
@@ -66,6 +73,7 @@ export default class EventScanner extends Component {
     if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     }
+
     return (
       <View>
         <BarCodeScanner
@@ -85,16 +93,21 @@ export default class EventScanner extends Component {
                 }}
               />
             </View>
+            {/* TODO: add a bit of state for auto/manual and a toggle handler */}
             <TouchableHighlight style={eventScannerStyles.pillContainer}>
               <View style={styles.flexRowCenter}>
                 <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
-                <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
+                <Text style={eventScannerStyles.pillTextPrimary}>{checkInMode.toUpperCase()}</Text>
               </View>
             </TouchableHighlight>
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
-
+          {/* TODO: turns this silly message into whatever the mocks want; ask brittany for help */}
           <View>
+            <Text style={[eventScannerStyles.pillTextWhite]}>{statusMessage}</Text>
+          </View>
+
+          {/* <View>
             <View style={eventScannerStyles.headerActionsWrapper}>
               <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
                 <View style={styles.flexRowFlexStartCenter}>
@@ -123,7 +136,7 @@ export default class EventScanner extends Component {
                 </View>
               </View>
             </ScrollView>
-          </View>
+          </View> */}
 
         </View>
 

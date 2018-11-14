@@ -1,6 +1,10 @@
 import {Container} from 'unstated'
 import {server} from '../constants/Server'
-
+const SCAN_MESSAGES = {
+  success: 'Ticket valid!',
+  alreadyRedeemed: 'Already redeemed',
+  serverError: 'We found an issue',
+};
 /* eslint-disable camelcase,space-before-function-paren, complexity */
 class EventManagerContainer extends Container {
   constructor(props = {}) {
@@ -12,7 +16,24 @@ class EventManagerContainer extends Container {
       statusIcon: '',
       ticketInfo: {},
       scanType: 'redeem',
+      events: [],
+      eventToScan: {},
     }
+  }
+
+  get events() {
+    return this.state.events
+  }
+
+  // TODO: filter by live vs upcoming?
+  getEvents = async () => {
+    const {data} = await server.events.index()
+
+    this.setState({
+      // lastUpdate: DateTime.local(),
+      events: data.data,
+      paging: data.paging,
+    })
   }
 
   _transfer = async () => {
@@ -25,24 +46,33 @@ class EventManagerContainer extends Container {
     }
   };
 
-  _redeem = async () => {
+  _resetStatusMessage = () => {
+    setTimeout(() => {
+      this.setState({statusMessage: ''});
+    }, 2000)
+  }
+
+  _redeem = async (ticket, scanner) => {
+    let message;
     try {
       const result = await server.tickets.redeem.redeem({
-        ticket_id: this.state.ticketInfo.id,
-        redeem_key: this.state.ticketInfo.redeem_key,
+        ticket_id: ticket.data.id,
+        redeem_key: ticket.data.redeem_key,
       });
-      let message;
 
       if (result.data.success) {
         // Redeemed
-        message = 'Checked In';
+        message = SCAN_MESSAGES['success'];
       } else {
-        message = result.data.message;
+        // TODO: this is a general error message, not server; not sure if we should
+        // cover it up w/ "already redeemed," but that's only thing I've seen so far
+        message = SCAN_MESSAGES['alreadyRedeemed'];
       }
 
-      this.setState({statusMessage: message, ticketInfo: {}});
+      this.setState({statusMessage: message, ticketInfo: {}}, this._resetStatusMessage);
     } catch (e) {
-      this.setState({statusMessage: e.message || 'Error From Server', ticketInfo: {}});
+      message = SCAN_MESSAGES['serverError']
+      this.setState({statusMessage: message || 'Error From Server', ticketInfo: {}}, this._resetStatusMessage);
     }
 
   };
