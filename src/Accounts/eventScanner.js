@@ -102,12 +102,13 @@ export default class EventScanner extends Component {
             </TouchableHighlight>
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
-          {/* TODO: turns this silly message into whatever the mocks want; ask brittany for help */}
-          <View>
-            <Text style={[eventScannerStyles.pillTextWhite]}>{statusMessage}</Text>
+
+          <View style={eventScannerStyles.messageContainer}>
+            <Icon style={eventScannerStyles.messageIconError} name="error-outline" />
+            <Text style={eventScannerStyles.messageText}>{statusMessage} Error Message</Text>
           </View>
 
-          {/* <View>
+          <View>
             <View style={eventScannerStyles.headerActionsWrapper}>
               <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
                 <View style={styles.flexRowFlexStartCenter}>
@@ -136,7 +137,7 @@ export default class EventScanner extends Component {
                 </View>
               </View>
             </ScrollView>
-          </View> */}
+          </View>
 
         </View>
 

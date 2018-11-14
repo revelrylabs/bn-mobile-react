@@ -5,9 +5,12 @@ import {
   pillContainerColor,
   sectionHeaderColor,
   successColor,
+  errorColor,
+  errorTextColor,
   bodyFontSize,
   subnavFontSize,
   headerSecondaryFontSize,
+  sectionHeaderFontSize,
   globalFontSemiBold,
   globalFontRegular,
   globalPaddingTiny,
@@ -21,6 +24,7 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const iconFontSize = 32
+export const iconMessageFontSize = 48
 
 const EventScannerStyles = {
   // CONTAINERS
@@ -33,6 +37,11 @@ const EventScannerStyles = {
     alignItems: 'center',
     paddingHorizontal: globalPadding,
     paddingTop: globalPaddingLarge,
+  },
+  messageContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 
   // MAIN BODY STYLES
@@ -96,6 +105,28 @@ const EventScannerStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: headerSecondaryFontSize,
     width: 275,
+  },
+
+  // MESSAGE STYLES
+  messageText: {
+    color: white,
+    fontFamily: globalFontSemiBold,
+    fontSize: sectionHeaderFontSize,
+  },
+  messageIconError: {
+    color: errorColor,
+    fontSize: iconMessageFontSize,
+    paddingBottom: globalPaddingSmall,
+  },
+  messageIconSuccess: {
+    color: successColor,
+    fontSize: iconMessageFontSize,
+    paddingBottom: globalPaddingSmall,
+  },
+  messageIconCancel: {
+    color: errorTextColor,
+    fontSize: iconMessageFontSize,
+    paddingBottom: globalPaddingSmall,
   },
 }
 
