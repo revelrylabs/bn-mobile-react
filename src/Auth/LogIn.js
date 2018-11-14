@@ -66,7 +66,7 @@ export default class LogIn extends Component {
             secureTextEntry
             onChangeText={(password) => this.setState({password})}
           />
-          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.logIn}>
+          <TouchableHighlight style={[styles.buttonContainer, styles.marginBottom]} onPress={this.logIn}>
             <LinearGradient
               start={{x: 0, y: 0}}
               end={{x: 1, y: 0}}

@@ -61,7 +61,7 @@ export default class VenueShow extends Component {
           </View>
 
           <View style={styles.paddingTop}>
-            <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.logIn}>
+            <TouchableHighlight style={[styles.buttonContainer, styles.marginBottom]} onPress={this.logIn}>
               <LinearGradient
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 0}}
@@ -73,8 +73,8 @@ export default class VenueShow extends Component {
             </TouchableHighlight>
           </View>
 
-          <Text style={eventDetailsStyles.bodyText}>
-            The Midway is a new, multifaceted creative complex, located in San Fransisco's burgeoning Dogpatch neighborhood. Equal parts creative laboratory...
+          <Text numberOfLines={3} style={eventDetailsStyles.bodyText}>
+            The Midway is a new, multifaceted creative complex, located in San Fransisco's burgeoning Dogpatch neighborhood. Equal parts creative laboratory multifaceted creative complex, located in San Fransisco's burgeoning Dogpatch neighborhood. Equal parts creative laboratory.
           </Text>
 
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
@@ -82,11 +82,10 @@ export default class VenueShow extends Component {
           </TouchableHighlight>
 
           <View style={eventDetailsStyles.eventDescriptionContainer}>
-          
+            <Text style={styles.sectionHeader}>Upcoming</Text>
           </View>
 
         </View>
-        <View style={eventDetailsStyles.spacerFooter} />
       </View>
 
     )
