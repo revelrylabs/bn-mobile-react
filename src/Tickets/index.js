@@ -23,7 +23,7 @@ AnimatedTicket.propTypes = {
 }
 
 const Ticket = ({navigate, ticket}) => (
-    <View>
+    <View style={ticketStyles.emptyStateContainer}>
       <Image
         style={ticketStyles.emptyStateIcon}
         source={require('../../assets/icon-empty-state.png')}
