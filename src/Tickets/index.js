@@ -23,61 +23,60 @@ AnimatedTicket.propTypes = {
 }
 
 const Ticket = ({navigate, ticket}) => (
-    <View style={ticketStyles.emptyStateContainer}>
-      <Image
-        style={ticketStyles.emptyStateIcon}
-        source={require('../../assets/icon-empty-state.png')}
-      />
-      <Text style={ticketStyles.emptyStateText}>
-        Looks like you haven't attended any events yet! Why not tap browse and find your first?
-      </Text>
-    </View>
-
-
-
-  // <View>
-  //   <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
-  //     <View style={ticketStyles.ticketContainer}>
-  //       <Image
-  //         style={ticketStyles.eventImage}
-  //         source={ticket.image}
-  //       />
-  //       <Image
-  //         style={ticketStyles.eventImageOverlay}
-  //         source={require('../../assets/event-img-overlay.png')}
-  //       />
-  //       <View style={ticketStyles.detailsContainer}>
-  //         <View>
-  //           <View style={styles.iconLinkContainer}>
-  //             <Icon style={ticketStyles.iconTicket} name="local-activity" />
-  //             <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
-  //           </View>
-  //         </View>
-  //         <View>
-  //           <Text style={ticketStyles.header}>{ticket.name}</Text>
-  //           <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
-  //         </View>
-  //       </View>
-  //     </View>
-  //   </TouchableHighlight>
-  //
-  //   <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
-  //     <View style={ticketStyles.detailsContainerBottom}>
-  //       <View>
-  //         <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
-  //         <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
-  //       </View>
-  //       <View>
-  //         <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
-  //         <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
-  //       </View>
-  //       <View>
-  //         <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
-  //         <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
-  //       </View>
-  //     </View>
-  //   </View>
+  // TODO: Set up empty state component outside of this const
+  // <View style={ticketStyles.emptyStateContainer}>
+  //   <Image
+  //     style={ticketStyles.emptyStateIcon}
+  //     source={require('../../assets/icon-empty-state.png')}
+  //   />
+  //   <Text style={ticketStyles.emptyStateText}>
+  //     Looks like you haven't attended any events yet! Why not tap browse and find your first?
+  //   </Text>
   // </View>
+
+  <View>
+    <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
+      <View style={ticketStyles.ticketContainer}>
+        <Image
+          style={ticketStyles.eventImage}
+          source={ticket.image}
+        />
+        <Image
+          style={ticketStyles.eventImageOverlay}
+          source={require('../../assets/event-img-overlay.png')}
+        />
+        <View style={ticketStyles.detailsContainer}>
+          <View>
+            <View style={styles.iconLinkContainer}>
+              <Icon style={ticketStyles.iconTicket} name="local-activity" />
+              <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
+            </View>
+          </View>
+          <View>
+            <Text style={ticketStyles.header}>{ticket.name}</Text>
+            <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
+          </View>
+        </View>
+      </View>
+    </TouchableHighlight>
+
+    <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
+      <View style={ticketStyles.detailsContainerBottom}>
+        <View>
+          <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
+          <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
+        </View>
+        <View>
+          <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
+          <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
+        </View>
+        <View>
+          <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
+          <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
+        </View>
+      </View>
+    </View>
+  </View>
 )
 
 Ticket.propTypes = {
