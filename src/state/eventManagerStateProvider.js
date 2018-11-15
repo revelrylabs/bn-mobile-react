@@ -5,6 +5,7 @@ const SCAN_MESSAGES = {
   alreadyRedeemed: 'Already redeemed',
   serverError: 'We found an issue',
 };
+const SCAN_MESSAGE_TIMEOUT = 3000;
 /* eslint-disable camelcase,space-before-function-paren, complexity */
 class EventManagerContainer extends Container {
   constructor(props = {}) {
@@ -49,7 +50,7 @@ class EventManagerContainer extends Container {
   _resetStatusMessage = () => {
     setTimeout(() => {
       this.setState({statusMessage: ''});
-    }, 2000)
+    }, SCAN_MESSAGE_TIMEOUT)
   }
 
   _redeem = async (ticket, scanner) => {
