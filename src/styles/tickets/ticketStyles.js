@@ -100,6 +100,17 @@ const TicketStyles = {
   iconTicketText: {
     color: white,
   },
+
+  // EMPTY STATE STYLES
+  emptyStateIcon: {
+    height: 150,
+    width: 120,
+  },
+  emptyStateText: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
+  },
 }
 
 function createStyles(overrides = {}) {

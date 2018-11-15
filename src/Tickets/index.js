@@ -24,6 +24,13 @@ AnimatedTicket.propTypes = {
 
 const Ticket = ({navigate, ticket}) => (
     <View>
+      <Image
+        style={ticketStyles.emptyStateIcon}
+        source={require('../../assets/icon-empty-state.png')}
+      />
+      <Text style={ticketStyles.emptyStateText}>
+        Looks like you haven't attended any events yet! Why not tap browse and find your first?
+      </Text>
     </View>
 
 
