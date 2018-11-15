@@ -20,6 +20,7 @@ const IMAGES = [
   require('./Icon-1024.png'),
   require('./icon-account-active.png'),
   require('./icon-account.png'),
+  require('./icon-empty-state.png'),
   require('./icon-explore-active.png'),
   require('./icon-explore.png'),
   require('./icon-facebook.png'),

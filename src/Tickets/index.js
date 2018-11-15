@@ -23,49 +23,54 @@ AnimatedTicket.propTypes = {
 }
 
 const Ticket = ({navigate, ticket}) => (
-  <View>
-    <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
-      <View style={ticketStyles.ticketContainer}>
-        <Image
-          style={ticketStyles.eventImage}
-          source={ticket.image}
-        />
-        <Image
-          style={ticketStyles.eventImageOverlay}
-          source={require('../../assets/event-img-overlay.png')}
-        />
-        <View style={ticketStyles.detailsContainer}>
-          <View>
-            <View style={styles.iconLinkContainer}>
-              <Icon style={ticketStyles.iconTicket} name="local-activity" />
-              <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
-            </View>
-          </View>
-          <View>
-            <Text style={ticketStyles.header}>{ticket.name}</Text>
-            <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
-          </View>
-        </View>
-      </View>
-    </TouchableHighlight>
-
-    <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
-      <View style={ticketStyles.detailsContainerBottom}>
-        <View>
-          <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
-          <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
-        </View>
-        <View>
-          <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
-          <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
-        </View>
-        <View>
-          <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
-          <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
-        </View>
-      </View>
+    <View>
     </View>
-  </View>
+
+
+
+  // <View>
+  //   <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
+  //     <View style={ticketStyles.ticketContainer}>
+  //       <Image
+  //         style={ticketStyles.eventImage}
+  //         source={ticket.image}
+  //       />
+  //       <Image
+  //         style={ticketStyles.eventImageOverlay}
+  //         source={require('../../assets/event-img-overlay.png')}
+  //       />
+  //       <View style={ticketStyles.detailsContainer}>
+  //         <View>
+  //           <View style={styles.iconLinkContainer}>
+  //             <Icon style={ticketStyles.iconTicket} name="local-activity" />
+  //             <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
+  //           </View>
+  //         </View>
+  //         <View>
+  //           <Text style={ticketStyles.header}>{ticket.name}</Text>
+  //           <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
+  //         </View>
+  //       </View>
+  //     </View>
+  //   </TouchableHighlight>
+  //
+  //   <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
+  //     <View style={ticketStyles.detailsContainerBottom}>
+  //       <View>
+  //         <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
+  //         <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
+  //       </View>
+  //       <View>
+  //         <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
+  //         <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
+  //       </View>
+  //       <View>
+  //         <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
+  //         <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
+  //       </View>
+  //     </View>
+  //   </View>
+  // </View>
 )
 
 Ticket.propTypes = {
