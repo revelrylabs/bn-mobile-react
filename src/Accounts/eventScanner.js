@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import {
+  MaterialIcons,
+  EvilIcons,
+} from '@expo/vector-icons'
 
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -20,11 +24,29 @@ function delay(time) {
   }));
 }
 
-// TODO: rework the static placeholders into pulling from state of eventManager
-// state should be eventToScan or something
+const SCAN_MESSAGES = {
+  success: 'Ticket valid!',
+  alreadyRedeemed: 'Already redeemed',
+  serverError: 'We found an issue',
+};
+
+const SCAN_STYLES = {
+  success: 'messageIconSuccess',
+  alreadyRedeemed: 'messageIconCancel',
+  serverError: 'messageIconError',
+};
+
+// EvilIcons names
+const SCAN_ICONS = {
+  success: 'check',
+  alreadyRedeemed: 'close-o',
+  serverError: 'exclamation',
+};
+
+// TODO: this should probably use eventToScan state (see eventManager and
+// eventManagerStateProvider) to validate tickets against currently selected event
 export default class EventScanner extends Component {
   static propTypes = {
-    // onScan: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
     screenProps: PropTypes.object.isRequired,
   }
@@ -43,7 +65,7 @@ export default class EventScanner extends Component {
 
   debounce = false;
 
-  // TODO: switch scan handler based on mode
+  // TODO: switch scan handler based on mode (or perhaps just remove scanner in manual mode?)
   handleBarCodeScanned = async ({_type, data}) => {
     const {screenProps: {eventManager}} = this.props;
 
@@ -62,10 +84,27 @@ export default class EventScanner extends Component {
     eventManager._redeem(parsed, this);
   }
 
+  statusMessage(type) {
+    if (type === null) {
+      return;
+    }
+
+    const copy = SCAN_MESSAGES[type];
+    const styles = SCAN_STYLES[type];
+    const icon = SCAN_ICONS[type];
+
+    return (
+      <View style={eventScannerStyles.messageContainer}>
+        <EvilIcons style={eventScannerStyles[styles]} name={icon} />
+        <Text style={eventScannerStyles.messageText}>{copy}</Text>
+      </View>
+    );
+  }
+
   render() {
     const {hasCameraPermission, checkInMode} = this.state;
     const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
-    const {statusMessage} = eventManager.state;
+    const {scanResult} = eventManager.state;
 
     if (hasCameraPermission === null) {
       return <Text>Requesting for camera permission</Text>;
@@ -85,7 +124,7 @@ export default class EventScanner extends Component {
 
           <View style={[eventScannerStyles.headerActionsWrapper, styles.flexRowSpaceBetween]}>
             <View style={eventDetailsStyles.backArrowCircleContainer}>
-              <Icon
+              <MaterialIcons
                 style={eventDetailsStyles.backArrow}
                 name="close"
                 onPress={() => {
@@ -93,7 +132,7 @@ export default class EventScanner extends Component {
                 }}
               />
             </View>
-            {/* TODO: add a bit of state for auto/manual and a toggle handler */}
+            {/* TODO: add a bit of state for auto/manual modes and a toggle handler */}
             <TouchableHighlight style={eventScannerStyles.pillContainer}>
               <View style={styles.flexRowCenter}>
                 <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
@@ -103,12 +142,13 @@ export default class EventScanner extends Component {
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
 
-          <View style={eventScannerStyles.messageContainer}>
-            <Icon style={eventScannerStyles.messageIconError} name="error-outline" />
-            <Text style={eventScannerStyles.messageText}>{statusMessage} Error Message</Text>
-          </View>
+          {this.statusMessage(scanResult)}
 
+          {/* TODO: fill in guest info panel, remove whitespace style workaround */}
           <View>
+            <Text>&nbsp; &nbsp; &nbsp;</Text>
+          </View>
+          {/* <View>
             <View style={eventScannerStyles.headerActionsWrapper}>
               <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
                 <View style={styles.flexRowFlexStartCenter}>
@@ -122,7 +162,7 @@ export default class EventScanner extends Component {
                     <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
                     <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
                   </View>
-                  <Icon style={eventScannerStyles.checkIcon} name="check-circle" />
+                  <MaterialIcons style={eventScannerStyles.checkIcon} name="check-circle" />
                 </View>
               </View>
             </View>
@@ -132,12 +172,12 @@ export default class EventScanner extends Component {
                 <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
                   <View style={styles.flexRowSpaceBetween}>
                     <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
-                    <Icon style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
+                    <MaterialIcons style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
                   </View>
                 </View>
               </View>
             </ScrollView>
-          </View>
+          </View> */}
 
         </View>
 

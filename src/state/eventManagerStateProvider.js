@@ -1,10 +1,6 @@
 import {Container} from 'unstated'
 import {server} from '../constants/Server'
-const SCAN_MESSAGES = {
-  success: 'Ticket valid!',
-  alreadyRedeemed: 'Already redeemed',
-  serverError: 'We found an issue',
-};
+
 const SCAN_MESSAGE_TIMEOUT = 3000;
 /* eslint-disable camelcase,space-before-function-paren, complexity */
 class EventManagerContainer extends Container {
@@ -17,6 +13,7 @@ class EventManagerContainer extends Container {
       statusIcon: '',
       ticketInfo: {},
       scanType: 'redeem',
+      scanResult: null,
       events: [],
       eventToScan: {},
     }
@@ -47,14 +44,15 @@ class EventManagerContainer extends Container {
     }
   };
 
-  _resetStatusMessage = () => {
+  _resetScanResult = () => {
     setTimeout(() => {
-      this.setState({statusMessage: ''});
+      this.setState({scanResult: null});
     }, SCAN_MESSAGE_TIMEOUT)
   }
 
   _redeem = async (ticket, scanner) => {
     let message;
+
     try {
       const result = await server.tickets.redeem.redeem({
         ticket_id: ticket.data.id,
@@ -63,19 +61,14 @@ class EventManagerContainer extends Container {
 
       if (result.data.success) {
         // Redeemed
-        message = SCAN_MESSAGES['success'];
+        this.setState({scanResult: 'success'}, this._resetScanResult)
       } else {
-        // TODO: this is a general error message, not server; not sure if we should
-        // cover it up w/ "already redeemed," but that's only thing I've seen so far
-        message = SCAN_MESSAGES['alreadyRedeemed'];
+        // TODO: any other validations besides alreadyRedeemed? eg, wrong event?
+        this.setState({scanResult: 'alreadyRedeemed'}, this._resetScanResult)
       }
-
-      this.setState({statusMessage: message, ticketInfo: {}}, this._resetStatusMessage);
     } catch (e) {
-      message = SCAN_MESSAGES['serverError']
-      this.setState({statusMessage: message || 'Error From Server', ticketInfo: {}}, this._resetStatusMessage);
+      this.setState({scanResult: 'serverError', ticketInfo: {}}, this._resetScanResult)
     }
-
   };
 
   _handleScan = async (data, _scanner) => {

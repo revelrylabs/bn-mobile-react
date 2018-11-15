@@ -24,7 +24,8 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const iconFontSize = 32
-export const iconMessageFontSize = 48
+export const statusMessageTextFontSize = 36
+export const statusMessageIconFontSize = 60
 
 const EventScannerStyles = {
   // CONTAINERS
@@ -111,21 +112,21 @@ const EventScannerStyles = {
   messageText: {
     color: white,
     fontFamily: globalFontSemiBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: statusMessageTextFontSize,
   },
   messageIconError: {
     color: errorColor,
-    fontSize: iconMessageFontSize,
+    fontSize: statusMessageIconFontSize,
     paddingBottom: globalPaddingSmall,
   },
   messageIconSuccess: {
     color: successColor,
-    fontSize: iconMessageFontSize,
+    fontSize: statusMessageIconFontSize,
     paddingBottom: globalPaddingSmall,
   },
   messageIconCancel: {
     color: errorTextColor,
-    fontSize: iconMessageFontSize,
+    fontSize: statusMessageIconFontSize,
     paddingBottom: globalPaddingSmall,
   },
 }

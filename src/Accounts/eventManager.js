@@ -14,6 +14,10 @@ const eventManagerStyles = EventManagerStyles.createStyles()
 export default function EventManager(props) {
   const {navigation: {navigate}, screenProps: {eventManager}} = props
 
+  // NOTE: eventToScan doesn't matter yet, need to talk to api guys about validating
+  // that ticket presented is for this event
+  // only ticket redeem datapoints atm are ticket_id and redeem_key, user could
+  // presumably use stale tickets that they never redeemed to enter new events
   const scanForEvent = (event) => {
     return () => {
       eventManager.setState({eventToScan: event}, () => {navigate('EventScanner')});
