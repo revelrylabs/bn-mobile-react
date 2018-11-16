@@ -21,6 +21,7 @@ export default class Checkout extends Component {
     changeScreen: PropTypes.func,
     event: PropTypes.object,
     cart: PropTypes.object,
+    selectedPaymentDetails: PropTypes.object,
   }
 
   constructor(props) {
@@ -76,7 +77,8 @@ export default class Checkout extends Component {
   }
 
   get paymentSelected() {
-    const selected = !isEmpty(this.props.selectedPaymentDetails)
+    const {selectedPaymentDetails} = this.props
+    const selected = !isEmpty(selectedPaymentDetails)
 
     if (selected) {
       return (
@@ -85,7 +87,7 @@ export default class Checkout extends Component {
             style={checkoutStyles.iconPaymentSmall}
             source={require('../../assets/icon-visa-pay.png')}
           />
-          <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** {this.props.selectedPaymentDetails.last4}</Text>
+          <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** {selectedPaymentDetails.last4}</Text>
         </View>
       )
     } else {

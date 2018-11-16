@@ -98,12 +98,11 @@ export default class PaymentTypes extends Component {
 
   get changeDetails() {
     const {access_token, refresh_token} = this.props
-    console.log(encodeURIComponent(access_token), encodeURIComponent(refresh_token));
 
     return (
       <WebView
         injectedJavaScript={patchPostMessageJsCode}
-        source={{uri: `http://staging.bigneon.com/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
+        source={{uri: `https://staging.bigneon.com/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
         onMessage={this.parseMessage}
       />
     )
@@ -115,10 +114,8 @@ export default class PaymentTypes extends Component {
     switch (currentScreen) {
     case 'show':
       return this.currentDetails
-      break;
     default:
       return this.changeDetails
-      break;
     }
   }
 

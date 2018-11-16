@@ -130,7 +130,7 @@ export default class EventShow extends Component {
     this.setState({
       selectedPaymentDetails,
       currentScreen: 'checkout',
-    }, () => console.log('state', this.state))
+    })
   }
 
   toggleLoadingModal = ({showLoadingModal}) => {
