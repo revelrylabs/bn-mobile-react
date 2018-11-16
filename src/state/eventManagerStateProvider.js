@@ -34,6 +34,10 @@ class EventManagerContainer extends Container {
     })
   }
 
+  scanForEvent = async (event) => {
+    this.setState({eventToScan: event});
+  }
+
   _transfer = async () => {
     try {
       const _result = await server.tickets.transfer.receive(this.state.ticketInfo);
@@ -59,6 +63,7 @@ class EventManagerContainer extends Container {
         redeem_key: ticket.data.redeem_key,
       });
 
+      console.warn(JSON.stringify(result));
       if (result.data.success) {
         // Redeemed
         this.setState({scanResult: 'success'}, this._resetScanResult)
