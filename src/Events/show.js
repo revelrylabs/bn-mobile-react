@@ -67,20 +67,6 @@ SuccessScreen.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
 }
 
-const PaymentOptions = [
-  {
-    header: 'Apple Pay',
-    icon: require('../../assets/icon-apple-pay.png'),
-    id: 1,
-  },
-  {
-    header: '**** **** **** 4455',
-    icon: require('../../assets/icon-visa-pay.png'),
-    id: 2,
-    subheader: 'Karim Balaa . Expires 09/18',
-  },
-]
-
 export default class EventShow extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
@@ -95,7 +81,7 @@ export default class EventShow extends Component {
       eventId: props.navigation.getParam('eventId', false),
       favorite: false,
       currentScreen: 'details',
-      selectedPaymentId: 1,
+      selectedPaymentDetails: {},
       showLoadingModal: false,
       showSuccessModal: false,
     }
@@ -140,11 +126,11 @@ export default class EventShow extends Component {
     this.setState({currentScreen})
   }
 
-  selectPayment = (selectedPaymentId) => {
+  selectPayment = (selectedPaymentDetails) => {
     this.setState({
-      selectedPaymentId,
+      selectedPaymentDetails,
       currentScreen: 'checkout',
-    })
+    }, () => console.log('state', this.state))
   }
 
   toggleLoadingModal = ({showLoadingModal}) => {
@@ -206,7 +192,8 @@ export default class EventShow extends Component {
 
   /* eslint-disable-next-line complexity */
   get showScreen() {
-    const {event, currentScreen, selectedPaymentId} = this.state
+    const {event, currentScreen, selectedPaymentDetails} = this.state
+    const {screenProps: {user: {access_token, refresh_token}}} = this.props
 
     if (!event || isEmpty(event)) {
       return null
@@ -220,14 +207,22 @@ export default class EventShow extends Component {
     case 'tickets':
       return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
     case 'checkout':
-      return <Checkout cart={this.props.screenProps.cart} event={event} changeScreen={this.changeScreen} />
+      return (
+        <Checkout
+          cart={this.props.screenProps.cart}
+          event={event}
+          changeScreen={this.changeScreen}
+          selectedPaymentDetails={selectedPaymentDetails}
+        />
+      )
     case 'payment':
       return (
         <PaymentTypes
           changeScreen={this.changeScreen}
-          paymentOptions={PaymentOptions}
-          selectedPaymentId={selectedPaymentId}
+          selectedPaymentDetails={selectedPaymentDetails}
           selectPayment={this.selectPayment}
+          access_token={access_token}
+          refresh_token={refresh_token}
         />
       )
     default:

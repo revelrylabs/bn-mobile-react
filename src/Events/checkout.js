@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
+import {isEmpty} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -26,8 +27,6 @@ export default class Checkout extends Component {
     super(props)
 
     // const {cart: {state}} = props
-
-
     this.state = {
       quantity: 1, // @TODO: get form cart state
       selectedTicket: this.selectedTicket,
@@ -76,6 +75,28 @@ export default class Checkout extends Component {
     return quantity <= 1 ? checkoutStyles.removeIconDisabled : checkoutStyles.removeIcon
   }
 
+  get paymentSelected() {
+    const selected = !isEmpty(this.props.selectedPaymentDetails)
+
+    if (selected) {
+      return (
+        <View style={styles.flexRowFlexStart}>
+          <Image
+            style={checkoutStyles.iconPaymentSmall}
+            source={require('../../assets/icon-visa-pay.png')}
+          />
+          <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** {this.props.selectedPaymentDetails.last4}</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.flexRowFlexStart}>
+          <Text>Please enter your payment information</Text>
+        </View>
+      )
+    }
+  }
+
   render() {
     const {selectedTicket} = this.state
 
@@ -119,13 +140,7 @@ export default class Checkout extends Component {
               <View style={checkoutStyles.row}>
                 <View>
                   <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Payment</Text>
-                  <View style={styles.flexRowFlexStart}>
-                    <Image
-                      style={checkoutStyles.iconPaymentSmall}
-                      source={require('../../assets/icon-visa-pay.png')}
-                    />
-                    <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** 4455</Text>
-                  </View>
+                  {this.paymentSelected}
                 </View>
               </View>
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />

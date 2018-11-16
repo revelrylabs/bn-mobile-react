@@ -33,6 +33,7 @@
     "react-native-snap-carousel": "^3.7.2",
     "react-native-video": "^3.2.0",
     "react-navigation": "^2.11.2",
+    "rn-webview": "^0.1.0",
     "unstated": "^2.1.1"
   }
 }

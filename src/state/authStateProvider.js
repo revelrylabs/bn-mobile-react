@@ -14,7 +14,7 @@ class AuthContainer extends Container {
     return {
       currentUser: {},
       access_token: null,
-      refresh_tokn: null,
+      refresh_token: null,
     }
   }
 
