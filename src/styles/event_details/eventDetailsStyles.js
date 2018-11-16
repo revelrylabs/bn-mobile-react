@@ -149,7 +149,14 @@ const EventDetailsStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     paddingBottom: globalPaddingSmall,
-    paddingLeft: globalPadding,
+    paddingLeft: globalPadding + globalPaddingTiny,
+  },
+  linkText: {
+    backgroundColor: 'transparent',
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    paddingLeft: globalPadding + globalPaddingTiny,
   },
   iconSectionHeader: {
     color: textColor,
@@ -180,7 +187,6 @@ const EventDetailsStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginLeft: -5,
   },
 
   // AVATAR STYLES
