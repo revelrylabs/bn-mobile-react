@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
+import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -22,8 +22,8 @@ export default class EventManager extends Component {
   scanForEvent = async (event) => {
     const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
 
-    eventManager.scanForEvent(event);
-    await navigate('EventScanner');
+    await eventManager.scanForEvent(event);
+    navigate('EventScanner');
   }
 
   loadEvents = () => {
@@ -39,7 +39,7 @@ export default class EventManager extends Component {
           <View style={eventManagerStyles.cardImageWrapper}>
             <Image
               style={eventManagerStyles.cardImage}
-              source={event.promo_image_url}
+              source={{uri: event.promo_image_url}}
             />
           </View>
           <View style={eventManagerStyles.textWrapper}>
@@ -53,7 +53,7 @@ export default class EventManager extends Component {
   }
 
   render() {
-    const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
+    const {screenProps: {eventManager}} = this.props;
 
     return (
       <ScrollView style={styles.containerDark}>

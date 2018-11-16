@@ -54,8 +54,8 @@ class EventManagerContainer extends Container {
     }, SCAN_MESSAGE_TIMEOUT)
   }
 
-  _redeem = async (ticket, scanner) => {
-    let message;
+  _redeem = async (ticket, _scanner) => {
+    let _message;
 
     try {
       const result = await server.tickets.redeem.redeem({
@@ -63,7 +63,6 @@ class EventManagerContainer extends Container {
         redeem_key: ticket.data.redeem_key,
       });
 
-      console.warn(JSON.stringify(result));
       if (result.data.success) {
         // Redeemed
         this.setState({scanResult: 'success'}, this._resetScanResult)
