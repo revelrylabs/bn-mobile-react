@@ -13,6 +13,9 @@ const cardIcons = {
 }
 
 /* eslint-disable camelcase */
+
+// This function is an iOS hack to fix WebView's onMessage callback
+// https://github.com/facebook/react-native/issues/10865#issuecomment-269847703
 const patchPostMessageFunction = () => {
   const originalPostMessage = window.postMessage;
 
@@ -100,7 +103,7 @@ export default class PaymentTypes extends Component {
     return (
       <WebView
         injectedJavaScript={patchPostMessageJsCode}
-        source={{uri: `http://localhost:3000/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
+        source={{uri: `http://staging.bigneon.com/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
         onMessage={this.parseMessage}
       />
     )
