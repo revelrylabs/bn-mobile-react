@@ -1,5 +1,6 @@
-import React from 'react';
-import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
+import React, {Component} from 'react';
+import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
+import {NavigationEvents} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -9,83 +10,63 @@ const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const eventManagerStyles = EventManagerStyles.createStyles()
 
+export default class EventManager extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-export default function EventManager(props) {
-  const {navigation: {navigate}} = props
+  // NOTE: eventToScan doesn't matter yet, need to talk to api guys about validating
+  // that ticket presented is for this event
+  // only ticket redeem datapoints atm are ticket_id and redeem_key, user could
+  // presumably use stale tickets that they never redeemed to enter new events
+  scanForEvent = async (event) => {
+    const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
 
-  return (
-    <ScrollView style={styles.containerDark}>
-      <View style={[styles.paddingVerticalMedium, styles.paddingHorizontal]}>
+    await eventManager.scanForEvent(event);
+    navigate('EventScanner');
+  }
 
-        <Text style={eventManagerStyles.sectionHeader}>Live</Text>
+  loadEvents = () => {
+    const {screenProps: {eventManager}} = this.props;
 
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
-          <View style={eventManagerStyles.cardContainer}>
-            <View style={eventManagerStyles.cardImageWrapper}>
-              <Image
-                style={eventManagerStyles.cardImage}
-                source={require('../../assets/doorman-event-img-3.png')}
-              />
-            </View>
-            <View style={eventManagerStyles.textWrapper}>
-              <Text numberOfLines={1} style={styles.headerSecondary}>Taylor Swift</Text>
-              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
-            </View>
-            <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
+    eventManager.getEvents();
+  }
+
+  eventCard = (event) => {
+    return (
+      <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.scanForEvent(event)} key={event.id}>
+        <View style={eventManagerStyles.cardContainer}>
+          <View style={eventManagerStyles.cardImageWrapper}>
+            <Image
+              style={eventManagerStyles.cardImage}
+              source={{uri: event.promo_image_url}}
+            />
           </View>
-        </TouchableHighlight>
-
-        <Text style={[eventManagerStyles.sectionHeader, styles.paddingTopSmall]}>Upcoming</Text>
-
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
-          <View style={eventManagerStyles.cardContainer}>
-            <View style={eventManagerStyles.cardImageWrapper}>
-              <Image
-                style={eventManagerStyles.cardImage}
-                source={require('../../assets/doorman-event-img.png')}
-              />
-            </View>
-            <View style={eventManagerStyles.textWrapper}>
-              <Text numberOfLines={1} style={styles.headerSecondary}>Childishhhhhh Gambino</Text>
-              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>The House of Blues &bull; New Orleans, LA &bull; 6/15/18</Text>
-            </View>
-            <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
+          <View style={eventManagerStyles.textWrapper}>
+            <Text numberOfLines={1} style={styles.headerSecondary}>{event.name}</Text>
+            <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>{event.venue.name} &bull; {event.scheduleText}</Text>
           </View>
-        </TouchableHighlight>
+          <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
+        </View>
+      </TouchableHighlight>
+    )
+  }
 
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
-          <View style={eventManagerStyles.cardContainer}>
-            <View style={eventManagerStyles.cardImageWrapper}>
-              <Image
-                style={eventManagerStyles.cardImage}
-                source={require('../../assets/doorman-event-img-2.png')}
-              />
-            </View>
-            <View style={eventManagerStyles.textWrapper}>
-              <Text numberOfLines={1} style={styles.headerSecondary}>Taylor Swift</Text>
-              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>Fox Theater &bull; Oakland, CA &bull; 6/15/18</Text>
-            </View>
-            <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
-          </View>
-        </TouchableHighlight>
+  render() {
+    const {screenProps: {eventManager}} = this.props;
 
-        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventScanner')}>
-          <View style={eventManagerStyles.cardContainer}>
-            <View style={eventManagerStyles.cardImageWrapper}>
-              <Image
-                style={eventManagerStyles.cardImage}
-                source={require('../../assets/doorman-event-img-4.png')}
-              />
-            </View>
-            <View style={eventManagerStyles.textWrapper}>
-              <Text numberOfLines={1} style={styles.headerSecondary}>Childish Gambino</Text>
-              <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>The House of Blues &bull; New Orleans, LA &bull; 6/15/18</Text>
-            </View>
-            <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
-          </View>
-        </TouchableHighlight>
-
-      </View>
-    </ScrollView>
-  );
+    return (
+      <ScrollView style={styles.containerDark}>
+        <NavigationEvents
+          onWillFocus={this.loadEvents}
+        />
+        <View style={[styles.paddingVerticalMedium, styles.paddingHorizontal]}>
+          {eventManager.events.map(this.eventCard)}
+          {/* TODO: figure out how to differentiate live vs upcoming and perhaps scope events relevant to the doorman? */}
+          {/* <Text style={eventManagerStyles.sectionHeader}>Live</Text> */}
+          {/* <Text style={[eventManagerStyles.sectionHeader, styles.paddingTopSmall]}>Upcoming</Text> */}
+        </View>
+      </ScrollView>
+    );
+  }
 }

@@ -1,6 +1,8 @@
 import {Container} from 'unstated'
 import {server} from '../constants/Server'
 
+const SCAN_MESSAGE_TIMEOUT = 3000;
+
 /* eslint-disable camelcase,space-before-function-paren, complexity */
 class EventManagerContainer extends Container {
   constructor(props = {}) {
@@ -12,7 +14,29 @@ class EventManagerContainer extends Container {
       statusIcon: '',
       ticketInfo: {},
       scanType: 'redeem',
+      scanResult: null,
+      events: [],
+      eventToScan: {},
     }
+  }
+
+  get events() {
+    return this.state.events
+  }
+
+  // TODO: filter by live vs upcoming?
+  getEvents = async () => {
+    const {data} = await server.events.index()
+
+    this.setState({
+      // lastUpdate: DateTime.local(),
+      events: data.data,
+      paging: data.paging,
+    })
+  }
+
+  scanForEvent = async (event) => {
+    this.setState({eventToScan: event});
   }
 
   _transfer = async () => {
@@ -25,26 +49,31 @@ class EventManagerContainer extends Container {
     }
   };
 
-  _redeem = async () => {
+  _resetScanResult = () => {
+    setTimeout(() => {
+      this.setState({scanResult: null});
+    }, SCAN_MESSAGE_TIMEOUT)
+  }
+
+  _redeem = async (ticket, _scanner) => {
+    let _message;
+
     try {
       const result = await server.tickets.redeem.redeem({
-        ticket_id: this.state.ticketInfo.id,
-        redeem_key: this.state.ticketInfo.redeem_key,
+        ticket_id: ticket.data.id,
+        redeem_key: ticket.data.redeem_key,
       });
-      let message;
 
       if (result.data.success) {
         // Redeemed
-        message = 'Checked In';
+        this.setState({scanResult: 'success'}, this._resetScanResult)
       } else {
-        message = result.data.message;
+        // TODO: any other validations besides alreadyRedeemed? eg, wrong event?
+        this.setState({scanResult: 'alreadyRedeemed'}, this._resetScanResult)
       }
-
-      this.setState({statusMessage: message, ticketInfo: {}});
     } catch (e) {
-      this.setState({statusMessage: e.message || 'Error From Server', ticketInfo: {}});
+      this.setState({scanResult: 'serverError', ticketInfo: {}}, this._resetScanResult)
     }
-
   };
 
   _handleScan = async (data, _scanner) => {
