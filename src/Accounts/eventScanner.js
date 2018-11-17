@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
+import {Text, View, TouchableHighlight} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
 
 import {
@@ -11,12 +11,10 @@ import {
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
-import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const eventScannerStyles = EventScannerStyles.createStyles()
-const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 function delay(time) {
   return new Promise(((resolve, _reject) => {
@@ -90,15 +88,15 @@ export default class EventScanner extends Component {
     }
 
     const copy = SCAN_MESSAGES[type];
-    const styles = SCAN_STYLES[type];
+    const scanStyles = SCAN_STYLES[type];
     const icon = SCAN_ICONS[type];
 
     return (
       <View style={eventScannerStyles.messageContainer}>
-        <EvilIcons style={eventScannerStyles[styles]} name={icon} />
+        <EvilIcons style={eventScannerStyles[scanStyles]} name={icon} />
         <Text style={eventScannerStyles.messageText}>{copy}</Text>
       </View>
-    );
+    )
   }
 
   render() {

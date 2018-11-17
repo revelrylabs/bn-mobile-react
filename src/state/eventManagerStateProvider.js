@@ -2,6 +2,7 @@ import {Container} from 'unstated'
 import {server} from '../constants/Server'
 
 const SCAN_MESSAGE_TIMEOUT = 3000;
+
 /* eslint-disable camelcase,space-before-function-paren, complexity */
 class EventManagerContainer extends Container {
   constructor(props = {}) {
