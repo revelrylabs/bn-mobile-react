@@ -13,8 +13,8 @@ const tabBarOptions = {
     activeTintColor: '#FF20B1',
     inactiveTintColor: 'black',
     labelStyle: {
-      fontFamily: 'tt_commons_demibold',
-      fontSize: 14,
+      fontFamily: 'tt_commons_regular',
+      fontSize: 13,
     },
     style: {
       backgroundColor: 'white',
