@@ -177,11 +177,11 @@ const EventDetailsStyles = {
   },
   eventDescriptionContainer: {
     paddingVertical: globalPaddingSmall,
-    borderTopColor: borderColor,
-    borderBottomColor: borderColor,
-    borderStyle: 'solid',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    // borderTopColor: borderColor,
+    // borderBottomColor: borderColor,
+    // borderStyle: 'solid',
+    // borderTopWidth: 1,
+    // borderBottomWidth: 1, // Removing until the Avatar section is added
   },
   eventDescriptionHeaderWrapper: {
     alignItems: 'center',
