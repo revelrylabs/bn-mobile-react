@@ -42,8 +42,8 @@ const Ticket = ({navigate, ticket}) => (
             </View>
           </View>
           <View>
-            <Text style={ticketStyles.header}>{ticket.name}</Text>
-            <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
+            <Text numberOfLines={1} style={ticketStyles.header}>{ticket.name}</Text>
+            <Text numberOfLines={1} style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
           </View>
         </View>
       </View>
