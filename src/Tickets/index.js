@@ -189,6 +189,8 @@ export default class MyTickets extends Component {
               purchasedTicketId={this.state.purchasedTicket}
             />
           </View>
+          
+          <View style={styles.spacer} />
 
         </ScrollView>
       </View>

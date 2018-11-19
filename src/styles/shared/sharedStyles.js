@@ -120,6 +120,9 @@ const SharedStyles = {
   section: {
     paddingVertical: globalPaddingLarge,
   },
+  spacer: {
+    height: 25,
+  },
 
   // BUTTONS
   buttonContainer: {
