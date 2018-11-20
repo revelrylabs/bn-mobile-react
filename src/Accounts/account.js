@@ -36,6 +36,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="Kook"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -47,6 +48,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="McDropin"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -58,6 +60,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="504-000-0000"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -69,6 +72,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="kookmcdropz@gmail.com"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -80,6 +84,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="password"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
