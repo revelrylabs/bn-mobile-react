@@ -66,8 +66,7 @@ const EventDetailsStyles = {
   // MAIN BODY STYLES
   mainBody: {
     backgroundColor: 'transparent',
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingBottom: globalPaddingLarge,
     paddingHorizontal: 0,
     marginTop: 240,
   },
