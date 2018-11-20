@@ -70,7 +70,7 @@ const SharedStyles = {
     borderBottomWidth: 1,
     borderStyle: 'solid',
     paddingHorizontal: globalPadding,
-    paddingTop: globalPadding,
+    paddingTop: globalPaddingSmall,
     width: fullWidth,
     flexDirection: 'column',
   },
@@ -119,6 +119,9 @@ const SharedStyles = {
   },
   section: {
     paddingVertical: globalPaddingLarge,
+  },
+  spacer: {
+    height: 25,
   },
 
   // BUTTONS

@@ -270,6 +270,8 @@ export default class EventsIndex extends Component {
           <Text style={styles.sectionHeader}>Upcoming</Text>
 
           {this.allEvents}
+
+          <View style={styles.spacer} />
         </ScrollView>
         <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
           <View style={navigationStyles.scrollHeader}>
