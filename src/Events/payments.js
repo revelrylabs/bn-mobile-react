@@ -12,6 +12,8 @@ const cardIcons = {
   'default': require('../../assets/icon-visa-pay.png'),
 }
 
+const URI = 'http://localhost:3000' // 'https://staging.bigneon.com'
+
 /* eslint-disable camelcase */
 
 // This function is an iOS hack to fix WebView's onMessage callback
@@ -99,10 +101,15 @@ export default class PaymentTypes extends Component {
   get changeDetails() {
     const {access_token, refresh_token} = this.props
 
+    console.log(encodeURIComponent(access_token));
+    console.log(encodeURIComponent(refresh_token));
+
+
+
     return (
       <WebView
         injectedJavaScript={patchPostMessageJsCode}
-        source={{uri: `https://staging.bigneon.com/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
+        source={{uri: `${URI}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
         onMessage={this.parseMessage}
       />
     )
