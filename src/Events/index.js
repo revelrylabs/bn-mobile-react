@@ -151,12 +151,11 @@ export default class EventsIndex extends Component {
     const {mainFavorite, locations} = this.state
 
     return (
-      <View>
+      <View style={styles.container}>
         <NavigationEvents
           onWillFocus={() => this.loadEvents()}
         />
         <ScrollView
-          style={styles.container}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]

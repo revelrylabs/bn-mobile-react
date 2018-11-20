@@ -56,7 +56,6 @@ const SharedStyles = {
     flexDirection: 'column',
     paddingHorizontal: globalPadding,
     paddingTop: globalPadding,
-    paddingBottom: globalPaddingLarge,
   },
   containerDark: {
     backgroundColor: containerDarkColor,
