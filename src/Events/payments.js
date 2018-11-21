@@ -12,7 +12,7 @@ const cardIcons = {
   'default': require('../../assets/icon-visa-pay.png'),
 }
 
-const URI = 'http://localhost:3000' // 'https://staging.bigneon.com'
+const URI =  'http://localhost:3000' // 'https://staging.bigneon.com'
 
 /* eslint-disable camelcase */
 
@@ -111,6 +111,12 @@ export default class PaymentTypes extends Component {
         injectedJavaScript={patchPostMessageJsCode}
         source={{uri: `${URI}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
         onMessage={this.parseMessage}
+        onLoadStart={() => {console.log('LOAD START');
+        }}
+        onLoadEnd={() => {console.log('LOAD END???');
+        }}
+        onError={(error) => {console.log("WV ERR:", error);
+        }}
       />
     )
   }
