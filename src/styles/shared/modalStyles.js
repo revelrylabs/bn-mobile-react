@@ -46,7 +46,7 @@ const ModalStyles = {
     backgroundColor: containerDarkColor,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
-    height: fullHeight - 325,
+    height: fullHeight - 225,
     marginHorizontal: globalMargin,
     marginTop: globalMargin,
     overflow: 'hidden',
