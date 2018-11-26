@@ -58,13 +58,15 @@ class EventManagerContainer extends Container {
   _redeem = async (ticket, _scanner) => {
     let _message;
 
+    const event_id = this.state.eventToScan.id;
     try {
-      const result = await server.tickets.redeem.redeem({
+      const result = await server.events.tickets.redeem({
+        event_id,
         ticket_id: ticket.data.id,
         redeem_key: ticket.data.redeem_key,
       });
-
-      if (result.data.success) {
+      //The attendee details will be in result.data
+      if (result.status === 200) {
         // Redeemed
         this.setState({scanResult: 'success'}, this._resetScanResult)
       } else {
@@ -103,7 +105,7 @@ class EventManagerContainer extends Container {
         // }
       }
     } catch (e) {
-      // alert(e);
+      alert(e);
     }
   }
 }
