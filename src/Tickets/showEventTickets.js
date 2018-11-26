@@ -89,6 +89,7 @@ export default class EventsTicket extends Component {
             itemWidth={itemWidth}
             slideStyle={ticketWalletStyles.slideWrapper}
             onSnapToItem={(index) => this.setState({activeSlide: index})}
+            removeClippedSubviews={false}
           />
           <Pagination
             dotsLength={ticketData.length}
