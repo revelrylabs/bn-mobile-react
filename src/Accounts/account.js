@@ -15,6 +15,7 @@ export default function AccountDetails(props) {
     <ScrollView style={styles.containerDark}>
       <View style={styles.paddingVerticalMedium}>
 
+        {false &&  // TODO: Re-enable when functionality is implemented.
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>
             <View style={[ticketWalletStyles.avatarContainer, accountStyles.avatarContainer]}>
@@ -28,6 +29,7 @@ export default function AccountDetails(props) {
             </TouchableHighlight>
           </View>
         </View>
+        }
 
         <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>

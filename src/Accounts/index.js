@@ -86,17 +86,21 @@ export default class Account extends Component {
             style={accountStyles.accountBkgd}
             source={require('../../assets/account-placeholder-bkgd.png')}
           />
+          {false &&  // TODO: Re-enable when functionality is implemented.
           <View style={accountStyles.accountPhotoContainer}>
             <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
               <Text style={accountStyles.accountPhotoText}>+ TAP TO ADD A COVER PHOTO</Text>
             </TouchableHighlight>
           </View>
+          }
         </View>
 
         <View style={styles.headerContainer}>
+          {false && // TODO: Re-enable when functionality is implemented.
           <View style={accountStyles.avatarPlaceholderContainer}>
             <Icon style={accountStyles.avatarIcon} name="person-add" />
           </View>
+          }
 
           <View style={accountStyles.accountHeaderWrapper}>
             <View>
@@ -130,6 +134,7 @@ export default class Account extends Component {
           </TouchableHighlight>
 
 
+          {false && // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Notifications')}>
             <View style={accountStyles.rowContainer}>
               <View style={accountStyles.row}>
@@ -139,6 +144,7 @@ export default class Account extends Component {
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
+          }
 
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Billing')}>
             <View style={accountStyles.rowContainer}>
@@ -150,6 +156,7 @@ export default class Account extends Component {
             </View>
           </TouchableHighlight>
 
+          {false && // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('OrderHistory')}>
             <View style={accountStyles.rowContainer}>
               <View style={accountStyles.row}>
@@ -159,6 +166,7 @@ export default class Account extends Component {
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
+          }
 
           <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Event Tools</Text>
 
