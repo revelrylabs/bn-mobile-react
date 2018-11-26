@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, TouchableHighlight} from 'react-native'
+import {View, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -53,57 +53,57 @@ export default class SignUp extends Component {
 
   render() {
     return (
-      <View style={loginStyles.container}>
+      <KeyboardAvoidingView style={loginStyles.container} behavior="padding" enabled>
+        <ScrollView>
+          <View>
+            <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
+              Create your account
+            </Text>
+            <TextInput
+              style={formStyles.input}
+              placeholder="First Name"
+              underlineColorAndroid="transparent"
+              onChangeText={(first_name) => this.setState({first_name})}
+            />
+            <TextInput
+              style={formStyles.input}
+              placeholder="Last Name"
+              underlineColorAndroid="transparent"
+              onChangeText={(last_name) => this.setState({last_name})}
+            />
+            <TextInput
+              style={formStyles.input}
+              placeholder="Email Address"
+              underlineColorAndroid="transparent"
+              onChangeText={(email) => this.setState({email})}
+            />
+            <TextInput
+              style={formStyles.input}
+              secureTextEntry
+              placeholder="Password"
+              underlineColorAndroid="transparent"
+              onChangeText={(password) => this.setState({password})}
+            />
+            <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#5491CC', '#9A68B2', '#E53D96']}
+                style={loginStyles.button}
+              >
+                <Text style={loginStyles.buttonText}>Let's Do This</Text>
+              </LinearGradient>
+            </TouchableHighlight>
+          </View>
 
-        <View>
-          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
-            Create your account
-          </Text>
-          <TextInput
-            style={formStyles.input}
-            placeholder="First Name"
-            underlineColorAndroid="transparent"
-            onChangeText={(first_name) => this.setState({first_name})}
-          />
-          <TextInput
-            style={formStyles.input}
-            placeholder="Last Name"
-            underlineColorAndroid="transparent"
-            onChangeText={(last_name) => this.setState({last_name})}
-          />
-          <TextInput
-            style={formStyles.input}
-            placeholder="Email Address"
-            underlineColorAndroid="transparent"
-            onChangeText={(email) => this.setState({email})}
-          />
-          <TextInput
-            style={formStyles.input}
-            secureTextEntry
-            placeholder="Password"
-            underlineColorAndroid="transparent"
-            onChangeText={(password) => this.setState({password})}
-          />
-          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              colors={['#5491CC', '#9A68B2', '#E53D96']}
-              style={loginStyles.button}
-            >
-              <Text style={loginStyles.buttonText}>Let's Do This</Text>
-            </LinearGradient>
-          </TouchableHighlight>
-        </View>
-
-        <View>
-          <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
-          <TouchableHighlight>
-            <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service &amp; Privacy Policy.</Text>
-          </TouchableHighlight>
-        </View>
-
-      </View>
+          <View>
+            <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
+            <TouchableHighlight>
+              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service &amp; Privacy Policy.</Text>
+            </TouchableHighlight>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     )
   }
 }
