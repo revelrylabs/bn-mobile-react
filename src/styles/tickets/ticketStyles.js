@@ -106,8 +106,8 @@ const TicketStyles = {
   emptyStateContainer: {
     alignItems: 'center',
     flexDirection: 'column',
-    height: fullHeight,
     justifyContent: 'center',
+    height: fullHeight - 250,
   },
   emptyStateIcon: {
     height: 150,

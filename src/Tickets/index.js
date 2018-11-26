@@ -86,7 +86,6 @@ Ticket.propTypes = {
 }
 
 const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicketId}) => {
-  tickets = [] // @TODO BRITTANY DO NOT COMMIT THIS
   if (!tickets.length) {
     return <EmptyTickets text={emptyText} />
   }
@@ -110,9 +109,9 @@ TicketsView.propTypes = {
 }
 
 const EMPTY_TEXT_FOR_ACTIVE_TAB = {
-  upcoming: "no upcoming tickets",
-  past: "you've never been to a concert?",
-  transfer: "you cannot give what you do not have",
+  upcoming: "Looks like you don’t have any upcoming events! Why not tap browse and have a look?",
+  past: "Looks like you haven’t attended any events yet! Why not tap browse and find your first?",
+  transfer: "Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?",
 }
 
 export default class MyTickets extends Component {
