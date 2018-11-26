@@ -239,8 +239,8 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
             </View>
 
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-              <Text style={eventDetailsStyles.linkText}>{venue.name}</Text>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.props.changeScreen('venueShow')}>
+              <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={[eventDetailsStyles.bodyText, styles.paddingLeft]}>
               {venue.address}, {venue.city}, {venue.state} {venue.postal_code}, {venue.country}
