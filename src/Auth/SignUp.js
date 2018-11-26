@@ -91,7 +91,7 @@ export default class SignUp extends Component {
                 colors={['#5491CC', '#9A68B2', '#E53D96']}
                 style={loginStyles.button}
               >
-                <Text style={loginStyles.buttonText}>Let's Do This</Text>
+                <Text style={loginStyles.buttonText}>{"Let's Do This"}</Text>
               </LinearGradient>
             </TouchableHighlight>
           </View>
