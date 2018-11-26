@@ -41,7 +41,11 @@ const NavigationStyles = {
   headerTitle: {
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
-    // paddingLeft: globalPaddingLarge, // Add this padding for Android only
+    ...Platform.select({
+      android: {
+        paddingLeft: globalPaddingLarge,
+      },
+    })
   },
   headerLeftWrapper: {
     flexDirection: 'row',
