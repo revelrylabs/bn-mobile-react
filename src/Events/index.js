@@ -202,6 +202,7 @@ export default class EventsIndex extends Component {
             </ModalDropdown>
           </View>
 
+          {false && // TODO: Re-enable when functionality is implemented.
           <View style={formStyles.searchContainer}>
             <Image
               style={formStyles.searchIcon}
@@ -215,8 +216,13 @@ export default class EventsIndex extends Component {
               disabled
             />
           </View>
-          <Text style={styles.sectionHeader}>Hot This Week</Text>
+          }
 
+          {false && // TODO: Re-enable when functionality is implemented.
+          <Text style={styles.sectionHeader}>Hot This Week</Text>
+          }
+
+          {false && // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
             <View style={slideshowStyles.slideshowContainer}>
               <Image
@@ -266,6 +272,7 @@ export default class EventsIndex extends Component {
               </View>
             </View>
           </TouchableHighlight>
+          }
 
           <Text style={styles.sectionHeader}>Upcoming</Text>
 
