@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {createStackNavigator} from 'react-navigation'
 import {Subscribe} from 'unstated'
 import {AuthContainer} from '../state/authStateProvider'
+import {EventManagerContainer} from '../state/eventManagerStateProvider'
 import AccountRoutes from '../Accounts/routes'
 import {last} from 'lodash'
 
@@ -34,11 +35,11 @@ export default class accountsStackWithStore extends Component {
 
   render() {
     return (
-      <Subscribe to={[AuthContainer]}>
-        {(auth) => (
+      <Subscribe to={[AuthContainer, EventManagerContainer]}>
+        {(auth, eventManager) => (
           <AccountsStack
             navigation={this.props.navigation}
-            screenProps={{auth}}
+            screenProps={{auth, eventManager}}
           />
         )}
       </Subscribe>

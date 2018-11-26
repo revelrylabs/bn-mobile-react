@@ -151,12 +151,11 @@ export default class EventsIndex extends Component {
     const {mainFavorite, locations} = this.state
 
     return (
-      <View>
+      <View style={styles.container}>
         <NavigationEvents
           onWillFocus={() => this.loadEvents()}
         />
         <ScrollView
-          style={styles.container}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
@@ -212,6 +211,7 @@ export default class EventsIndex extends Component {
               style={formStyles.searchInput}
               placeholder="Search artists, shows, venues..."
               searchIcon={{size: 24}}
+              underlineColorAndroid="transparent"
               disabled
             />
           </View>
@@ -270,6 +270,8 @@ export default class EventsIndex extends Component {
           <Text style={styles.sectionHeader}>Upcoming</Text>
 
           {this.allEvents}
+
+          <View style={styles.spacer} />
         </ScrollView>
         <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
           <View style={navigationStyles.scrollHeader}>
