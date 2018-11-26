@@ -81,7 +81,6 @@ export default class EventShow extends Component {
       eventId: props.navigation.getParam('eventId', false),
       favorite: false,
       currentScreen: 'details',
-      selectedPaymentDetails: {},
       showLoadingModal: false,
       showSuccessModal: false,
     }
@@ -126,11 +125,11 @@ export default class EventShow extends Component {
     this.setState({currentScreen})
   }
 
-  selectPayment = (selectedPaymentDetails) => {
-    this.setState({
-      selectedPaymentDetails,
-      currentScreen: 'checkout',
-    })
+  selectPayment = async (selectedPaymentDetails) => {
+    const {screenProps: {cart}} = this.props
+
+    await cart.setPayment(selectedPaymentDetails)
+    this.changeScreen('checkout')
   }
 
   toggleLoadingModal = ({showLoadingModal}) => {
@@ -185,6 +184,7 @@ export default class EventShow extends Component {
   onTicketSelection = async (ticketTypeId, ticketPricingId) => {
     const {screenProps: {cart}} = this.props
 
+    await cart.emptyCart()
     await cart.selectTicket(ticketTypeId, ticketPricingId)
     this.changeScreen('checkout')
   }
@@ -192,8 +192,8 @@ export default class EventShow extends Component {
 
   /* eslint-disable-next-line complexity */
   get showScreen() {
-    const {event, currentScreen, selectedPaymentDetails} = this.state
-    const {screenProps: {user: {access_token, refresh_token}}} = this.props
+    const {event, currentScreen} = this.state
+    const {screenProps: {cart: {state: {selectedPaymentDetails}}, user: {access_token, refresh_token}}} = this.props
 
     if (!event || isEmpty(event)) {
       return null
@@ -212,7 +212,6 @@ export default class EventShow extends Component {
           cart={this.props.screenProps.cart}
           event={event}
           changeScreen={this.changeScreen}
-          selectedPaymentDetails={selectedPaymentDetails}
         />
       )
     case 'payment':

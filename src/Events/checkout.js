@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
+import {DateTime} from 'luxon'
 import {isEmpty} from 'lodash'
 
 const styles = SharedStyles.createStyles()
@@ -18,7 +19,6 @@ export default class Checkout extends Component {
     changeScreen: PropTypes.func,
     event: PropTypes.object,
     cart: PropTypes.object,
-    selectedPaymentDetails: PropTypes.object,
   }
 
   constructor(props) {
@@ -89,7 +89,7 @@ export default class Checkout extends Component {
   }
 
   get paymentSelected() {
-    const {selectedPaymentDetails} = this.props
+    const {cart: {state: {selectedPaymentDetails}}} = this.props
     const selected = !isEmpty(selectedPaymentDetails)
 
     if (selected) {
@@ -109,6 +109,11 @@ export default class Checkout extends Component {
         </View>
       )
     }
+  }
+
+  get subtotal() {
+    // const {cart: {state: {items}}} = this.props
+    return 0
   }
 
   get fees() {
@@ -133,7 +138,8 @@ export default class Checkout extends Component {
 
   render() {
     const {selectedTicket} = this.state
-    const {cart: {state: {quantity}}} = this.props
+    const {event, cart: {state: {quantity}}} = this.props
+    const doorTime = DateTime.fromISO(event.door_time)
 
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
@@ -164,8 +170,8 @@ export default class Checkout extends Component {
           <View style={checkoutStyles.rowContainer}>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Taylor Swift</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>Friday, July 20 - 8:50 pm - The Warfield</Text>
+                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>{event.name}</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>{doorTime.toFormat('cccc LLLL d')} - {doorTime.toFormat('h:mm a')} - {event.venue.name}</Text>
               </View>
             </View>
           </View>
@@ -192,7 +198,7 @@ export default class Checkout extends Component {
             <View style={checkoutStyles.row}>
               <View>
                 <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>$30.00 USD</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>$5.00 USD</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>${this.fees} USD</Text>
               </View>
             </View>
           </View>

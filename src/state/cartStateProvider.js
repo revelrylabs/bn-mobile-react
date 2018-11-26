@@ -21,19 +21,27 @@ class CartContainer extends Container {
       total_in_cents: 0,
       seconds_until_expiry: null,
       cartExpiryTicker: null,
+      selectedPaymentDetails: {},
     }
+  }
+
+  setPayment = async (selectedPaymentDetails) => {
+    this.setState({selectedPaymentDetails})
   }
 
   selectTicket = async (ticketTypeId, _ticketPricingId) => {
     // Dont preserve existing tickets - we dont do multi-ticket carts in mobile
-    this.setState({ticketTypeId}, () => {
-      this.updateCart()
+    this.setState({ticketTypeId}, async () => {
+      await this.updateCart()
+      console.log(this.state);
+
     })
   }
 
   updateQuantity = async (quantity) => {
-    this.setState({quantity}, () => {
-      this.updateCart()
+    this.setState({quantity}, async () => {
+      await this.updateCart()
+      console.log(this.state);
     })
   }
 
@@ -44,7 +52,7 @@ class CartContainer extends Container {
     }]
 
     try {
-      const response = server.cart.update({items})
+      const response = await server.cart.update({items})
       const {data} = response;
 
       if (data) {
@@ -79,7 +87,7 @@ class CartContainer extends Container {
 
   refreshCart = async () => {
     try {
-      const response = server.cart.read()
+      const response = await server.cart.read()
       const {data} = response;
 
       if (data) {
