@@ -10,6 +10,18 @@ const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
+function EmptyTickets({text}) {
+  return (
+    <View style={ticketStyles.emptyStateContainer}>
+      <Image
+        style={ticketStyles.emptyStateIcon}
+        source={require('../../assets/icon-empty-state.png')}
+      />
+      <Text style={ticketStyles.emptyStateText}>{text}</Text>
+    </View>
+  )
+}
+
 const AnimatedTicket = ({navigate, ticket, springValue}) => (
   <Animated.View style={{transform: [{scale: springValue}]}}>
     <Ticket navigate={navigate} ticket={ticket} />
@@ -73,8 +85,12 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({tickets, navigate, springValue, purchasedTicketId}) => (
-  tickets.map((ticket) => (
+const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicketId}) => {
+  if (!tickets.length) {
+    return <EmptyTickets text={emptyText} />
+  }
+
+  return tickets.map((ticket) => (
     ticket.id === purchasedTicketId ?
       <AnimatedTicket
         key={ticket.name}
@@ -84,7 +100,7 @@ const TicketsView = ({tickets, navigate, springValue, purchasedTicketId}) => (
       /> :
       <Ticket key={ticket.name} navigate={navigate} ticket={ticket} />
   ))
-)
+}
 
 TicketsView.propTypes = {
   navigate: PropTypes.func.isRequired,
@@ -92,6 +108,11 @@ TicketsView.propTypes = {
   springValue: PropTypes.object.isRequired,
 }
 
+const EMPTY_TEXT_FOR_ACTIVE_TAB = {
+  upcoming: "Looks like you don’t have any upcoming events! Why not tap browse and have a look?",
+  past: "Looks like you haven’t attended any events yet! Why not tap browse and find your first?",
+  transfer: "Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?",
+}
 
 export default class MyTickets extends Component {
 
@@ -156,6 +177,10 @@ export default class MyTickets extends Component {
     return false // @TODO: Grab a purchasedTicket from unstated
   }
 
+  get emptyText() {
+    return EMPTY_TEXT_FOR_ACTIVE_TAB[this.state.activeTab]
+  }
+
   render() {
     const {navigation: {navigate}} = this.props
 
@@ -183,13 +208,14 @@ export default class MyTickets extends Component {
         <ScrollView>
           <View style={styles.paddingHorizontal}>
             <TicketsView
+              emptyText={this.emptyText}
               navigate={navigate}
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
               purchasedTicketId={this.state.purchasedTicket}
             />
           </View>
-          
+
           <View style={styles.spacer} />
 
         </ScrollView>
