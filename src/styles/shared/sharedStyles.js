@@ -21,6 +21,7 @@ export const boxShadowColor = 'rgba(36, 36, 40, 0.08)'
 export const pillContainerColor = 'rgba(0, 0, 0, 0.6)'
 export const disabledColor = '#F7F7F7'
 export const successColor = '#A1F44D'
+export const errorColor = '#F7E61A'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -55,7 +56,6 @@ const SharedStyles = {
     flexDirection: 'column',
     paddingHorizontal: globalPadding,
     paddingTop: globalPadding,
-    paddingBottom: globalPaddingLarge,
   },
   containerDark: {
     backgroundColor: containerDarkColor,
@@ -69,7 +69,7 @@ const SharedStyles = {
     borderBottomWidth: 1,
     borderStyle: 'solid',
     paddingHorizontal: globalPadding,
-    paddingTop: globalPadding,
+    paddingTop: globalPaddingSmall,
     width: fullWidth,
     flexDirection: 'column',
   },
@@ -118,6 +118,9 @@ const SharedStyles = {
   },
   section: {
     paddingVertical: globalPaddingLarge,
+  },
+  spacer: {
+    height: 25,
   },
 
   // BUTTONS

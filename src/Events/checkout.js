@@ -5,13 +5,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
+import {isEmpty} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
-
-// @TODO: Replace on a per-event level, I guess?
-const maxAllowed = 999999
 
 /*  eslint-disable camelcase */
 
@@ -20,16 +18,14 @@ export default class Checkout extends Component {
     changeScreen: PropTypes.func,
     event: PropTypes.object,
     cart: PropTypes.object,
+    selectedPaymentDetails: PropTypes.object,
   }
 
   constructor(props) {
     super(props)
 
     // const {cart: {state}} = props
-
-
     this.state = {
-      quantity: 1, // @TODO: get form cart state
       selectedTicket: this.selectedTicket,
     }
   }
@@ -40,44 +36,104 @@ export default class Checkout extends Component {
     return ticket_types.find((ticket) => ticket.id === ticketTypeId)
   }
 
-  incrementTickets = () => {
-    const {quantity} = this.state
+  get allowIncrement() {
+    const {cart: {state: {quantity}}} = this.props
+    const {selectedTicket: {increment, limit_per_person}} = this.state
 
-    if (quantity >= maxAllowed) {
-      return null
+    if (!limit_per_person) {
+      return true
     }
 
-    this.setState({quantity: quantity + 1})
+    return quantity + increment <= limit_per_person
+  }
+
+  incrementTickets = () => {
+    const {cart: {updateQuantity, state: {quantity}}} = this.props
+    const {selectedTicket: {increment}} = this.state
+
+    if (this.allowIncrement) {
+      this.setState({quantity: quantity + increment}, () => {
+        updateQuantity(this.state.quantity)
+      })
+    }
+
     return null
   }
 
   get incrementStyle() {
-    const {quantity} = this.state
+    return this.allowIncrement ? checkoutStyles.addIcon : checkoutStyles.addIconDisabled
+  }
 
-    return quantity >= maxAllowed ? checkoutStyles.addIconDisabled : checkoutStyles.addIcon
+  get allowDecrement() {
+    const {cart: {state: {quantity}}} = this.props
+    const {selectedTicket: {increment}} = this.state
+
+    return quantity - increment >= 0
   }
 
   decrementTickets = () => {
-    const {quantity} = this.state
+    const {cart: {updateQuantity, state: {quantity}}} = this.props
+    const {selectedTicket: {increment}} = this.state
 
-    // Dont decrement below one ticket
-    if (quantity <= 1) {
-      return null
+    if (this.allowDecrement) {
+      this.setState({quantity: quantity - increment}, () => {
+        updateQuantity(this.state.quantity)
+      })
     }
 
-    // @TODO: Add a check for max tickets allowed
-    this.setState({quantity: quantity - 1})
     return null
   }
 
   get decrementStyle() {
-    const {quantity} = this.state
+    return this.allowDecrement ? checkoutStyles.removeIcon : checkoutStyles.removeIconDisabled
+  }
 
-    return quantity <= 1 ? checkoutStyles.removeIconDisabled : checkoutStyles.removeIcon
+  get paymentSelected() {
+    const {selectedPaymentDetails} = this.props
+    const selected = !isEmpty(selectedPaymentDetails)
+
+    if (selected) {
+      return (
+        <View style={styles.flexRowFlexStart}>
+          <Image
+            style={checkoutStyles.iconPaymentSmall}
+            source={require('../../assets/icon-visa-pay.png')}
+          />
+          <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** {selectedPaymentDetails.last4}</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.flexRowFlexStart}>
+          <Text>Please enter your payment information</Text>
+        </View>
+      )
+    }
+  }
+
+  get fees() {
+    const {cart: {state: {items}}} = this.props
+
+    if (!items) {
+      return 0;
+    }
+
+    let fees = 0;
+
+    items.forEach((item) => {
+      const {item_type, quantity, unit_price_in_cents} = item
+
+      if (item_type === 'Fees') {
+        fees = fees + unit_price_in_cents * quantity;
+      }
+    });
+
+    return fees / 100;
   }
 
   render() {
     const {selectedTicket} = this.state
+    const {cart: {state: {quantity}}} = this.props
 
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
@@ -98,7 +154,7 @@ export default class Checkout extends Component {
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.decrementTickets()}>
                 <Icon style={this.decrementStyle} name="remove-circle" />
               </TouchableHighlight>
-              <Text style={checkoutStyles.quantityPrice}>{this.state.quantity}</Text>
+              <Text style={checkoutStyles.quantityPrice}>{quantity}</Text>
               <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.incrementTickets()}>
                 <Icon style={this.incrementStyle} name="add-circle" />
               </TouchableHighlight>
@@ -119,13 +175,7 @@ export default class Checkout extends Component {
               <View style={checkoutStyles.row}>
                 <View>
                   <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Payment</Text>
-                  <View style={styles.flexRowFlexStart}>
-                    <Image
-                      style={checkoutStyles.iconPaymentSmall}
-                      source={require('../../assets/icon-visa-pay.png')}
-                    />
-                    <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** 4455</Text>
-                  </View>
+                  {this.paymentSelected}
                 </View>
               </View>
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />

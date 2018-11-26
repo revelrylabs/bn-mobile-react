@@ -42,8 +42,8 @@ const Ticket = ({navigate, ticket}) => (
             </View>
           </View>
           <View>
-            <Text style={ticketStyles.header}>{ticket.name}</Text>
-            <Text style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
+            <Text numberOfLines={1} style={ticketStyles.header}>{ticket.name}</Text>
+            <Text numberOfLines={1} style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
           </View>
         </View>
       </View>
@@ -189,6 +189,8 @@ export default class MyTickets extends Component {
               purchasedTicketId={this.state.purchasedTicket}
             />
           </View>
+          
+          <View style={styles.spacer} />
 
         </ScrollView>
       </View>

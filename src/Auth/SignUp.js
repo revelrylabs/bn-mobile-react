@@ -62,22 +62,26 @@ export default class SignUp extends Component {
           <TextInput
             style={formStyles.input}
             placeholder="First Name"
+            underlineColorAndroid="transparent"
             onChangeText={(first_name) => this.setState({first_name})}
           />
           <TextInput
             style={formStyles.input}
             placeholder="Last Name"
+            underlineColorAndroid="transparent"
             onChangeText={(last_name) => this.setState({last_name})}
           />
           <TextInput
             style={formStyles.input}
             placeholder="Email Address"
+            underlineColorAndroid="transparent"
             onChangeText={(email) => this.setState({email})}
           />
           <TextInput
             style={formStyles.input}
             secureTextEntry
             placeholder="Password"
+            underlineColorAndroid="transparent"
             onChangeText={(password) => this.setState({password})}
           />
           <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
