@@ -89,6 +89,11 @@ export default class EventsTicket extends Component {
             itemWidth={itemWidth}
             slideStyle={ticketWalletStyles.slideWrapper}
             onSnapToItem={(index) => this.setState({activeSlide: index})}
+            // The following line of code is a workaround for a bug. References:
+            //
+            // https://github.com/archriss/react-native-snap-carousel/issues/238
+            // https://github.com/facebook/react-native/issues/1831
+            removeClippedSubviews={false}
           />
           <Pagination
             dotsLength={ticketData.length}
