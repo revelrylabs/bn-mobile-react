@@ -6,7 +6,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {DateTime} from 'luxon'
-import {isEmpty} from 'lodash'
+import {isEmpty, includes} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -111,9 +111,30 @@ export default class Checkout extends Component {
     }
   }
 
+  get ticketsTotal() {
+    const {cart: {state: {items}}} = this.props
+
+    if (!items) {
+      return 0;
+    }
+
+    let tickets = 0;
+
+    items.forEach((item) => {
+      const {item_type, quantity, unit_price_in_cents} = item
+
+      if (item_type === 'Tickets') {
+        tickets = tickets + unit_price_in_cents * quantity;
+      }
+    });
+
+    return tickets / 100;
+  }
+
   get subtotal() {
-    // const {cart: {state: {items}}} = this.props
-    return 0
+    const {cart: {state: {total_in_cents}}} = this.props
+
+    return total_in_cents / 100
   }
 
   get fees() {
@@ -128,7 +149,7 @@ export default class Checkout extends Component {
     items.forEach((item) => {
       const {item_type, quantity, unit_price_in_cents} = item
 
-      if (item_type === 'Fees') {
+      if (includes(item_type, 'Fee')) {
         fees = fees + unit_price_in_cents * quantity;
       }
     });
@@ -197,7 +218,7 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>$30.00 USD</Text>
+                <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>${this.ticketsTotal} USD</Text>
                 <Text style={checkoutStyles.ticketSubHeader}>${this.fees} USD</Text>
               </View>
             </View>
@@ -211,7 +232,7 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={checkoutStyles.ticketHeader}>$35.00 USD</Text>
+                <Text style={checkoutStyles.ticketHeader}>${this.subtotal} USD</Text>
               </View>
             </View>
           </View>

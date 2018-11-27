@@ -10,7 +10,7 @@ import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
-import {flatMap, min, max, isEmpty} from 'lodash'
+import {flatMap, min, max, isEmpty, some} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -140,42 +140,39 @@ export default class EventShow extends Component {
     this.setState({showSuccessModal})
   }
 
-  async addTicket(id) {
-    const {screenProps: {addPurchasedTicket}} = this.props
-
-    return new Promise((resolve) => {
-      addPurchasedTicket(id)
-      resolve()
-    })
-  }
-
-  lowestPrice(ticket_types) {
+  priceRange(ticket_types) {
     const ticket_pricing = flatMap(ticket_types, (ticket) => (
-      ticket.ticket_pricing.price_in_cents
+      ticket.ticket_pricing ? ticket.ticket_pricing.price_in_cents : false
     ))
 
-    return min(ticket_pricing) / 100
+    return ticket_pricing ? [min(ticket_pricing) / 100, max(ticket_pricing) / 100] : ticket_pricing
   }
 
-  highestPrice(ticket_types) {
-    const ticket_pricing = flatMap(ticket_types, (ticket) => (
-      ticket.ticket_pricing.price_in_cents
-    ))
-
-    return max(ticket_pricing) / 100
-  }
-
-  get ticketRange() {
+  // If no ticket types, or no ticket pricings, we cant buy tickets
+  get canBuyTickets() {
     const {event: {ticket_types}} = this.state
 
-    if (!ticket_types) {
-      return null
+    return some(ticket_types, (ticket) => !isEmpty(ticket.ticket_pricing))
+  }
+
+  get ticketRange() { // eslint-disable-line complexity
+    const {event: {ticket_types}} = this.state
+
+    const priceRange = []
+    const [lowest, highest] = this.priceRange(ticket_types)
+
+    if (lowest) {
+      priceRange.push(`$${lowest}`)
+    }
+
+    if (highest && highest !== lowest) {
+      priceRange.push(`$${highest}`)
     }
 
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
         <Text style={eventDetailsStyles.priceHeader}>
-          ${this.lowestPrice(ticket_types)} - ${this.highestPrice(ticket_types)}
+          {priceRange.join(' - ')}
         </Text>
       </View>
     )
@@ -188,7 +185,6 @@ export default class EventShow extends Component {
     await cart.selectTicket(ticketTypeId, ticketPricingId)
     this.changeScreen('checkout')
   }
-
 
   /* eslint-disable-next-line complexity */
   get showScreen() {
@@ -232,7 +228,7 @@ export default class EventShow extends Component {
   get getTickets() {
     const {currentScreen} = this.state
 
-    if (currentScreen === 'details') {
+    if (currentScreen === 'details' && this.canBuyTickets) {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
           {this.ticketRange}
@@ -255,16 +251,11 @@ export default class EventShow extends Component {
     const {currentScreen} = this.state
 
     if (currentScreen === 'checkout') {
-      const ticketDetails = {
-        ticketId: 1,
-        purchaseId: 1,
-      }
-
       return (
         <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
           <TouchableHighlight
             style={styles.button}
-            onPress={() => this.purchaseTicket(ticketDetails)}
+            onPress={this.purchaseTicket}
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
@@ -275,41 +266,42 @@ export default class EventShow extends Component {
     return null
   }
 
-  async purchaseTicket(_purchasedTicket) {
-    const {navigation: {navigate}} = this.props
+  purchaseTicket = async () => {
+    const {screenProps: {cart, addPurchasedTicket}, navigation: {navigate}} = this.props
+
+    if (isEmpty(cart.state.selectedPaymentDetails)) {
+      alert('Please enter your payment details');
+      return false
+    }
+
 
     this.setState({showLoadingModal: true})
 
-    // Simulate the purchasing ticket wait
-    setTimeout(async () => {
-      this.setState({
+    try {
+      await cart.placeOrder(() => addPurchasedTicket(cart.state.ticketTypeId))
+
+      await this.setState({
         showLoadingModal: false,
         showSuccessModal: true,
       })
 
-      // Simulate a sucessful purchase
-      setTimeout(async () => {
-        this.setState({showSuccessModal: false})
-        const _ticketResult = await this.addTicket(1)
+      const resetAction = StackActions.reset({
+        index: 0,
+        key: 'Explore',
+        actions: [
+          NavigationActions.navigate({routeName: 'Home'}),
+        ],
+      })
 
-        // Reset the Explore Tab Stack
-        const resetAction = StackActions.reset({
-          index: 0,
-          key: 'Explore',
-          actions: [
-            NavigationActions.navigate({routeName: 'Home'}),
-          ],
-        })
-
+      setTimeout(() => {
         this.props.navigation.dispatch(resetAction)
 
         // Navigate to the tickets tab to see the new ticket
         navigate('MyTickets')
-      }, 1000)
-    }, 3000)
-
-    // @TODO: Set a "purchasedTicket flag in unstated so we can use it on MyTickets"
-
+      }, 3000)
+    } catch (error) {
+      alert(`There was an error checking out:\n\n${error}`)
+    }
   }
 
 

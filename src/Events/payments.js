@@ -12,7 +12,8 @@ const cardIcons = {
   'default': require('../../assets/icon-visa-pay.png'),
 }
 
-const URI = 'https://bigneon:t%40ri@staging.bigneon.com'
+const URI = 'https://staging.bigneon.com'
+// const URI = 'http://localhost:3000'
 
 /* eslint-disable camelcase */
 
