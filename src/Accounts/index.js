@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Modal, Text, View, Image, TouchableHighlight} from 'react-native';
+import {ScrollView, Modal, Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import ModalStyles from '../styles/shared/modalStyles'
+import coverPhotoPlaceholder from '../../assets/account-placeholder-bkgd.png'
+import qrCodePlaceholder from '../../assets/qr-code-placeholder.png'
+import qrCodeIcon from '../../assets/qr-code-small.png'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -23,7 +26,7 @@ const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
       <View style={modalStyles.contentWrapper}>
         <Image
           style={modalStyles.qrCode}
-          source={require('../../assets/qr-code-placeholder.png')}
+          source={qrCodePlaceholder}
         />
         <Text style={modalStyles.header}>Show this to complete a ticket transfer.</Text>
         <View style={styles.buttonContainer}>
@@ -60,14 +63,12 @@ export default class Account extends Component {
 
     this.state = {
       showQRModal: false,
-      user: this.setUser,
+      user: this.user,
     }
   }
 
-  get setUser() {
-    const {screenProps: {auth: {state: {currentUser}}}} = this.props
-
-    return currentUser.user
+  get user() {
+    return this.props.screenProps.auth.state.currentUser.user
   }
 
   toggleQRModal = (visible) => {
@@ -75,8 +76,11 @@ export default class Account extends Component {
   }
 
   render() {
-    const {navigation: {navigate}} = this.props
-    const {showQRModal} = this.state
+    const {
+      props: {navigation: {navigate}},
+      state: {showQRModal},
+      user,
+    } = this
 
     return (
       <ScrollView style={styles.containerDark}>
@@ -84,7 +88,7 @@ export default class Account extends Component {
         <View style={accountStyles.accountBkgdContainer}>
           <Image
             style={accountStyles.accountBkgd}
-            source={require('../../assets/account-placeholder-bkgd.png')}
+            source={user.cover_photo_url || coverPhotoPlaceholder}
           />
           {false &&  // TODO: Re-enable when functionality is implemented.
           <View style={accountStyles.accountPhotoContainer}>
@@ -104,16 +108,16 @@ export default class Account extends Component {
 
           <View style={accountStyles.accountHeaderWrapper}>
             <View>
-              <Text style={accountStyles.accountEmailHeader}>Kook McDropin</Text>
+              <Text style={accountStyles.accountEmailHeader}>{user.first_name} {user.last_name}</Text>
               <View style={accountStyles.emailWrapper}>
                 <Icon style={accountStyles.emailIcon} name="mail" />
-                <Text style={accountStyles.accountEmail}>{this.state.user ? this.state.user.email : 'test@example.com'}</Text>
+                <Text style={accountStyles.accountEmail}>{user.email}</Text>
               </View>
             </View>
             <TouchableHighlight onPress={() => this.toggleQRModal(true)}>
               <Image
                 style={accountStyles.qrCodeSmall}
-                source={require('../../assets/qr-code-small.png')}
+                source={qrCodeIcon}
               />
             </TouchableHighlight>
           </View>

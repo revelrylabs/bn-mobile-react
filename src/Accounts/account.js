@@ -3,13 +3,22 @@ import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'reac
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
+import avatarPlaceholder from '../../assets/avatar-female.png'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 export default function AccountDetails(props) {
-  const {navigation: {navigate}, screenProps: {auth: {logOut}}} = props
+  const {
+    navigation: {navigate},
+    screenProps: {
+      auth: {
+        logOut,
+        state: {currentUser: {user}}
+      },
+    },
+  } = props
 
   return (
     <ScrollView style={styles.containerDark}>
@@ -21,7 +30,7 @@ export default function AccountDetails(props) {
             <View style={[ticketWalletStyles.avatarContainer, accountStyles.avatarContainer]}>
               <Image
                 style={ticketWalletStyles.avatar}
-                source={require('../../assets/avatar-female.png')}
+                source={avatarPlaceholder}
               />
             </View>
             <TouchableHighlight style={styles.flexColumnCenter}>
@@ -36,7 +45,7 @@ export default function AccountDetails(props) {
             <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
-              placeholder="Kook"
+              defaultValue={user.first_name}
               placeholderTextColor='#CCC'
               underlineColorAndroid="transparent"
             />
@@ -49,6 +58,7 @@ export default function AccountDetails(props) {
             <TextInput
               style={accountStyles.accountInputHeader}
               placeholder="McDropin"
+              defaultValue={user.last_name}
               placeholderTextColor='#CCC'
               underlineColorAndroid="transparent"
             />
@@ -60,7 +70,7 @@ export default function AccountDetails(props) {
             <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
-              placeholder="504-000-0000"
+              defaultValue={user.phone}
               placeholderTextColor='#CCC'
               underlineColorAndroid="transparent"
             />
@@ -72,7 +82,7 @@ export default function AccountDetails(props) {
             <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
-              placeholder="kookmcdropz@gmail.com"
+              defaultValue={user.email}
               placeholderTextColor='#CCC'
               underlineColorAndroid="transparent"
             />
@@ -84,7 +94,7 @@ export default function AccountDetails(props) {
             <Text style={accountStyles.accountInputHeaderDisabled}>Password</Text>
             <TextInput
               style={accountStyles.accountInputHeader}
-              placeholder="password"
+              placeholder="********"
               placeholderTextColor='#CCC'
               underlineColorAndroid="transparent"
             />
