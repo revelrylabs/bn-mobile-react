@@ -78,8 +78,7 @@ export default class Account extends Component {
   render() {
     const {
       props: {navigation: {navigate}},
-      state: {showQRModal},
-      user,
+      state: {user, showQRModal},
     } = this
 
     return (
