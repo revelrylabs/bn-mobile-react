@@ -110,7 +110,7 @@ export default class TransferTickets extends Component {
           </View>
 
           <View style={modalStyles.contentRoundedWrapper}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
 
               <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
 

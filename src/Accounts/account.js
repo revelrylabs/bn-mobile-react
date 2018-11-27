@@ -12,7 +12,7 @@ export default function AccountDetails(props) {
   const {navigation: {navigate}, screenProps: {auth: {logOut}}} = props
 
   return (
-    <ScrollView style={styles.containerDark}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
       <View style={styles.paddingVerticalMedium}>
 
         {false &&  // TODO: Re-enable when functionality is implemented.

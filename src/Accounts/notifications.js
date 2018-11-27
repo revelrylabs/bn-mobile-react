@@ -94,7 +94,7 @@ export default class Notifications extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.containerDark}>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
         <View style={styles.paddingVerticalMedium}>
 
           <View style={notificationStyles.notificationHeaderRow}>
