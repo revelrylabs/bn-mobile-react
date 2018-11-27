@@ -157,6 +157,7 @@ export default class EventsIndex extends Component {
         />
         <ScrollView
           scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
           )}

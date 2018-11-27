@@ -79,7 +79,7 @@ export default class Account extends Component {
     const {showQRModal} = this.state
 
     return (
-      <ScrollView style={styles.containerDark}>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
         <QRCode _qrCode="" toggleModal={this.toggleQRModal} modalVisible={showQRModal} />
         <View style={accountStyles.accountBkgdContainer}>
           <Image
