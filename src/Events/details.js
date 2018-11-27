@@ -235,7 +235,7 @@ export default class Details extends Component {
             </View>
 
             <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-              <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
+              <Text style={eventDetailsStyles.linkText}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={eventDetailsStyles.bodyText}>
               {venue.address}, {venue.city}, {venue.state} {venue.postal_code}, {venue.country}

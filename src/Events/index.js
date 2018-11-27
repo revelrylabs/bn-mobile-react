@@ -151,12 +151,11 @@ export default class EventsIndex extends Component {
     const {mainFavorite, locations} = this.state
 
     return (
-      <View>
+      <View style={styles.container}>
         <NavigationEvents
           onWillFocus={() => this.loadEvents()}
         />
         <ScrollView
-          style={styles.container}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
@@ -203,6 +202,7 @@ export default class EventsIndex extends Component {
             </ModalDropdown>
           </View>
 
+          {false && // TODO: Re-enable when functionality is implemented.
           <View style={formStyles.searchContainer}>
             <Image
               style={formStyles.searchIcon}
@@ -212,11 +212,17 @@ export default class EventsIndex extends Component {
               style={formStyles.searchInput}
               placeholder="Search artists, shows, venues..."
               searchIcon={{size: 24}}
+              underlineColorAndroid="transparent"
               disabled
             />
           </View>
-          <Text style={styles.sectionHeader}>Hot This Week</Text>
+          }
 
+          {false && // TODO: Re-enable when functionality is implemented.
+          <Text style={styles.sectionHeader}>Hot This Week</Text>
+          }
+
+          {false && // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
             <View style={slideshowStyles.slideshowContainer}>
               <Image
@@ -266,10 +272,13 @@ export default class EventsIndex extends Component {
               </View>
             </View>
           </TouchableHighlight>
+          }
 
           <Text style={styles.sectionHeader}>Upcoming</Text>
 
           {this.allEvents}
+
+          <View style={styles.spacer} />
         </ScrollView>
         <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
           <View style={navigationStyles.scrollHeader}>

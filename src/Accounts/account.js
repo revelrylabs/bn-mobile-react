@@ -15,6 +15,7 @@ export default function AccountDetails(props) {
     <ScrollView style={styles.containerDark}>
       <View style={styles.paddingVerticalMedium}>
 
+        {false &&  // TODO: Re-enable when functionality is implemented.
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>
             <View style={[ticketWalletStyles.avatarContainer, accountStyles.avatarContainer]}>
@@ -28,6 +29,7 @@ export default function AccountDetails(props) {
             </TouchableHighlight>
           </View>
         </View>
+        }
 
         <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
@@ -36,6 +38,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="Kook"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -47,6 +50,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="McDropin"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -58,6 +62,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="504-000-0000"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -69,6 +74,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="kookmcdropz@gmail.com"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -80,6 +86,7 @@ export default function AccountDetails(props) {
               style={accountStyles.accountInputHeader}
               placeholder="password"
               placeholderTextColor='#CCC'
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>

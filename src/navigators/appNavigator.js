@@ -13,15 +13,15 @@ const tabBarOptions = {
     activeTintColor: '#FF20B1',
     inactiveTintColor: 'black',
     labelStyle: {
-      fontFamily: 'tt_commons_demibold',
-      fontSize: 14,
+      fontFamily: 'tt_commons_regular',
+      fontSize: 13,
     },
     style: {
       backgroundColor: 'white',
       borderWidth: 0,
       borderTopColor: '#DCDCDC',
       height: 50,
-      paddingVertical: 3,
+      paddingVertical: 4,
     },
   },
 }
@@ -63,4 +63,5 @@ export default createBottomTabNavigator(
       },
     },
   },
+  tabBarOptions: {},
 )

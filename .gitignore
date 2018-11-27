@@ -8,6 +8,7 @@
 # dependencies
 /node_modules
 /.vscode
+/.idea
 
 # misc
 .env.local

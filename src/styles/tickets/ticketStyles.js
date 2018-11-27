@@ -4,6 +4,7 @@ import {
   globalFontRegular,
   bodyFontSize,
   iconFontSize,
+  globalPaddingLarge,
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
@@ -99,6 +100,26 @@ const TicketStyles = {
   },
   iconTicketText: {
     color: white,
+  },
+
+  // EMPTY STATE STYLES
+  emptyStateContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: fullHeight - 250,
+  },
+  emptyStateIcon: {
+    height: 150,
+    marginBottom: globalMargin,
+    width: 120,
+  },
+  emptyStateText: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: iconFontSize,
+    paddingHorizontal: globalPaddingLarge,
+    textAlign: 'center',
   },
 }
 
