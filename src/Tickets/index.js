@@ -109,9 +109,9 @@ TicketsView.propTypes = {
 }
 
 const EMPTY_TEXT_FOR_ACTIVE_TAB = {
-  upcoming: "Looks like you don’t have any upcoming events! Why not tap browse and have a look?",
-  past: "Looks like you haven’t attended any events yet! Why not tap browse and find your first?",
-  transfer: "Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?",
+  upcoming: 'Looks like you don’t have any upcoming events! Why not tap browse and have a look?',
+  past: 'Looks like you haven’t attended any events yet! Why not tap browse and find your first?',
+  transfer: 'Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?',
 }
 
 export default class MyTickets extends Component {
@@ -137,8 +137,6 @@ export default class MyTickets extends Component {
     const {screenProps: {store: {state}}} = this.props
 
     if (this.state.purchasedTicket !== state.purchasedTicketId) {
-
-
       this.setState({
         purchasedTicket: state.purchasedTicketId,
       }, this.spring())
@@ -185,7 +183,7 @@ export default class MyTickets extends Component {
     const {navigation: {navigate}} = this.props
 
     return (
-      <View  style={styles.containerDark}>
+      <View style={styles.containerDark}>
         <View style={styles.headerContainer}>
           <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
             <Image
@@ -205,7 +203,7 @@ export default class MyTickets extends Component {
             <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.paddingHorizontal}>
             <TicketsView
               emptyText={this.emptyText}

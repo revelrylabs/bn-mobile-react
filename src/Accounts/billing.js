@@ -11,7 +11,7 @@ const billingStyles = BillingStyles.createStyles()
 
 export default function Billing() {
   return (
-    <ScrollView style={styles.containerDark}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
       <View style={styles.paddingVerticalMedium}>
 
         <Text style={accountStyles.sectionHeader}>Credit Cards</Text>

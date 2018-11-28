@@ -54,7 +54,7 @@ export default class SignUp extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={loginStyles.container} behavior="padding" enabled>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
               Create your account

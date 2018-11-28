@@ -113,7 +113,7 @@ class CartContainer extends Container {
   placeOrder = async (onSuccess) => {
     try {
       await server.cart.checkout({
-        amount: this.state.total_in_cents, //TODO remove this amount, we shouldn't be specifying it on the frontend
+        amount: this.state.total_in_cents, // @TODO: remove this amount, we shouldn't be specifying it on the frontend
         method: {
           type: 'Card',
           provider: 'stripe',

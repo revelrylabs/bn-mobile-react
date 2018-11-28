@@ -56,7 +56,7 @@ export default class EventManager extends Component {
     const {screenProps: {eventManager}} = this.props;
 
     return (
-      <ScrollView style={styles.containerDark}>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
         <NavigationEvents
           onWillFocus={this.loadEvents}
         />

@@ -165,7 +165,7 @@ export default class EventScanner extends Component {
               </View>
             </View>
 
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <View style={eventScannerStyles.mainBody}>
                 <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
                   <View style={styles.flexRowSpaceBetween}>
