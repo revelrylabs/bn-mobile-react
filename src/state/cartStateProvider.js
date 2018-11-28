@@ -34,11 +34,12 @@ class CartContainer extends Container {
       await this.updateQuantity(0)
     }
 
-    if (this.state.quantity < 1) {
-      await this.setState({quantity: 1})
-    }
-
-    this.setState({ticketTypeId}, async () => {
+    this.setState((state) => {
+      return {
+        ticketTypeId,
+        quantity: state.quantity < 1 ? 1 : state.quantity,
+      }
+    }, async () => {
       await this.updateCart()
     })
   }
@@ -111,7 +112,7 @@ class CartContainer extends Container {
 
   placeOrder = async (onSuccess) => {
     try {
-      const response = await server.cart.checkout({
+      await server.cart.checkout({
         amount: this.state.total_in_cents, //TODO remove this amount, we shouldn't be specifying it on the frontend
         method: {
           type: 'Card',
