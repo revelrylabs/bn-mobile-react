@@ -75,6 +75,17 @@ class AuthContainer extends Container {
     }
   }
 
+  updateCurrentUser = async (params) => {
+    try {
+      const {data} = await server.users.update(params)
+
+      await this.setState({currentUser: data})
+      return data
+    } catch (error) {
+      return error.response.data
+    }
+  }
+
   signUp = (formData) => {
     return server.users.register({
       first_name: formData.first_name,

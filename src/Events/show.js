@@ -359,7 +359,7 @@ export default class EventShow extends Component {
           source={{uri: event.promo_image_url}}
         />
 
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {this.showScreen}
         </ScrollView>
 

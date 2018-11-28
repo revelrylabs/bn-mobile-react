@@ -203,7 +203,7 @@ export default class MyTickets extends Component {
             <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.paddingHorizontal}>
             <TicketsView
               emptyText={this.emptyText}
