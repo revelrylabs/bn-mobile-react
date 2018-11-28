@@ -69,6 +69,7 @@ export default class Ticket extends Component {
           />
         </View>
 
+        {false && // TODO: Re-enable when functionality is implemented.
         <View style={ticketWalletStyles.bottomNav}>
           <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
             <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
@@ -81,6 +82,7 @@ export default class Ticket extends Component {
             </View>
           </TouchableHighlight>
         </View>
+        }
       </View>
     )
   }
