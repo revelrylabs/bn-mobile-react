@@ -7,6 +7,7 @@ import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {DateTime} from 'luxon'
 import {isEmpty, includes} from 'lodash'
+import Big from 'big.js'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -111,50 +112,30 @@ export default class Checkout extends Component {
     }
   }
 
-  get ticketsTotal() {
+  cartItemInCents(itemType, exact = true) {
     const {cart: {state: {items}}} = this.props
 
-    if (!items) {
-      return 0;
-    }
+    return (items || [])
+      // just the tickets
+      .filter(({item_type}) => exact ? item_type === itemType : includes(item_type, itemType))
+      // as their prices
+      .map(({quantity, unit_price_in_cents}) => unit_price_in_cents * quantity)
+      // summed
+      .reduce((sum, price) => sum + price, 0)
+  }
 
-    let tickets = 0;
-
-    items.forEach((item) => {
-      const {item_type, quantity, unit_price_in_cents} = item
-
-      if (item_type === 'Tickets') {
-        tickets = tickets + unit_price_in_cents * quantity;
-      }
-    });
-
-    return tickets / 100;
+  get ticketsTotal() {
+    return new Big(this.cartItemInCents('Tickets')).div(100).toFixed(2)
   }
 
   get subtotal() {
     const {cart: {state: {total_in_cents}}} = this.props
 
-    return total_in_cents / 100
+    return new Big(total_in_cents).div(100).toFixed(2)
   }
 
   get fees() {
-    const {cart: {state: {items}}} = this.props
-
-    if (!items) {
-      return 0;
-    }
-
-    let fees = 0;
-
-    items.forEach((item) => {
-      const {item_type, quantity, unit_price_in_cents} = item
-
-      if (includes(item_type, 'Fee')) {
-        fees = fees + unit_price_in_cents * quantity;
-      }
-    });
-
-    return fees / 100;
+    return new Big(this.cartItemInCents('Fees', false)).div(100).toFixed(2)
   }
 
   render() {

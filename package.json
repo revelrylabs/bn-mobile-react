@@ -21,6 +21,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "big.js": "^5.2.2",
     "bn-api-node": "^0.3.5",
     "expo": "^27.0.1",
     "lodash": "^4.17.11",

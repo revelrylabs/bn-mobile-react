@@ -11,6 +11,7 @@ import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
 import {flatMap, min, max, isEmpty, some} from 'lodash'
+import Big from 'big.js'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -145,7 +146,10 @@ export default class EventShow extends Component {
       ticket.ticket_pricing ? ticket.ticket_pricing.price_in_cents : false
     ))
 
-    return ticket_pricing ? [min(ticket_pricing) / 100, max(ticket_pricing) / 100] : ticket_pricing
+    return ticket_pricing ? [
+      new Big(min(ticket_pricing)).div(100).toFixed(0),
+      new Big(max(ticket_pricing)).div(100).toFixed(0),
+    ] : ticket_pricing
   }
 
   // If no ticket types, or no ticket pricings, we cant buy tickets
