@@ -63,11 +63,16 @@ const TicketWalletStyles = {
   },
 
   // IMAGE STYLES
-  eventImage: {
-    borderTopRightRadius: 6,
-    borderTopLeftRadius: 6,
-    height: 180,
+  eventImageWrapper: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    overflow: 'hidden',
     position: 'absolute',
+  },
+  eventImage: {
+    height: 180,
     width: fullWidth - 43,
   },
   modalBkgdImage: {
@@ -120,6 +125,8 @@ const TicketWalletStyles = {
   // QR CODE STYLES
   qrCodeContainer: {
     backgroundColor: containerDarkColor,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     padding: globalPadding,
