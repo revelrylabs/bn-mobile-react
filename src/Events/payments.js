@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {isEmpty} from 'lodash'
+import {BASE_URL} from "../constants/Server";
 
 const styles = SharedStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
@@ -12,7 +13,8 @@ const cardIcons = {
   'default': require('../../assets/icon-visa-pay.png'),
 }
 
-const URI = 'https://staging.bigneon.com'
+const URI = BASE_URL
+
 // const URI = 'http://localhost:3000'
 
 /* eslint-disable camelcase */
