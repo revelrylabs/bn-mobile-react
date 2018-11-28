@@ -24,10 +24,12 @@ export default class Ticket extends Component {
     return (
       <View>
         <View style={ticketStyles.ticketContainer}>
-          <Image
-            style={ticketWalletStyles.eventImage}
-            source={ticket.image}
-          />
+          <View style={ticketWalletStyles.eventImageWrapper}>
+            <Image
+              style={ticketWalletStyles.eventImage}
+              source={ticket.image}
+            />
+          </View>
           <View style={ticketStyles.detailsContainer}>
             <View>
               <View style={styles.iconLinkContainer}>
