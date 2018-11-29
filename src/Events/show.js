@@ -10,14 +10,25 @@ import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
+import {toDollars} from '../constants/money'
 import {flatMap, min, max, isEmpty, some} from 'lodash'
-import Big from 'big.js'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
+function priceRange(ticket_types) {
+  const ticket_pricing = flatMap(ticket_types, (ticket) => (
+    ticket.ticket_pricing ? ticket.ticket_pricing.price_in_cents : false
+  ))
+
+  return ticket_pricing ? [
+    toDollars(min(ticket_pricing)),
+    toDollars(max(ticket_pricing)),
+  ] : ticket_pricing
+}
+
 
 const LoadingScreen = ({toggleModal, modalVisible}) => (
   <Modal
@@ -141,17 +152,6 @@ export default class EventShow extends Component {
     this.setState({showSuccessModal})
   }
 
-  priceRange(ticket_types) {
-    const ticket_pricing = flatMap(ticket_types, (ticket) => (
-      ticket.ticket_pricing ? ticket.ticket_pricing.price_in_cents : false
-    ))
-
-    return ticket_pricing ? [
-      new Big(min(ticket_pricing)).div(100).toFixed(0),
-      new Big(max(ticket_pricing)).div(100).toFixed(0),
-    ] : ticket_pricing
-  }
-
   // If no ticket types, or no ticket pricings, we cant buy tickets
   get canBuyTickets() {
     const {event: {ticket_types}} = this.state
@@ -162,21 +162,21 @@ export default class EventShow extends Component {
   get ticketRange() { // eslint-disable-line complexity
     const {event: {ticket_types}} = this.state
 
-    const priceRange = []
-    const [lowest, highest] = this.priceRange(ticket_types)
+    const ticketPriceRange = []
+    const [lowest, highest] = priceRange(ticket_types)
 
     if (lowest) {
-      priceRange.push(`$${lowest}`)
+      ticketPriceRange.push(`$${lowest}`)
     }
 
     if (highest && highest !== lowest) {
-      priceRange.push(`$${highest}`)
+      ticketPriceRange.push(`$${highest}`)
     }
 
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
         <Text style={eventDetailsStyles.priceHeader}>
-          {priceRange.join(' - ')}
+          {ticketPriceRange.join(' - ')}
         </Text>
       </View>
     )
