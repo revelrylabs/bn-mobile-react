@@ -62,24 +62,27 @@ export default function Billing() {
           </View>
         </View>
 
-        <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
-
-        <View style={accountStyles.inputContainer}>
-          <View style={billingStyles.row}>
-            <View style={billingStyles.imageWrapper}>
-              <Image
-                style={billingStyles.billingImageVenmo}
-                source={require('../../assets/icon-venmo.png')}
+        {false &&  // TODO: Re-enable when functionality is implemented.
+        <View>
+          <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
+          <View style={accountStyles.inputContainer}>
+            <View style={billingStyles.row}>
+              <View style={billingStyles.imageWrapper}>
+                <Image
+                  style={billingStyles.billingImageVenmo}
+                  source={require('../../assets/icon-venmo.png')}
+                />
+              </View>
+              <TextInput
+                style={accountStyles.accountInputHeader}
+                placeholder="kookster9000@hottopic.com"
+                placeholderTextColor='black'
+                underlineColorAndroid="transparent"
               />
             </View>
-            <TextInput
-              style={accountStyles.accountInputHeader}
-              placeholder="kookster9000@hottopic.com"
-              placeholderTextColor='black'
-              underlineColorAndroid="transparent"
-            />
           </View>
         </View>
+        }
 
         <View style={[styles.buttonContainer, styles.marginTop]}>
           <TouchableHighlight
