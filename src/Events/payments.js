@@ -14,7 +14,6 @@ const cardIcons = {
 }
 
 const URI = BASE_URL
-// const URI = 'http://localhost:3000'
 
 /* eslint-disable camelcase */
 
@@ -102,9 +101,6 @@ export default class PaymentTypes extends Component {
 
   get changeDetails() {
     const {access_token, refresh_token} = this.props
-
-    // console.log(encodeURIComponent(access_token));
-    // console.log(encodeURIComponent(refresh_token));
 
     return (
       <WebView

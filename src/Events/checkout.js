@@ -7,7 +7,7 @@ import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {DateTime} from 'luxon'
 import {isEmpty, includes} from 'lodash'
-import Big from 'big.js'
+import {toDollars} from '../constants/money'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -125,17 +125,17 @@ export default class Checkout extends Component {
   }
 
   get ticketsTotal() {
-    return new Big(this.cartItemInCents('Tickets')).div(100).toFixed(2)
+    return toDollars(this.cartItemInCents('Tickets'), 2)
   }
 
   get subtotal() {
     const {cart: {state: {total_in_cents}}} = this.props
 
-    return new Big(total_in_cents).div(100).toFixed(2)
+    return toDollars(total_in_cents, 2)
   }
 
   get fees() {
-    return new Big(this.cartItemInCents('Fees', false)).div(100).toFixed(2)
+    return toDollars(this.cartItemInCents('Fees', false), 2)
   }
 
   render() {
