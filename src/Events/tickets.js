@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {sortBy} from 'lodash'
+import {toDollars} from '../constants/money'
 
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
@@ -29,7 +30,7 @@ export default class GetTickets extends Component {
         <TouchableHighlight key={ticket.id} onPress={() => onTicketSelection(id, ticket_pricing.id)}>
           <View style={checkoutStyles.rowContainer}>
             <View style={checkoutStyles.row}>
-              <Text style={checkoutStyles.ticketPrice}>${ticket_pricing.price_in_cents / 100.00}</Text>
+              <Text style={checkoutStyles.ticketPrice}>${toDollars(ticket_pricing.price_in_cents)}</Text>
               <View>
                 <Text style={checkoutStyles.ticketHeader}>{name}</Text>
                 <Text style={checkoutStyles.ticketSubHeader}>{ticket_pricing.name}</Text>

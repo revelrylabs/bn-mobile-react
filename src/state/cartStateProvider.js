@@ -16,24 +16,37 @@ class CartContainer extends Container {
     this.state = {
       id: null, // Cart ID
       ticketTypeId: null,
-      quantity: 0,
+      quantity: 1,
       items: [],
       total_in_cents: 0,
       seconds_until_expiry: null,
-      cartExpiryTicker: null,
+      selectedPaymentDetails: {},
     }
+  }
+
+  setPayment = async (selectedPaymentDetails) => {
+    this.setState({selectedPaymentDetails})
   }
 
   selectTicket = async (ticketTypeId, _ticketPricingId) => {
     // Dont preserve existing tickets - we dont do multi-ticket carts in mobile
-    this.setState({ticketTypeId}, () => {
-      this.updateCart()
+    if (this.state.ticketTypeId && ticketTypeId !== this.state.ticketTypeId) {
+      await this.updateQuantity(0)
+    }
+
+    this.setState((state) => {
+      return {
+        ticketTypeId,
+        quantity: state.quantity < 1 ? 1 : state.quantity,
+      }
+    }, async () => {
+      await this.updateCart()
     })
   }
 
   updateQuantity = async (quantity) => {
-    this.setState({quantity}, () => {
-      this.updateCart()
+    this.setState({quantity}, async () => {
+      await this.updateCart()
     })
   }
 
@@ -44,7 +57,7 @@ class CartContainer extends Container {
     }]
 
     try {
-      const response = server.cart.update({items})
+      const response = await server.cart.update({items})
       const {data} = response;
 
       if (data) {
@@ -55,31 +68,9 @@ class CartContainer extends Container {
     }
   }
 
-  startExpiryTicker = async () => {
-    if (this.state.cartExpiryTicker) {
-      clearInterval(this.state.cartExpiryTicker);
-    }
-
-    this.setState({
-      cartExpiryTicker: setInterval(() => {
-        if (!this.state.seconds_until_expiry || this.state.seconds_until_expiry < 1) {
-          clearInterval(this.state.cartExpiryTicker);
-          this.refreshCart();
-        } else {
-          this.state.seconds_until_expiry--;
-
-          // Refresh the cart from server every 30 seconds as JS can be paused in browsers
-          if (this.state.seconds_until_expiry % 30 === 0) {
-            this.refreshCart();
-          }
-        }
-      }, 1000),
-    })
-  }
-
   refreshCart = async () => {
     try {
-      const response = server.cart.read()
+      const response = await server.cart.read()
       const {data} = response;
 
       if (data) {
@@ -107,15 +98,7 @@ class CartContainer extends Container {
   replaceCartData = async (data) => {
     const {id, items, total_in_cents, seconds_until_expiry} = data
 
-    this.setState({id, items, total_in_cents})
-
-    if (seconds_until_expiry) {
-      this.setState({seconds_until_expiry}, () => {
-        this.startExpiryTicker()
-      })
-    } else {
-      this.setState({seconds_until_expiry: null})
-    }
+    this.setState({id, items, total_in_cents, seconds_until_expiry})
   }
 
   emptyCart = async () => {
@@ -125,6 +108,39 @@ class CartContainer extends Container {
       id: null,
       total_in_cents: 0,
     })
+  }
+
+  placeOrder = async (onSuccess) => {
+    try {
+      await server.cart.checkout({
+        amount: this.state.total_in_cents, // @TODO: remove this amount, we shouldn't be specifying it on the frontend
+        method: {
+          type: 'Card',
+          provider: 'stripe',
+          token: this.state.selectedPaymentDetails.id,
+          save_payment_method: false,
+          set_default: false,
+        },
+      })
+
+      onSuccess()
+
+      return true
+    } catch (error) {
+      // console.error("Cart placeOrder Error", error);
+
+      let message = 'Loading cart details failed.'
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        message = error.response.data.error;
+      }
+
+      throw message
+    }
   }
 }
 

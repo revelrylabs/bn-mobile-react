@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventCardStyles from '../styles/shared/eventCardStyles'
 import {DateTime} from 'luxon'
+import {toDollars} from '../constants/money'
 
 const styles = SharedStyles.createStyles()
 const eventCardStyles = EventCardStyles.createStyles()
@@ -63,7 +64,7 @@ export default class EventsIndex extends Component {
                 </View>
               </View>
               <View style={styles.priceTagContainer}>
-                <Text style={styles.priceTag}>${event.min_ticket_price / 100}</Text>
+                <Text style={styles.priceTag}>${toDollars(event.min_ticket_price)}</Text>
               </View>
             </View>
           </View>
