@@ -62,7 +62,6 @@ export default function Billing() {
           </View>
         </View>
 
-        {false &&  // TODO: Re-enable when functionality is implemented.
         <View>
           <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
           <View style={accountStyles.inputContainer}>
@@ -82,7 +81,6 @@ export default function Billing() {
             </View>
           </View>
         </View>
-        }
 
         <View style={[styles.buttonContainer, styles.marginTop]}>
           <TouchableHighlight
