@@ -71,11 +71,7 @@ class AuthContainer extends Container {
     }
 
     try {
-      console.log('logging in', access_token, refresh_token);
-
       const myUserResponse = await server.users.current()
-
-      console.log('My user', myUserResponse.data);
 
       this.setState({currentUser: myUserResponse.data, access_token, refresh_token})
     } catch (error) {
@@ -105,8 +101,6 @@ class AuthContainer extends Container {
         password: formData.password,
         phone: '',
       })
-
-      console.log("signUP resp", response);
 
       this.setTokens(response, navigate, true)
     } catch (error) {
