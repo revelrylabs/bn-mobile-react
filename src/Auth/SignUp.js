@@ -11,6 +11,8 @@ const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
 
+/* eslint-disable camelcase,space-before-function-paren */
+
 const returnToButton = (navigation) => (
   <TouchableHighlight onPress={() => navigation.goBack()} underlayColor="rgba(0, 0, 0, 0)">
     <Icon style={loginStyles.backButton} name="arrow-back" />
@@ -44,11 +46,8 @@ export default class SignUp extends Component {
     const {screenProps: {auth}, navigation: {navigate}} = this.props
     const {email, password, first_name, last_name} = this.state
 
-    const signUpResp = await auth.signUp({email, password, first_name, last_name})
-
-    if (signUpResp.status === 201) {
-      auth.logIn({email, password}, navigate)
-    }
+    // Should register & login on success
+    await auth.signUp({email, password, first_name, last_name}, navigate)
   }
 
   render() {
