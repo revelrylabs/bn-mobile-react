@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import EventCardStyles from '../styles/shared/eventCardStyles'
+import QRCode from 'react-native-qrcode';
+
 import TicketStyles from '../styles/tickets/ticketStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 
 const styles = SharedStyles.createStyles()
-const eventCardStyles = EventCardStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
@@ -18,8 +18,44 @@ export default class Ticket extends Component {
     ticket: PropTypes.object.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      qrText: '',
+      firstName: '',
+      lastName: '',
+      redeem_key: '',
+    }
+  }
+
+  componentDidMount() {
+    this.ticketDetails()
+  }
+
+  buildQRText() {
+    const {redeem_key} = this.state
+    const {ticket: {ticketId, eventId}} = this.props
+    const qrObj = {type: 0, data: {redeem_key, id: ticketId, event_id: eventId, extra: ''}};
+    this.setState({qrText: JSON.stringify(qrObj)})
+  }
+
+  async ticketDetails() {
+    const {redeemTicketInfo, ticket} = this.props
+    const details = await redeemTicketInfo(ticket.ticketId)
+
+    this.setState({
+      firstName: details.first_name,
+      lastName: details.last_name,
+      redeem_key: details.redeem_key,
+    }, () => {
+      this.buildQRText()
+    })
+  }
+
   render() {
     const {navigate, ticket} = this.props
+    const {firstName, lastName} = this.state
 
     return (
       <View>
@@ -27,7 +63,7 @@ export default class Ticket extends Component {
           <View style={ticketWalletStyles.eventImageWrapper}>
             <Image
               style={ticketWalletStyles.eventImage}
-              source={ticket.image}
+              source={{uri: ticket.image}}
             />
           </View>
           <View style={ticketStyles.detailsContainer}>
@@ -41,7 +77,7 @@ export default class Ticket extends Component {
             </View>
             <View>
               <Text style={ticketStyles.header}>{ticket.name}</Text>
-              <Text style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.starts}  &bull;  {ticket.venue}</Text>
+              <Text style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.formattedDate} {ticket.formattedStart}  &bull;  {ticket.venue}</Text>
               <View style={styles.iconLinkContainer}>
                 <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
                 <Icon style={ticketWalletStyles.iconLink} name="call-made" />
@@ -58,17 +94,14 @@ export default class Ticket extends Component {
               />
             </View>
             <View>
-              <Text style={ticketStyles.ticketHolderHeader}>Anna Behrensmeyer</Text>
-              <Text style={ticketStyles.ticketHolderSubheader}>GENERAL ADMISSION</Text>
+              <Text style={ticketStyles.ticketHolderHeader}>{firstName} {lastName}</Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.ticketType}</Text>
             </View>
           </View>
         </View>
 
         <View style={ticketWalletStyles.qrCodeContainer}>
-          <Image
-            style={ticketWalletStyles.qrCode}
-            source={require('../../assets/qr-code-placeholder.png')}
-          />
+          {this.state.qrText !== '' ? <QRCode size={300} fgColor="white" bgColor="black" value={this.state.qrText} /> : null}
         </View>
 
         {false && // TODO: Re-enable when functionality is implemented.

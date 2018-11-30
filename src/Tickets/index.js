@@ -42,7 +42,7 @@ const Ticket = ({navigate, ticket}) => {
 
   return (
     <View>
-      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
+      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets', {eventId: event.id})}>
         <View style={ticketStyles.ticketContainer}>
           <Image
             style={ticketStyles.eventImage}
@@ -128,9 +128,6 @@ export default class MyTickets extends Component {
 
     this.springValue = new Animated.Value(0.3)
     const {screenProps: {store: {state}}} = props
-
-    console.log("INDEX STATE:", state);
-
 
     this.state = {
       activeTab: 'upcoming',

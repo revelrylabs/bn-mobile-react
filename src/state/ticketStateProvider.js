@@ -1,6 +1,7 @@
 import {Container} from 'unstated'
 import {server} from '../constants/Server'
 import {DateTime} from 'luxon'
+import {find} from 'lodash'
 
 // Hardcoding for now, will probably be replaced by a URL,
 // and <Image source={{uri: ticket.imageUrl}} ... />
@@ -89,6 +90,8 @@ const _sampleTickets = {
   ],
 }
 
+/* eslint-disable camelcase,space-before-function-paren */
+
 class TicketsContainer extends Container {
   constructor(props = {}) {
     super(props);
@@ -138,6 +141,34 @@ class TicketsContainer extends Container {
 
   setPurchasedTicket = (purchasedTicketId) => {
     this.setState({purchasedTicketId})
+  }
+
+  // Can they view details for past or transfefred tickets?
+  ticketsForEvent = async (eventId, bucket = 'upcoming') => {
+    const {tickets} = this.state
+
+    return find(tickets[bucket], ({event, _tickets}) => eventId === event.id)
+  }
+
+  redeemTicketInfo = async (ticket_id) => { // eslint-disable-line complexity
+    try {
+      const response = await server.tickets.redeem.read({ticket_id})
+      
+      return response.data;
+    } catch (error) {
+      console.error(error); // eslint-disable-line no-console
+      let message = 'Creating QR code failed failed.';
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        message = error.response.data.error;
+      }
+
+      alert(message)
+    }
   }
 }
 
