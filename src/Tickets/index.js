@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
+import emptyState from '../../assets/icon-empty-state.png'
+import imageOverlay from '../../assets/event-img-overlay.png'
+import {some} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
@@ -15,7 +18,7 @@ function EmptyTickets({text}) {
     <View style={ticketStyles.emptyStateContainer}>
       <Image
         style={ticketStyles.emptyStateIcon}
-        source={require('../../assets/icon-empty-state.png')}
+        source={emptyState}
       />
       <Text style={ticketStyles.emptyStateText}>{text}</Text>
     </View>
@@ -34,51 +37,55 @@ AnimatedTicket.propTypes = {
   springValue: PropTypes.object.isRequired,
 }
 
-const Ticket = ({navigate, ticket}) => (
-  <View>
-    <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
-      <View style={ticketStyles.ticketContainer}>
-        <Image
-          style={ticketStyles.eventImage}
-          source={ticket.image}
-        />
-        <Image
-          style={ticketStyles.eventImageOverlay}
-          source={require('../../assets/event-img-overlay.png')}
-        />
-        <View style={ticketStyles.detailsContainer}>
-          <View>
-            <View style={styles.iconLinkContainer}>
-              <Icon style={ticketStyles.iconTicket} name="local-activity" />
-              <Text style={ticketStyles.iconTicketText}>x {ticket.quantity}</Text>
+const Ticket = ({navigate, ticket}) => {
+  const {event, tickets} = ticket
+
+  return (
+    <View>
+      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets', {eventId: event.id})}>
+        <View style={ticketStyles.ticketContainer}>
+          <Image
+            style={ticketStyles.eventImage}
+            source={{uri: event.promo_image_url}}
+          />
+          <Image
+            style={ticketStyles.eventImageOverlay}
+            source={imageOverlay}
+          />
+          <View style={ticketStyles.detailsContainer}>
+            <View>
+              <View style={styles.iconLinkContainer}>
+                <Icon style={ticketStyles.iconTicket} name="local-activity" />
+                <Text style={ticketStyles.iconTicketText}>x {tickets.length}</Text>
+              </View>
+            </View>
+            <View>
+              <Text numberOfLines={1} style={ticketStyles.header}>{event.name}</Text>
+              <Text numberOfLines={1} style={slideshowStyles.details}>{event.venue.name} | {event.venue.city}, {event.venue.state}</Text>
             </View>
           </View>
-          <View>
-            <Text numberOfLines={1} style={ticketStyles.header}>{ticket.name}</Text>
-            <Text numberOfLines={1} style={slideshowStyles.details}>{ticket.venue} | {ticket.location}</Text>
-          </View>
         </View>
-      </View>
-    </TouchableHighlight>
+      </TouchableHighlight>
 
-    <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
-      <View style={ticketStyles.detailsContainerBottom}>
-        <View>
-          <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
-          <Text style={ticketStyles.detailsBottomText}>{ticket.date}</Text>
-        </View>
-        <View>
-          <Text style={ticketStyles.detailsBottomHeader}>BEGINS</Text>
-          <Text style={ticketStyles.detailsBottomText}>{ticket.starts}</Text>
-        </View>
-        <View>
-          <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>ENDS</Text>
-          <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{ticket.ends}</Text>
+      <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
+        <View style={ticketStyles.detailsContainerBottom}>
+          <View>
+            <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
+            <Text style={ticketStyles.detailsBottomText}>{event.formattedDate}</Text>
+          </View>
+          <View>
+            <Text style={ticketStyles.detailsBottomHeader}>DOORS</Text>
+            <Text style={ticketStyles.detailsBottomText}>{event.formattedDoors}</Text>
+          </View>
+          <View>
+            <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>SHOW</Text>
+            <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{event.formattedShow}</Text>
+          </View>
         </View>
       </View>
     </View>
-  </View>
-)
+  )
+}
 
 Ticket.propTypes = {
   navigate: PropTypes.func.isRequired,
@@ -91,14 +98,14 @@ const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket
   }
 
   return tickets.map((ticket) => (
-    ticket.id === purchasedTicketId ?
+    some(ticket.tickets, ({id}) => id === purchasedTicketId) ?
       <AnimatedTicket
-        key={ticket.name}
+        key={ticket.event.name}
         navigate={navigate}
         ticket={ticket}
         springValue={springValue}
       /> :
-      <Ticket key={ticket.name} navigate={navigate} ticket={ticket} />
+      <Ticket key={ticket.event.name} navigate={navigate} ticket={ticket} />
   ))
 }
 
@@ -109,9 +116,9 @@ TicketsView.propTypes = {
 }
 
 const EMPTY_TEXT_FOR_ACTIVE_TAB = {
-  upcoming: "Looks like you don’t have any upcoming events! Why not tap browse and have a look?",
-  past: "Looks like you haven’t attended any events yet! Why not tap browse and find your first?",
-  transfer: "Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?",
+  upcoming: 'Looks like you don’t have any upcoming events! Why not tap browse and have a look?',
+  past: 'Looks like you haven’t attended any events yet! Why not tap browse and find your first?',
+  transfer: 'Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?',
 }
 
 export default class MyTickets extends Component {
@@ -137,8 +144,6 @@ export default class MyTickets extends Component {
     const {screenProps: {store: {state}}} = this.props
 
     if (this.state.purchasedTicket !== state.purchasedTicketId) {
-
-
       this.setState({
         purchasedTicket: state.purchasedTicketId,
       }, this.spring())
@@ -185,7 +190,7 @@ export default class MyTickets extends Component {
     const {navigation: {navigate}} = this.props
 
     return (
-      <View  style={styles.containerDark}>
+      <View style={styles.containerDark}>
         <View style={styles.headerContainer}>
           <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
             <Image

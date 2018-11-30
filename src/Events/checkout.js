@@ -5,7 +5,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
-import {isEmpty} from 'lodash'
+import {DateTime} from 'luxon'
+import {isEmpty, includes} from 'lodash'
+import {toDollars} from '../constants/money'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -18,7 +20,6 @@ export default class Checkout extends Component {
     changeScreen: PropTypes.func,
     event: PropTypes.object,
     cart: PropTypes.object,
-    selectedPaymentDetails: PropTypes.object,
   }
 
   constructor(props) {
@@ -89,7 +90,7 @@ export default class Checkout extends Component {
   }
 
   get paymentSelected() {
-    const {selectedPaymentDetails} = this.props
+    const {cart: {state: {selectedPaymentDetails}}} = this.props
     const selected = !isEmpty(selectedPaymentDetails)
 
     if (selected) {
@@ -111,29 +112,36 @@ export default class Checkout extends Component {
     }
   }
 
-  get fees() {
+  cartItemInCents(itemType, exact = true) {
     const {cart: {state: {items}}} = this.props
 
-    if (!items) {
-      return 0;
-    }
+    return (items || [])
+      // just the tickets
+      .filter(({item_type}) => exact ? item_type === itemType : includes(item_type, itemType))
+      // as their prices
+      .map(({quantity, unit_price_in_cents}) => unit_price_in_cents * quantity)
+      // summed
+      .reduce((sum, price) => sum + price, 0)
+  }
 
-    let fees = 0;
+  get ticketsTotal() {
+    return toDollars(this.cartItemInCents('Tickets'), 2)
+  }
 
-    items.forEach((item) => {
-      const {item_type, quantity, unit_price_in_cents} = item
+  get subtotal() {
+    const {cart: {state: {total_in_cents}}} = this.props
 
-      if (item_type === 'Fees') {
-        fees = fees + unit_price_in_cents * quantity;
-      }
-    });
+    return toDollars(total_in_cents, 2)
+  }
 
-    return fees / 100;
+  get fees() {
+    return toDollars(this.cartItemInCents('Fees', false), 2)
   }
 
   render() {
     const {selectedTicket} = this.state
-    const {cart: {state: {quantity}}} = this.props
+    const {event, cart: {state: {quantity}}} = this.props
+    const doorTime = DateTime.fromISO(event.door_time)
 
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
@@ -164,8 +172,8 @@ export default class Checkout extends Component {
           <View style={checkoutStyles.rowContainer}>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Taylor Swift</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>Friday, July 20 - 8:50 pm - The Warfield</Text>
+                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>{event.name}</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>{doorTime.toFormat('cccc LLLL d')} - {doorTime.toFormat('h:mm a')} - {event.venue.name}</Text>
               </View>
             </View>
           </View>
@@ -191,8 +199,8 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>$30.00 USD</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>$5.00 USD</Text>
+                <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>${this.ticketsTotal} USD</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>${this.fees} USD</Text>
               </View>
             </View>
           </View>
@@ -205,7 +213,7 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={checkoutStyles.ticketHeader}>$35.00 USD</Text>
+                <Text style={checkoutStyles.ticketHeader}>${this.subtotal} USD</Text>
               </View>
             </View>
           </View>

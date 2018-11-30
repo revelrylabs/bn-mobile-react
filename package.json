@@ -21,6 +21,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "big.js": "^5.2.2",
     "bn-api-node": "^0.3.5",
     "expo": "^27.0.1",
     "lodash": "^4.17.11",
@@ -30,6 +31,7 @@
     "react-native": "~0.55.2",
     "react-native-circle-checkbox": "^0.1.6",
     "react-native-modal-dropdown": "^0.6.2",
+    "react-native-qrcode": "^0.2.7",
     "react-native-snap-carousel": "^3.7.2",
     "react-native-video": "^3.2.0",
     "react-navigation": "^2.11.2",
