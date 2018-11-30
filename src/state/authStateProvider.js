@@ -1,7 +1,6 @@
 import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
-import {server} from '../constants/Server'
-import {apiErrorAlert} from '../constants/error'
+import {server, apiErrorAlert} from '../constants/Server'
 
 /* eslint-disable camelcase,space-before-function-paren */
 class AuthContainer extends Container {

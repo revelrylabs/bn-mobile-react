@@ -1,8 +1,7 @@
 import {Container} from 'unstated'
-import {server} from '../constants/Server'
+import {server, apiErrorAlert} from '../constants/Server'
 import {DateTime} from 'luxon'
 import {find} from 'lodash'
-import {apiErrorAlert} from '../constants/error'
 
 // Hardcoding for now, will probably be replaced by a URL,
 // and <Image source={{uri: ticket.imageUrl}} ... />

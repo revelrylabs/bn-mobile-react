@@ -13,3 +13,20 @@ const authString = basicAuthUsername || basicAuthPassword ? `${basicAuthUsername
 export const BASE_URL = `https://${authString}staging.bigneon.com`;
 
 export const server = new Bigneon.Server({prefix: `${BASE_URL}/api`})// , {}, mocker)
+
+// eslint-disable-next-line complexity
+export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
+  console.log(defaultMsg, error); // eslint-disable-line no-console
+
+  let message = defaultMsg
+
+  if (
+    error.response &&
+    error.response.data &&
+    error.response.data.error
+  ) {
+    message = error.response.data.error;
+  }
+
+  alert(message)
+}
