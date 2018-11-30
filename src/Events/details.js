@@ -211,10 +211,10 @@ export default class Details extends Component {
           </View>
 
           <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
-            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}>
+            <TouchableHighlight style={[eventDetailsStyles.buttonRoundedActive, styles.marginRightTiny]}>
               <View style={styles.flexRowCenter}>
-                <Icon style={eventDetailsStyles.buttonRoundedIcon} name="star" />
-                <Text style={eventDetailsStyles.buttonRoundedText}>I&apos;m Interested</Text>
+                <Icon style={eventDetailsStyles.buttonRoundedActiveIcon} name="star" />
+                <Text style={eventDetailsStyles.buttonRoundedActiveText}>I&apos;m Interested</Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]}>
