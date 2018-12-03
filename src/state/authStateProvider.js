@@ -107,6 +107,27 @@ class AuthContainer extends Container {
       apiErrorAlert(error, 'There was an error creating your account.')
     }
   }
+
+  hasScope = (key) => {
+    const {currentUser} = this.state
+
+    if (!currentUser) {
+      return false
+    }
+
+    const scopes = currentUser.organization_scopes || {}
+    const orgIds = Object.keys(scopes)
+
+    for (let i = 0; i < orgIds.length; i++) {
+      if (scopes[orgIds[i]].includes(key)) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  canScanTickets = () => this.hasScope('event:scan')
 }
 
 export {
