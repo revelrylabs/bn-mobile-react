@@ -152,6 +152,7 @@ export default class Account extends Component {
           </TouchableHighlight>
           }
 
+          {false &&  // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Billing')}>
             <View style={accountStyles.rowContainer}>
               <View style={accountStyles.row}>
@@ -161,6 +162,7 @@ export default class Account extends Component {
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
+          }
 
           {false && // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('OrderHistory')}>
