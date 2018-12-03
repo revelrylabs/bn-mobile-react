@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight} from 'react-native'
+import {Text, View, TouchableHighlight, Share} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import {DateTime} from 'luxon'
 import {map} from 'lodash'
+import {BASE_URL} from '../constants/Server'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -16,6 +17,19 @@ function toSentence(arr) {
   return arr.slice(0, -2).join(', ') +
     (arr.slice(0, -2).length ? ', ' : '') +
     arr.slice(-2).join(arr.length === 2 ? ' and ' : ', and ');
+}
+
+function shareEvent(event) {
+  const url = `${BASE_URL}/events/${event.id}`
+  const title = `${event.name} is at ${event.venue.name}`
+
+  Share.share({
+    message: `Check this out, ${event.name} is at ${event.venue.name}. Tickets are on Big Neon. ${url}`,
+    url,
+    title,
+    subject: title,
+    dialogTitle: title,
+  })
 }
 
 export default class Details extends Component {
@@ -190,6 +204,8 @@ export default class Details extends Component {
     // )
   }
 
+  onPressShare = () => shareEvent(this.props.event)
+
   render() {
     const {event} = this.props
     const {venue} = event
@@ -217,7 +233,7 @@ export default class Details extends Component {
                 <Text style={eventDetailsStyles.buttonRoundedText}>I&apos;m Interested</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]}>
+            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]} onPress={this.onPressShare}>
               <View style={styles.flexRowCenter}>
                 <Icon style={eventDetailsStyles.buttonRoundedIcon} name="reply" />
                 <Text style={eventDetailsStyles.buttonRoundedText}>Share Event</Text>
