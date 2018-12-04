@@ -9,7 +9,6 @@ if ((typeof basicAuthUsername === 'string' && !basicAuthUsername) || (typeof bas
 }
 const authString = basicAuthUsername || basicAuthPassword ? `${basicAuthUsername}:${basicAuthPassword}@` : '';
 
-
 export const BASE_URL = `https://${authString}staging.bigneon.com`;
 
 export const server = new Bigneon.Server({prefix: `${BASE_URL}/api`})// , {}, mocker)
