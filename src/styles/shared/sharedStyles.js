@@ -134,10 +134,8 @@ const SharedStyles = {
     justifyContent: 'center',
   },
   buttonSecondary: {
-    alignItems: 'center',
     backgroundColor: white,
     flex: 1,
-    flexDirection: 'row',
     height: 50,
     justifyContent: 'center',
   },
@@ -155,6 +153,7 @@ const SharedStyles = {
     color: primaryColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
+    textAlign: 'center',
   },
 
   // HEADERS
