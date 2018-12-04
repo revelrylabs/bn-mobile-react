@@ -92,8 +92,7 @@ export default class PaymentTypes extends Component {
     const payment = JSON.parse(data)
 
     if (payment.error) {
-      // @TODO: Change to alert, and modify bn-web to reset state on error
-      console.log('error', payment.error); // eslint-disable-line
+      alert(`There was an error.\n\n${payment.error}`);
     } else {
       this.props.selectPayment(payment)
     }
