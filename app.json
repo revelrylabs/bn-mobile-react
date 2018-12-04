@@ -3,14 +3,14 @@
     "sdkVersion": "27.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "slug": "big-neon-mobile",
     "ios": {
       "bundleIdentifier": "com.bigneon.mobile"
     },
     "android": {
       "package": "com.bigneon.mobile",
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }
