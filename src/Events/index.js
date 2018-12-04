@@ -45,8 +45,14 @@ export default class EventsIndex extends Component {
       easing: Easing.linear,
       selectedLocationId: state.selectedLocationId || 2,
       mainFavorite: true,
-      locations: state.locations || [],
     };
+  }
+
+  get locations() {
+    return [
+      {id: null, name: 'Where are you looking for events?', selectedName: 'All Locations'},
+      ...this.props.screenProps.store.state.locations,
+    ]
   }
 
   componentWillReceiveProps(newProps) {
@@ -74,9 +80,13 @@ export default class EventsIndex extends Component {
   }
 
   get events() {
-    const {screenProps: {store: {state: {events}}}} = this.props
+    const {screenProps: {store: {state: {events, selectedLocationId}}}} = this.props
 
-    return events
+    if (!selectedLocationId) {
+      return events
+    }
+
+    return events.filter(({venue: {region_id}}) => region_id == selectedLocationId)
   }
 
   setFavorite = (mainFavorite) => {
@@ -84,10 +94,9 @@ export default class EventsIndex extends Component {
   }
 
   get currentLocationDisplayName() {
-    const {locations} = this.state
-    const selectedLoc = locations.find((loc) => (loc.id === this.state.selectedLocationId))
+    const selectedLoc = this.locations.find((loc) => (loc.id === this.state.selectedLocationId))
 
-    return selectedLoc.nickname
+    return selectedLoc && (selectedLoc.selectedName || selectedLoc.name) || ''
   }
 
   locRowOption = (rowData, rowID, _highlighted) => {
@@ -148,7 +157,7 @@ export default class EventsIndex extends Component {
     });
 
     const {navigation: {navigate}, screenProps: {store}} = this.props
-    const {mainFavorite, locations} = this.state
+    const {mainFavorite} = this.state
 
     return (
       <View style={styles.container}>
@@ -187,7 +196,7 @@ export default class EventsIndex extends Component {
                 this._dropdown = ref
               }}
               onSelect={store.changeLocation}
-              options={locations}
+              options={this.locations}
               renderRow={this.locRowOption}
               renderSeparator={() => <View />}
               dropdownStyle={modalStyles.modalDropdownContainer}
