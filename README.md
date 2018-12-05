@@ -47,7 +47,7 @@ There are staging and production deploy scripts, based on using Expo's release c
 
 You will need Apple and Google developer accounts.
 
-We're using [Expo Build releasing through Fastlane](https://blog.expo.io/automating-standalone-expo-app-builds-and-deployments-with-fastlane-exp-and-exptool-9b2f5ad0a2cd) if you want to try to set up your own deploy.
+We're using [Expo Build releasing through Fastlane](https://blog.expo.io/automating-standalone-expo-app-builds-and-deployments-with-fastlane-exp-and-exptool-9b2f5ad0a2cd) as a guideline if you want to try to set up your own deploy.
 
 #### Set up your environment for deployment
 
@@ -98,11 +98,23 @@ In the following text, select `Expo handles all credentials, you can still provi
   I will provide all the credentials and files needed, Expo does no validation
 ```
 
-*Install fastlane*
-
-Make sure you have ruby and bundler installed first. Then install the fastlane gem.
+To install Fastlane, make sure you have ruby and bundler installed first. Then install the fastlane gem.
 
 ```
 $> bundle update
 ```
+
+You will also need a `google-deploy-key.json` file to upload to Google. Contact Keith at Big Neon for this file, and save it in the parent directory to the app. Never commit it to github.
+
+#### Deploying
+
+```
+$> ./deploy_staging
+```
+
+This will build the app with the staging variables, and deploy to the Google Play store's alpha track, and to Apple's App Store Connect.
+
+In the Apple App Store Connect, you may need to manually go to the build listing and fix the Missing Compliance issue.
+
+Also, make sure there is always a `user: test@example.com, pass: test` account so Apple can log in to the app to test it.
 
