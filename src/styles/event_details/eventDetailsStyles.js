@@ -52,6 +52,7 @@ const EventDetailsStyles = {
     position: 'absolute',
     top: 0,
     padding: globalPadding + globalPaddingTiny,
+    paddingTop: globalPaddingLarge,
     zIndex: 0,
   },
   backArrowCircleContainer: {
