@@ -44,10 +44,14 @@ const EventDetailsStyles = {
   },
 
   // CLOSE ICON STYLES
+  linkContainer: {
+    height: 85,
+    width: 85,
+  },
   backArrowWrapper: {
     position: 'absolute',
     top: 0,
-    padding: globalPaddingSmall,
+    padding: globalPadding + globalPaddingTiny,
     paddingTop: globalPaddingLarge,
     zIndex: 0,
   },
