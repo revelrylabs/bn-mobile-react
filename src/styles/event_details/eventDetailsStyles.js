@@ -61,6 +61,8 @@ const EventDetailsStyles = {
   backArrow: {
     color: white,
     fontSize: backArrowFontSize,
+    paddingBottom: globalPaddingLarge,
+    paddingRight: globalPaddingLarge,
   },
 
   // MAIN BODY STYLES
