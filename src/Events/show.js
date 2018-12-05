@@ -330,7 +330,7 @@ export default class EventShow extends Component {
     const icon = currentScreen === 'details' ? 'close' : 'arrow-back'
 
     return (
-      <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.prevScreen}>
+      <TouchableHighlight style={eventDetailsStyles.linkContainer} underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.prevScreen}>
         <View style={eventDetailsStyles.backArrowCircleContainer}>
           <Icon
             style={eventDetailsStyles.backArrow}

@@ -44,11 +44,15 @@ const EventDetailsStyles = {
   },
 
   // CLOSE ICON STYLES
+  linkContainer: {
+    height: 100,
+    width: 100,
+  }, 
   backArrowWrapper: {
     position: 'absolute',
     top: 0,
-    padding: globalPaddingSmall,
-    paddingTop: globalPaddingLarge,
+    padding: globalPadding + globalPaddingTiny,
+    // paddingTop: globalPaddingMedium,
     zIndex: 0,
   },
   backArrowCircleContainer: {
@@ -61,8 +65,8 @@ const EventDetailsStyles = {
   backArrow: {
     color: white,
     fontSize: backArrowFontSize,
-    paddingBottom: globalPaddingLarge,
-    paddingRight: globalPaddingLarge,
+    // paddingBottom: globalPaddingLarge,
+    // paddingRight: globalPaddingLarge,
   },
 
   // MAIN BODY STYLES
