@@ -52,7 +52,7 @@ We're using [Expo Build releasing through Fastlane](https://blog.expo.io/automat
 #### Set up your environment for deployment
 
 In your `.bash_profile` (or whichever file hosts your bash/zsh/etc config),
-
+2
 ```
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -62,7 +62,7 @@ export FASTLANE_ITC_TEAM_ID=119447135
 ```
 The Team ID is the Big Neon Team ID in the App Store. To deploy, you will need to be added to the organization.
 
-[Based on the steps here](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html#3-start-the-build), first you need to set up some keystores.
+[Based on the steps here](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html#3-start-the-build), first you need to set up some keystores:
 
 *Android:*
 
@@ -107,6 +107,11 @@ $> bundle update
 You will also need a `google-deploy-key.json` file to upload to Google. Contact Keith at Big Neon for this file, and save it in the parent directory to the app. Never commit it to github.
 
 #### Deploying
+
+First, make sure you bump the `version` and `android:versionCode` numbers in `app.json`.
+
+- `version` should follow semantic versioning: `major.minor.patch`. If the updates are minor, just bump the patch number by one. Moderate changes bump the minor number by 1. And large changes bump the major number by 1.
+- `versionNumber` must always be an integer, and can just be incremented by one.
 
 ```
 $> ./deploy_staging
