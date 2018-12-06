@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Deployment stuff
+	big-neon-mobile.mobileprovision
+	big-neon-mobile_dist.p12
+	big-neon-mobile_dist_cert_private.key
+	big-neon-mobile_push.p12
+	big-neon-mobile_push_cert_private.key
+	passwords.txt
+	revelrylabs-big-neon.jks
