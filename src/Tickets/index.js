@@ -8,6 +8,7 @@ import TicketStyles from '../styles/tickets/ticketStyles'
 import emptyState from '../../assets/icon-empty-state.png'
 import imageOverlay from '../../assets/event-img-overlay.png'
 import {some} from 'lodash'
+import {NavigationEvents} from 'react-navigation'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
@@ -127,12 +128,9 @@ export default class MyTickets extends Component {
     super(props)
 
     this.springValue = new Animated.Value(0.3)
-    const {screenProps: {store: {state}}} = props
 
     this.state = {
       activeTab: 'upcoming',
-      tickets: state.tickets || [],
-      purchasedTicket: state.purchasedTicketId || false,
     }
   }
 
@@ -171,9 +169,7 @@ export default class MyTickets extends Component {
   }
 
   get ticketsForActiveView() {
-    const {tickets, activeTab} = this.state
-
-    return tickets[activeTab] || []
+    return this.props.screenProps.store.state.tickets[this.state.activeTab] || []
   }
 
   get hasPurchasedTicket() {
@@ -186,11 +182,17 @@ export default class MyTickets extends Component {
     return EMPTY_TEXT_FOR_ACTIVE_TAB[this.state.activeTab]
   }
 
+  refreshTickets = async () => {
+    await this.props.screenProps.store.userTickets()
+    this.spring()
+  }
+
   render() {
     const {navigation: {navigate}} = this.props
 
     return (
       <View style={styles.containerDark}>
+        <NavigationEvents onWillFocus={this.refreshTickets} />
         <View style={styles.headerContainer}>
           <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
             <Image
@@ -217,7 +219,7 @@ export default class MyTickets extends Component {
               navigate={navigate}
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
-              purchasedTicketId={this.state.purchasedTicket}
+              purchasedTicketId={this.props.screenProps.store.state.purchasedTicketId}
             />
           </View>
 
