@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server} from '../constants/Server'
+import {server, BASE_URL} from '../constants/Server'
 import {DateTime} from 'luxon'
 
 const SAMPLE_LOCATIONS = [
@@ -58,6 +58,12 @@ class EventsContainer extends Container {
   getEvents = async (_location = null) => {
     const {data} = await server.events.index()
 
+    data.data.forEach((event) => {
+      if (!event.promo_image_url) {
+        event.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+      }
+    })
+
     this.setState({
       lastUpdate: DateTime.local(),
       events: data.data,
@@ -72,8 +78,12 @@ class EventsContainer extends Container {
   getEvent = async (id) => {
     const {data} = await server.events.read({id})
 
+    if (!data.promo_image_url) {
+      data.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+    }
+
     this.setState({
-      selectedEvent: {...data}
+      selectedEvent: {...data},
     })
   }
 
