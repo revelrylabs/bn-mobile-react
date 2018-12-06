@@ -70,7 +70,7 @@ The Team ID is the Big Neon Team ID in the App Store. To deploy, you will need t
 $> expo build:android
 ```
 
-In the following text, select `1) Let Expo handle the process!`
+In the following text, select `2) I want to upload my own keystore!`
 ```
 Would you like to upload a keystore or have us generate one for you?
 If you don't know what this means, let us handle it! :)
@@ -78,6 +78,8 @@ If you don't know what this means, let us handle it! :)
   1) Let Expo handle the process!
   2) I want to upload my own keystore!
 ```
+
+You can get the keystore file from Brad (brad@revelry.co), as well as the keystpre password, key alias, and key password, which will all be needed.
 
 *iOS:*
 
