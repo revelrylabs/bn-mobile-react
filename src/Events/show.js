@@ -193,7 +193,15 @@ export default class EventShow extends Component {
   /* eslint-disable-next-line complexity */
   get showScreen() {
     const {event, currentScreen} = this.state
-    const {screenProps: {cart: {state: {selectedPaymentDetails}}, user: {access_token, refresh_token}}} = this.props
+    const {
+      screenProps: {
+        store: {toggleInterest},
+        cart: {
+          state: {selectedPaymentDetails}
+        },
+        user: {access_token, refresh_token}
+      }
+    } = this.props
 
     if (!event || isEmpty(event)) {
       return null
@@ -203,7 +211,7 @@ export default class EventShow extends Component {
 
     switch (currentScreen) {
     case 'details':
-      return <Details event={event} />
+      return <Details event={event} onInterested={toggleInterest} />
     case 'tickets':
       return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
     case 'checkout':

@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server, BASE_URL} from '../constants/Server'
+import {server, BASE_URL, apiErrorAlert} from '../constants/Server'
 import {DateTime} from 'luxon'
 
 const LOCATIONS_FETCH_MIN_MINUTES = 15
@@ -9,6 +9,8 @@ const _SAMPLE_AVATARS = [
   require('../../assets/avatar-male.png'),
   require('../../assets/avatar-female.png'),
 ]
+
+/* eslint-disable complexity,space-before-function-paren,camelcase */
 
 class EventsContainer extends Container {
 
@@ -86,21 +88,26 @@ class EventsContainer extends Container {
   }
 
   changeLocation = (_index, {id}) => this.setState({selectedLocationId: id})
-}
 
-toggleInterest = async (event) => {
-  if (!event) {
-    alert("No event selected.");
-    return;
-  }
+  // allEvents will refresh all events (ie: from the index page), whereas setting it to false will refresh the interested event
+  toggleInterest = async (event, allEvents = true) => {
+    const {user_is_interested, id} = event
 
-  const {user_is_interested, id} = event
-
-  if(user_is_interested) {
-    // User already interested, so delete it.
     try {
-      const response = await server.events.interests.remove({event_id: id})
-      this.getEvents() // refresh events -- @TODO: this wont work if its on a single eve,t. Figure it out tomorrow.
+      if (user_is_interested) {
+        // User already interested, so delete it.
+        const _response = await server.events.interests.remove({event_id: id})
+      } else {
+        const _response = await server.events.interests.create({event_id: id})
+      }
+    } catch (error) {
+      apiErrorAlert(error, 'There was a problem selecting this event.')
+    } finally {
+      if (allEvents) {
+        this.getEvents()
+      } else {
+        this.getEvent(id)
+      }
     }
   }
 }

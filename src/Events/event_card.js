@@ -14,18 +14,11 @@ export default class EventsIndex extends Component {
   static propTypes = {
     event: PropTypes.object,
     onPress: PropTypes.func,
+    onInterested: PropTypes.func,
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      favorite: props.event.favorite,
-    }
-  }
-
-  setFavorite = (favorite) => {
-    this.setState({favorite})
+  setFavorite = () => {
+    this.props.onInterested(this.props.event)
   }
 
   get scheduleText() {
@@ -39,7 +32,6 @@ export default class EventsIndex extends Component {
 
   render() {
     const {onPress, event} = this.props
-    const {favorite} = this.state
 
     return (
       <TouchableHighlight underlayColor="#fff" onPress={onPress}>
@@ -52,9 +44,9 @@ export default class EventsIndex extends Component {
             />
             <View style={eventCardStyles.detailsContainer}>
               <View style={eventCardStyles.sectionTop}>
-                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!favorite)}>
-                  <View style={favorite ? eventCardStyles.iconLinkCircleContainerSmallActive : eventCardStyles.iconLinkCircleContainerSmall}>
-                    <Icon style={favorite ? eventCardStyles.iconLinkCircleSmallActive : eventCardStyles.iconLinkCircleSmall} name="star" />
+                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={this.setFavorite}>
+                  <View style={event.user_is_interested ? eventCardStyles.iconLinkCircleContainerSmallActive : eventCardStyles.iconLinkCircleContainerSmall}>
+                    <Icon style={event.user_is_interested ? eventCardStyles.iconLinkCircleSmallActive : eventCardStyles.iconLinkCircleSmall} name="star" />
                   </View>
                 </TouchableHighlight>
                 <View style={styles.avatarContainer}>

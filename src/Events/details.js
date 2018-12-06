@@ -8,10 +8,21 @@ import {DateTime} from 'luxon'
 import {map} from 'lodash'
 import {BASE_URL} from '../constants/Server'
 
+/*  eslint-disable camelcase */
+
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
-
-/*  eslint-disable camelcase */
+const interestedStylesForEvent = (user_is_interested) => (
+  user_is_interested ? {
+    button: eventDetailsStyles.buttonRoundedActive,
+    icon: eventDetailsStyles.buttonRoundedActiveIcon,
+    text: eventDetailsStyles.buttonRoundedActiveText,
+  } : {
+    button: eventDetailsStyles.buttonRounded,
+    icon: eventDetailsStyles.buttonRoundedIcon,
+    text: eventDetailsStyles.buttonRoundedText,
+  }
+)
 
 function toSentence(arr) {
   return arr.slice(0, -2).join(', ') +
@@ -35,6 +46,14 @@ function shareEvent(event) {
 export default class Details extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
+    onInterested: PropTypes.func.isRequired,
+  }
+
+  toggleInterest = () => {
+    const {onInterested, event} = this.props
+
+    // set 'false' for individual event
+    onInterested(event, false)
   }
 
   get topLineInfo() {
@@ -211,6 +230,7 @@ export default class Details extends Component {
     const {venue} = event
     const eventStart = DateTime.fromISO(event.event_start)
     const doorTime = DateTime.fromISO(event.door_time)
+    const interestedStyles = interestedStylesForEvent(event.user_is_interested)
 
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
@@ -227,10 +247,10 @@ export default class Details extends Component {
           </View>
 
           <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
-            <TouchableHighlight style={[eventDetailsStyles.buttonRoundedActive, styles.marginRightTiny]}>
+            <TouchableHighlight style={[interestedStyles.button, styles.marginRightTiny]} onPress={this.toggleInterest}>
               <View style={styles.flexRowCenter}>
-                <Icon style={eventDetailsStyles.buttonRoundedActiveIcon} name="star" />
-                <Text style={eventDetailsStyles.buttonRoundedActiveText}>I&apos;m Interested</Text>
+                <Icon style={interestedStyles.icon} name="star" />
+                <Text style={interestedStyles.text}>I&apos;m Interested</Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]} onPress={this.onPressShare}>
