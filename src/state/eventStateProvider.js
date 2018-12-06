@@ -95,6 +95,23 @@ class EventsContainer extends Container {
   }
 }
 
+toggleInterest = async (event) => {
+  if (!event) {
+    alert("No event selected.");
+    return;
+  }
+
+  const {user_is_interested, id} = event
+
+  if(user_is_interested) {
+    // User already interested, so delete it.
+    try {
+      const response = await server.events.interests.remove({event_id: id})
+      this.getEvents() // refresh events -- @TODO: this wont work if its on a single eve,t. Figure it out tomorrow.
+    }
+  }
+}
+
 export {
   EventsContainer,
 }
