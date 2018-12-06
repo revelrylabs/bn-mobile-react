@@ -27,7 +27,7 @@ export default class AccountDetails extends Component {
 
   saveChanges = async () => {
     const result = await this.props.screenProps.auth.updateCurrentUser(this.state.user)
-    
+
     if (result.error) {
       this.onSaveChangesError(result)
     } else {
@@ -148,16 +148,20 @@ export default class AccountDetails extends Component {
           <View style={[styles.buttonContainer]}>
             <TouchableHighlight
               style={styles.buttonSecondary}
+              onPress={this.saveChanges}
+              underlayColor="rgba(0, 0, 0, 0)"
             >
-              <Text style={styles.buttonSecondaryText} onPress={this.saveChanges}>Save Changes</Text>
+              <Text style={styles.buttonSecondaryText}>Save Changes</Text>
             </TouchableHighlight>
           </View>
 
           <View style={[styles.buttonContainer, styles.marginTop]}>
             <TouchableHighlight
               style={styles.buttonSecondary}
+              onPress={() => logOut(navigate)}
+              underlayColor="rgba(0, 0, 0, 0)"
             >
-              <Text style={styles.buttonSecondaryText} onPress={() => logOut(navigate)}>Sign Out</Text>
+              <Text style={styles.buttonSecondaryText}>Sign Out</Text>
             </TouchableHighlight>
           </View>
 

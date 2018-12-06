@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {ScrollView, Modal, Text, View, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -77,7 +77,10 @@ export default class Account extends Component {
 
   render() {
     const {
-      props: {navigation: {navigate}},
+      props: {
+        navigation: {navigate},
+        screenProps: {auth: {canScanTickets}},
+      },
       state: {user, showQRModal},
     } = this
 
@@ -149,6 +152,7 @@ export default class Account extends Component {
           </TouchableHighlight>
           }
 
+          {false &&  // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('Billing')}>
             <View style={accountStyles.rowContainer}>
               <View style={accountStyles.row}>
@@ -158,6 +162,7 @@ export default class Account extends Component {
               <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
+          }
 
           {false && // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('OrderHistory')}>
@@ -171,18 +176,21 @@ export default class Account extends Component {
           </TouchableHighlight>
           }
 
-          <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Event Tools</Text>
+          {canScanTickets() &&
+          <Fragment>
+            <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Event Tools</Text>
 
-          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('ManageEvents')}>
-            <View style={accountStyles.rowContainer}>
-              <View style={accountStyles.row}>
-                <Icon style={accountStyles.accountIcon} name="filter-center-focus" />
-                <Text style={accountStyles.accountHeader}>Doorman</Text>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('ManageEvents')}>
+              <View style={accountStyles.rowContainer}>
+                <View style={accountStyles.row}>
+                  <Icon style={accountStyles.accountIcon} name="filter-center-focus" />
+                  <Text style={accountStyles.accountHeader}>Doorman</Text>
+                </View>
+                <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
               </View>
-              <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-            </View>
-          </TouchableHighlight>
-
+            </TouchableHighlight>
+          </Fragment>
+          || null}
         </View>
       </ScrollView>
     )

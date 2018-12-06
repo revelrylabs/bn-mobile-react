@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server} from '../constants/Server'
+import {server, apiErrorAlert} from '../constants/Server'
 
 /**
  *  Right now, this only does one ticket type for one event
@@ -64,7 +64,7 @@ class CartContainer extends Container {
         this.replaceCartData(data);
       }
     } catch (error) {
-      console.error(error);
+      apiErrorAlert(error, 'There was a problem updating your cart.')
     }
   }
 
@@ -76,22 +76,8 @@ class CartContainer extends Container {
       if (data) {
         this.replaceCartData(data);
       }
-
-      return true
     } catch (error) {
-      console.error(error);
-
-      let message = 'Loading cart details failed.'
-
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.error
-      ) {
-        message = error.response.data.error;
-      }
-
-      return message
+      apiErrorAlert(error, 'Loading cart details failed.')
     }
   }
 
@@ -127,19 +113,7 @@ class CartContainer extends Container {
 
       return true
     } catch (error) {
-      // console.error("Cart placeOrder Error", error);
-
-      let message = 'Loading cart details failed.'
-
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.error
-      ) {
-        message = error.response.data.error;
-      }
-
-      throw message
+      apiErrorAlert(error, 'There was an error checking out.')
     }
   }
 }

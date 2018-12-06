@@ -58,7 +58,7 @@ export default class PaymentTypes extends Component {
 
           <View style={[styles.buttonContainer, styles.paddingTop]}>
             <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" style={checkoutStyles.buttonRounded}>
-              <Text style={[styles.buttonSecondaryText, styles.textCenter]}>Add New Payment Method</Text>
+              <Text style={styles.buttonSecondaryText}>Add New Payment Method</Text>
             </TouchableHighlight>
           </View>
 

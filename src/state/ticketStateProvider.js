@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server} from '../constants/Server'
+import {server, apiErrorAlert} from '../constants/Server'
 import {DateTime} from 'luxon'
 import {find} from 'lodash'
 
@@ -133,9 +133,7 @@ class TicketsContainer extends Container {
       this.setState({tickets: ticketGroups});
 
     } catch (error) {
-      const errorMsg = error || 'Loading tickets failed.'
-
-      alert(errorMsg)
+      apiErrorAlert(error, 'Loading tickets failed.')
     }
   }
 
@@ -153,21 +151,10 @@ class TicketsContainer extends Container {
   redeemTicketInfo = async (ticket_id) => { // eslint-disable-line complexity
     try {
       const response = await server.tickets.redeem.read({ticket_id})
-      
+
       return response.data;
     } catch (error) {
-      console.error(error); // eslint-disable-line no-console
-      let message = 'Creating QR code failed failed.';
-
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.error
-      ) {
-        message = error.response.data.error;
-      }
-
-      alert(message)
+      apiErrorAlert(error, 'Creating QR code failed failed.')
     }
   }
 }

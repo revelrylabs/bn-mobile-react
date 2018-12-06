@@ -281,31 +281,28 @@ export default class EventShow extends Component {
 
     this.setState({showLoadingModal: true})
 
-    try {
-      await cart.placeOrder(() => addPurchasedTicket(cart.state.ticketTypeId))
+    await cart.placeOrder(() => addPurchasedTicket(cart.state.ticketTypeId))
 
-      await this.setState({
-        showLoadingModal: false,
-        showSuccessModal: true,
-      })
+    await this.setState({
+      showLoadingModal: false,
+      showSuccessModal: true,
+    })
 
-      const resetAction = StackActions.reset({
-        index: 0,
-        key: 'Explore',
-        actions: [
-          NavigationActions.navigate({routeName: 'Home'}),
-        ],
-      })
+    const resetAction = StackActions.reset({
+      index: 0,
+      key: 'Explore',
+      actions: [
+        NavigationActions.navigate({routeName: 'Home'}),
+      ],
+    })
 
-      setTimeout(() => {
-        this.props.navigation.dispatch(resetAction)
+    setTimeout(() => {
+      this.props.navigation.dispatch(resetAction)
 
-        // Navigate to the tickets tab to see the new ticket
-        navigate('MyTickets')
-      }, 3000)
-    } catch (error) {
-      alert(`There was an error checking out:\n\n${error}`)
-    }
+      // Navigate to the tickets tab to see the new ticket
+      navigate('MyTickets')
+    }, 3000)
+
   }
 
 
@@ -333,13 +330,14 @@ export default class EventShow extends Component {
     const icon = currentScreen === 'details' ? 'close' : 'arrow-back'
 
     return (
-      <View style={eventDetailsStyles.backArrowCircleContainer}>
-        <Icon
-          style={eventDetailsStyles.backArrow}
-          name={icon}
-          onPress={() => this.prevScreen}
-        />
-      </View>
+      <TouchableHighlight style={eventDetailsStyles.linkContainer} underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.prevScreen}>
+        <View style={eventDetailsStyles.backArrowCircleContainer}>
+          <Icon
+            style={eventDetailsStyles.backArrow}
+            name={icon}
+          />
+        </View>
+      </TouchableHighlight>
     )
   }
 
