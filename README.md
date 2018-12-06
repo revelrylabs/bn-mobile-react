@@ -79,7 +79,7 @@ If you don't know what this means, let us handle it! :)
   2) I want to upload my own keystore!
 ```
 
-You can get the keystore file from Brad (brad@revelry.co), as well as the keystpre password, key alias, and key password, which will all be needed.
+You can get the keystore file from Brad (brad@revelry.co), as well as the `keystpre password`, `key alias`, and `key password`, which will all be needed.
 
 *iOS:*
 
@@ -87,7 +87,7 @@ You can get the keystore file from Brad (brad@revelry.co), as well as the keystp
 $> expo build:ios
 ```
 
-In the following text, select `Expo handles all credentials, you can still provide overrides`
+In the following text, select `I will provide all the credentials and files needed, Expo does no validation`
 ```
 [exp] Making sure project is set up correctly...
 [exp] Your project looks good!
@@ -98,6 +98,16 @@ In the following text, select `Expo handles all credentials, you can still provi
  (Use arrow keys)
 ❯ Expo handles all credentials, you can still provide overrides
   I will provide all the credentials and files needed, Expo does no validation
+```
+
+You can get the relevant mobile provision and p12 files listed below from brad (brad@revelry.co), as well as the `Distribution p12 password` and `Push p12 password`
+
+```
+big-neon-mobile.mobileprovision
+big-neon-mobile_dist.p12
+big-neon-mobile_dist_cert_private.key
+big-neon-mobile_push.p12
+big-neon-mobile_push_cert_private.key
 ```
 
 To install Fastlane, make sure you have ruby and bundler installed first. Then install the fastlane gem.
