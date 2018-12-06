@@ -116,7 +116,7 @@ To install Fastlane, make sure you have ruby and bundler installed first. Then i
 $> bundle update
 ```
 
-You will also need a `google-deploy-key.json` file to upload to Google. Contact Keith at Big Neon for this file, and save it in the parent directory to the app. Never commit it to github.
+You will also need a `google-deploy-key.json` file to upload to Google. Contact Brad at Revelry or Keith at Big Neon for this file, and save it in the .creds directory. Never commit it to github.
 
 #### Deploying
 
