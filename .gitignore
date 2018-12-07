@@ -2,6 +2,8 @@
 *.ipa
 *.apk
 
+.DS_Store
+
 # expo
 .expo/
 
@@ -19,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Deployment stuff
+.creds/*
