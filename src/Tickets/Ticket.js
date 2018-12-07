@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import QRCode from 'react-native-qrcode';
+import imageOverlay from '../../assets/event-img-overlay.png'
 
 import TicketStyles from '../styles/tickets/ticketStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -65,6 +66,10 @@ export default class Ticket extends Component {
               style={ticketWalletStyles.eventImage}
               source={{uri: ticket.image}}
             />
+            <Image
+              style={ticketStyles.eventImageOverlay}
+              source={imageOverlay}
+            />
           </View>
           <View style={ticketStyles.detailsContainer}>
             <View>
@@ -87,12 +92,14 @@ export default class Ticket extends Component {
         </View>
         <View style={ticketWalletStyles.ticketContainerBottom}>
           <View style={[styles.flexRowFlexStartCenter, styles.padding]}>
+            {false && // TODO: Re-enable when functionality is implemented.
             <View style={ticketWalletStyles.avatarContainer}>
               <Image
                 style={ticketWalletStyles.avatar}
                 source={require('../../assets/avatar-female.png')}
               />
             </View>
+            }
             <View>
               <Text style={ticketStyles.ticketHolderHeader}>{firstName} {lastName}</Text>
               <Text style={ticketStyles.ticketHolderSubheader}>{ticket.ticketType}</Text>
@@ -101,7 +108,7 @@ export default class Ticket extends Component {
         </View>
 
         <View style={ticketWalletStyles.qrCodeContainer}>
-          {this.state.qrText !== '' ? <QRCode size={300} fgColor="white" bgColor="black" value={this.state.qrText} /> : null}
+          {this.state.qrText !== '' ? <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} /> : null}
         </View>
 
         {false && // TODO: Re-enable when functionality is implemented.
