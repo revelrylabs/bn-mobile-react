@@ -229,19 +229,47 @@ export default class EventShow extends Component {
     }
   }
 
-  get getTickets() {
-    const {currentScreen} = this.state
+  get getDetailPageButtonCta() {
+    const {event,currentScreen} = this.state
+    switch(event.override_status){
+      case 'PurchaseTickets':
+        return {ctaText: 'Purchase Tickets', enabled: true}
+      case 'SoldOut':
+        return {ctaText: 'Sold Out', enabled: true}
+      case 'OnSaleSoon':
+        return {ctaText: 'On Sale Soon', enabled: true}
+      case 'TicketsAtTheDoor':
+        return {ctaText: 'Tickets At The Door', enabled: true}
+      case 'UseAccessCode':
+        return {ctaText: 'Use Access Code', enabled: true}
+      case 'Free':
+        return {ctaText: 'Free', enabled: true}
+      case 'Rescheduled':
+        return {ctaText: 'Rescheduled', enabled: false}
+      case 'Cancelled':
+        return {ctaText: 'Cancelled', enabled: false}
+      case 'OffSale':
+        return {ctaText: 'Off-Sale', enabled: false}
+      case 'Ended':
+        return {ctaText: 'Sale Ended', enabled: false}
+      default:
+        return {ctaText: 'Purchase Tickets', enabled: true}
+    }
+  }
 
+  get getTickets() {
+    const {event,currentScreen} = this.state
+    const {ctaText, enabled} = this.getDetailPageButtonCta
     if (currentScreen === 'details' && this.canBuyTickets) {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
-          {this.ticketRange}
+          {enabled ? this.ticketRange : null}
           <View style={styles.buttonContainer}>
             <TouchableHighlight
-              style={styles.button}
-              onPress={() => this.changeScreen('tickets')}
+              style={enabled ? styles.button : styles.buttonDisabled}
+              onPress={enabled ? () => this.changeScreen('tickets') : null}
             >
-              <Text style={styles.buttonText}>Get Tickets</Text>
+              <Text style={styles.buttonText}>{ctaText}</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -253,7 +281,7 @@ export default class EventShow extends Component {
 
   get purchaseTicketButton() {
     const {currentScreen} = this.state
-
+    
     if (currentScreen === 'checkout') {
       return (
         <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
