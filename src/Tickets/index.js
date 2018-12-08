@@ -26,11 +26,14 @@ function EmptyTickets({text}) {
   )
 }
 
-const AnimatedTicket = ({navigate, ticket, springValue}) => (
-  <Animated.View style={{transform: [{scale: springValue}]}}>
-    <Ticket navigate={navigate} ticket={ticket} />
-  </Animated.View>
-)
+const AnimatedTicket = ({navigate, ticket, springValue, resetPurchasedTicket}) => {
+
+  return (
+    <Animated.View style={{transform: [{scale: springValue}]}}>
+      <Ticket navigate={navigate} ticket={ticket} />
+    </Animated.View>
+  )
+}
 
 AnimatedTicket.propTypes = {
   navigate: PropTypes.func.isRequired,
@@ -93,18 +96,19 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicketId}) => {
+const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket, resetPurchasedTicket}) => {
   if (!tickets.length) {
     return <EmptyTickets text={emptyText} />
   }
 
   return tickets.map((ticket) => (
-    some(ticket.tickets, ({id}) => id === purchasedTicketId) ?
+    some(ticket.tickets, ({order_id}) => order_id === purchasedTicket) ?
       <AnimatedTicket
         key={ticket.event.name}
         navigate={navigate}
         ticket={ticket}
         springValue={springValue}
+        resetPurchasedTicket={resetPurchasedTicket}
       /> :
       <Ticket key={ticket.event.name} navigate={navigate} ticket={ticket} />
   ))
@@ -134,20 +138,6 @@ export default class MyTickets extends Component {
     }
   }
 
-  componentDidMount() {
-    this.spring()
-  }
-
-  componentDidUpdate(_prevProps) {
-    const {screenProps: {store: {state}}} = this.props
-
-    if (this.state.purchasedTicket !== state.purchasedTicketId) {
-      this.setState({
-        purchasedTicket: state.purchasedTicketId,
-      }, this.spring())
-    }
-  }
-
   spring() {
     this.springValue.setValue(0.3)
     Animated.spring(
@@ -170,12 +160,6 @@ export default class MyTickets extends Component {
 
   get ticketsForActiveView() {
     return this.props.screenProps.store.state.tickets[this.state.activeTab] || []
-  }
-
-  get hasPurchasedTicket() {
-    const {navigation} = this.props
-
-    return false // @TODO: Grab a purchasedTicket from unstated
   }
 
   get emptyText() {
@@ -219,7 +203,8 @@ export default class MyTickets extends Component {
               navigate={navigate}
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
-              purchasedTicketId={this.props.screenProps.store.state.purchasedTicketId}
+              purchasedTicket={this.props.screenProps.store.state.purchasedTicket}
+              resetPurchasedTicket={() => this.props.screenProps.store.setPurchasedTicket(null)}
             />
           </View>
 
