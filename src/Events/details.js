@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight, Share} from 'react-native'
+import {Text, Platform, View, Linking, TouchableHighlight, Share} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -206,6 +206,18 @@ export default class Details extends Component {
 
   onPressShare = () => shareEvent(this.props.event)
 
+  openVenueDirections = () => {
+    const {event} = this.props
+    const {venue} = event
+    let daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+
+    if (Platform.OS === 'ios') {
+      Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
+    } else {
+      Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
+    }
+  }
+
   render() {
     const {event} = this.props
     const {venue} = event
@@ -250,7 +262,7 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
             </View>
 
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+            <TouchableHighlight onPress={this.openVenueDirections} underlayColor="rgba(0, 0, 0, 0)">
               <Text style={eventDetailsStyles.linkText}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={eventDetailsStyles.bodyText}>
