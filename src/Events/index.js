@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl, Easing} from 'react-native';
+import {NavigationEvents} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import ModalDropdown from 'react-native-modal-dropdown';
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -9,6 +10,7 @@ import SlideShowStyles from '../styles/shared/slideshowStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import EventItemView from './event_card'
+import {DateTime} from 'luxon';
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -21,90 +23,17 @@ const HEADER_MAX_HEIGHT = 0;
 const HEADER_MIN_HEIGHT = -25;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-const SAMPLE_LOCATIONS = [
-  {
-    name: 'Where are you looking for events?',
-    nickname: '',
-    id: 1,
-  },
-  {
-    name: 'Philadelphia, PA',
-    nickname: 'PHILLY',
-    id: 2,
-  },
-  {
-    name: 'New York, NY',
-    nickname: 'NYC',
-    id: 3,
-  },
-  {
-    name: 'New Orleans, LA',
-    nickname: 'NOLA',
-    id: 4,
-  },
-  {
-    name: 'San Francisco, CA',
-    nickname: 'SF',
-    id: 5,
-  },
-  {
-    name: 'Washington, D.C.',
-    nickname: 'DC',
-    id: 6,
-  },
-]
-
-const SAMPLE_AVATARS = [
-  require('../../assets/avatar-female.png'),
-  require('../../assets/avatar-male.png'),
-  require('../../assets/avatar-female.png'),
-]
-const SAMPLE_EVENTS = [
-  {
-    name: 'River Whyless',
-    bgImage: require('../../assets/event-smaller-1.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'River Whyless',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: true,
-  },
-  {
-    name: 'Beyonce',
-    bgImage: require('../../assets/event-smaller-2.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Beyonce',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: false,
-  },
-  {
-    name: 'Drake',
-    bgImage: require('../../assets/event-smaller-3.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Drake',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: false,
-  },
-  {
-    name: 'Ed Sheeran',
-    bgImage: require('../../assets/event-smaller-4.png'),
-    avatarImages: SAMPLE_AVATARS,
-    priceDollars: 30,
-    titleText: 'Ed Sheeran',
-    scheduleText: 'Fri, July 20 - 8:50 pm - The Warfield',
-    favorite: true,
-  },
-]
-
 export default class EventsIndex extends Component {
   static propTypes = {
     navigation: PropTypes.object,
+    screenProps: PropTypes.object,
   }
 
+  /* eslint-disable-next-line complexity */
   constructor(props) {
     super(props);
+    const {screenProps: {store}} = props
+    const {state} = store
 
     this.state = {
       scrollY: new Animated.Value(
@@ -114,27 +43,55 @@ export default class EventsIndex extends Component {
       toValue: 1,
       duration: 2000,
       easing: Easing.linear,
-      selectedLocationId: 2,
+      selectedLocationId: state.selectedLocationId || 2,
       mainFavorite: true,
+      locations: state.locations || [],
     };
+  }
+
+  componentWillReceiveProps(newProps) {
+    // Check for updated Location
+    const {screenProps: {store: {state: {selectedLocationId}}}} = newProps
+
+    if (selectedLocationId !== this.state.selectedLocationId) {
+      // also do some kind of event re-search action to load new city events
+      this.setState({selectedLocationId})
+    }
+  }
+
+  loadEvents() {
+    const {screenProps: {store}} = this.props
+
+    if (this.events.length === 0 || this.eventsRefresh) {
+      store.getEvents()
+    }
+  }
+
+  get eventsRefresh() {
+    const {screenProps: {store: {state: {lastUpdate}}}} = this.props
+
+    return !lastUpdate || lastUpdate.plus({minutes: 15}) < DateTime.local()
+  }
+
+  get events() {
+    const {screenProps: {store: {state: {events}}}} = this.props
+
+    return events
   }
 
   setFavorite = (mainFavorite) => {
     this.setState({mainFavorite})
   }
 
-  changeLocation = (index, selectedLocation) => {
-    this.setState({selectedLocationId: selectedLocation.id})
-  }
-
   get currentLocationDisplayName() {
-    const selectedLoc = SAMPLE_LOCATIONS.find((loc) => (loc.id === this.state.selectedLocationId))
+    const {locations} = this.state
+    const selectedLoc = locations.find((loc) => (loc.id === this.state.selectedLocationId))
 
     return selectedLoc.nickname
   }
 
   locRowOption = (rowData, rowID, _highlighted) => {
-    if (rowID === 0) {
+    if (rowID === '0') {
       return (
         <View>
           <View style={modalStyles.rowWrapper}>
@@ -156,11 +113,14 @@ export default class EventsIndex extends Component {
 
   get allEvents() {
     const {navigation: {navigate}} = this.props
+    const events = this.events
 
-    return SAMPLE_EVENTS.map((event, index) => (
+    if (events.length === 0) { return null }
+
+    return events.map((event, index) => (
       <EventItemView
         key={index}
-        onPress={() => navigate('EventsShow', {name: 'River Whyless'})}
+        onPress={() => navigate('EventsShow', {eventId: event.id})}
         event={event}
       />
     ))
@@ -187,11 +147,14 @@ export default class EventsIndex extends Component {
       outputRange: [1, 0, 1],
     });
 
-    const {navigation: {navigate}} = this.props
-    const {mainFavorite} = this.state
+    const {navigation: {navigate}, screenProps: {store}} = this.props
+    const {mainFavorite, locations} = this.state
 
     return (
       <View>
+        <NavigationEvents
+          onWillFocus={() => this.loadEvents()}
+        />
         <ScrollView
           style={styles.container}
           scrollEventThrottle={16}
@@ -217,19 +180,19 @@ export default class EventsIndex extends Component {
             y: -HEADER_MAX_HEIGHT,
           }}
         >
-          <View style={styles.sectionHeaderContainer}>
+          <View style={[styles.sectionHeaderContainer, styles.flexRowSpaceBetween]}>
             <Animated.Text style={[styles.header, {opacity}]}>Explore</Animated.Text>
             <ModalDropdown
               ref={(ref) => {
                 this._dropdown = ref
               }}
-              onSelect={this.changeLocation}
-              options={SAMPLE_LOCATIONS}
+              onSelect={store.changeLocation}
+              options={locations}
               renderRow={this.locRowOption}
               renderSeparator={() => <View />}
               dropdownStyle={modalStyles.modalDropdownContainer}
             >
-              <View style={styles.iconLinkContainer}>
+              <View style={styles.dropdownLinkContainer}>
                 <Image
                   style={styles.iconImageSmall}
                   source={require('../../assets/heart-small.png')}
@@ -241,7 +204,10 @@ export default class EventsIndex extends Component {
           </View>
 
           <View style={formStyles.searchContainer}>
-            <Icon style={formStyles.searchIcon} name="search" />
+            <Image
+              style={formStyles.searchIcon}
+              source={require('../../assets/icon-search.png')}
+            />
             <TextInput
               style={formStyles.searchInput}
               placeholder="Search artists, shows, venues..."
@@ -251,47 +217,55 @@ export default class EventsIndex extends Component {
           </View>
           <Text style={styles.sectionHeader}>Hot This Week</Text>
 
-          <View style={slideshowStyles.slideshowContainer}>
-            <Image
-              style={slideshowStyles.slideShowImage}
-              source={require('../../assets/featured-1.png')}
-            />
+          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
+            <View style={slideshowStyles.slideshowContainer}>
+              <Image
+                style={slideshowStyles.slideShowImage}
+                source={require('../../assets/featured-1.png')}
+              />
+              <Image
+                style={slideshowStyles.slideShowImage}
+                source={require('../../assets/featured-img-overlay.png')}
+              />
 
-            <View style={slideshowStyles.detailsContainer}>
-              <View style={slideshowStyles.sectionTop}>
-                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!mainFavorite)}>
-                  <View style={mainFavorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                    <Icon style={mainFavorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
+              <View style={slideshowStyles.detailsContainer}>
+                <View style={slideshowStyles.sectionTop}>
+                  <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!mainFavorite)}>
+                    <View style={mainFavorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
+                      <Icon style={mainFavorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
+                    </View>
+                  </TouchableHighlight>
+                  <View style={styles.avatarContainer}>
+                    <Image
+                      style={styles.avatar}
+                      source={require('../../assets/avatar-male.png')}
+                    />
+                    <Image
+                      style={styles.avatar}
+                      source={require('../../assets/avatar-female.png')}
+                    />
                   </View>
-                </TouchableHighlight>
-                <View style={styles.avatarContainer}>
-                  <Image
-                    style={styles.avatar}
-                    source={require('../../assets/avatar-male.png')}
-                  />
-                  <Image
-                    style={styles.avatar}
-                    source={require('../../assets/avatar-female.png')}
-                  />
                 </View>
-              </View>
 
-              <View style={slideshowStyles.sectionMiddle}>
-                <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
-                <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
-              </View>
+                <View style={slideshowStyles.sectionMiddle}>
+                  <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
+                  <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
+                </View>
 
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
-                <View style={slideshowStyles.sectionBottom}>
-                  <View style={styles.priceTagContainer}>
-                    <Text style={styles.priceTag}>$30</Text>
+
+                  <View>
+                    <View style={styles.priceTagContainer}>
+                      <Text style={styles.priceTag}>$30</Text>
+                    </View>
+                    <Text style={slideshowStyles.header}>Childish Gambino</Text>
+                    <View style={styles.flexRowSpaceBetween}>
+                      <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
+                      <Text style={slideshowStyles.details}>July 15, 2018</Text>
+                    </View>
                   </View>
-                  <Text style={slideshowStyles.header}>Childish Gambino</Text>
-                  <Text style={slideshowStyles.details}>Fri, July 20 - 8:50 pm - The Warfield</Text>
-                </View>
-              </TouchableHighlight>
+              </View>
             </View>
-          </View>
+          </TouchableHighlight>
 
           <Text style={styles.sectionHeader}>Upcoming</Text>
 

@@ -2,24 +2,24 @@ import React from 'react';
 import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'react-native';
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
-import TicketShowStyles from '../styles/tickets/ticketShowStyles'
+import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
-const ticketShowStyles = TicketShowStyles.createStyles()
+const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 export default function AccountDetails(props) {
-  const {navigation: {navigate}} = props
+  const {navigation: {navigate}, screenProps: {auth: {logOut}}} = props
 
   return (
-    <ScrollView>
-      <View style={accountStyles.containerDark}>
+    <ScrollView style={styles.containerDark}>
+      <View style={styles.paddingVerticalMedium}>
 
         <View style={accountStyles.rowContainer}>
           <View style={accountStyles.row}>
-            <View style={[ticketShowStyles.avatarContainer, accountStyles.avatarContainer]}>
+            <View style={[ticketWalletStyles.avatarContainer, accountStyles.avatarContainer]}>
               <Image
-                style={ticketShowStyles.avatar}
+                style={ticketWalletStyles.avatar}
                 source={require('../../assets/avatar-female.png')}
               />
             </View>
@@ -29,57 +29,57 @@ export default function AccountDetails(props) {
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>First Name</Text>
             <TextInput
-              style={styles.flexColumnCenter}
+              style={accountStyles.accountInputHeader}
               placeholder="Kook"
-              placeholderTextColor='black'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Last Name</Text>
             <TextInput
-              style={styles.flexColumnCenter}
+              style={accountStyles.accountInputHeader}
               placeholder="McDropin"
-              placeholderTextColor='black'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={[accountStyles.rowContainer, styles.marginTop]}>
+        <View style={[accountStyles.inputContainer, styles.marginTop]}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Mobile</Text>
             <TextInput
-              style={styles.flexColumnCenter}
+              style={accountStyles.accountInputHeader}
               placeholder="504-000-0000"
-              placeholderTextColor='black'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
             <TextInput
-              style={styles.flexColumnCenter}
+              style={accountStyles.accountInputHeader}
               placeholder="kookmcdropz@gmail.com"
-              placeholderTextColor='black'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
 
-        <View style={accountStyles.rowContainer}>
+        <View style={accountStyles.inputContainer}>
           <View style={accountStyles.row}>
             <Text style={accountStyles.accountInputHeaderDisabled}>Password</Text>
             <TextInput
-              style={styles.flexColumnCenter}
+              style={accountStyles.accountInputHeader}
               placeholder="password"
-              placeholderTextColor='black'
+              placeholderTextColor='#CCC'
             />
           </View>
         </View>
@@ -87,7 +87,7 @@ export default function AccountDetails(props) {
           <TouchableHighlight
             style={styles.buttonSecondary}
           >
-            <Text style={styles.buttonSecondaryText} onPress={() => navigate('SignedOut')}>Sign Out</Text>
+            <Text style={styles.buttonSecondaryText} onPress={() => logOut(navigate)}>Sign Out</Text>
           </TouchableHighlight>
         </View>
 

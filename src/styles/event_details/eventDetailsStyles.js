@@ -4,11 +4,13 @@ import {
   sectionHeaderColor,
   borderColor,
   textColor,
+  disabledHeaderColor,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
   globalFontBold,
   bodyFontSize,
+  globalPaddingLarger,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
@@ -29,32 +31,36 @@ export const calendarMonthFontSize = 14
 export const iconLargeFontSize = 56
 export const slideShowArrowFontSize = 28
 export const attendeeFontSize = 12
+export const backArrowFontSize = 25
 
 const EventDetailsStyles = {
-  // VIDEO STYLES
-  videoContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+  // VIDEO BKGD STYLES
+  videoBkgd: {
     height: 300,
-  },
-  videoContainerHeader: {
     position: 'absolute',
     top: 0,
-  },
-  videoBkgd: {
     width: fullWidth,
-    height: 300,
-    position: 'absolute',
+    zIndex: -10,
   },
-  videoDetailsContainer: {
-    flexDirection: 'column',
-    height: 290,
-    justifyContent: 'space-between',
+
+  // CLOSE ICON STYLES
+  backArrowWrapper: {
+    position: 'absolute',
+    top: 0,
     padding: globalPaddingSmall,
     paddingTop: globalPaddingLarge,
-    width: fullWidth,
+    zIndex: 0,
+  },
+  backArrowCircleContainer: {
+    backgroundColor: disabledHeaderColor,
+    borderRadius: 100/2,
+    height: 45,
+    padding: globalPaddingSmall,
+    width: 45,
+  },
+  backArrow: {
+    color: white,
+    fontSize: backArrowFontSize,
   },
 
   // MAIN BODY STYLES
@@ -71,22 +77,18 @@ const EventDetailsStyles = {
     borderTopLeftRadius: 30/2,
     paddingHorizontal: globalPadding,
     paddingTop: globalPaddingMedium,
-  },
-  spacer: {
-    height: 220,
+    position: 'relative',
+    zIndex: 10,
   },
   spacerFooter: {
-    height: 60,
+    height: 100,
   },
 
   // CONTAINER STYLES
   fixedFooter: {
     position: 'absolute',
     bottom: 0,
-  },
-  sectionTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: fullWidth,
   },
   sectionBottom: {
     alignItems: 'center',
@@ -94,29 +96,39 @@ const EventDetailsStyles = {
     marginTop: -45,
     paddingBottom: globalPaddingLarge,
   },
-  videoActionsContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-  },
   iconSectionHeaderContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     paddingVertical: globalPadding,
   },
+  youtubeVideoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 300,
+  },
+  priceHeaderWrapper: {
+    backgroundColor: white,
+    borderTopColor: borderColor,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    paddingVertical: globalPadding - globalPaddingTiny,
+  },
 
   // TEXT STYLES
   descriptionHeader: {
+    color: textColor,
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
-    color: textColor,
     width: 275,
   },
   descriptionSubHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontMedium,
     fontSize: sectionHeaderFontSize,
-    marginBottom: globalMargin,
+    paddingBottom: globalPaddingTiny,
     paddingTop: globalPaddingTiny,
   },
   header: {
@@ -148,17 +160,16 @@ const EventDetailsStyles = {
     color: textColor,
     fontFamily: globalFontBold,
     fontSize: sectionHeaderFontSize,
-    paddingBottom: globalPaddingSmall,
     textAlign: 'center',
   },
 
   // EVENT DETAILS/DESCRIPTION STYLES
   eventDetailsContainer: {
     flexDirection: 'row',
-    paddingVertical: globalPadding,
+    paddingVertical: globalPaddingMedium - globalPaddingTiny,
   },
   eventDescriptionContainer: {
-    paddingVertical: globalPadding,
+    paddingVertical: globalPaddingSmall,
     borderTopColor: borderColor,
     borderBottomColor: borderColor,
     borderStyle: 'solid',
@@ -236,13 +247,12 @@ const EventDetailsStyles = {
     alignItems: 'center',
     backgroundColor: white,
     borderColor: borderColor,
-    borderRadius: 45/2,
+    borderRadius: 5,
     borderWidth: 1,
     flex: 1,
     flexDirection: 'row',
     height: 40,
     justifyContent: 'center',
-    marginHorizontal: globalPaddingTiny,
   },
   buttonRoundedText: {
     color: sectionHeaderColor,
@@ -271,9 +281,8 @@ const EventDetailsStyles = {
   // CALENDAR STYLES
   calendarWrapper: {
     backgroundColor: textColor,
-    borderRadius: 5,
+    borderRadius: 4,
     height: 50,
-    marginRight: globalPaddingSmall,
     padding: globalPaddingTiny,
     width: 50,
   },

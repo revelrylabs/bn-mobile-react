@@ -1,73 +1,25 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
-import {ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
+import {ScrollView, Text, View, Image, Animated, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
-import EventStyles from '../styles/shared/eventStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
-const eventStyles = EventStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
+const AnimatedTicket = ({navigate, ticket, springValue}) => (
+  <Animated.View style={{transform: [{scale: springValue}]}}>
+    <Ticket navigate={navigate} ticket={ticket} />
+  </Animated.View>
+)
 
-// Hardcoding for now, will probably be replaced by a URL,
-// and <Image source={{uri: ticket.imageUrl}} ... />
-const sampleImages = {
-  image1: require('../../assets/ticket-event.png'),
-  image2: require('../../assets/ticket-event-2.png'),
-}
-const sampleTickets = {
-  upcoming: [
-    {
-      quantity: 3,
-      name: 'Explosions In The Sky',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, July 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image1,
-      qrCode: '',
-    },
-    {
-      quantity: 3,
-      name: 'Tycho',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, July 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image2,
-      qrCode: '',
-    },
-  ],
-  past: [
-    {
-      quantity: 3,
-      name: 'Tycho',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, January 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image2,
-      qrCode: '',
-    },
-    {
-      quantity: 3,
-      name: 'Explosions In The Sky',
-      venue: 'Fox Theater',
-      location: 'Oakland, CA',
-      date: 'Tue, January 21st',
-      starts: '7:30pm',
-      ends: '12:30am',
-      image: sampleImages.image1,
-      qrCode: '',
-    },
-  ],
+AnimatedTicket.propTypes = {
+  navigate: PropTypes.func.isRequired,
+  ticket: PropTypes.object.isRequired,
+  springValue: PropTypes.object.isRequired,
 }
 
 const Ticket = ({navigate, ticket}) => (
@@ -75,8 +27,12 @@ const Ticket = ({navigate, ticket}) => (
     <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets')}>
       <View style={ticketStyles.ticketContainer}>
         <Image
-          style={eventStyles.eventImage}
+          style={ticketStyles.eventImage}
           source={ticket.image}
+        />
+        <Image
+          style={ticketStyles.eventImageOverlay}
+          source={require('../../assets/event-img-overlay.png')}
         />
         <View style={ticketStyles.detailsContainer}>
           <View>
@@ -93,7 +49,7 @@ const Ticket = ({navigate, ticket}) => (
       </View>
     </TouchableHighlight>
 
-    <View style={ticketStyles.ticketContainerBottom}>
+    <View style={[ticketStyles.ticketContainerBottom, styles.borderBottomRadius]}>
       <View style={ticketStyles.detailsContainerBottom}>
         <View>
           <Text style={ticketStyles.detailsBottomHeader}>DATE</Text>
@@ -117,61 +73,130 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({navigate, viewType}) => (
-  sampleTickets[viewType].map((ticket) => (
-    <Ticket key={ticket.name} navigate={navigate} ticket={ticket} />
+const TicketsView = ({tickets, navigate, springValue, purchasedTicketId}) => (
+  tickets.map((ticket) => (
+    ticket.id === purchasedTicketId ?
+      <AnimatedTicket
+        key={ticket.name}
+        navigate={navigate}
+        ticket={ticket}
+        springValue={springValue}
+      /> :
+      <Ticket key={ticket.name} navigate={navigate} ticket={ticket} />
   ))
 )
 
 TicketsView.propTypes = {
   navigate: PropTypes.func.isRequired,
-  viewType: PropTypes.string.isRequired,
+  tickets: PropTypes.array.isRequired,
+  springValue: PropTypes.object.isRequired,
 }
 
 
 export default class MyTickets extends Component {
-  state = {
-    activeTab: 'upcoming',
+
+  constructor(props) {
+    super(props)
+
+    this.springValue = new Animated.Value(0.3)
+    const {screenProps: {store: {state}}} = props
+
+    this.state = {
+      activeTab: 'upcoming',
+      tickets: state.tickets || [],
+      purchasedTicket: state.purchasedTicketId || false,
+    }
+  }
+
+  componentDidMount() {
+    this.spring()
+  }
+
+  componentDidUpdate(_prevProps) {
+    const {screenProps: {store: {state}}} = this.props
+
+    if (this.state.purchasedTicket !== state.purchasedTicketId) {
+
+
+      this.setState({
+        purchasedTicket: state.purchasedTicketId,
+      }, this.spring())
+    }
+  }
+
+  spring() {
+    this.springValue.setValue(0.3)
+    Animated.spring(
+      this.springValue,
+      {
+        toValue: 1,
+        friction: 1,
+        tension: 1,
+      }
+    ).start()
   }
 
   tabStyle(viewType) {
     return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
   }
 
+  tabWrapperStyle(viewType) {
+    return viewType === this.state.activeTab ? styles.activeWrapper : null
+  }
+
+  get ticketsForActiveView() {
+    const {tickets, activeTab} = this.state
+
+    return tickets[activeTab] || []
+  }
+
+  get hasPurchasedTicket() {
+    const {navigation} = this.props
+
+    return false // @TODO: Grab a purchasedTicket from unstated
+  }
+
   render() {
     const {navigation: {navigate}} = this.props
 
     return (
-      <ScrollView>
-
+      <View  style={styles.containerDark}>
         <View style={styles.headerContainer}>
-          <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.header}>My Tickets</Text>
-            <View style={styles.iconLinkContainer}>
-              <Image
-                style={styles.iconImage}
-                source={require('../../assets/heart-large.png')}
-              />
-            </View>
+          <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
+            <Image
+              style={[styles.iconImage, styles.marginBottomSmall]}
+              source={require('../../assets/heart-large.png')}
+            />
           </View>
         </View>
-
-        <View style={styles.containerDark}>
-
-          <View style={styles.subnavContainer}>
-            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>Upcoming Events</Text>
-            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>Past Events</Text>
+        <View style={styles.subnavContainer}>
+          <View style={this.tabWrapperStyle('upcoming')}>
+            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
+          </View>
+          <View style={this.tabWrapperStyle('past')}>
+            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
+          </View>
+          <View style={this.tabWrapperStyle('transfer')}>
+            <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
+          </View>
+        </View>
+        <ScrollView>
+          <View style={styles.paddingHorizontal}>
+            <TicketsView
+              navigate={navigate}
+              tickets={this.ticketsForActiveView}
+              springValue={this.springValue}
+              purchasedTicketId={this.state.purchasedTicket}
+            />
           </View>
 
-          <TicketsView navigate={navigate} viewType={this.state.activeTab} />
-
-        </View>
-
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }
 
 MyTickets.propTypes = {
   navigation: PropTypes.object.isRequired,
+  screenProps: PropTypes.object.isRequired,
 }

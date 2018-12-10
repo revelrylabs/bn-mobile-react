@@ -1,9 +1,12 @@
 import MyTickets from './index'
 import EventTickets from './showEventTickets'
+import TransferTickets from './transferTickets'
 
-const ROUTES = {
-  MyTickets,
-  EventTickets,
+export const MAIN_ROUTES = {
+  MyTicketList: MyTickets,
 }
 
-export default ROUTES
+export const MODAL_ROUTES = {
+  EventTickets,
+  TransferTickets,
+}

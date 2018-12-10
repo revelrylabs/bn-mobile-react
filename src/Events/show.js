@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, TouchableHighlight} from 'react-native'
+import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
@@ -8,9 +9,64 @@ import Details from './details'
 import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
+import ModalStyles from '../styles/shared/modalStyles'
+import {flatMap, min, max, isEmpty} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const modalStyles = ModalStyles.createStyles()
+
+/* eslint-disable camelcase, space-before-function-paren */
+
+const LoadingScreen = ({toggleModal, modalVisible}) => (
+  <Modal
+    onRequestClose={() => {
+      toggleModal(!modalVisible)
+    }}
+    visible={modalVisible}
+    transparent
+  >
+    <View style={modalStyles.modalContainer}>
+      <View style={styles.flexRowCenter}>
+        <View style={modalStyles.activityIndicator}>
+          <ActivityIndicator size="large" color="#FF20B1" />
+        </View>
+      </View>
+    </View>
+  </Modal>
+)
+
+LoadingScreen.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+}
+
+const SuccessScreen = ({toggleModal, modalVisible}) => (
+  <Modal
+    onRequestClose={() => {
+      toggleModal(!modalVisible)
+    }}
+    visible={modalVisible}
+    transparent
+  >
+    <View style={modalStyles.modalContainer}>
+      <View style={styles.flexRowCenter}>
+        <View style={modalStyles.activityIndicator}>
+          <Image
+            style={modalStyles.emojiActivityIndicator}
+            source={require('../../assets/emoji-loader.png')}
+          />
+        </View>
+      </View>
+    </View>
+  </Modal>
+)
+
+SuccessScreen.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+}
+
 const PaymentOptions = [
   {
     header: 'Apple Pay',
@@ -28,12 +84,47 @@ const PaymentOptions = [
 export default class EventShow extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
-  state = {
-    favorite: false,
-    currentScreen: 'details',
-    selectedPaymentId: 1,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      event: false,
+      eventId: props.navigation.getParam('eventId', false),
+      favorite: false,
+      currentScreen: 'details',
+      selectedPaymentId: 1,
+      showLoadingModal: false,
+      showSuccessModal: false,
+    }
+
+    this.loadEvent()
+  }
+
+  componentWillReceiveProps(newProps) {
+    const {screenProps: {store: {state: {selectedEvent}}}} = newProps
+
+    // Do we want to check if the event id different, or just always update?
+    if (selectedEvent) {
+      this.setState({event: selectedEvent})
+    }
+  }
+
+  clearEvent() {
+    const {screenProps: {store}} = this.props
+
+    store.clearEvent()
+  }
+
+  async loadEvent() {
+    const {screenProps: {store}} = this.props
+    const {eventId} = this.state
+
+    if (eventId) {
+      store.getEvent(eventId)
+    }
   }
 
   scrollToTop = () => {
@@ -56,17 +147,80 @@ export default class EventShow extends Component {
     })
   }
 
+  toggleLoadingModal = ({showLoadingModal}) => {
+    this.setState({showLoadingModal})
+  }
+
+  toggleSuccessModal = ({showSuccessModal}) => {
+    this.setState({showSuccessModal})
+  }
+
+  async addTicket(id) {
+    const {screenProps: {addPurchasedTicket}} = this.props
+
+    return new Promise((resolve) => {
+      addPurchasedTicket(id)
+      resolve()
+    })
+  }
+
+  lowestPrice(ticket_types) {
+    const ticket_pricing = flatMap(ticket_types, (ticket) => (
+      ticket.ticket_pricing.price_in_cents
+    ))
+
+    return min(ticket_pricing) / 100
+  }
+
+  highestPrice(ticket_types) {
+    const ticket_pricing = flatMap(ticket_types, (ticket) => (
+      ticket.ticket_pricing.price_in_cents
+    ))
+
+    return max(ticket_pricing) / 100
+  }
+
+  get ticketRange() {
+    const {event: {ticket_types}} = this.state
+
+    if (!ticket_types) {
+      return null
+    }
+
+    return (
+      <View style={eventDetailsStyles.priceHeaderWrapper}>
+        <Text style={eventDetailsStyles.priceHeader}>
+          ${this.lowestPrice(ticket_types)} - ${this.highestPrice(ticket_types)}
+        </Text>
+      </View>
+    )
+  }
+
+  onTicketSelection = async (ticketTypeId, ticketPricingId) => {
+    const {screenProps: {cart}} = this.props
+
+    await cart.selectTicket(ticketTypeId, ticketPricingId)
+    this.changeScreen('checkout')
+  }
+
+
   /* eslint-disable-next-line complexity */
   get showScreen() {
-    const {currentScreen, selectedPaymentId} = this.state
+    const {event, currentScreen, selectedPaymentId} = this.state
+
+    if (!event || isEmpty(event)) {
+      return null
+    }
+
+    // @TODO: Add a ScrollTo initial position
 
     switch (currentScreen) {
     case 'details':
-      return <Details />
+      return <Details event={event} />
     case 'tickets':
-      return <GetTickets changeScreen={this.changeScreen} />
+      return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
     case 'checkout':
-      return <Checkout changeScreen={this.changeScreen} />
+      return <Checkout cart={this.props.screenProps.cart} event={event} changeScreen={this.changeScreen} />
     case 'payment':
       return (
         <PaymentTypes
@@ -86,38 +240,84 @@ export default class EventShow extends Component {
 
     if (currentScreen === 'details') {
       return (
-        <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.changeScreen('tickets')}
-          >
-            <Text style={styles.buttonText}>Get Tickets</Text>
-          </TouchableHighlight>
+        <View style={eventDetailsStyles.fixedFooter}>
+          {this.ticketRange}
+          <View style={styles.buttonContainer}>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={() => this.changeScreen('tickets')}
+            >
+              <Text style={styles.buttonText}>Get Tickets</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       )
-    } else {
-      return null
     }
+
+    return null
   }
 
-  get purchaseTicket() {
+  get purchaseTicketButton() {
     const {currentScreen} = this.state
 
     if (currentScreen === 'checkout') {
+      const ticketDetails = {
+        ticketId: 1,
+        purchaseId: 1,
+      }
+
       return (
         <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
           <TouchableHighlight
             style={styles.button}
-            onPress={() => this.changeScreen('confirm')}
+            onPress={() => this.purchaseTicket(ticketDetails)}
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
         </View>
       )
-    } else {
-      return null
     }
+
+    return null
   }
+
+  async purchaseTicket(_purchasedTicket) {
+    const {navigation: {navigate}} = this.props
+
+    this.setState({showLoadingModal: true})
+
+    // Simulate the purchasing ticket wait
+    setTimeout(async () => {
+      this.setState({
+        showLoadingModal: false,
+        showSuccessModal: true,
+      })
+
+      // Simulate a sucessful purchase
+      setTimeout(async () => {
+        this.setState({showSuccessModal: false})
+        const _ticketResult = await this.addTicket(1)
+
+        // Reset the Explore Tab Stack
+        const resetAction = StackActions.reset({
+          index: 0,
+          key: 'Explore',
+          actions: [
+            NavigationActions.navigate({routeName: 'Home'}),
+          ],
+        })
+
+        this.props.navigation.dispatch(resetAction)
+
+        // Navigate to the tickets tab to see the new ticket
+        navigate('MyTickets')
+      }, 1000)
+    }, 3000)
+
+    // @TODO: Set a "purchasedTicket flag in unstated so we can use it on MyTickets"
+
+  }
+
 
   /* eslint-disable-next-line complexity */
   get prevScreen() {
@@ -143,50 +343,46 @@ export default class EventShow extends Component {
     const icon = currentScreen === 'details' ? 'close' : 'arrow-back'
 
     return (
-      <Icon
-        style={styles.iconLinkCircle}
-        name={icon}
-        onPress={() => this.prevScreen}
-      />
+      <View style={eventDetailsStyles.backArrowCircleContainer}>
+        <Icon
+          style={eventDetailsStyles.backArrow}
+          name={icon}
+          onPress={() => this.prevScreen}
+        />
+      </View>
     )
   }
 
   render() {
-    const {favorite} = this.state
+    const {event, showLoadingModal, showSuccessModal} = this.state
+
+    if (!event) {
+      return null
+    }
 
     return (
       <View style={{backgroundColor: 'white'}}>
-        <View style={[eventDetailsStyles.videoContainer, eventDetailsStyles.videoContainerHeader]}>
-          <Image
-            style={eventDetailsStyles.videoBkgd}
-            source={require('../../assets/video-bkgd.png')}
-          />
-
-          <View style={eventDetailsStyles.videoDetailsContainer}>
-
-            <View style={eventDetailsStyles.sectionTop}>
-              {this.backArrow}
-              <View style={eventDetailsStyles.videoActionsContainer}>
-                <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.toggleFavorite(!favorite)}>
-                  <View style={favorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                    <Icon style={favorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
-                  </View>
-                </TouchableHighlight>
-                <View style={[styles.iconLinkCircleContainer, styles.marginTopSmall]}>
-                  <Icon style={styles.iconLinkCircle} name="reply" />
-                </View>
-              </View>
-            </View>
-
-          </View>
-
-        </View>
+        <NavigationEvents
+          onWillFocus={() => this.loadEvent()}
+          onDidBlur={() => this.clearEvent()}
+        />
+        <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={showLoadingModal} />
+        <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
+        <Image
+          style={eventDetailsStyles.videoBkgd}
+          source={{uri: event.promo_image_url}}
+        />
 
         <ScrollView>
           {this.showScreen}
         </ScrollView>
 
+        <View style={eventDetailsStyles.backArrowWrapper}>
+          {this.backArrow}
+        </View>
+
         {this.getTickets}
+        {this.purchaseTicketButton}
       </View>
     )
   }

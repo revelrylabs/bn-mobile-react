@@ -21,6 +21,9 @@ export const bodyFontSizeSmall = 13
 const TicketStyles = {
   // CONTAINER STYLES
   ticketContainer: {
+    borderTopRightRadius: 6,
+    borderTopLeftRadius: 6,
+    overflow: 'hidden',
     marginTop: globalMargin,
     padding: globalPadding,
   },
@@ -32,12 +35,29 @@ const TicketStyles = {
   ticketContainerBottom: {
     backgroundColor: white,
     marginTop: -10,
-    width: fullWidth - 43,
   },
   detailsContainerBottom: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: globalPaddingSmall + globalPaddingTiny,
+  },
+  ticketHolderWrapper: {
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+
+  // IMAGE BKGD STYLES
+  eventImage: {
+    borderTopRightRadius: 6,
+    borderTopLeftRadius: 6,
+    height: 180,
+    position: 'absolute',
+    width: fullWidth,
+  },
+  eventImageOverlay: {
+    height: 300,
+    position: 'absolute',
   },
 
   // TEXT STYLES
@@ -59,6 +79,16 @@ const TicketStyles = {
   },
   detailsLast: {
     textAlign: 'right',
+  },
+  ticketHolderHeader: {
+    fontSize: bodyFontSize,
+    paddingBottom: 2,
+  },
+  ticketHolderSubheader: {
+    color: sectionHeaderColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSizeSmall,
+    letterSpacing: 0.5,
   },
 
   // ICON STYLES

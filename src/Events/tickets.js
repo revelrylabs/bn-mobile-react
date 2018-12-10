@@ -2,53 +2,57 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
-import EventTicketStyles from '../styles/event_details/eventTicketStyles'
+import CheckoutStyles from '../styles/event_details/checkoutStyles'
+import {sortBy} from 'lodash'
 
-const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
-const eventTicketStyles = EventTicketStyles.createStyles()
+const checkoutStyles = CheckoutStyles.createStyles()
+
+/* eslint-disable camelcase, space-before-function-paren */
 
 export default class GetTickets extends Component {
   static propTypes = {
-    navigation: PropTypes.object,
+    onTicketSelection: PropTypes.func,
+    event: PropTypes.object,
+  }
+
+  get tickets() {
+    const {onTicketSelection, event: {ticket_types}} = this.props
+
+    return sortBy(ticket_types, (ticket) => (
+      ticket.ticket_pricing.price_in_cents
+    )).map((ticket) => {
+      const {id, name, ticket_pricing} = ticket
+
+      return (
+        <TouchableHighlight key={ticket.id} onPress={() => onTicketSelection(id, ticket_pricing.id)}>
+          <View style={checkoutStyles.rowContainer}>
+            <View style={checkoutStyles.row}>
+              <Text style={checkoutStyles.ticketPrice}>${ticket_pricing.price_in_cents / 100.00}</Text>
+              <View>
+                <Text style={checkoutStyles.ticketHeader}>{name}</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>{ticket_pricing.name}</Text>
+              </View>
+            </View>
+            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+          </View>
+        </TouchableHighlight>
+      )
+    })
   }
 
   render() {
     return (
-      <View style={eventTicketStyles.mainBody}>
-        <View style={eventTicketStyles.mainBodyContent}>
+      <View style={checkoutStyles.mainBody}>
+        <View style={checkoutStyles.mainBodyContent}>
 
-          <View style={styles.container}>
-            <Text style={styles.header}>Ticket Type</Text>
+          <View style={checkoutStyles.headerWrapper}>
+            <Text style={checkoutStyles.header}>Ticket Type</Text>
           </View>
 
-          <TouchableHighlight onPress={() => this.props.changeScreen('checkout')}>
-            <View style={eventTicketStyles.rowContainer}>
-              <View style={eventTicketStyles.row}>
-                <Text style={eventTicketStyles.ticketPrice}>$35</Text>
-                <View>
-                  <Text style={eventTicketStyles.ticketHeader}>General Admission</Text>
-                  <Text style={eventTicketStyles.ticketSubHeader}>Lorem ipsum dolor sit amet non lorem.</Text>
-                </View>
-              </View>
-              <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-            </View>
-          </TouchableHighlight>
+          {this.tickets}
 
-          <TouchableHighlight onPress={() => this.props.changeScreen('checkout')}>
-            <View style={eventTicketStyles.rowContainer}>
-              <View style={eventTicketStyles.row}>
-                <Text style={eventTicketStyles.ticketPrice}>$55</Text>
-                <View>
-                  <Text style={eventTicketStyles.ticketHeader}>VIP</Text>
-                  <Text style={eventTicketStyles.ticketSubHeader}>Lorem ipsum dolor sit amet non lorem.</Text>
-                </View>
-              </View>
-              <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-            </View>
-          </TouchableHighlight>
         </View>
       </View>
     )
