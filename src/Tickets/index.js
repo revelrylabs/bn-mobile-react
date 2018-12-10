@@ -27,6 +27,7 @@ function EmptyTickets({text}) {
 }
 
 const AnimatedTicket = ({navigate, ticket, springValue, resetPurchasedTicket}) => {
+  resetPurchasedTicket()
 
   return (
     <Animated.View style={{transform: [{scale: springValue}]}}>
@@ -39,6 +40,7 @@ AnimatedTicket.propTypes = {
   navigate: PropTypes.func.isRequired,
   ticket: PropTypes.object.isRequired,
   springValue: PropTypes.object.isRequired,
+  resetPurchasedTicket: PropTypes.func.isRequired,
 }
 
 const Ticket = ({navigate, ticket}) => {
