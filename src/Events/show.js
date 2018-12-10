@@ -239,11 +239,11 @@ export default class EventShow extends Component {
       case 'SoldOut':
         return {ctaText: 'Sold Out', enabled: (event.is_external ? false : true)}
       case 'OnSaleSoon':
-        return {ctaText: 'On Sale Soon', enabled: (event.is_external ? true : false)}
+        return {ctaText: 'On Sale Soon', enabled: (event.is_external ? false : true)}
       case 'TicketsAtTheDoor':
-        return {ctaText: 'Tickets At The Door', enabled: (event.is_external ? true : false)}
+        return {ctaText: 'Tickets At The Door', enabled: (event.is_external ? false : true)}
       case 'UseAccessCode':
-        return {ctaText: (!event.is_external ? 'Use Access Code' : 'Get Tickets via Web'), enabled: (event.is_external ? true : false)}
+        return {ctaText: (!event.is_external ? 'Use Access Code' : 'Get Tickets via Web'), enabled: true}
       case 'Free':
         return {ctaText: (!event.is_external ? 'Free' : 'Free via Web'), enabled: true}
       case 'Rescheduled':
