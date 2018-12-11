@@ -26,13 +26,11 @@ function EmptyTickets({text}) {
   )
 }
 
-const AnimatedTicket = ({navigate, ticket, springValue}) => {
-  return (
-    <Animated.View style={{transform: [{scale: springValue}]}}>
-      <Ticket navigate={navigate} ticket={ticket} />
-    </Animated.View>
-  )
-}
+const AnimatedTicket = ({navigate, ticket, springValue}) => (
+  <Animated.View style={{transform: [{scale: springValue}]}}>
+    <Ticket navigate={navigate} ticket={ticket} />
+  </Animated.View>
+)
 
 AnimatedTicket.propTypes = {
   navigate: PropTypes.func.isRequired,
