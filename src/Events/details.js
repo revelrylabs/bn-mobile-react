@@ -52,8 +52,8 @@ export default class Details extends Component {
   toggleInterest = () => {
     const {onInterested, event} = this.props
 
-    // set 'false' for individual event
-    onInterested(event, false)
+    // set 'true' for individual event
+    onInterested(event, true)
   }
 
   get topLineInfo() {

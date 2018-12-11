@@ -90,7 +90,7 @@ class EventsContainer extends Container {
   changeLocation = (_index, {id}) => this.setState({selectedLocationId: id})
 
   // allEvents will refresh all events (ie: from the index page), whereas setting it to false will refresh the interested event
-  toggleInterest = async (event, allEvents = true) => {
+  toggleInterest = async (event, singleEvent = false) => {
     const {user_is_interested, id} = event
 
     try {
@@ -103,9 +103,8 @@ class EventsContainer extends Container {
     } catch (error) {
       apiErrorAlert(error, 'There was a problem selecting this event.')
     } finally {
-      if (allEvents) {
-        this.getEvents()
-      } else {
+      this.getEvents()
+      if (singleEvent) {
         this.getEvent(id)
       }
     }
