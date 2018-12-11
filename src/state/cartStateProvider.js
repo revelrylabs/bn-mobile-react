@@ -98,7 +98,7 @@ class CartContainer extends Container {
 
   placeOrder = async (onSuccess) => {
     try {
-      await server.cart.checkout({
+      const _resp = await server.cart.checkout({
         amount: this.state.total_in_cents, // @TODO: remove this amount, we shouldn't be specifying it on the frontend
         method: {
           type: 'Card',
@@ -109,10 +109,12 @@ class CartContainer extends Container {
         },
       })
 
+      await this.setState({selectedPaymentDetails: {}})
       onSuccess()
 
       return true
     } catch (error) {
+      this.setState({selectedPaymentDetails: {}})
       apiErrorAlert(error, 'There was an error checking out.')
     }
   }
