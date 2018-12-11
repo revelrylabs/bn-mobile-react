@@ -25,14 +25,14 @@ const HEADER_MAX_HEIGHT = 0;
 const HEADER_MIN_HEIGHT = -25;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-function EmptyTickets({text}) {
+function EmptyEvents({locationName}) {
   return (
     <View style={ticketStyles.emptyStateContainer}>
       <Image
         style={ticketStyles.emptyStateIcon}
         source={emptyState}
       />
-      <Text style={ticketStyles.emptyStateText}>{text}</Text>
+      <Text style={ticketStyles.emptyStateText}>{"More" + (locationName == "All Locations" ? null : " " + locationName) + " events and experiences powered by Big Neon launching soon!"}</Text>
     </View>
   )
 }
@@ -138,7 +138,7 @@ export default class EventsIndex extends Component {
     const {navigation: {navigate}, screenProps: {store: {toggleInterest}}} = this.props
     const events = this.events
     if(events.length == 0){
-      return <EmptyTickets text={"More" + (this.currentLocationDisplayName == "All Locations" ? null : " " + this.currentLocationDisplayName) + " events and experiences powered by Big Neon launching soon!"} />
+      return <EmptyEvents locationName={this.currentLocationDisplayName} />
     }
     return events.map((event, index) => (
       <EventItemView
