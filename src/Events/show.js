@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import {ScrollView, Linking, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import { Constants, WebBrowser } from 'expo';
 import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -11,13 +12,26 @@ import PaymentTypes from './payments'
 import Checkout from './checkout'
 import VenueShow from './venueShow'
 import ModalStyles from '../styles/shared/modalStyles'
-import {flatMap, min, max, isEmpty} from 'lodash'
+import {toDollars} from '../constants/money'
+import {flatMap, min, max, isEmpty, some} from 'lodash'
+
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
+function priceRange(ticket_types) {
+  const ticket_pricing = flatMap(ticket_types, (ticket) => (
+    ticket.ticket_pricing ? ticket.ticket_pricing.price_in_cents : false
+  ))
+
+  return ticket_pricing ? [
+    toDollars(min(ticket_pricing)),
+    toDollars(max(ticket_pricing)),
+  ] : ticket_pricing
+}
+
 
 const LoadingScreen = ({toggleModal, modalVisible}) => (
   <Modal
@@ -82,7 +96,6 @@ export default class EventShow extends Component {
       eventId: props.navigation.getParam('eventId', false),
       favorite: false,
       currentScreen: 'details',
-      selectedPaymentDetails: {},
       showLoadingModal: false,
       showSuccessModal: false,
     }
@@ -127,11 +140,11 @@ export default class EventShow extends Component {
     this.setState({currentScreen})
   }
 
-  selectPayment = (selectedPaymentDetails) => {
-    this.setState({
-      selectedPaymentDetails,
-      currentScreen: 'checkout',
-    })
+  selectPayment = async (selectedPaymentDetails) => {
+    const {screenProps: {cart}} = this.props
+
+    await cart.setPayment(selectedPaymentDetails)
+    this.changeScreen('checkout')
   }
 
   toggleLoadingModal = ({showLoadingModal}) => {
@@ -142,42 +155,31 @@ export default class EventShow extends Component {
     this.setState({showSuccessModal})
   }
 
-  async addTicket(id) {
-    const {screenProps: {addPurchasedTicket}} = this.props
-
-    return new Promise((resolve) => {
-      addPurchasedTicket(id)
-      resolve()
-    })
-  }
-
-  lowestPrice(ticket_types) {
-    const ticket_pricing = flatMap(ticket_types, (ticket) => (
-      ticket.ticket_pricing.price_in_cents
-    ))
-
-    return min(ticket_pricing) / 100
-  }
-
-  highestPrice(ticket_types) {
-    const ticket_pricing = flatMap(ticket_types, (ticket) => (
-      ticket.ticket_pricing.price_in_cents
-    ))
-
-    return max(ticket_pricing) / 100
-  }
-
-  get ticketRange() {
+  // If no ticket types, or no ticket pricings, we cant buy tickets
+  get canBuyTickets() {
     const {event: {ticket_types}} = this.state
 
-    if (!ticket_types) {
-      return null
+    return some(ticket_types, (ticket) => !isEmpty(ticket.ticket_pricing))
+  }
+
+  get ticketRange() { // eslint-disable-line complexity
+    const {event: {ticket_types}} = this.state
+
+    const ticketPriceRange = []
+    const [lowest, highest] = priceRange(ticket_types)
+
+    if (lowest) {
+      ticketPriceRange.push(`$${lowest}`)
+    }
+
+    if (highest && highest !== lowest) {
+      ticketPriceRange.push(`$${highest}`)
     }
 
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
         <Text style={eventDetailsStyles.priceHeader}>
-          ${this.lowestPrice(ticket_types)} - ${this.highestPrice(ticket_types)}
+          {ticketPriceRange.join(' - ')}
         </Text>
       </View>
     )
@@ -186,15 +188,23 @@ export default class EventShow extends Component {
   onTicketSelection = async (ticketTypeId, ticketPricingId) => {
     const {screenProps: {cart}} = this.props
 
+    await cart.emptyCart()
     await cart.selectTicket(ticketTypeId, ticketPricingId)
     this.changeScreen('checkout')
   }
 
-
   /* eslint-disable-next-line complexity */
   get showScreen() {
-    const {event, currentScreen, selectedPaymentDetails} = this.state
-    const {screenProps: {user: {access_token, refresh_token}}} = this.props
+    const {event, currentScreen} = this.state
+    const {
+      screenProps: {
+        store: {toggleInterest},
+        cart: {
+          state: {selectedPaymentDetails}
+        },
+        user: {access_token, refresh_token}
+      }
+    } = this.props
 
     if (!event || isEmpty(event)) {
       return null
@@ -204,7 +214,7 @@ export default class EventShow extends Component {
 
     switch (currentScreen) {
     case 'details':
-      return <Details event={event} changeScreen={this.changeScreen} />
+      return <Details event={event} onInterested={toggleInterest} />
     case 'tickets':
       return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
     case 'checkout':
@@ -213,7 +223,6 @@ export default class EventShow extends Component {
           cart={this.props.screenProps.cart}
           event={event}
           changeScreen={this.changeScreen}
-          selectedPaymentDetails={selectedPaymentDetails}
         />
       )
     case 'payment':
@@ -233,19 +242,49 @@ export default class EventShow extends Component {
     }
   }
 
-  get getTickets() {
-    const {currentScreen} = this.state
+  get getDetailPageButtonCta() {
+    const {event,currentScreen} = this.state
+    switch(event.override_status){
+      case 'PurchaseTickets':
+        return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
+      case 'SoldOut':
+        return {ctaText: 'Sold Out', enabled: (event.is_external ? false : true)}
+      case 'OnSaleSoon':
+        return {ctaText: 'On Sale Soon', enabled: (event.is_external ? false : true)}
+      case 'TicketsAtTheDoor':
+        return {ctaText: 'Tickets At The Door', enabled: (event.is_external ? false : true)}
+      case 'UseAccessCode':
+        return {ctaText: (!event.is_external ? 'Use Access Code' : 'Get Tickets via Web'), enabled: true}
+      case 'Free':
+        return {ctaText: (!event.is_external ? 'Free' : 'Free via Web'), enabled: true}
+      case 'Rescheduled':
+        return {ctaText: 'Rescheduled', enabled: false}
+      case 'Cancelled':
+        return {ctaText: 'Cancelled', enabled: false}
+      case 'OffSale':
+        return {ctaText: 'Off-Sale', enabled: false}
+      case 'Ended':
+        return {ctaText: 'Sale Ended', enabled: false}
+      default:
+        return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
+    }
+  }
 
-    if (currentScreen === 'details') {
+  get getTickets() {
+    const {event,currentScreen} = this.state
+    const {ctaText, enabled} = this.getDetailPageButtonCta
+    if (currentScreen === 'details' && this.canBuyTickets) {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
-          {this.ticketRange}
+          {enabled && !event.is_external ? this.ticketRange : null}
           <View style={styles.buttonContainer}>
             <TouchableHighlight
-              style={styles.button}
-              onPress={() => this.changeScreen('tickets')}
+              style={enabled ? styles.button : styles.buttonDisabled}
+              onPress={enabled ? (event.is_external ? () => {
+                WebBrowser.openBrowserAsync(event.external_url)
+              } : () => this.changeScreen('tickets')) : null}
             >
-              <Text style={styles.buttonText}>Get Tickets</Text>
+              <Text style={styles.buttonText}>{ctaText}</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -259,16 +298,11 @@ export default class EventShow extends Component {
     const {currentScreen} = this.state
 
     if (currentScreen === 'checkout') {
-      const ticketDetails = {
-        ticketId: 1,
-        purchaseId: 1,
-      }
-
       return (
         <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
           <TouchableHighlight
             style={styles.button}
-            onPress={() => this.purchaseTicket(ticketDetails)}
+            onPress={this.purchaseTicket}
           >
             <Text style={styles.buttonText}>Purchase Ticket</Text>
           </TouchableHighlight>
@@ -279,40 +313,38 @@ export default class EventShow extends Component {
     return null
   }
 
-  async purchaseTicket(_purchasedTicket) {
-    const {navigation: {navigate}} = this.props
+  purchaseTicket = async () => {
+    const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
+
+    if (isEmpty(cart.state.selectedPaymentDetails)) {
+      alert('Please enter your payment details');
+      return false
+    }
 
     this.setState({showLoadingModal: true})
 
-    // Simulate the purchasing ticket wait
-    setTimeout(async () => {
-      this.setState({
-        showLoadingModal: false,
-        showSuccessModal: true,
-      })
+    await cart.placeOrder(() => setPurchasedTicket(cart.state.id))
 
-      // Simulate a sucessful purchase
-      setTimeout(async () => {
-        this.setState({showSuccessModal: false})
-        const _ticketResult = await this.addTicket(1)
+    // @TODO: Need to wrap this in a try, or as a const, so we can skip the nav if it fails
+    await this.setState({
+      showLoadingModal: false,
+      showSuccessModal: true,
+    })
 
-        // Reset the Explore Tab Stack
-        const resetAction = StackActions.reset({
-          index: 0,
-          key: 'Explore',
-          actions: [
-            NavigationActions.navigate({routeName: 'Home'}),
-          ],
-        })
+    const resetAction = StackActions.reset({
+      index: 0,
+      key: 'Explore',
+      actions: [
+        NavigationActions.navigate({routeName: 'Home'}),
+      ],
+    })
 
-        this.props.navigation.dispatch(resetAction)
+    setTimeout(() => {
+      this.props.navigation.dispatch(resetAction)
 
-        // Navigate to the tickets tab to see the new ticket
-        navigate('MyTickets')
-      }, 1000)
+      // Navigate to the tickets tab to see the new ticket
+      navigate('MyTickets')
     }, 3000)
-
-    // @TODO: Set a "purchasedTicket flag in unstated so we can use it on MyTickets"
 
   }
 
@@ -341,13 +373,14 @@ export default class EventShow extends Component {
     const icon = currentScreen === 'details' ? 'close' : 'arrow-back'
 
     return (
-      <View style={eventDetailsStyles.backArrowCircleContainer}>
-        <Icon
-          style={eventDetailsStyles.backArrow}
-          name={icon}
-          onPress={() => this.prevScreen}
-        />
-      </View>
+      <TouchableHighlight style={eventDetailsStyles.linkContainer} underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.prevScreen}>
+        <View style={eventDetailsStyles.backArrowCircleContainer}>
+          <Icon
+            style={eventDetailsStyles.backArrow}
+            name={icon}
+          />
+        </View>
+      </TouchableHighlight>
     )
   }
 
@@ -371,7 +404,7 @@ export default class EventShow extends Component {
           source={{uri: event.promo_image_url}}
         />
 
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {this.showScreen}
         </ScrollView>
 

@@ -11,7 +11,7 @@ const billingStyles = BillingStyles.createStyles()
 
 export default function Billing() {
   return (
-    <ScrollView style={styles.containerDark}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
       <View style={styles.paddingVerticalMedium}>
 
         <Text style={accountStyles.sectionHeader}>Credit Cards</Text>
@@ -62,22 +62,23 @@ export default function Billing() {
           </View>
         </View>
 
-        <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
-
-        <View style={accountStyles.inputContainer}>
-          <View style={billingStyles.row}>
-            <View style={billingStyles.imageWrapper}>
-              <Image
-                style={billingStyles.billingImageVenmo}
-                source={require('../../assets/icon-venmo.png')}
+        <View>
+          <Text style={[accountStyles.sectionHeader, styles.marginTop]}>Other</Text>
+          <View style={accountStyles.inputContainer}>
+            <View style={billingStyles.row}>
+              <View style={billingStyles.imageWrapper}>
+                <Image
+                  style={billingStyles.billingImageVenmo}
+                  source={require('../../assets/icon-venmo.png')}
+                />
+              </View>
+              <TextInput
+                style={accountStyles.accountInputHeader}
+                placeholder="kookster9000@hottopic.com"
+                placeholderTextColor='black'
+                underlineColorAndroid="transparent"
               />
             </View>
-            <TextInput
-              style={accountStyles.accountInputHeader}
-              placeholder="kookster9000@hottopic.com"
-              placeholderTextColor='black'
-              underlineColorAndroid="transparent"
-            />
           </View>
         </View>
 

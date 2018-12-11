@@ -86,6 +86,7 @@ export default class LogIn extends Component {
           </TouchableHighlight>
         </View>
 
+        {false && // TODO: Re-enable when functionality is implemented.
         <View>
           <TouchableHighlight>
             <View style={styles.flexRowCenter}>
@@ -106,6 +107,7 @@ export default class LogIn extends Component {
             </View>
           </TouchableHighlight>
         </View>
+        }
 
       </View>
     )

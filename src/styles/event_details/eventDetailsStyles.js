@@ -44,10 +44,14 @@ const EventDetailsStyles = {
   },
 
   // CLOSE ICON STYLES
+  linkContainer: {
+    height: 85,
+    width: 85,
+  },
   backArrowWrapper: {
     position: 'absolute',
     top: 0,
-    padding: globalPaddingSmall,
+    padding: globalPadding + globalPaddingTiny,
     paddingTop: globalPaddingLarge,
     zIndex: 0,
   },
@@ -259,14 +263,36 @@ const EventDetailsStyles = {
     height: 40,
     justifyContent: 'center',
   },
+  buttonRoundedActive: {
+    alignItems: 'center',
+    backgroundColor: primaryColor,
+    borderColor: primaryColor,
+    borderRadius: 5,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'center',
+  },
   buttonRoundedText: {
     color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
     textAlign: 'center',
   },
+  buttonRoundedActiveText: {
+    color: white,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    textAlign: 'center',
+  },
   buttonRoundedIcon: {
     color: sectionHeaderColor,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingTiny,
+  },
+  buttonRoundedActiveIcon: {
+    color: white,
     fontSize: bodyFontSize,
     paddingRight: globalPaddingTiny,
   },

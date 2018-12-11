@@ -1,15 +1,18 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, TouchableHighlight} from 'react-native'
+import {View, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
+import { Constants, WebBrowser } from 'expo';
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
+
+/* eslint-disable camelcase,space-before-function-paren */
 
 const returnToButton = (navigation) => (
   <TouchableHighlight onPress={() => navigation.goBack()} underlayColor="rgba(0, 0, 0, 0)">
@@ -44,66 +47,80 @@ export default class SignUp extends Component {
     const {screenProps: {auth}, navigation: {navigate}} = this.props
     const {email, password, first_name, last_name} = this.state
 
-    const signUpResp = await auth.signUp({email, password, first_name, last_name})
-
-    if (signUpResp.status === 201) {
-      auth.logIn({email, password}, navigate)
-    }
+    // Should register & login on success
+    await auth.signUp({email, password, first_name, last_name}, navigate)
   }
 
   render() {
     return (
-      <View style={loginStyles.container}>
+      <KeyboardAvoidingView style={loginStyles.container} behavior="padding" enabled>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View>
+            <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
+              Create your account
+            </Text>
+            <TextInput
+              style={formStyles.input}
+              placeholder="First Name"
+              underlineColorAndroid="transparent"
+              onChangeText={(first_name) => this.setState({first_name})}
+            />
+            <TextInput
+              style={formStyles.input}
+              placeholder="Last Name"
+              underlineColorAndroid="transparent"
+              onChangeText={(last_name) => this.setState({last_name})}
+            />
+            <TextInput
+              style={formStyles.input}
+              placeholder="Email Address"
+              underlineColorAndroid="transparent"
+              onChangeText={(email) => this.setState({email})}
+            />
+            <TextInput
+              style={formStyles.input}
+              secureTextEntry
+              placeholder="Password"
+              underlineColorAndroid="transparent"
+              onChangeText={(password) => this.setState({password})}
+            />
+            <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#5491CC', '#9A68B2', '#E53D96']}
+                style={loginStyles.button}
+              >
+                <Text style={loginStyles.buttonText}>{"Let's Do This"}</Text>
+              </LinearGradient>
+            </TouchableHighlight>
+          </View>
 
-        <View>
-          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
-            Create your account
-          </Text>
-          <TextInput
-            style={formStyles.input}
-            placeholder="First Name"
-            underlineColorAndroid="transparent"
-            onChangeText={(first_name) => this.setState({first_name})}
-          />
-          <TextInput
-            style={formStyles.input}
-            placeholder="Last Name"
-            underlineColorAndroid="transparent"
-            onChangeText={(last_name) => this.setState({last_name})}
-          />
-          <TextInput
-            style={formStyles.input}
-            placeholder="Email Address"
-            underlineColorAndroid="transparent"
-            onChangeText={(email) => this.setState({email})}
-          />
-          <TextInput
-            style={formStyles.input}
-            secureTextEntry
-            placeholder="Password"
-            underlineColorAndroid="transparent"
-            onChangeText={(password) => this.setState({password})}
-          />
-          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              colors={['#5491CC', '#9A68B2', '#E53D96']}
-              style={loginStyles.button}
+          <View>
+            <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
+            <View 
+              style={{flexDirection: 'row',justifyContent: 'center'}}
             >
-              <Text style={loginStyles.buttonText}>Let's Do This</Text>
-            </LinearGradient>
-          </TouchableHighlight>
-        </View>
-
-        <View>
-          <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
-          <TouchableHighlight>
-            <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service &amp; Privacy Policy.</Text>
-          </TouchableHighlight>
-        </View>
-
-      </View>
+            <TouchableHighlight 
+              style={{flexDirection:'column'}}
+              onPress={ () => {
+                WebBrowser.openBrowserAsync('https://www.bigneon.com/terms.html')
+              }}>
+              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service</Text>
+            </TouchableHighlight>
+            <Text style={{flexDirection:'column'}}> &amp; </Text>
+            <TouchableHighlight
+              style={{flexDirection:'column'}}
+              onPress={ () => {
+                WebBrowser.openBrowserAsync('https://www.bigneon.com/privacy.html')
+              }}
+            >
+              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Privacy Policy</Text>
+            </TouchableHighlight>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     )
   }
 }

@@ -63,4 +63,5 @@ export default createBottomTabNavigator(
       },
     },
   },
+  tabBarOptions: {},
 )

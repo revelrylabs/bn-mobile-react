@@ -45,7 +45,6 @@ export default class EventsIndex extends Component {
       easing: Easing.linear,
       selectedLocationId: state.selectedLocationId || 2,
       mainFavorite: true,
-      locations: state.locations || [],
     };
   }
 
@@ -57,6 +56,13 @@ export default class EventsIndex extends Component {
       // also do some kind of event re-search action to load new city events
       this.setState({selectedLocationId})
     }
+  }
+
+  get locations() {
+    return [
+      {id: null, name: 'Where are you looking for events?', selectedName: 'All Locations'},
+      ...this.props.screenProps.store.state.locations,
+    ]
   }
 
   loadEvents() {
@@ -74,9 +80,13 @@ export default class EventsIndex extends Component {
   }
 
   get events() {
-    const {screenProps: {store: {state: {events}}}} = this.props
+    const {screenProps: {store: {state: {events, selectedLocationId}}}} = this.props
 
-    return events
+    if (!selectedLocationId) {
+      return events
+    }
+
+    return events.filter(({venue: {region_id}}) => region_id === selectedLocationId)
   }
 
   setFavorite = (mainFavorite) => {
@@ -84,10 +94,9 @@ export default class EventsIndex extends Component {
   }
 
   get currentLocationDisplayName() {
-    const {locations} = this.state
-    const selectedLoc = locations.find((loc) => (loc.id === this.state.selectedLocationId))
+    const selectedLoc = this.locations.find((loc) => (loc.id === this.state.selectedLocationId))
 
-    return selectedLoc.nickname
+    return selectedLoc && (selectedLoc.selectedName || selectedLoc.name) || ''
   }
 
   locRowOption = (rowData, rowID, _highlighted) => {
@@ -112,7 +121,7 @@ export default class EventsIndex extends Component {
   }
 
   get allEvents() {
-    const {navigation: {navigate}} = this.props
+    const {navigation: {navigate}, screenProps: {store: {toggleInterest}}} = this.props
     const events = this.events
 
     if (events.length === 0) { return null }
@@ -122,6 +131,7 @@ export default class EventsIndex extends Component {
         key={index}
         onPress={() => navigate('EventsShow', {eventId: event.id})}
         event={event}
+        onInterested={toggleInterest}
       />
     ))
   }
@@ -148,15 +158,17 @@ export default class EventsIndex extends Component {
     });
 
     const {navigation: {navigate}, screenProps: {store}} = this.props
-    const {mainFavorite, locations} = this.state
+    const {mainFavorite} = this.state
 
     return (
-      <View style={styles.container}>
+      <View style={styles.containerFullHeight}>
         <NavigationEvents
           onWillFocus={() => this.loadEvents()}
         />
         <ScrollView
+          style={{flex:1}}
           scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
           )}
@@ -186,7 +198,7 @@ export default class EventsIndex extends Component {
                 this._dropdown = ref
               }}
               onSelect={store.changeLocation}
-              options={locations}
+              options={this.locations}
               renderRow={this.locRowOption}
               renderSeparator={() => <View />}
               dropdownStyle={modalStyles.modalDropdownContainer}
@@ -202,6 +214,7 @@ export default class EventsIndex extends Component {
             </ModalDropdown>
           </View>
 
+          {false && // TODO: Re-enable when functionality is implemented.
           <View style={formStyles.searchContainer}>
             <Image
               style={formStyles.searchIcon}
@@ -215,8 +228,13 @@ export default class EventsIndex extends Component {
               disabled
             />
           </View>
-          <Text style={styles.sectionHeader}>Hot This Week</Text>
+          }
 
+          {false && // TODO: Re-enable when functionality is implemented.
+          <Text style={styles.sectionHeader}>Hot This Week</Text>
+          }
+
+          {false && // TODO: Re-enable when functionality is implemented.
           <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
             <View style={slideshowStyles.slideshowContainer}>
               <Image
@@ -251,21 +269,20 @@ export default class EventsIndex extends Component {
                   <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
                   <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
                 </View>
-
-
-                  <View>
-                    <View style={styles.priceTagContainer}>
-                      <Text style={styles.priceTag}>$30</Text>
-                    </View>
-                    <Text style={slideshowStyles.header}>Childish Gambino</Text>
-                    <View style={styles.flexRowSpaceBetween}>
-                      <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
-                      <Text style={slideshowStyles.details}>July 15, 2018</Text>
-                    </View>
+                <View>
+                  <View style={styles.priceTagContainer}>
+                    <Text style={styles.priceTag}>$30</Text>
                   </View>
+                  <Text style={slideshowStyles.header}>Childish Gambino</Text>
+                  <View style={styles.flexRowSpaceBetween}>
+                    <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
+                    <Text style={slideshowStyles.details}>July 15, 2018</Text>
+                  </View>
+                </View>
               </View>
             </View>
           </TouchableHighlight>
+          }
 
           <Text style={styles.sectionHeader}>Upcoming</Text>
 
@@ -276,7 +293,7 @@ export default class EventsIndex extends Component {
         <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
           <View style={navigationStyles.scrollHeader}>
             <Animated.Text style={[navigationStyles.scrollTitle, {opacity}]}>Explore</Animated.Text>
-            <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; Los Angeles, CA</Animated.Text>
+            <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; {this.currentLocationDisplayName}</Animated.Text>
           </View>
         </Animated.View>
       </View>
