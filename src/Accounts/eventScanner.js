@@ -48,6 +48,7 @@ export default class EventScanner extends Component {
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
         this.setState({read: null})
+        Vibration.vibrate(0.5);
       }, 1500);
       return;
     }
