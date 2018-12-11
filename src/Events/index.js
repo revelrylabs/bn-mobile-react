@@ -161,11 +161,12 @@ export default class EventsIndex extends Component {
     const {mainFavorite} = this.state
 
     return (
-      <View style={styles.container}>
+      <View style={styles.containerFullHeight}>
         <NavigationEvents
           onWillFocus={() => this.loadEvents()}
         />
         <ScrollView
+          style={{flex:1}}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
