@@ -303,18 +303,18 @@ export default class EventShow extends Component {
   }
 
   purchaseTicket = async () => {
-    const {screenProps: {cart, addPurchasedTicket}, navigation: {navigate}} = this.props
+    const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
 
     if (isEmpty(cart.state.selectedPaymentDetails)) {
       alert('Please enter your payment details');
       return false
     }
 
-
     this.setState({showLoadingModal: true})
 
-    await cart.placeOrder(() => addPurchasedTicket(cart.state.ticketTypeId))
+    await cart.placeOrder(() => setPurchasedTicket(cart.state.id))
 
+    // @TODO: Need to wrap this in a try, or as a const, so we can skip the nav if it fails
     await this.setState({
       showLoadingModal: false,
       showSuccessModal: true,

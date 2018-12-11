@@ -45,7 +45,7 @@ export default class eventStackWithStore extends Component {
             screenProps={{
               store: eventStore,
               cart: cartStore,
-              addPurchasedTicket: ticketStore.setPurchasedTicket,
+              setPurchasedTicket: ticketStore.setPurchasedTicket,
               user: authStore.state,
             }}
           />

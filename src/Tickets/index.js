@@ -93,13 +93,13 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicketId}) => {
+const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket}) => {
   if (!tickets.length) {
     return <EmptyTickets text={emptyText} />
   }
 
   return tickets.map((ticket) => (
-    some(ticket.tickets, ({id}) => id === purchasedTicketId) ?
+    some(ticket.tickets, ({order_id}) => order_id === purchasedTicket) ?
       <AnimatedTicket
         key={ticket.event.name}
         navigate={navigate}
@@ -134,20 +134,6 @@ export default class MyTickets extends Component {
     }
   }
 
-  componentDidMount() {
-    this.spring()
-  }
-
-  componentDidUpdate(_prevProps) {
-    const {screenProps: {store: {state}}} = this.props
-
-    if (this.state.purchasedTicket !== state.purchasedTicketId) {
-      this.setState({
-        purchasedTicket: state.purchasedTicketId,
-      }, this.spring())
-    }
-  }
-
   spring() {
     this.springValue.setValue(0.3)
     Animated.spring(
@@ -172,12 +158,6 @@ export default class MyTickets extends Component {
     return this.props.screenProps.store.state.tickets[this.state.activeTab] || []
   }
 
-  get hasPurchasedTicket() {
-    const {navigation} = this.props
-
-    return false // @TODO: Grab a purchasedTicket from unstated
-  }
-
   get emptyText() {
     return EMPTY_TEXT_FOR_ACTIVE_TAB[this.state.activeTab]
   }
@@ -188,11 +168,16 @@ export default class MyTickets extends Component {
   }
 
   render() {
-    const {navigation: {navigate}} = this.props
+    const {
+      navigation: {navigate},
+      screenProps: {
+        store: {setPurchasedTicket, state: {purchasedTicket}},
+      }
+    } = this.props
 
     return (
       <View style={styles.containerDark}>
-        <NavigationEvents onWillFocus={this.refreshTickets} />
+        <NavigationEvents onWillFocus={this.refreshTickets} onDidBlur={() => setPurchasedTicket(null)} />
         <View style={styles.headerContainer}>
           <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
             <Image
@@ -219,7 +204,7 @@ export default class MyTickets extends Component {
               navigate={navigate}
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
-              purchasedTicketId={this.props.screenProps.store.state.purchasedTicketId}
+              purchasedTicket={purchasedTicket}
             />
           </View>
 
