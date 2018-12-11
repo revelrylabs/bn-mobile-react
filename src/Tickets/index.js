@@ -93,7 +93,7 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket, resetPurchasedTicket}) => {
+const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket}) => {
   if (!tickets.length) {
     return <EmptyTickets text={emptyText} />
   }
@@ -105,7 +105,6 @@ const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket
         navigate={navigate}
         ticket={ticket}
         springValue={springValue}
-        resetPurchasedTicket={resetPurchasedTicket}
       /> :
       <Ticket key={ticket.event.name} navigate={navigate} ticket={ticket} />
   ))
