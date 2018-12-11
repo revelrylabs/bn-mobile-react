@@ -195,7 +195,15 @@ export default class EventShow extends Component {
   /* eslint-disable-next-line complexity */
   get showScreen() {
     const {event, currentScreen} = this.state
-    const {screenProps: {cart: {state: {selectedPaymentDetails}}, user: {access_token, refresh_token}}} = this.props
+    const {
+      screenProps: {
+        store: {toggleInterest},
+        cart: {
+          state: {selectedPaymentDetails}
+        },
+        user: {access_token, refresh_token}
+      }
+    } = this.props
 
     if (!event || isEmpty(event)) {
       return null
@@ -205,7 +213,7 @@ export default class EventShow extends Component {
 
     switch (currentScreen) {
     case 'details':
-      return <Details event={event} />
+      return <Details event={event} onInterested={toggleInterest} />
     case 'tickets':
       return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
     case 'checkout':
@@ -303,18 +311,18 @@ export default class EventShow extends Component {
   }
 
   purchaseTicket = async () => {
-    const {screenProps: {cart, addPurchasedTicket}, navigation: {navigate}} = this.props
+    const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
 
     if (isEmpty(cart.state.selectedPaymentDetails)) {
       alert('Please enter your payment details');
       return false
     }
 
-
     this.setState({showLoadingModal: true})
 
-    await cart.placeOrder(() => addPurchasedTicket(cart.state.ticketTypeId))
+    await cart.placeOrder(() => setPurchasedTicket(cart.state.id))
 
+    // @TODO: Need to wrap this in a try, or as a const, so we can skip the nav if it fails
     await this.setState({
       showLoadingModal: false,
       showSuccessModal: true,

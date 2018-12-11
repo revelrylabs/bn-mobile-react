@@ -62,14 +62,6 @@ export default class EventsIndex extends Component {
     };
   }
 
-  get locations() {
-    return [
-      {id: null, name: 'Where are you looking for events?', selectedName: 'All Locations'},
-      ...this.props.screenProps.store.state.locations,
-    ]
-  }
-  
-  
   componentWillReceiveProps(newProps) {
     // Check for updated Location
     const {screenProps: {store: {state: {selectedLocationId}}}} = newProps
@@ -78,6 +70,13 @@ export default class EventsIndex extends Component {
       // also do some kind of event re-search action to load new city events
       this.setState({selectedLocationId})
     }
+  }
+
+  get locations() {
+    return [
+      {id: null, name: 'Where are you looking for events?', selectedName: 'All Locations'},
+      ...this.props.screenProps.store.state.locations,
+    ]
   }
 
   loadEvents() {
@@ -101,7 +100,7 @@ export default class EventsIndex extends Component {
       return events
     }
 
-    return events.filter(({venue: {region_id}}) => region_id == selectedLocationId)
+    return events.filter(({venue: {region_id}}) => region_id === selectedLocationId)
   }
 
   setFavorite = (mainFavorite) => {
@@ -136,7 +135,7 @@ export default class EventsIndex extends Component {
   }
 
   get allEvents() {
-    const {navigation: {navigate}} = this.props
+    const {navigation: {navigate}, screenProps: {store: {toggleInterest}}} = this.props
     const events = this.events
     if(events.length == 0){
       return <EmptyTickets text={"More" + (this.currentLocationDisplayName == "All Locations" ? null : " " + this.currentLocationDisplayName) + " events and experiences powered by Big Neon launching soon!"} />
@@ -146,6 +145,7 @@ export default class EventsIndex extends Component {
         key={index}
         onPress={() => navigate('EventsShow', {eventId: event.id})}
         event={event}
+        onInterested={toggleInterest}
       />
     ))
   }
@@ -175,11 +175,12 @@ export default class EventsIndex extends Component {
     const {mainFavorite} = this.state
 
     return (
-      <View style={styles.container}>
+      <View style={styles.containerFullHeight}>
         <NavigationEvents
           onWillFocus={() => this.loadEvents()}
         />
         <ScrollView
+          style={{flex:1}}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
@@ -282,18 +283,16 @@ export default class EventsIndex extends Component {
                   <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
                   <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
                 </View>
-
-
-                  <View>
-                    <View style={styles.priceTagContainer}>
-                      <Text style={styles.priceTag}>$30</Text>
-                    </View>
-                    <Text style={slideshowStyles.header}>Childish Gambino</Text>
-                    <View style={styles.flexRowSpaceBetween}>
-                      <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
-                      <Text style={slideshowStyles.details}>July 15, 2018</Text>
-                    </View>
+                <View>
+                  <View style={styles.priceTagContainer}>
+                    <Text style={styles.priceTag}>$30</Text>
                   </View>
+                  <Text style={slideshowStyles.header}>Childish Gambino</Text>
+                  <View style={styles.flexRowSpaceBetween}>
+                    <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
+                    <Text style={slideshowStyles.details}>July 15, 2018</Text>
+                  </View>
+                </View>
               </View>
             </View>
           </TouchableHighlight>

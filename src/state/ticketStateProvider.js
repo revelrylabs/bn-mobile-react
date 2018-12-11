@@ -98,7 +98,7 @@ class TicketsContainer extends Container {
 
     this.state = {
       tickets: [],
-      purchasedTicketId: false,
+      purchasedTicket: null,
     };
 
     this.userTickets()
@@ -137,8 +137,8 @@ class TicketsContainer extends Container {
     }
   }
 
-  setPurchasedTicket = (purchasedTicketId) => {
-    this.setState({purchasedTicketId})
+  setPurchasedTicket = (purchasedTicket) => {
+    this.setState({purchasedTicket})
   }
 
   // Can they view details for past or transfefred tickets?

@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server} from '../constants/Server'
+import {server, BASE_URL, apiErrorAlert} from '../constants/Server'
 import {DateTime} from 'luxon'
 
 const LOCATIONS_FETCH_MIN_MINUTES = 15
@@ -9,6 +9,8 @@ const _SAMPLE_AVATARS = [
   require('../../assets/avatar-male.png'),
   require('../../assets/avatar-female.png'),
 ]
+
+/* eslint-disable complexity,space-before-function-paren,camelcase */
 
 class EventsContainer extends Container {
 
@@ -56,6 +58,12 @@ class EventsContainer extends Container {
   getEvents = async (_location = null) => {
     const [{data}, ..._rest] = await Promise.all([server.events.index(), this.fetchLocations()])
 
+    data.data.forEach((event) => {
+      if (!event.promo_image_url) {
+        event.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+      }
+    })
+
     this.setState({
       lastUpdate: DateTime.local(),
       events: data.data,
@@ -70,12 +78,37 @@ class EventsContainer extends Container {
   getEvent = async (id) => {
     const {data} = await server.events.read({id})
 
+    if (!data.promo_image_url) {
+      data.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+    }
+
     this.setState({
-      selectedEvent: {...data}
+      selectedEvent: {...data},
     })
   }
 
   changeLocation = (_index, {id}) => this.setState({selectedLocationId: id})
+
+  // allEvents will refresh all events (ie: from the index page), whereas setting it to false will refresh the interested event
+  toggleInterest = async (event, singleEvent = false) => {
+    const {user_is_interested, id} = event
+
+    try {
+      if (user_is_interested) {
+        // User already interested, so delete it.
+        const _response = await server.events.interests.remove({event_id: id})
+      } else {
+        const _response = await server.events.interests.create({event_id: id})
+      }
+    } catch (error) {
+      apiErrorAlert(error, 'There was a problem selecting this event.')
+    } finally {
+      this.getEvents()
+      if (singleEvent) {
+        this.getEvent(id)
+      }
+    }
+  }
 }
 
 export {
