@@ -26,9 +26,7 @@ function EmptyTickets({text}) {
   )
 }
 
-const AnimatedTicket = ({navigate, ticket, springValue, resetPurchasedTicket}) => {
-  resetPurchasedTicket()
-
+const AnimatedTicket = ({navigate, ticket, springValue}) => {
   return (
     <Animated.View style={{transform: [{scale: springValue}]}}>
       <Ticket navigate={navigate} ticket={ticket} />
@@ -40,7 +38,6 @@ AnimatedTicket.propTypes = {
   navigate: PropTypes.func.isRequired,
   ticket: PropTypes.object.isRequired,
   springValue: PropTypes.object.isRequired,
-  resetPurchasedTicket: PropTypes.func.isRequired,
 }
 
 const Ticket = ({navigate, ticket}) => {
@@ -174,11 +171,16 @@ export default class MyTickets extends Component {
   }
 
   render() {
-    const {navigation: {navigate}} = this.props
+    const {
+      navigation: {navigate},
+      screenProps: {
+        store: {setPurchasedTicket, state: {purchasedTicket}},
+      }
+    } = this.props
 
     return (
       <View style={styles.containerDark}>
-        <NavigationEvents onWillFocus={this.refreshTickets} />
+        <NavigationEvents onWillFocus={this.refreshTickets} onDidBlur={() => setPurchasedTicket(null)} />
         <View style={styles.headerContainer}>
           <View style={[styles.sectionHeaderContainer, styles.flexRowCenter]}>
             <Image
@@ -205,8 +207,7 @@ export default class MyTickets extends Component {
               navigate={navigate}
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
-              purchasedTicket={this.props.screenProps.store.state.purchasedTicket}
-              resetPurchasedTicket={() => this.props.screenProps.store.setPurchasedTicket(null)}
+              purchasedTicket={purchasedTicket}
             />
           </View>
 
