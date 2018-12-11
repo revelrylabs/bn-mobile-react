@@ -293,7 +293,7 @@ export default class EventsIndex extends Component {
         <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
           <View style={navigationStyles.scrollHeader}>
             <Animated.Text style={[navigationStyles.scrollTitle, {opacity}]}>Explore</Animated.Text>
-            <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; Los Angeles, CA</Animated.Text>
+            <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; {this.currentLocationDisplayName}</Animated.Text>
           </View>
         </Animated.View>
       </View>

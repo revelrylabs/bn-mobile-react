@@ -6,6 +6,7 @@ import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
+import { Constants, WebBrowser } from 'expo';
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -97,9 +98,26 @@ export default class SignUp extends Component {
 
           <View>
             <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
-            <TouchableHighlight>
-              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service &amp; Privacy Policy.</Text>
+            <View 
+              style={{flexDirection: 'row',justifyContent: 'center'}}
+            >
+            <TouchableHighlight 
+              style={{flexDirection:'column'}}
+              onPress={ () => {
+                WebBrowser.openBrowserAsync('https://www.bigneon.com/terms.html')
+              }}>
+              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service</Text>
             </TouchableHighlight>
+            <Text style={{flexDirection:'column'}}> &amp; </Text>
+            <TouchableHighlight
+              style={{flexDirection:'column'}}
+              onPress={ () => {
+                WebBrowser.openBrowserAsync('https://www.bigneon.com/privacy.html')
+              }}
+            >
+              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Privacy Policy</Text>
+            </TouchableHighlight>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

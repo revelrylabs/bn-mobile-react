@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import {ScrollView, Linking, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import { Constants, WebBrowser } from 'expo';
 import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -12,6 +13,7 @@ import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
 import {toDollars} from '../constants/money'
 import {flatMap, min, max, isEmpty, some} from 'lodash'
+
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -229,19 +231,49 @@ export default class EventShow extends Component {
     }
   }
 
-  get getTickets() {
-    const {currentScreen} = this.state
+  get getDetailPageButtonCta() {
+    const {event,currentScreen} = this.state
+    switch(event.override_status){
+      case 'PurchaseTickets':
+        return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
+      case 'SoldOut':
+        return {ctaText: 'Sold Out', enabled: (event.is_external ? false : true)}
+      case 'OnSaleSoon':
+        return {ctaText: 'On Sale Soon', enabled: (event.is_external ? false : true)}
+      case 'TicketsAtTheDoor':
+        return {ctaText: 'Tickets At The Door', enabled: (event.is_external ? false : true)}
+      case 'UseAccessCode':
+        return {ctaText: (!event.is_external ? 'Use Access Code' : 'Get Tickets via Web'), enabled: true}
+      case 'Free':
+        return {ctaText: (!event.is_external ? 'Free' : 'Free via Web'), enabled: true}
+      case 'Rescheduled':
+        return {ctaText: 'Rescheduled', enabled: false}
+      case 'Cancelled':
+        return {ctaText: 'Cancelled', enabled: false}
+      case 'OffSale':
+        return {ctaText: 'Off-Sale', enabled: false}
+      case 'Ended':
+        return {ctaText: 'Sale Ended', enabled: false}
+      default:
+        return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
+    }
+  }
 
+  get getTickets() {
+    const {event,currentScreen} = this.state
+    const {ctaText, enabled} = this.getDetailPageButtonCta
     if (currentScreen === 'details' && this.canBuyTickets) {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
-          {this.ticketRange}
+          {enabled && !event.is_external ? this.ticketRange : null}
           <View style={styles.buttonContainer}>
             <TouchableHighlight
-              style={styles.button}
-              onPress={() => this.changeScreen('tickets')}
+              style={enabled ? styles.button : styles.buttonDisabled}
+              onPress={enabled ? (event.is_external ? () => {
+                WebBrowser.openBrowserAsync(event.external_url)
+              } : () => this.changeScreen('tickets')) : null}
             >
-              <Text style={styles.buttonText}>Get Tickets</Text>
+              <Text style={styles.buttonText}>{ctaText}</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -253,7 +285,7 @@ export default class EventShow extends Component {
 
   get purchaseTicketButton() {
     const {currentScreen} = this.state
-
+    
     if (currentScreen === 'checkout') {
       return (
         <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>

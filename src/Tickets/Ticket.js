@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight} from 'react-native';
+import {Text, View, Linking, Platform, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import QRCode from 'react-native-qrcode';
 import imageOverlay from '../../assets/event-img-overlay.png'
@@ -54,6 +54,18 @@ export default class Ticket extends Component {
     })
   }
 
+  openVenueDirections = () => {
+    const {ticket} = this.props
+    const {venue} = ticket
+    let daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+
+    if (Platform.OS === 'ios') {
+      Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
+    } else {
+      Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
+    }
+  }
+
   render() {
     const {navigate, ticket} = this.props
     const {firstName, lastName} = this.state
@@ -83,10 +95,12 @@ export default class Ticket extends Component {
             <View>
               <Text style={ticketStyles.header}>{ticket.name}</Text>
               <Text style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.formattedDate} {ticket.formattedStart}  &bull;  {ticket.venue}</Text>
-              <View style={styles.iconLinkContainer}>
-                <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
-                <Icon style={ticketWalletStyles.iconLink} name="call-made" />
-              </View>
+              <TouchableHighlight onPress={this.openVenueDirections}>
+                <View style={styles.iconLinkContainer}>
+                    <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
+                    <Icon style={ticketWalletStyles.iconLink} name="call-made" />
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </View>
