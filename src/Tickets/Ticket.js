@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight} from 'react-native';
+import {Text, View, Linking, Platform, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import QRCode from 'react-native-qrcode';
+import imageOverlay from '../../assets/event-img-overlay.png'
 
 import TicketStyles from '../styles/tickets/ticketStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -53,6 +54,18 @@ export default class Ticket extends Component {
     })
   }
 
+  openVenueDirections = () => {
+    const {ticket} = this.props
+    const {venue} = ticket
+    let daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+
+    if (Platform.OS === 'ios') {
+      Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
+    } else {
+      Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
+    }
+  }
+
   render() {
     const {navigate, ticket} = this.props
     const {firstName, lastName} = this.state
@@ -64,6 +77,10 @@ export default class Ticket extends Component {
             <Image
               style={ticketWalletStyles.eventImage}
               source={{uri: ticket.image}}
+            />
+            <Image
+              style={ticketStyles.eventImageOverlay}
+              source={imageOverlay}
             />
           </View>
           <View style={ticketStyles.detailsContainer}>
@@ -78,21 +95,25 @@ export default class Ticket extends Component {
             <View>
               <Text style={ticketStyles.header}>{ticket.name}</Text>
               <Text style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.formattedDate} {ticket.formattedStart}  &bull;  {ticket.venue}</Text>
-              <View style={styles.iconLinkContainer}>
-                <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
-                <Icon style={ticketWalletStyles.iconLink} name="call-made" />
-              </View>
+              <TouchableHighlight onPress={this.openVenueDirections}>
+                <View style={styles.iconLinkContainer}>
+                    <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
+                    <Icon style={ticketWalletStyles.iconLink} name="call-made" />
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </View>
         <View style={ticketWalletStyles.ticketContainerBottom}>
           <View style={[styles.flexRowFlexStartCenter, styles.padding]}>
+            {false && // TODO: Re-enable when functionality is implemented.
             <View style={ticketWalletStyles.avatarContainer}>
               <Image
                 style={ticketWalletStyles.avatar}
                 source={require('../../assets/avatar-female.png')}
               />
             </View>
+            }
             <View>
               <Text style={ticketStyles.ticketHolderHeader}>{firstName} {lastName}</Text>
               <Text style={ticketStyles.ticketHolderSubheader}>{ticket.ticketType}</Text>
@@ -101,7 +122,7 @@ export default class Ticket extends Component {
         </View>
 
         <View style={ticketWalletStyles.qrCodeContainer}>
-          {this.state.qrText !== '' ? <QRCode size={300} fgColor="white" bgColor="black" value={this.state.qrText} /> : null}
+          {this.state.qrText !== '' ? <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} /> : null}
         </View>
 
         {false && // TODO: Re-enable when functionality is implemented.

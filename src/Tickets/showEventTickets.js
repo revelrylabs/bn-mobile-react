@@ -48,6 +48,7 @@ export default class EventsTicket extends Component {
       name: event.name,
       venue: event.venue.name,
       location: `${event.venue.city}, ${event.venue.state}`,
+      venue_addr: event.venue,
       date: event.formattedDate,
       starts: event.formattedStart,
       doors: event.formattedDoors,
