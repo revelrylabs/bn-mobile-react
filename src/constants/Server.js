@@ -38,18 +38,13 @@ function parseJwt(token) {
   return JSON.parse(window.atob(base64));
 }
 
-// If the access token is expired, return true
-function needsToRefresh(user) {
-  return user.exp < Math.floor(Date.now() / 1000)
-}
-
 export async function refreshCheck() {
   /* eslint-disable complexity,camelcase */
   const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken'])
   const user = (userToken && userToken[1]) ? parseJwt(userToken[1]) : false
 
   // if expired, refresh
-  if (user && needsToRefresh(user)) {
+  if (user && user.exp < Math.floor(Date.now() / 1000)) {
     const resp = await server.auth.refresh({refresh_token: refreshToken[1]})
     const {data: {access_token, refresh_token}} = resp
 
