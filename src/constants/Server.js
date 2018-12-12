@@ -69,6 +69,10 @@ function wrapInTokenRefresher(fn) {
 }
 
 function proxyGet(server, prop) {
+  if (prop === 'withoutToken') {
+    return server
+  }
+  
   const value = server[prop]
 
   if (typeof value === 'function') {

@@ -59,9 +59,7 @@ class AuthContainer extends Container {
         refresh_token = data.refresh_token
 
         await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
-
-        // needs to use direct bigneonServer because proxy server cant set token on itself
-        await bigneonServer.client.setToken(access_token)
+        await server.withoutToken.client.setToken(access_token)
       } catch (error) {
         apiErrorAlert(error, 'There was a problem logging you in.')
 
