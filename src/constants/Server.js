@@ -12,7 +12,7 @@ const authString = basicAuthUsername || basicAuthPassword ? `${basicAuthUsername
 
 export const BASE_URL = `https://${authString}staging.bigneon.com`;
 
-// eslint-disable-next-line complexity
+/* eslint-disable complexity */
 export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
   console.log(defaultMsg, error); // eslint-disable-line no-console
 
@@ -43,43 +43,17 @@ function needsToRefresh(user) {
   return user.exp < Math.floor(Date.now() / 1000)
 }
 
-export function refresh() {
+export async function refreshCheck() {
   /* eslint-disable complexity,camelcase */
-  return AsyncStorage.multiGet(['userToken', 'refreshToken'])
-    .then(([userToken, refreshToken]) => {
-      // decode the JWT token
-      const user = (userToken && userToken[1]) ? parseJwt(userToken[1]) : false
+  const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken'])
+  const user = (userToken && userToken[1]) ? parseJwt(userToken[1]) : false
 
-      // if expired, refresh
-      if (user && needsToRefresh(user)) {
-        server.auth.refresh({refresh_token: refreshToken[1]})
-          .then((resp) => {
-            const {data: {access_token, refresh_token}} = resp
+  // if expired, refresh
+  if (user && needsToRefresh(user)) {
+    const resp = await server.auth.refresh({refresh_token: refreshToken[1]})
+    const {data: {access_token, refresh_token}} = resp
 
-            AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
-              .then(() => server.client.setToken(access_token))
-              .then(() => {
-                return true
-              })
-          }).catch((_error) => {
-            return false
-          })
-      } else {
-        return true
-      }
-    }).catch((_error) => {
-      return false
-    })
-}
-
-// refresh access token on API Calls if expired
-
-export function refreshCheck() {
-  return new Promise(function(resolve, reject) {
-    if (refresh()) {
-      resolve();
-    } else {
-      reject(Error("Refreshing Login Failed"));
-    }
-  })
+    const _setTokens = await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
+    const _setAPIToken = await server.client.setToken(access_token)
+  }
 }
