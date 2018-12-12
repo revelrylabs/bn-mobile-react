@@ -12,7 +12,7 @@ import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
 import {toDollars} from '../constants/money'
-import {flatMap, min, max, isEmpty, some} from 'lodash'
+import {flatMap, min, max, isEmpty, some, uniq} from 'lodash'
 
 
 const styles = SharedStyles.createStyles()
@@ -20,15 +20,13 @@ const eventDetailsStyles = EventDetailsStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
-function priceRange(ticket_types) {
-  const ticket_pricing = flatMap(ticket_types, (ticket) => (
-    ticket.ticket_pricing ? ticket.ticket_pricing.price_in_cents : false
-  ))
+function priceRangeString(ticket_types) {
+  const prices = ticket_types
+    .map(({ticket_pricing: pricing}) => pricing)
+    .filter(pricing => pricing !== null)
+    .map(({price_in_cents: cents}) => cents)
 
-  return ticket_pricing ? [
-    toDollars(min(ticket_pricing)),
-    toDollars(max(ticket_pricing)),
-  ] : ticket_pricing
+  return uniq([min(prices), max(prices)]).map(cents => `$${toDollars(cents)}`).join(' - ')
 }
 
 
@@ -161,24 +159,11 @@ export default class EventShow extends Component {
     return some(ticket_types, (ticket) => !isEmpty(ticket.ticket_pricing))
   }
 
-  get ticketRange() { // eslint-disable-line complexity
-    const {event: {ticket_types}} = this.state
-
-    const ticketPriceRange = []
-    const [lowest, highest] = priceRange(ticket_types)
-
-    if (lowest) {
-      ticketPriceRange.push(`$${lowest}`)
-    }
-
-    if (highest && highest !== lowest) {
-      ticketPriceRange.push(`$${highest}`)
-    }
-
+  get ticketRange() {
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
         <Text style={eventDetailsStyles.priceHeader}>
-          {ticketPriceRange.join(' - ')}
+          {priceRangeString(this.state.event.ticket_types)}
         </Text>
       </View>
     )

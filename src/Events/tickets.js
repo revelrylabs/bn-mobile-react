@@ -4,13 +4,68 @@ import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
-import {sortBy} from 'lodash'
 import {toDollars} from '../constants/money'
 
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
+
+function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
+  if (a === null && b == null) {
+    return 0
+  }
+  if (a === null) {
+    return 1
+  }
+  if (b === null) {
+    return -1
+  }
+  return b - a
+}
+
+class Ticket extends Component {
+  getOnPressHandler() {
+    const {ticket, onTicketSelection} = this.props
+
+    return ticket.ticket_pricing && (() => onTicketSelection(ticket.id, ticket.ticket_pricing.id))
+  }
+
+  get priceContent() {
+    const {ticket_pricing} = this.props.ticket
+
+    return ticket_pricing ? `$${toDollars(ticket_pricing.price_in_cents)}` : "N/A"
+  }
+
+  get subHeaderContent() {
+    const {ticket_pricing} = this.props.ticket
+
+    return ticket_pricing ? ticket_pricing.name : "SOLD OUT"
+  }
+
+  get icon() {
+    return this.props.ticket.ticket_pricing && (
+      <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+    )
+  }
+
+  render() {
+    return (
+      <TouchableHighlight key={this.props.ticket.id} onPress={this.getOnPressHandler()}>
+        <View style={checkoutStyles.rowContainer}>
+          <View style={checkoutStyles.row}>
+            <Text style={checkoutStyles.ticketPrice}>{this.priceContent}</Text>
+            <View>
+              <Text style={checkoutStyles.ticketHeader}>{this.props.ticket.name}</Text>
+              <Text style={checkoutStyles.ticketSubHeader}>{this.subHeaderContent}</Text>
+            </View>
+          </View>
+          {this.icon}
+        </View>
+      </TouchableHighlight>
+    )
+  }
+}
 
 export default class GetTickets extends Component {
   static propTypes = {
@@ -21,26 +76,9 @@ export default class GetTickets extends Component {
   get tickets() {
     const {onTicketSelection, event: {ticket_types}} = this.props
 
-    return sortBy(ticket_types, (ticket) => (
-      ticket.ticket_pricing.price_in_cents
-    )).map((ticket) => {
-      const {id, name, ticket_pricing} = ticket
-
-      return (
-        <TouchableHighlight key={ticket.id} onPress={() => onTicketSelection(id, ticket_pricing.id)}>
-          <View style={checkoutStyles.rowContainer}>
-            <View style={checkoutStyles.row}>
-              <Text style={checkoutStyles.ticketPrice}>${toDollars(ticket_pricing.price_in_cents)}</Text>
-              <View>
-                <Text style={checkoutStyles.ticketHeader}>{name}</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>{ticket_pricing.name}</Text>
-              </View>
-            </View>
-            <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-          </View>
-        </TouchableHighlight>
-      )
-    })
+    return ticket_types.sort(ticketComparator).map(ticket => (
+      <Ticket key={ticket.id} ticket={ticket} onTicketSelection={onTicketSelection} />
+    ))
   }
 
   render() {
