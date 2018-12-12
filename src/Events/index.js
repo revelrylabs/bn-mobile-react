@@ -11,17 +11,31 @@ import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import EventItemView from './event_card'
 import {DateTime} from 'luxon';
+import TicketStyles from '../styles/tickets/ticketStyles'
+import emptyState from '../../assets/icon-empty-state.png'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
 const navigationStyles = NavigationStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
-
+const ticketStyles = TicketStyles.createStyles()
 
 const HEADER_MAX_HEIGHT = 0;
 const HEADER_MIN_HEIGHT = -25;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
+function EmptyEvents({locationName}) {
+  return (
+    <View style={ticketStyles.emptyStateContainer}>
+      <Image
+        style={ticketStyles.emptyStateIcon}
+        source={emptyState}
+      />
+      <Text style={ticketStyles.emptyStateText}>{"More" + (locationName == "All Locations" ? null : " " + locationName) + " events and experiences powered by Big Neon launching soon!"}</Text>
+    </View>
+  )
+}
 
 export default class EventsIndex extends Component {
   static propTypes = {
@@ -123,9 +137,9 @@ export default class EventsIndex extends Component {
   get allEvents() {
     const {navigation: {navigate}, screenProps: {store: {toggleInterest}}} = this.props
     const events = this.events
-
-    if (events.length === 0) { return null }
-
+    if(events.length == 0){
+      return <EmptyEvents locationName={this.currentLocationDisplayName} />
+    }
     return events.map((event, index) => (
       <EventItemView
         key={index}
@@ -284,7 +298,7 @@ export default class EventsIndex extends Component {
           </TouchableHighlight>
           }
 
-          <Text style={styles.sectionHeader}>Upcoming</Text>
+          <View style={styles.spacer} />
 
           {this.allEvents}
 
