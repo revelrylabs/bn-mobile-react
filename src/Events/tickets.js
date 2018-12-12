@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight} from 'react-native'
+import {Text, View, TouchableHighlight, Image} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
+import TicketStyles from '../styles/tickets/ticketStyles'
+import emptyState from '../../assets/icon-empty-state.png'
 import {toDollars} from '../constants/money'
 
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
+const ticketStyles = TicketStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
 
@@ -67,13 +70,31 @@ class Ticket extends Component {
   }
 }
 
+function NoAvailableTickets() {
+  return (
+    <View style={ticketStyles.emptyStateContainer}>
+      <Image
+        style={ticketStyles.emptyStateIcon}
+        source={emptyState}
+      />
+      <Text style={ticketStyles.emptyStateText}>
+        Looks like there are no tickets available at this time.
+      </Text>
+    </View>
+  )
+}
+
 export default class GetTickets extends Component {
   static propTypes = {
     onTicketSelection: PropTypes.func,
     event: PropTypes.object,
   }
 
-  get tickets() {
+  get hasTickets() {
+    return this.props.event.ticket_types.length > 0
+  }
+
+  get ticketList() {
     const {onTicketSelection, event: {ticket_types}} = this.props
 
     return ticket_types.sort(ticketComparator).map(ticket => (
@@ -82,15 +103,31 @@ export default class GetTickets extends Component {
   }
 
   render() {
+    const hasTickets = this.props.event
+
     return (
       <View style={checkoutStyles.mainBody}>
         <View style={checkoutStyles.mainBodyContent}>
 
-          <View style={checkoutStyles.headerWrapper}>
-            <Text style={checkoutStyles.header}>Ticket Type</Text>
-          </View>
+          {this.hasTickets ? (
+            <View style={checkoutStyles.headerWrapper}>
+              <Text style={checkoutStyles.header}>Ticket Type</Text>
+            </View>
+          ) : null}
 
-          {this.tickets}
+          {this.hasTickets ? (
+            this.ticketList
+          ) : (
+            <View style={ticketStyles.emptyStateContainer}>
+              <Image
+                style={ticketStyles.emptyStateIcon}
+                source={emptyState}
+              />
+              <Text style={ticketStyles.emptyStateText}>
+                Looks like there are no tickets available at this time.
+              </Text>
+            </View>
+          )}
 
         </View>
       </View>
