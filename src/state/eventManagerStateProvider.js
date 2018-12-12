@@ -27,7 +27,7 @@ export class EventManagerContainer extends Container {
   // TODO: filter by live vs upcoming?
   getEvents = async () => {
     try {
-      await refreshCheck()
+      
       const {data} = await server.events.index()
 
       this.setState({
@@ -46,7 +46,7 @@ export class EventManagerContainer extends Container {
 
   _transfer = async () => {
     try {
-      await refreshCheck()
+      
       const _result = await server.tickets.transfer.receive(this.state.ticketInfo);
 
       this.setState({scanType: '', statusMessage: 'Successfully Transferred', ticketInfo: {}});
@@ -65,7 +65,7 @@ export class EventManagerContainer extends Container {
     const event_id = this.state.eventToScan.id
 
     try {
-      await refreshCheck()
+      
       await server.events.tickets.redeem({
         event_id,
         ticket_id: ticket.data.id,

@@ -29,7 +29,7 @@ export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
   alert(message)
 }
 
-export const server = new Bigneon.Server({prefix: `${BASE_URL}/api`})// , {}, mocker)
+export const bigneonServer = new Bigneon.Server({prefix: `${BASE_URL}/api`})// , {}, mocker)
 
 function parseJwt(token) {
   const base64Url = token.split('.')[1];
@@ -38,17 +38,43 @@ function parseJwt(token) {
   return JSON.parse(window.atob(base64));
 }
 
-export async function refreshCheck() {
+export async function refresher() {
   /* eslint-disable complexity,camelcase */
   const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken'])
   const user = (userToken && userToken[1]) ? parseJwt(userToken[1]) : false
 
+  console.log("User exp:", user.exp);
+
   // if expired, refresh
   if (user && user.exp < Math.floor(Date.now() / 1000)) {
-    const resp = await server.auth.refresh({refresh_token: refreshToken[1]})
+    const resp = await bigneonServer.auth.refresh({refresh_token: refreshToken[1]})
     const {data: {access_token, refresh_token}} = resp
+    console.log('Refreshing Token');
 
     const _setTokens = await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
-    const _setAPIToken = await server.client.setToken(access_token)
+    const _setAPIToken = await bigneonServer.client.setToken(access_token)
   }
 }
+
+function wrapInTokenRefresher(fn) {
+  return async (...args) => {
+    await refresher()
+    await fn(...args)
+  }
+}
+
+function proxyGet(server, prop) {
+  const value = server[prop]
+
+  if (typeof value === 'function') {
+    return wrapInTokenRefresher(value)
+  }
+
+  if (typeof value === 'object') {
+    return new Proxy(value, {get: proxyGet})
+  }
+
+  return value
+}
+
+export const server = new Proxy(bigneonServer, {get: proxyGet})

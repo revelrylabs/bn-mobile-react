@@ -51,7 +51,7 @@ class EventsContainer extends Container {
 
   _fetchLocations = async () => {
     try {
-      await refreshCheck()
+
       const {data: {data: locations}} = await server.regions.index()
 
       await this.setState({locations})
@@ -61,8 +61,7 @@ class EventsContainer extends Container {
   }
 
   getEvents = async (_location = null) => {
-      try {
-      await refreshCheck()
+    try {
       const [{data}, ..._rest] = await Promise.all([server.events.index(), this.fetchLocations()])
 
       data.data.forEach((event) => {
@@ -87,7 +86,7 @@ class EventsContainer extends Container {
 
   getEvent = async (id) => {
     try {
-      await refreshCheck()
+
       const {data} = await server.events.read({id})
 
       if (!data.promo_image_url) {
@@ -109,8 +108,6 @@ class EventsContainer extends Container {
     const {user_is_interested, id} = event
 
     try {
-      const _refresh = await refreshCheck()
-
       if (user_is_interested) {
         // User already interested, so delete it.
         const _response = await server.events.interests.remove({event_id: id})

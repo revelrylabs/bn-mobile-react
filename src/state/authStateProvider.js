@@ -33,6 +33,8 @@ class AuthContainer extends Container {
 
   // Can set tokens after login or signup
   async setTokens(resp, navigate, refresh = false) {
+    console.log("RESP LOGIN:", resp);
+
     const {data: {access_token, refresh_token}} = resp
 
     await AsyncStorage.setItem('userToken', access_token)
@@ -83,7 +85,7 @@ class AuthContainer extends Container {
 
   updateCurrentUser = async (params) => {
     try {
-      await refreshCheck()
+
       const {data} = await server.users.update(params)
 
       await this.setState({currentUser: data})
