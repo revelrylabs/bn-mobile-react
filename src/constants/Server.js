@@ -12,7 +12,6 @@ const authString = basicAuthUsername || basicAuthPassword ? `${basicAuthUsername
 
 export const BASE_URL = `https://${authString}staging.bigneon.com`;
 
-/* eslint-disable complexity */
 export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
   console.log(defaultMsg, error); // eslint-disable-line no-console
 
@@ -49,7 +48,7 @@ export function needsRefresh(token) {
 }
 
 export async function refresher() {
-  /* eslint-disable complexity,camelcase */
+  /* eslint-disable camelcase */
   const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken'])
 
   // if expired, refresh

@@ -36,7 +36,6 @@ export default class App extends Component {
   //   this.props.navigation.navigate('Auth');
   // };
 
-  // eslint-disable-next-line complexity
   render() {
     if (!this.state.isSplashReady) {
       return (

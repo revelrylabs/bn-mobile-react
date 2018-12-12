@@ -49,7 +49,6 @@ class AuthContainer extends Container {
     })
   }
 
-  // eslint-disable-next-line complexity
   getCurrentUser = async (navigate, access_token, refresh_token, setToken = true) => { // eslint-disable-line space-before-function-paren
     if (setToken) {
       try {
@@ -111,7 +110,6 @@ class AuthContainer extends Container {
     }
   }
 
-  /* eslint-disable complexity */
   hasScope = (key) => {
     const {currentUser} = this.state
 

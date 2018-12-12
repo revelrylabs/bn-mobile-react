@@ -3,7 +3,7 @@ import {server, apiErrorAlert, refreshCheck} from '../constants/Server'
 
 const SCAN_MESSAGE_TIMEOUT = 3000;
 
-/* eslint-disable camelcase,complexity,space-before-function-paren */
+/* eslint-disable camelcase,space-before-function-paren */
 export class EventManagerContainer extends Container {
   constructor(props = {}) {
     super(props);
@@ -27,7 +27,7 @@ export class EventManagerContainer extends Container {
   // TODO: filter by live vs upcoming?
   getEvents = async () => {
     try {
-      
+
       const {data} = await server.events.index()
 
       this.setState({
@@ -46,7 +46,7 @@ export class EventManagerContainer extends Container {
 
   _transfer = async () => {
     try {
-      
+
       const _result = await server.tickets.transfer.receive(this.state.ticketInfo);
 
       this.setState({scanType: '', statusMessage: 'Successfully Transferred', ticketInfo: {}});
@@ -65,7 +65,7 @@ export class EventManagerContainer extends Container {
     const event_id = this.state.eventToScan.id
 
     try {
-      
+
       await server.events.tickets.redeem({
         event_id,
         ticket_id: ticket.data.id,
