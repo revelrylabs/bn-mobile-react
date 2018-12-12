@@ -5,6 +5,7 @@
     "icon": "./assets/appIcon.png",
     "version": "1.0.4",
     "slug": "big-neon-mobile",
+    "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.bigneon.mobile"
     },
