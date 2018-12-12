@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Ticket from './Ticket'
 import SharedStyles from '../styles/shared/sharedStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
+import {Brightness} from 'expo'
 
 const styles = SharedStyles.createStyles()
 
@@ -27,6 +28,20 @@ export default class EventsTicket extends Component {
     }
 
     this.event()
+    this.doBrightness()
+  }
+
+  async doBrightness() {
+    this._prevBrightness = await Brightness.getBrightnessAsync()
+    await Brightness.setBrightnessAsync(1)
+  }
+
+  async undoBrightness() {
+    await Brightness.setBrightnessAsync(this._prevBrightness)
+  }
+
+  componentWillUnmount() {
+    this.undoBrightness()
   }
 
   async event() {
