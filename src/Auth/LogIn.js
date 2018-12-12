@@ -57,12 +57,14 @@ export default class LogIn extends Component {
             style={formStyles.input}
             placeholder="Email Address"
             searchIcon={{size: 24}}
+            underlineColorAndroid="transparent"
             onChangeText={(email) => this.setState({email})}
           />
           <TextInput
             style={formStyles.input}
             placeholder="Password"
             searchIcon={{size: 24}}
+            underlineColorAndroid="transparent"
             secureTextEntry
             onChangeText={(password) => this.setState({password})}
           />
@@ -84,6 +86,7 @@ export default class LogIn extends Component {
           </TouchableHighlight>
         </View>
 
+        {false && // TODO: Re-enable when functionality is implemented.
         <View>
           <TouchableHighlight>
             <View style={styles.flexRowCenter}>
@@ -104,6 +107,7 @@ export default class LogIn extends Component {
             </View>
           </TouchableHighlight>
         </View>
+        }
 
       </View>
     )

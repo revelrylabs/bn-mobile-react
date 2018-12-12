@@ -1,16 +1,28 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight} from 'react-native'
+import {Text, Platform, View, Linking, TouchableHighlight, Share} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import {DateTime} from 'luxon'
 import {map} from 'lodash'
+import {BASE_URL} from '../constants/Server'
+
+/*  eslint-disable camelcase */
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
-
-/*  eslint-disable camelcase */
+const interestedStylesForEvent = (user_is_interested) => (
+  user_is_interested ? {
+    button: eventDetailsStyles.buttonRoundedActive,
+    icon: eventDetailsStyles.buttonRoundedActiveIcon,
+    text: eventDetailsStyles.buttonRoundedActiveText,
+  } : {
+    button: eventDetailsStyles.buttonRounded,
+    icon: eventDetailsStyles.buttonRoundedIcon,
+    text: eventDetailsStyles.buttonRoundedText,
+  }
+)
 
 function toSentence(arr) {
   return arr.slice(0, -2).join(', ') +
@@ -18,9 +30,30 @@ function toSentence(arr) {
     arr.slice(-2).join(arr.length === 2 ? ' and ' : ', and ');
 }
 
+function shareEvent(event) {
+  const url = `${BASE_URL}/events/${event.id}`
+  const title = `${event.name} is at ${event.venue.name}`
+
+  Share.share({
+    message: `Check this out, ${event.name} is at ${event.venue.name}. Tickets are on Big Neon. ${url}`,
+    url,
+    title,
+    subject: title,
+    dialogTitle: title,
+  })
+}
+
 export default class Details extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
+    onInterested: PropTypes.func.isRequired,
+  }
+
+  toggleInterest = () => {
+    const {onInterested, event} = this.props
+
+    // set 'true' for individual event
+    onInterested(event, true)
   }
 
   get topLineInfo() {
@@ -190,11 +223,26 @@ export default class Details extends Component {
     // )
   }
 
+  onPressShare = () => shareEvent(this.props.event)
+
+  openVenueDirections = () => {
+    const {event} = this.props
+    const {venue} = event
+    let daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+
+    if (Platform.OS === 'ios') {
+      Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
+    } else {
+      Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
+    }
+  }
+
   render() {
     const {event} = this.props
     const {venue} = event
     const eventStart = DateTime.fromISO(event.event_start)
     const doorTime = DateTime.fromISO(event.door_time)
+    const interestedStyles = interestedStylesForEvent(event.user_is_interested)
 
     return (
       <View style={[styles.container, eventDetailsStyles.mainBody]}>
@@ -211,13 +259,13 @@ export default class Details extends Component {
           </View>
 
           <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
-            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}>
+            <TouchableHighlight style={[interestedStyles.button, styles.marginRightTiny]} onPress={this.toggleInterest}>
               <View style={styles.flexRowCenter}>
-                <Icon style={eventDetailsStyles.buttonRoundedIcon} name="star" />
-                <Text style={eventDetailsStyles.buttonRoundedText}>I&apos;m Interested</Text>
+                <Icon style={interestedStyles.icon} name="star" />
+                <Text style={interestedStyles.text}>I&apos;m Interested</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]}>
+            <TouchableHighlight style={[eventDetailsStyles.buttonRounded, styles.marginLeftTiny]} onPress={this.onPressShare}>
               <View style={styles.flexRowCenter}>
                 <Icon style={eventDetailsStyles.buttonRoundedIcon} name="reply" />
                 <Text style={eventDetailsStyles.buttonRoundedText}>Share Event</Text>
@@ -234,8 +282,8 @@ export default class Details extends Component {
               <Text style={eventDetailsStyles.sectionHeader}>TIME AND LOCATION</Text>
             </View>
 
-            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
-              <Text style={[styles.linkText, styles.paddingLeft]}>{venue.name}</Text>
+            <TouchableHighlight onPress={this.openVenueDirections} underlayColor="rgba(0, 0, 0, 0)">
+              <Text style={eventDetailsStyles.linkText}>{venue.name}</Text>
             </TouchableHighlight>
             <Text style={eventDetailsStyles.bodyText}>
               {venue.address}, {venue.city}, {venue.state} {venue.postal_code}, {venue.country}

@@ -19,8 +19,10 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.3)'
 export const disabledHeaderColor = 'rgba(64, 64, 64, 0.5)'
 export const boxShadowColor = 'rgba(36, 36, 40, 0.08)'
 export const pillContainerColor = 'rgba(0, 0, 0, 0.6)'
+export const disabledDarkColor = '#9DA3B4'
 export const disabledColor = '#F7F7F7'
 export const successColor = '#A1F44D'
+export const errorColor = '#F7E61A'
 
 export const globalPaddingTiny = 5
 export const globalPaddingSmall = 10
@@ -55,7 +57,13 @@ const SharedStyles = {
     flexDirection: 'column',
     paddingHorizontal: globalPadding,
     paddingTop: globalPadding,
-    paddingBottom: globalPaddingLarge,
+  },
+  containerFullHeight: {
+    backgroundColor: white,
+    flexDirection: 'column',
+    paddingHorizontal: globalPadding,
+    paddingTop: globalPadding,
+    flex:1
   },
   containerDark: {
     backgroundColor: containerDarkColor,
@@ -69,7 +77,7 @@ const SharedStyles = {
     borderBottomWidth: 1,
     borderStyle: 'solid',
     paddingHorizontal: globalPadding,
-    paddingTop: globalPadding,
+    paddingTop: globalPaddingSmall,
     width: fullWidth,
     flexDirection: 'column',
   },
@@ -119,6 +127,9 @@ const SharedStyles = {
   section: {
     paddingVertical: globalPaddingLarge,
   },
+  spacer: {
+    height: 25,
+  },
 
   // BUTTONS
   buttonContainer: {
@@ -130,11 +141,15 @@ const SharedStyles = {
     height: 60,
     justifyContent: 'center',
   },
+  buttonDisabled: {
+    backgroundColor: disabledDarkColor,
+    flex: 1,
+    height: 60,
+    justifyContent: 'center',
+  },
   buttonSecondary: {
-    alignItems: 'center',
     backgroundColor: white,
     flex: 1,
-    flexDirection: 'row',
     height: 50,
     justifyContent: 'center',
   },
@@ -152,6 +167,7 @@ const SharedStyles = {
     color: primaryColor,
     fontFamily: globalFontRegular,
     fontSize: iconFontSize,
+    textAlign: 'center',
   },
 
   // HEADERS

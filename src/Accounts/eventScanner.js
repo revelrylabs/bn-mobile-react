@@ -2,17 +2,19 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, View, Image, ScrollView, TouchableHighlight, Vibration} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import {
+  MaterialIcons,
+  EvilIcons,
+} from '@expo/vector-icons'
 
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
-import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const eventScannerStyles = EventScannerStyles.createStyles()
-const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 function delay(time) {
   return new Promise(((resolve, _reject) => {
@@ -20,15 +22,37 @@ function delay(time) {
   }));
 }
 
+const SCAN_MESSAGES = {
+  success: 'Ticket valid!',
+  alreadyRedeemed: 'Already redeemed',
+  serverError: 'We found an issue',
+};
+
+const SCAN_STYLES = {
+  success: 'messageIconSuccess',
+  alreadyRedeemed: 'messageIconCancel',
+  serverError: 'messageIconError',
+};
+
+// EvilIcons names
+const SCAN_ICONS = {
+  success: 'check',
+  alreadyRedeemed: 'close-o',
+  serverError: 'exclamation',
+};
+
+// TODO: this should probably use eventToScan state (see eventManager and
+// eventManagerStateProvider) to validate tickets against currently selected event
 export default class EventScanner extends Component {
   static propTypes = {
-    onScan: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
   state = {
     hasCameraPermission: null,
     read: null,
+    checkInMode: 'automatic',
   }
 
   async componentWillMount() {
@@ -39,8 +63,9 @@ export default class EventScanner extends Component {
 
   debounce = false;
 
+  // TODO: switch scan handler based on mode (or perhaps just remove scanner in manual mode?)
   handleBarCodeScanned = async ({_type, data}) => {
-    const {onScan} = () => {}// this.props;
+    const {screenProps: {eventManager}} = this.props;
 
     await delay(500);
 
@@ -53,13 +78,32 @@ export default class EventScanner extends Component {
       return;
     }
     this.setState({read: data});
+    const parsed = JSON.parse(data);
 
-    onScan(data, this);
+    eventManager.redeem(parsed);
+  }
+
+  statusMessage(type) {
+    if (type === null) {
+      return;
+    }
+
+    const copy = SCAN_MESSAGES[type];
+    const scanStyles = SCAN_STYLES[type];
+    const icon = SCAN_ICONS[type];
+
+    return (
+      <View style={eventScannerStyles.messageContainer}>
+        <EvilIcons style={eventScannerStyles[scanStyles]} name={icon} />
+        <Text style={eventScannerStyles.messageText}>{copy}</Text>
+      </View>
+    )
   }
 
   render() {
-    const {hasCameraPermission} = this.state
-    const {navigation: {navigate}} = this.props
+    const {hasCameraPermission, checkInMode} = this.state;
+    const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
+    const {scanResult} = eventManager.state;
 
     if (hasCameraPermission === null) {
       return <Text>Requesting for camera permission</Text>;
@@ -67,6 +111,7 @@ export default class EventScanner extends Component {
     if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     }
+
     return (
       <View>
         <BarCodeScanner
@@ -78,7 +123,7 @@ export default class EventScanner extends Component {
 
           <View style={[eventScannerStyles.headerActionsWrapper, styles.flexRowSpaceBetween]}>
             <View style={eventDetailsStyles.backArrowCircleContainer}>
-              <Icon
+              <MaterialIcons
                 style={eventDetailsStyles.backArrow}
                 name="close"
                 onPress={() => {
@@ -86,16 +131,23 @@ export default class EventScanner extends Component {
                 }}
               />
             </View>
+            {/* TODO: add a bit of state for auto/manual modes and a toggle handler */}
             <TouchableHighlight style={eventScannerStyles.pillContainer}>
               <View style={styles.flexRowCenter}>
                 <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
-                <Text style={eventScannerStyles.pillTextPrimary}>Manual</Text>
+                <Text style={eventScannerStyles.pillTextPrimary}>{checkInMode.toUpperCase()}</Text>
               </View>
             </TouchableHighlight>
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
 
+          {this.statusMessage(scanResult)}
+
+          {/* TODO: fill in guest info panel, remove whitespace style workaround */}
           <View>
+            <Text>&nbsp; &nbsp; &nbsp;</Text>
+          </View>
+          {/* <View>
             <View style={eventScannerStyles.headerActionsWrapper}>
               <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
                 <View style={styles.flexRowFlexStartCenter}>
@@ -109,22 +161,22 @@ export default class EventScanner extends Component {
                     <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
                     <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
                   </View>
-                  <Icon style={eventScannerStyles.checkIcon} name="check-circle" />
+                  <MaterialIcons style={eventScannerStyles.checkIcon} name="check-circle" />
                 </View>
               </View>
             </View>
 
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <View style={eventScannerStyles.mainBody}>
                 <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
                   <View style={styles.flexRowSpaceBetween}>
                     <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
-                    <Icon style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
+                    <MaterialIcons style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
                   </View>
                 </View>
               </View>
             </ScrollView>
-          </View>
+          </View> */}
 
         </View>
 

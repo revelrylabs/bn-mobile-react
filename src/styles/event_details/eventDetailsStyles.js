@@ -44,10 +44,14 @@ const EventDetailsStyles = {
   },
 
   // CLOSE ICON STYLES
+  linkContainer: {
+    height: 85,
+    width: 85,
+  },
   backArrowWrapper: {
     position: 'absolute',
     top: 0,
-    padding: globalPaddingSmall,
+    padding: globalPadding + globalPaddingTiny,
     paddingTop: globalPaddingLarge,
     zIndex: 0,
   },
@@ -66,8 +70,7 @@ const EventDetailsStyles = {
   // MAIN BODY STYLES
   mainBody: {
     backgroundColor: 'transparent',
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingBottom: globalPaddingLarge,
     paddingHorizontal: 0,
     marginTop: 240,
   },
@@ -149,7 +152,14 @@ const EventDetailsStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     paddingBottom: globalPaddingSmall,
-    paddingLeft: globalPadding,
+    paddingLeft: globalPadding + globalPaddingTiny,
+  },
+  linkText: {
+    backgroundColor: 'transparent',
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    paddingLeft: globalPadding + globalPaddingTiny,
   },
   iconSectionHeader: {
     color: textColor,
@@ -170,17 +180,16 @@ const EventDetailsStyles = {
   },
   eventDescriptionContainer: {
     paddingVertical: globalPaddingSmall,
-    borderTopColor: borderColor,
-    borderBottomColor: borderColor,
-    borderStyle: 'solid',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    // borderTopColor: borderColor,
+    // borderBottomColor: borderColor,
+    // borderStyle: 'solid',
+    // borderTopWidth: 1,
+    // borderBottomWidth: 1, // Removing until the Avatar section is added
   },
   eventDescriptionHeaderWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginLeft: -5,
   },
 
   // AVATAR STYLES
@@ -254,14 +263,36 @@ const EventDetailsStyles = {
     height: 40,
     justifyContent: 'center',
   },
+  buttonRoundedActive: {
+    alignItems: 'center',
+    backgroundColor: primaryColor,
+    borderColor: primaryColor,
+    borderRadius: 5,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'center',
+  },
   buttonRoundedText: {
     color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
     fontSize: bodyFontSize,
     textAlign: 'center',
   },
+  buttonRoundedActiveText: {
+    color: white,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    textAlign: 'center',
+  },
   buttonRoundedIcon: {
     color: sectionHeaderColor,
+    fontSize: bodyFontSize,
+    paddingRight: globalPaddingTiny,
+  },
+  buttonRoundedActiveIcon: {
+    color: white,
     fontSize: bodyFontSize,
     paddingRight: globalPaddingTiny,
   },
