@@ -38,18 +38,24 @@ function parseJwt(token) {
   return JSON.parse(window.atob(base64));
 }
 
+export function needsRefresh(token) {
+  if (!token) {
+    return false
+  }
+
+  const user = parseJwt(token)
+
+  return (user && user.exp < Math.floor(Date.now() / 1000))
+}
+
 export async function refresher() {
   /* eslint-disable complexity,camelcase */
   const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken'])
-  const user = (userToken && userToken[1]) ? parseJwt(userToken[1]) : false
-
-  console.log("User exp:", user.exp);
 
   // if expired, refresh
-  if (user && user.exp < Math.floor(Date.now() / 1000)) {
+  if (userToken && needsRefresh(userToken[1])) {
     const resp = await bigneonServer.auth.refresh({refresh_token: refreshToken[1]})
     const {data: {access_token, refresh_token}} = resp
-    console.log('Refreshing Token');
 
     const _setTokens = await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
     const _setAPIToken = await bigneonServer.client.setToken(access_token)
@@ -59,7 +65,7 @@ export async function refresher() {
 function wrapInTokenRefresher(fn) {
   return async (...args) => {
     await refresher()
-    await fn(...args)
+    return await fn(...args)
   }
 }
 

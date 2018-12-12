@@ -1,6 +1,6 @@
 import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
-import {server, apiErrorAlert, refreshCheck} from '../constants/Server'
+import {server, bigneonServer, apiErrorAlert, needsRefresh} from '../constants/Server'
 
 /* eslint-disable camelcase,space-before-function-paren */
 class AuthContainer extends Container {
@@ -23,7 +23,7 @@ class AuthContainer extends Container {
     try {
       const resp = await server.auth.authenticate(formData)
 
-      this.setTokens(resp, navigate)
+      this.setLoginData(resp, navigate)
     } catch (error) {
       apiErrorAlert(error, 'There was a problem logging in.')
 
@@ -32,13 +32,10 @@ class AuthContainer extends Container {
   }
 
   // Can set tokens after login or signup
-  async setTokens(resp, navigate, refresh = false) {
-    console.log("RESP LOGIN:", resp);
-
+  async setLoginData(resp, navigate, refresh = false) {
     const {data: {access_token, refresh_token}} = resp
 
-    await AsyncStorage.setItem('userToken', access_token)
-    await AsyncStorage.setItem('refreshToken', refresh_token)
+    await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
     await this.getCurrentUser(navigate, access_token, refresh_token, refresh)
     navigate('AuthLoading')
   }
@@ -56,15 +53,18 @@ class AuthContainer extends Container {
   getCurrentUser = async (navigate, access_token, refresh_token, setToken = true) => { // eslint-disable-line space-before-function-paren
     if (setToken) {
       try {
-        const refreshTokenResp = await server.auth.refresh({refresh_token})
-        const {data} = refreshTokenResp
+        if (needsRefresh(access_token)) {
+          const refreshTokenResp = await server.auth.refresh({refresh_token})
+          const {data} = refreshTokenResp
 
-        access_token = data.access_token
-        refresh_token = data.refresh_token
+          access_token = data.access_token
+          refresh_token = data.refresh_token
+        }
 
-        await AsyncStorage.setItem('userToken', access_token)
-        await AsyncStorage.setItem('refreshToken', refresh_token)
-        await server.client.setToken(access_token)
+        await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
+
+        // needs to use direct bigneonServer because proxy server cant set token on itself
+        await bigneonServer.client.setToken(access_token)
       } catch (error) {
         apiErrorAlert(error, 'There was a problem logging you in.')
 
@@ -105,7 +105,7 @@ class AuthContainer extends Container {
         phone: '',
       })
 
-      this.setTokens(response, navigate, true)
+      this.setLoginData(response, navigate, true)
     } catch (error) {
       apiErrorAlert(error, 'There was an error creating your account.')
     }
