@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server, apiErrorAlert} from '../constants/Server'
+import {server, apiErrorAlert, refreshCheck} from '../constants/Server'
 
 /**
  *  Right now, this only does one ticket type for one event
@@ -57,6 +57,7 @@ class CartContainer extends Container {
     }]
 
     try {
+      await refreshCheck()
       const response = await server.cart.update({items})
       const {data} = response;
 
@@ -70,6 +71,7 @@ class CartContainer extends Container {
 
   refreshCart = async () => {
     try {
+      await refreshCheck()
       const response = await server.cart.read()
       const {data} = response;
 
@@ -98,6 +100,7 @@ class CartContainer extends Container {
 
   placeOrder = async (onSuccess) => {
     try {
+      await refreshCheck()
       const _resp = await server.cart.checkout({
         amount: this.state.total_in_cents, // @TODO: remove this amount, we shouldn't be specifying it on the frontend
         method: {

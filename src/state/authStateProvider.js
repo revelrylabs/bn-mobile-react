@@ -1,6 +1,6 @@
 import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
-import {server, apiErrorAlert} from '../constants/Server'
+import {server, apiErrorAlert, refreshCheck} from '../constants/Server'
 
 /* eslint-disable camelcase,space-before-function-paren */
 class AuthContainer extends Container {
@@ -83,6 +83,7 @@ class AuthContainer extends Container {
 
   updateCurrentUser = async (params) => {
     try {
+      await refreshCheck()
       const {data} = await server.users.update(params)
 
       await this.setState({currentUser: data})
@@ -108,6 +109,7 @@ class AuthContainer extends Container {
     }
   }
 
+  /* eslint-disable complexity */
   hasScope = (key) => {
     const {currentUser} = this.state
 

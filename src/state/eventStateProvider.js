@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server, BASE_URL, apiErrorAlert} from '../constants/Server'
+import {server, BASE_URL, apiErrorAlert, refreshCheck} from '../constants/Server'
 import {DateTime} from 'luxon'
 
 const LOCATIONS_FETCH_MIN_MINUTES = 15
@@ -50,25 +50,35 @@ class EventsContainer extends Container {
   }
 
   _fetchLocations = async () => {
-    const {data: {data: locations}} = await server.regions.index()
+    try {
+      await refreshCheck()
+      const {data: {data: locations}} = await server.regions.index()
 
-    await this.setState({locations})
+      await this.setState({locations})
+    } catch (error) {
+      apiErrorAlert(error)
+    }
   }
 
   getEvents = async (_location = null) => {
-    const [{data}, ..._rest] = await Promise.all([server.events.index(), this.fetchLocations()])
+      try {
+      await refreshCheck()
+      const [{data}, ..._rest] = await Promise.all([server.events.index(), this.fetchLocations()])
 
-    data.data.forEach((event) => {
-      if (!event.promo_image_url) {
-        event.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
-      }
-    })
+      data.data.forEach((event) => {
+        if (!event.promo_image_url) {
+          event.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+        }
+      })
 
-    this.setState({
-      lastUpdate: DateTime.local(),
-      events: data.data,
-      paging: data.paging,
-    })
+      this.setState({
+        lastUpdate: DateTime.local(),
+        events: data.data,
+        paging: data.paging,
+      })
+    } catch (error) {
+      apiErrorAlert(error)
+    }
   }
 
   clearEvent = () => {
@@ -76,15 +86,20 @@ class EventsContainer extends Container {
   }
 
   getEvent = async (id) => {
-    const {data} = await server.events.read({id})
+    try {
+      await refreshCheck()
+      const {data} = await server.events.read({id})
 
-    if (!data.promo_image_url) {
-      data.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+      if (!data.promo_image_url) {
+        data.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+      }
+
+      this.setState({
+        selectedEvent: {...data},
+      })
+    } catch (error) {
+      apiErrorAlert(error)
     }
-
-    this.setState({
-      selectedEvent: {...data},
-    })
   }
 
   changeLocation = (_index, {id}) => this.setState({selectedLocationId: id})
@@ -94,6 +109,8 @@ class EventsContainer extends Container {
     const {user_is_interested, id} = event
 
     try {
+      const _refresh = await refreshCheck()
+
       if (user_is_interested) {
         // User already interested, so delete it.
         const _response = await server.events.interests.remove({event_id: id})

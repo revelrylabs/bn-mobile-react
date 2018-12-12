@@ -1,9 +1,9 @@
 import {Container} from 'unstated'
-import {server} from '../constants/Server'
+import {server, apiErrorAlert, refreshCheck} from '../constants/Server'
 
 const SCAN_MESSAGE_TIMEOUT = 3000;
 
-/* eslint-disable camelcase */
+/* eslint-disable camelcase,complexity,space-before-function-paren */
 export class EventManagerContainer extends Container {
   constructor(props = {}) {
     super(props);
@@ -26,13 +26,18 @@ export class EventManagerContainer extends Container {
 
   // TODO: filter by live vs upcoming?
   getEvents = async () => {
-    const {data} = await server.events.index()
+    try {
+      await refreshCheck()
+      const {data} = await server.events.index()
 
-    this.setState({
-      // lastUpdate: DateTime.local(),
-      events: data.data,
-      paging: data.paging,
-    })
+      this.setState({
+        // lastUpdate: DateTime.local(),
+        events: data.data,
+        paging: data.paging,
+      })
+    } catch (error) {
+      apiErrorAlert(error)
+    }
   }
 
   scanForEvent = async (event) => {
@@ -41,6 +46,7 @@ export class EventManagerContainer extends Container {
 
   _transfer = async () => {
     try {
+      await refreshCheck()
       const _result = await server.tickets.transfer.receive(this.state.ticketInfo);
 
       this.setState({scanType: '', statusMessage: 'Successfully Transferred', ticketInfo: {}});
@@ -59,12 +65,13 @@ export class EventManagerContainer extends Container {
     const event_id = this.state.eventToScan.id
 
     try {
+      await refreshCheck()
       await server.events.tickets.redeem({
         event_id,
         ticket_id: ticket.data.id,
         redeem_key: ticket.data.redeem_key,
       })
-     this.setState({scanResult: 'success'}, this._resetScanResult)
+      this.setState({scanResult: 'success'}, this._resetScanResult)
     } catch (e) {
       if (!e.response) {
         throw e
