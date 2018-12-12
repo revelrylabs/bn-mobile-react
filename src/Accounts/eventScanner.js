@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
+import {Text, View, Image, ScrollView, TouchableHighlight, Vibration} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
