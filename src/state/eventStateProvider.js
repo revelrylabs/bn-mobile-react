@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server, BASE_URL, apiErrorAlert, refreshCheck} from '../constants/Server'
+import {server, BASE_URL, apiErrorAlert} from '../constants/Server'
 import {DateTime} from 'luxon'
 
 const LOCATIONS_FETCH_MIN_MINUTES = 15

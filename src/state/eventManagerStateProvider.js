@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server, apiErrorAlert, refreshCheck} from '../constants/Server'
+import {server, apiErrorAlert} from '../constants/Server'
 
 const SCAN_MESSAGE_TIMEOUT = 3000;
 

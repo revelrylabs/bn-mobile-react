@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server, apiErrorAlert, refreshCheck} from '../constants/Server'
+import {server, apiErrorAlert} from '../constants/Server'
 
 /**
  *  Right now, this only does one ticket type for one event
