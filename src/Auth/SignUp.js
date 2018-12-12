@@ -72,6 +72,7 @@ export default class SignUp extends Component {
               onChangeText={(last_name) => this.setState({last_name})}
             />
             <TextInput
+              keyboardType="email-address"
               style={formStyles.input}
               placeholder="Email Address"
               underlineColorAndroid="transparent"

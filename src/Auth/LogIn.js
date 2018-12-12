@@ -54,6 +54,7 @@ export default class LogIn extends Component {
             Welcome back!
           </Text>
           <TextInput
+            keyboardType="email-address"
             style={formStyles.input}
             placeholder="Email Address"
             searchIcon={{size: 24}}
