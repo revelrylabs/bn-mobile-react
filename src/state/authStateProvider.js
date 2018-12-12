@@ -1,6 +1,6 @@
 import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
-import {server, bigneonServer, apiErrorAlert, needsRefresh} from '../constants/Server'
+import {server, bigneonServer, apiErrorAlert} from '../constants/Server'
 
 /* eslint-disable camelcase,space-before-function-paren */
 class AuthContainer extends Container {
@@ -52,13 +52,11 @@ class AuthContainer extends Container {
   getCurrentUser = async (navigate, access_token, refresh_token, setToken = true) => { // eslint-disable-line space-before-function-paren
     if (setToken) {
       try {
-        if (needsRefresh(access_token)) {
-          const refreshTokenResp = await server.auth.refresh({refresh_token})
-          const {data} = refreshTokenResp
+        const refreshTokenResp = await server.auth.refresh({refresh_token})
+        const {data} = refreshTokenResp
 
-          access_token = data.access_token
-          refresh_token = data.refresh_token
-        }
+        access_token = data.access_token
+        refresh_token = data.refresh_token
 
         await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
 

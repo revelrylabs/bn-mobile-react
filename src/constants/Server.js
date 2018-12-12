@@ -37,7 +37,7 @@ function parseJwt(token) {
   return JSON.parse(window.atob(base64));
 }
 
-export function needsRefresh(token) {
+function needsRefresh(token) {
   if (!token) {
     return false
   }
