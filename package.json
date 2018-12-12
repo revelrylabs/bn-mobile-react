@@ -30,6 +30,7 @@
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-circle-checkbox": "^0.1.6",
+    "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-qrcode": "^0.2.7",
     "react-native-snap-carousel": "^3.7.2",
