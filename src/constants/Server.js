@@ -1,17 +1,9 @@
 import Bigneon from 'bn-api-node'
 import {AsyncStorage} from 'react-native'
 import mocker from './mocker'
+import {apiURL, timeout} from './config'
 
-const basicAuthUsername = 'bigneon1';
-const basicAuthPassword = 'tar1';
-
-if ((typeof basicAuthUsername === 'string' && !basicAuthUsername) || (typeof basicAuthPassword === 'string' && !basicAuthPassword)) {
-  throw Error('Server.js - basicAuthUsername and basicAuthPassword must either be undefined or a valid string');
-}
-const authString = basicAuthUsername || basicAuthPassword ? `${basicAuthUsername}:${basicAuthPassword}@` : '';
-
-export const BASE_URL = `https://${authString}staging.bigneon.com`;
-
+// eslint-disable-next-line complexity
 export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
   console.log(defaultMsg, error); // eslint-disable-line no-console
 
@@ -28,7 +20,7 @@ export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
   alert(message)
 }
 
-export const bigneonServer = new Bigneon.Server({prefix: `${BASE_URL}/api`})// , {}, mocker)
+export const bigneonServer = new Bigneon.Server({prefix: apiURL(), timeout: timeout()})// , {}, mocker)
 
 function parseJwt(token) {
   const base64Url = token.split('.')[1];

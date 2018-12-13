@@ -122,6 +122,7 @@ export default class AccountDetails extends Component {
             <View style={accountStyles.row}>
               <Text style={accountStyles.accountInputHeaderDisabled}>Email</Text>
               <TextInput
+                keyboardType="email-address"
                 style={accountStyles.accountInputHeader}
                 defaultValue={user.email}
                 placeholderTextColor='#CCC'

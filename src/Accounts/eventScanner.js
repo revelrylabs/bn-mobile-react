@@ -77,9 +77,8 @@ export default class EventScanner extends Component {
       return;
     }
     this.setState({read: data});
-    const parsed = JSON.parse(data);
 
-    eventManager.redeem(parsed);
+    await eventManager.redeem(data);
   }
 
   statusMessage(type) {

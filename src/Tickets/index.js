@@ -116,9 +116,9 @@ TicketsView.propTypes = {
   springValue: PropTypes.object.isRequired,
 }
 
-const EMPTY_TEXT_FOR_ACTIVE_TAB = {
-  upcoming: 'Looks like you don’t have any upcoming events! Why not tap browse and have a look?',
-  past: 'Looks like you haven’t attended any events yet! Why not tap browse and find your first?',
+const EMPTY_TEXT_FOR_ACTIVE_TAB = { 
+  upcoming: 'Looks like you don’t have any upcoming events! Why not tap Explore and have a look?',
+  past: 'Looks like you haven’t attended any events yet! Why not tap Explore and find your first?',
   transfer: 'Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?',
 }
 

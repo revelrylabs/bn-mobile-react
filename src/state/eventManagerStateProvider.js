@@ -1,5 +1,10 @@
 import {Container} from 'unstated'
+<<<<<<< HEAD
 import {server, apiErrorAlert} from '../constants/Server'
+=======
+import {server} from '../constants/Server'
+import * as vibe from '../vibe'
+>>>>>>> origin/develop
 
 const SCAN_MESSAGE_TIMEOUT = 3000;
 
@@ -61,8 +66,16 @@ export class EventManagerContainer extends Container {
     }, SCAN_MESSAGE_TIMEOUT)
   }
 
-  redeem = async (ticket) => {
+  redeem = async (json) => {
     const event_id = this.state.eventToScan.id
+
+    let ticket = null
+    try {
+      ticket = JSON.parse(json)
+    } catch (_e) {
+      vibe.sad()
+      return await this.setState({scanResult: 'serverError', ticketInfo: {}}, this._resetScanResult)
+    }
 
     try {
 
@@ -71,8 +84,10 @@ export class EventManagerContainer extends Container {
         ticket_id: ticket.data.id,
         redeem_key: ticket.data.redeem_key,
       })
-      this.setState({scanResult: 'success'}, this._resetScanResult)
+      await this.setState({scanResult: 'success'}, this._resetScanResult)
+      vibe.happy()
     } catch (e) {
+      vibe.sad()
       if (!e.response) {
         throw e
       }
@@ -81,9 +96,9 @@ export class EventManagerContainer extends Container {
 
       switch (error) {
       case 'Ticket has already been redeemed.':
-        return this.setState({scanResult: 'alreadyRedeemed'}, this._resetScanResult)
+        return await this.setState({scanResult: 'alreadyRedeemed'}, this._resetScanResult)
       default:
-        return this.setState({scanResult: 'serverError', ticketInfo: {}}, this._resetScanResult)
+        return await this.setState({scanResult: 'serverError', ticketInfo: {}}, this._resetScanResult)
       }
     }
   }
