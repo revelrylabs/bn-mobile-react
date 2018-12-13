@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, Platform, View, Linking, TouchableHighlight, Share} from 'react-native'
+import {Text, Platform, View, Linking, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import {DateTime} from 'luxon'
 import {map} from 'lodash'
-import {baseURL} from '../constants/config'
+import {shareEvent} from '../sharing'
 
 /*  eslint-disable camelcase */
 
@@ -28,19 +28,6 @@ function toSentence(arr) {
   return arr.slice(0, -2).join(', ') +
     (arr.slice(0, -2).length ? ', ' : '') +
     arr.slice(-2).join(arr.length === 2 ? ' and ' : ', and ');
-}
-
-function shareEvent(event) {
-  const url = `${baseURL()}/events/${event.id}`
-  const title = `${event.name} is at ${event.venue.name}`
-
-  Share.share({
-    message: `Check this out, ${event.name} is at ${event.venue.name}. Tickets are on Big Neon. ${url}`,
-    url,
-    title,
-    subject: title,
-    dialogTitle: title,
-  })
 }
 
 export default class Details extends Component {
