@@ -4,6 +4,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import avatarPlaceholder from '../../assets/avatar-female.png'
+import {autotrim} from '../string'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -87,7 +88,7 @@ export default class AccountDetails extends Component {
                 defaultValue={user.first_name}
                 placeholderTextColor='#CCC'
                 underlineColorAndroid="transparent"
-                onChangeText={this.updateUser('first_name')}
+                onChangeText={autotrim(this.updateUser('first_name'))}
               />
             </View>
           </View>
@@ -100,7 +101,7 @@ export default class AccountDetails extends Component {
                 defaultValue={user.last_name}
                 placeholderTextColor='#CCC'
                 underlineColorAndroid="transparent"
-                onChangeText={this.updateUser('last_name')}
+                onChangeText={autotrim(this.updateUser('last_name'))}
               />
             </View>
           </View>
@@ -113,7 +114,7 @@ export default class AccountDetails extends Component {
                 defaultValue={user.phone}
                 placeholderTextColor='#CCC'
                 underlineColorAndroid="transparent"
-                onChangeText={this.updateUser('phone')}
+                onChangeText={autotrim(this.updateUser('phone'))}
               />
             </View>
           </View>
@@ -127,7 +128,7 @@ export default class AccountDetails extends Component {
                 defaultValue={user.email}
                 placeholderTextColor='#CCC'
                 underlineColorAndroid="transparent"
-                onChangeText={this.updateUser('email')}
+                onChangeText={autotrim(this.updateUser('email'))}
               />
             </View>
           </View>

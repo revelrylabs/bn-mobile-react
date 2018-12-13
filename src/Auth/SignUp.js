@@ -7,6 +7,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 import { Constants, WebBrowser } from 'expo';
+import { autotrim } from '../string';
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -63,20 +64,20 @@ export default class SignUp extends Component {
               style={formStyles.input}
               placeholder="First Name"
               underlineColorAndroid="transparent"
-              onChangeText={(first_name) => this.setState({first_name})}
+              onChangeText={autotrim((first_name) => this.setState({first_name}))}
             />
             <TextInput
               style={formStyles.input}
               placeholder="Last Name"
               underlineColorAndroid="transparent"
-              onChangeText={(last_name) => this.setState({last_name})}
+              onChangeText={autotrim((last_name) => this.setState({last_name}))}
             />
             <TextInput
               keyboardType="email-address"
               style={formStyles.input}
               placeholder="Email Address"
               underlineColorAndroid="transparent"
-              onChangeText={(email) => this.setState({email})}
+              onChangeText={autotrim((email) => this.setState({email}))}
             />
             <TextInput
               style={formStyles.input}
