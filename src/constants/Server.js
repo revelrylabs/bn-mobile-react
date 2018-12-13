@@ -1,3 +1,4 @@
+import 'get-own-property-symbols'
 import Bigneon from 'bn-api-node'
 import mocker from './mocker'
 import {apiURL} from './config'
