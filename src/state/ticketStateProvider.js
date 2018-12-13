@@ -34,9 +34,9 @@ class TicketsContainer extends Container {
       data.forEach((ticketGroup) => {
         const event = ticketGroup[0];
         const tickets = ticketGroup[1];
-        const bucket = DateTime.fromISO(event.door_time) < DateTime.local() ? 'past' : 'upcoming'
+        const bucket = DateTime.fromISO(event.event_start) < DateTime.local() ? 'past' : 'upcoming'
 
-        event.formattedDate = DateTime.fromISO(event.door_time).toFormat('EEE, MMMM d');
+        event.formattedDate = DateTime.fromISO(event.event_start).toFormat('EEE, MMMM d');
         event.formattedDoors = DateTime.fromISO(event.door_time).toFormat('t');
         event.formattedShow = DateTime.fromISO(event.event_start).toFormat('t');
 

@@ -6,6 +6,7 @@ import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
+import { autotrim } from '../string'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -59,7 +60,7 @@ export default class LogIn extends Component {
             placeholder="Email Address"
             searchIcon={{size: 24}}
             underlineColorAndroid="transparent"
-            onChangeText={(email) => this.setState({email})}
+            onChangeText={autotrim((email) => this.setState({email}))}
           />
           <TextInput
             style={formStyles.input}
@@ -79,7 +80,7 @@ export default class LogIn extends Component {
               <Text style={loginStyles.buttonText}>Login to your account</Text>
             </LinearGradient>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.props.navigation.goBack()}>
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('PasswordReset', {defaultEmail: this.state.email})}>
             <View style={styles.flexRowCenter}>
               <Text style={styles.linkTextDark}>Reset your password</Text>
               <Icon name="keyboard-arrow-right" />
