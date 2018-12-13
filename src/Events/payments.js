@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, Image, TouchableHighlight, WebView} from 'react-native'
+import Spinner from 'react-native-loading-spinner-overlay'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
@@ -49,6 +50,7 @@ export default class PaymentTypes extends Component {
 
     this.state = {
       currentScreen: isEmpty(props.selectedPaymentDetails) ? 'card' : 'show',
+      isLoading: false,
     }
   }
 
@@ -98,16 +100,31 @@ export default class PaymentTypes extends Component {
     }
   }
 
+  setIsLoading(isLoading) {
+    return () => {
+      this.setState({isLoading})
+    }
+  }
 
   get changeDetails() {
     const {access_token, refresh_token} = this.props
 
     return (
-      <WebView
-        injectedJavaScript={patchPostMessageJsCode}
-        source={{uri: `${URI}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
-        onMessage={this.parseMessage}
-      />
+      <View style={{flex: 1}}>
+        <Spinner
+            visible={this.state.isLoading}
+            textContent={'Loading...'}
+            textStyle={{ color: '#FFF' }}
+        />
+        <WebView
+          style={{flex: 1}}
+          injectedJavaScript={patchPostMessageJsCode}
+          source={{uri: `${URI}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
+          onMessage={this.parseMessage}
+          onLoadStart={this.setIsLoading(true)}
+          onLoad={this.setIsLoading(false)}
+        />
+      </View>
     )
   }
 
