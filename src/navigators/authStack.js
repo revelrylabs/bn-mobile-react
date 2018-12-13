@@ -6,12 +6,14 @@ import SignUpScreen from '../Auth/SignUp'
 import IndexScreen from '../Auth/index'
 import {Subscribe} from 'unstated'
 import {AuthContainer} from '../state/authStateProvider'
+import PasswordReset from '../Auth/PasswordReset'
 
 const AuthStack = createStackNavigator(
   {
     AuthRoot: IndexScreen,
     SignUp: SignUpScreen,
     LogIn: LogInScreen,
+    PasswordReset,
   },
   {
     initialRouteName: 'AuthRoot',
