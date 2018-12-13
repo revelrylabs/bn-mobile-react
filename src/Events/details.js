@@ -6,7 +6,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import {DateTime} from 'luxon'
 import {map} from 'lodash'
-import {BASE_URL} from '../constants/Server'
+import {baseURL} from '../constants/config'
 
 /*  eslint-disable camelcase */
 
@@ -31,7 +31,7 @@ function toSentence(arr) {
 }
 
 function shareEvent(event) {
-  const url = `${BASE_URL}/events/${event.id}`
+  const url = `${baseURL()}/events/${event.id}`
   const title = `${event.name} is at ${event.venue.name}`
 
   Share.share({
@@ -228,7 +228,7 @@ export default class Details extends Component {
   openVenueDirections = () => {
     const {event} = this.props
     const {venue} = event
-    let daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+    const daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
 
     if (Platform.OS === 'ios') {
       Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);

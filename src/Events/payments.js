@@ -6,15 +6,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {isEmpty} from 'lodash'
-import {BASE_URL} from '../constants/Server';
+import {stripeFormURL} from '../constants/config';
 
 const styles = SharedStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
 const cardIcons = {
   'default': require('../../assets/icon-visa-pay.png'),
 }
-
-const URI = BASE_URL
 
 /* eslint-disable camelcase */
 
@@ -112,14 +110,14 @@ export default class PaymentTypes extends Component {
     return (
       <View style={{flex: 1}}>
         <Spinner
-            visible={this.state.isLoading}
-            textContent={'Loading...'}
-            textStyle={{ color: '#FFF' }}
+          visible={this.state.isLoading}
+          textContent={'Loading...'}
+          textStyle={{color: '#FFF'}}
         />
         <WebView
           style={{flex: 1}}
           injectedJavaScript={patchPostMessageJsCode}
-          source={{uri: `${URI}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
+          source={{uri: `${stripeFormURL()}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
           onMessage={this.parseMessage}
           onLoadStart={this.setIsLoading(true)}
           onLoad={this.setIsLoading(false)}

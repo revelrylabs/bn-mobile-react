@@ -1,5 +1,6 @@
 import {Container} from 'unstated'
-import {server, BASE_URL, apiErrorAlert} from '../constants/Server'
+import {server, apiErrorAlert} from '../constants/Server'
+import {baseURL} from '../constants/config'
 import {DateTime} from 'luxon'
 
 const LOCATIONS_FETCH_MIN_MINUTES = 15
@@ -60,7 +61,7 @@ class EventsContainer extends Container {
 
     data.data.forEach((event) => {
       if (!event.promo_image_url) {
-        event.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+        event.promo_image_url = `${baseURL()}/images/event-placeholder.png`
       }
     })
 
@@ -79,7 +80,7 @@ class EventsContainer extends Container {
     const {data} = await server.events.read({id})
 
     if (!data.promo_image_url) {
-      data.promo_image_url = `${BASE_URL}/images/event-placeholder.png`
+      data.promo_image_url = `${baseURL()}/images/event-placeholder.png`
     }
 
     this.setState({

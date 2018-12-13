@@ -30,6 +30,20 @@ export default class EventsIndex extends Component {
     return DateTime.fromISO(time).toFormat('EEE, MMMM d')
   }
 
+  get priceTag() {
+    const {event: {min_ticket_price}} = this.props
+
+    if (min_ticket_price) {
+      return (
+        <View style={styles.priceTagContainer}>
+          <Text style={styles.priceTag}>{`$${toDollars(min_ticket_price)}`}</Text>
+        </View>
+      )
+    } else {
+      return null
+    }
+  }
+
   render() {
     const {onPress, event} = this.props
 
@@ -55,9 +69,7 @@ export default class EventsIndex extends Component {
                   }
                 </View>
               </View>
-              <View style={styles.priceTagContainer}>
-                <Text style={styles.priceTag}>${toDollars(event.min_ticket_price)}</Text>
-              </View>
+              {this.priceTag}
             </View>
           </View>
 
