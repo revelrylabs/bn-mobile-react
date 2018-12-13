@@ -4,10 +4,10 @@ set -e # exit entire script when command exits with non-zero status
 # Install dependencies
 npm install
 
-# Publish `staging` release
+# Publish `production` release
 expo publish --release-channel production --non-interactive
 
-# Start building standalone android build using `staging` release channel
+# Start building standalone android build using `production` release channel
 expo build:android --release-channel production --non-interactive --no-publish
 
 # Download the built android binary
@@ -16,7 +16,7 @@ curl -o app.apk "$(expo url:apk --non-interactive)"
 # Ask Keith for the JSON key. Store this one directory below the app, and DO NOT ADD TO GIT
 fastlane supply --track 'beta' --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
 
-# Start building standalone android build using `staging` release channel
+# Start building standalone android build using `production` release channel
 expo build:ios --release-channel production --non-interactive --no-publish
 
 # Download the artifact to current directory as `app.ipa`
