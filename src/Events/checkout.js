@@ -141,7 +141,7 @@ export default class Checkout extends Component {
   render() {
     const {selectedTicket} = this.state
     const {event, cart: {state: {quantity}}} = this.props
-    const doorTime = DateTime.fromISO(event.door_time)
+    const eventTime = DateTime.fromISO(event.event_start)
 
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
@@ -173,7 +173,7 @@ export default class Checkout extends Component {
             <View style={checkoutStyles.row}>
               <View>
                 <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>{event.name}</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>{doorTime.toFormat('cccc LLLL d')} - {doorTime.toFormat('h:mm a')} - {event.venue.name}</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>{eventTime.toFormat('cccc LLLL d')} - {eventTime.toFormat('h:mm a')} - {event.venue.name}</Text>
               </View>
             </View>
           </View>

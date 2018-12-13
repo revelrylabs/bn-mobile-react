@@ -25,7 +25,7 @@ export default class EventsIndex extends Component {
     const {event} = this.props
 
     // @TODO: toISOString might not be required... a string might be returned, not a real js date
-    const time = event.door_time instanceof Date ? event.door_time.toISOString() : event.door_time
+    const time = event.event_start instanceof Date ? event.event_start.toISOString() : event.event_start
 
     return DateTime.fromISO(time).toFormat('EEE, MMMM d')
   }

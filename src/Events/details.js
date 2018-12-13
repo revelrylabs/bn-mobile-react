@@ -276,7 +276,7 @@ export default class Details extends Component {
               {venue.address}, {venue.city}, {venue.state} {venue.postal_code}, {venue.country}
             </Text>
             <Text style={[eventDetailsStyles.bodyText, styles.noPaddingBottom]}>
-              {doorTime.toFormat('DDDD')}
+              {eventStart.toFormat('DDDD')}
             </Text>
             <Text style={eventDetailsStyles.bodyText}>
               Doors {doorTime.toFormat('t ZZZZ')} - Show {eventStart.toFormat('t ZZZZ')}
