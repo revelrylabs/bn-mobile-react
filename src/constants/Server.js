@@ -62,7 +62,7 @@ async function refresher() {
 
   // if expired, refresh
   if (userToken && needsRefresh(userToken)) {
-    refreshWithToken(refreshToken)
+    await refreshWithToken(refreshToken)
   }
 }
 
