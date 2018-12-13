@@ -1,6 +1,6 @@
 import Bigneon from 'bn-api-node'
 import {AsyncStorage} from 'react-native'
-import mocker from './mocker'
+// import mocker from './mocker'
 import {apiURL, timeout} from './config'
 
 // eslint-disable-next-line complexity
@@ -18,6 +18,15 @@ export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
   }
 
   alert(message)
+}
+
+export async function retrieveTokens() {
+  const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken']);
+
+  user = userToken[1] ? userToken[1] : false
+  refresh = refreshToken[1] ? refreshToken[1] : false
+
+  return {userToken: user, refreshToken: refresh}
 }
 
 export const bigneonServer = new Bigneon.Server({prefix: apiURL(), timeout: timeout()})// , {}, mocker)
@@ -39,17 +48,21 @@ function needsRefresh(token) {
   return (user && user.exp < Math.floor(Date.now() / 1000))
 }
 
-export async function refresher() {
-  /* eslint-disable camelcase */
-  const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken'])
+/* eslint-disable camelcase */
+export async function refreshWithToken(token) {
+  const resp = await bigneonServer.auth.refresh({refresh_token: token})
+  const {data: {access_token, refresh_token}} = resp
+
+  const _setTokens = await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
+  const _setAPIToken = await bigneonServer.client.setToken(access_token)
+}
+
+async function refresher() {
+  const {userToken, refreshToken} = retrieveTokens()
 
   // if expired, refresh
-  if (userToken && needsRefresh(userToken[1])) {
-    const resp = await bigneonServer.auth.refresh({refresh_token: refreshToken[1]})
-    const {data: {access_token, refresh_token}} = resp
-
-    const _setTokens = await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
-    const _setAPIToken = await bigneonServer.client.setToken(access_token)
+  if (userToken && needsRefresh(userToken)) {
+    refreshWithToken(refreshToken)
   }
 }
 
@@ -64,7 +77,7 @@ function proxyGet(server, prop) {
   if (prop === 'withoutToken') {
     return server
   }
-  
+
   const value = server[prop]
 
   if (typeof value === 'function') {

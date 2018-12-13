@@ -20,7 +20,6 @@ class TicketsContainer extends Container {
   // Grabbing tickets from orders right now - not preserving any order-level details
   userTickets = async () => {
     try {
-      
       const response = await server.tickets.index()
 
       const {data, _paging} = response.data; // @TODO: pagination
@@ -64,7 +63,7 @@ class TicketsContainer extends Container {
 
   redeemTicketInfo = async (ticket_id) => { // eslint-disable-line complexity
     try {
-      
+
       const response = await server.tickets.redeem.read({ticket_id})
 
       return response.data;

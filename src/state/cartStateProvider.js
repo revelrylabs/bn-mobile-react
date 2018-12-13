@@ -57,7 +57,6 @@ class CartContainer extends Container {
     }]
 
     try {
-      
       const response = await server.cart.update({items})
       const {data} = response;
 
@@ -71,7 +70,6 @@ class CartContainer extends Container {
 
   refreshCart = async () => {
     try {
-      
       const response = await server.cart.read()
       const {data} = response;
 
@@ -100,7 +98,7 @@ class CartContainer extends Container {
 
   placeOrder = async (onSuccess) => {
     try {
-      
+
       const _resp = await server.cart.checkout({
         amount: this.state.total_in_cents, // @TODO: remove this amount, we shouldn't be specifying it on the frontend
         method: {

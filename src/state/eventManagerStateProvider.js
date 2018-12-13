@@ -1,10 +1,6 @@
 import {Container} from 'unstated'
-<<<<<<< HEAD
 import {server, apiErrorAlert} from '../constants/Server'
-=======
-import {server} from '../constants/Server'
 import * as vibe from '../vibe'
->>>>>>> origin/develop
 
 const SCAN_MESSAGE_TIMEOUT = 3000;
 
