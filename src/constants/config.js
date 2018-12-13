@@ -22,7 +22,7 @@ const CONFIG = {
     apiURL: 'https://api.bigneon.com',
     baseURL: 'https://prod-1-mobile-www.bigneon.com',
     stripeFormURL: 'https://prod-1-mobile-www.bigneon.com',
-    timeout: 30000,
+    timeout: 10000,
   },
 }
 
