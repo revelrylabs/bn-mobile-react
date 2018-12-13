@@ -58,7 +58,7 @@ export async function refreshWithToken(token) {
 }
 
 async function refresher() {
-  const {userToken, refreshToken} = retrieveTokens()
+  const {userToken, refreshToken} = await retrieveTokens()
 
   // if expired, refresh
   if (userToken && needsRefresh(userToken)) {
