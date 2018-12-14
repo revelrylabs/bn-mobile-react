@@ -117,7 +117,7 @@ export default class PaymentTypes extends Component {
         <WebView
           style={{flex: 1}}
           injectedJavaScript={patchPostMessageJsCode}
-          source={{uri: `${stripeFormURL()}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
+          source={{uri: `${stripeFormURL}/mobile_stripe_token_auth/${encodeURIComponent(access_token)}/${encodeURIComponent(refresh_token)}`}}
           onMessage={this.parseMessage}
           onLoadStart={this.setIsLoading(true)}
           onLoad={this.setIsLoading(false)}

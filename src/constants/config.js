@@ -26,55 +26,20 @@ const CONFIG = {
   },
 }
 
-export const apiURL = () => {
+function valueForField(field) {
   const {manifest: {releaseChannel}} = Constants
 
   switch (releaseChannel) {
   case 'staging':
-    return CONFIG.staging.apiURL
+    return CONFIG.staging[field] || ''
   case 'production':
-    return CONFIG.production.apiURL
+    return CONFIG.production[field] || ''
   default:
-    return CONFIG.dev.apiURL
+    return CONFIG.dev[field] || ''
   }
 }
 
-export const baseURL = () => {
-  const {manifest: {releaseChannel}} = Constants
-
-  switch (releaseChannel) {
-  case 'staging':
-    return CONFIG.staging.baseURL
-  case 'production':
-    return CONFIG.production.baseURL
-  default:
-    return CONFIG.dev.baseURL
-  }
-}
-
-
-export const stripeFormURL = () => {
-  const {manifest: {releaseChannel}} = Constants
-
-  switch (releaseChannel) {
-  case 'staging':
-    return CONFIG.staging.stripeFormURL
-  case 'production':
-    return CONFIG.production.stripeFormURL
-  default:
-    return CONFIG.dev.stripeFormURL
-  }
-}
-
-export const timeout = () => {
-  const {manifest: {releaseChannel}} = Constants
-
-  switch (releaseChannel) {
-  case 'staging':
-    return CONFIG.staging.timeout
-  case 'production':
-    return CONFIG.production.timeout
-  default:
-    return CONFIG.dev.timeout
-  }
-}
+export const apiURL = valueForField('apiURL')
+export const baseURL = valueForField('baseURL')
+export const stripeFormURL = valueForField('stripeFormURL')
+export const timeout = valueForField('timeout')
