@@ -32,7 +32,7 @@ export async function retrieveTokens() {
   return {userToken: user, refreshToken: refresh}
 }
 
-export const bigneonServer = new Bigneon.Server({prefix: apiURL(), timeout: timeout()})// , {}, mocker)
+export const bigneonServer = new Bigneon.Server({prefix: apiURL, timeout: timeout})// , {}, mocker)
 
 function parseJwt(token) {
   const base64Url = token.split('.')[1];

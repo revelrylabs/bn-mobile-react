@@ -67,7 +67,7 @@ class EventsContainer extends Container {
 
       data.data.forEach((event) => {
         if (!event.promo_image_url) {
-          event.promo_image_url = `${baseURL()}/images/event-placeholder.png`
+          event.promo_image_url = `${baseURL}/images/event-placeholder.png`
         }
       })
 
@@ -90,7 +90,7 @@ class EventsContainer extends Container {
       const {data} = await server.events.read({id})
 
       if (!data.promo_image_url) {
-        data.promo_image_url = `${baseURL()}/images/event-placeholder.png`
+        data.promo_image_url = `${baseURL}/images/event-placeholder.png`
       }
 
       this.setState({
