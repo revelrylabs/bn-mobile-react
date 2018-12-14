@@ -6,21 +6,41 @@ import {AsyncStorage} from 'react-native'
 import {apiURL, timeout} from './config'
 import Base64 from './base64'
 
-// eslint-disable-next-line complexity
-export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
-  console.log(defaultMsg, error); // eslint-disable-line no-console
 
-  let message = defaultMsg
+const DEFAULT_ERROR_MSG =  'There was a problem.'
 
-  if (
-    error.response &&
-    error.response.data &&
-    error.response.data.error
-  ) {
-    message = error.response.data.error;
+function buildErrorMessage({error, fields}) {
+  let msg = error
+
+  if (typeof fields === 'object') {
+    const fieldsString = Object
+      .keys(fields)
+      .map(name => fields[name].map(x => x.code).join('\n'))
+      .join('\n')
+
+    msg = [
+      msg,
+      fieldsString,
+    ].join('\n\n')
   }
 
-  alert(message)
+  return msg
+}
+
+export function apiErrorAlert(error, msg = DEFAULT_ERROR_MSG) {
+  const {response} = error
+
+  if (!response) {
+    throw error
+  }
+
+  const {data} = response
+
+  if (!(data && data.error)) {
+    return msg
+  }
+
+  return alert(buildErrorMessage(data))
 }
 
 export async function retrieveTokens() {
