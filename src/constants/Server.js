@@ -3,6 +3,7 @@ import Bigneon from 'bn-api-node'
 import {AsyncStorage} from 'react-native'
 // import mocker from './mocker'
 import {apiURL, timeout} from './config'
+import Base64 from './base64'
 
 // eslint-disable-next-line complexity
 export function apiErrorAlert(error, defaultMsg = 'There was a problem.') {
@@ -36,7 +37,7 @@ function parseJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
 
-  return JSON.parse(window.atob(base64));
+  return JSON.parse(Base64.atob(base64));
 }
 
 function needsRefresh(token) {
