@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
   View,
 } from 'react-native';
 import {Subscribe} from 'unstated'
 import {AuthContainer} from '../state/authStateProvider'
+import {retrieveTokens} from '../constants/Server'
 
 class AuthStore extends Component {
   static propTypes = {
@@ -23,8 +23,7 @@ class AuthStore extends Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => { // eslint-disable-line complexity,space-before-function-paren
     const {navigation: {navigate}, auth} = this.props
-    const userToken = await AsyncStorage.getItem('userToken');
-    const refreshToken = await AsyncStorage.getItem('refreshToken');
+    const {userToken, refreshToken} = await retrieveTokens()
 
     if (userToken && refreshToken) {
       const {state: {currentUser}} = auth

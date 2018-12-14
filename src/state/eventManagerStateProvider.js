@@ -1,10 +1,10 @@
 import {Container} from 'unstated'
-import {server} from '../constants/Server'
+import {server, apiErrorAlert} from '../constants/Server'
 import * as vibe from '../vibe'
 
 const SCAN_MESSAGE_TIMEOUT = 3000;
 
-/* eslint-disable camelcase */
+/* eslint-disable camelcase,space-before-function-paren */
 export class EventManagerContainer extends Container {
   constructor(props = {}) {
     super(props);
@@ -27,13 +27,18 @@ export class EventManagerContainer extends Container {
 
   // TODO: filter by live vs upcoming?
   getEvents = async () => {
-    const {data} = await server.events.index()
+    try {
 
-    this.setState({
-      // lastUpdate: DateTime.local(),
-      events: data.data,
-      paging: data.paging,
-    })
+      const {data} = await server.events.index()
+
+      this.setState({
+        // lastUpdate: DateTime.local(),
+        events: data.data,
+        paging: data.paging,
+      })
+    } catch (error) {
+      apiErrorAlert(error)
+    }
   }
 
   scanForEvent = async (event) => {
@@ -42,6 +47,7 @@ export class EventManagerContainer extends Container {
 
   _transfer = async () => {
     try {
+
       const _result = await server.tickets.transfer.receive(this.state.ticketInfo);
 
       this.setState({scanType: '', statusMessage: 'Successfully Transferred', ticketInfo: {}});
@@ -68,6 +74,7 @@ export class EventManagerContainer extends Container {
     }
 
     try {
+
       await server.events.tickets.redeem({
         event_id,
         ticket_id: ticket.data.id,

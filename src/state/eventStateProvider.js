@@ -51,25 +51,34 @@ class EventsContainer extends Container {
   }
 
   _fetchLocations = async () => {
-    const {data: {data: locations}} = await server.regions.index()
+    try {
 
-    await this.setState({locations})
+      const {data: {data: locations}} = await server.regions.index()
+
+      await this.setState({locations})
+    } catch (error) {
+      apiErrorAlert(error)
+    }
   }
 
   getEvents = async (_location = null) => {
-    const [{data}, ..._rest] = await Promise.all([server.events.index(), this.fetchLocations()])
+    try {
+      const [{data}, ..._rest] = await Promise.all([server.events.index(), this.fetchLocations()])
 
-    data.data.forEach((event) => {
-      if (!event.promo_image_url) {
-        event.promo_image_url = `${baseURL()}/images/event-placeholder.png`
-      }
-    })
+      data.data.forEach((event) => {
+        if (!event.promo_image_url) {
+          event.promo_image_url = `${baseURL()}/images/event-placeholder.png`
+        }
+      })
 
-    this.setState({
-      lastUpdate: DateTime.local(),
-      events: data.data,
-      paging: data.paging,
-    })
+      this.setState({
+        lastUpdate: DateTime.local(),
+        events: data.data,
+        paging: data.paging,
+      })
+    } catch (error) {
+      apiErrorAlert(error)
+    }
   }
 
   clearEvent = () => {
@@ -77,15 +86,19 @@ class EventsContainer extends Container {
   }
 
   getEvent = async (id) => {
-    const {data} = await server.events.read({id})
+    try {
+      const {data} = await server.events.read({id})
 
-    if (!data.promo_image_url) {
-      data.promo_image_url = `${baseURL()}/images/event-placeholder.png`
+      if (!data.promo_image_url) {
+        data.promo_image_url = `${baseURL()}/images/event-placeholder.png`
+      }
+
+      this.setState({
+        selectedEvent: {...data},
+      })
+    } catch (error) {
+      apiErrorAlert(error)
     }
-
-    this.setState({
-      selectedEvent: {...data},
-    })
   }
 
   changeLocation = (_index, {id}) => this.setState({selectedLocationId: id})

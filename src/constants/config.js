@@ -10,16 +10,19 @@ const CONFIG = {
     apiURL: `https://${authString}staging.bigneon.com/api`,
     baseURL: `https://${authString}staging.bigneon.com`,
     stripeFormURL: `https://${authString}staging.bigneon.com`,
+    timeout: 3000,
   },
   staging: {
     apiURL: `https://${authString}staging.bigneon.com/api`,
     baseURL: `https://${authString}staging.bigneon.com`,
     stripeFormURL: `https://${authString}staging.bigneon.com`,
+    timeout: 3000,
   },
   production: {
     apiURL: 'https://api.bigneon.com',
     baseURL: 'https://prod-1-mobile-www.bigneon.com',
     stripeFormURL: 'https://prod-1-mobile-www.bigneon.com',
+    timeout: 10000,
   },
 }
 
@@ -63,3 +66,15 @@ export const stripeFormURL = () => {
   }
 }
 
+export const timeout = () => {
+  const {manifest: {releaseChannel}} = Constants
+
+  switch (releaseChannel) {
+  case 'staging':
+    return CONFIG.staging.timeout
+  case 'production':
+    return CONFIG.production.timeout
+  default:
+    return CONFIG.dev.timeout
+  }
+}
