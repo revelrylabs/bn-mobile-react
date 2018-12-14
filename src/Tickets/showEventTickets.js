@@ -12,6 +12,22 @@ const styles = SharedStyles.createStyles()
 
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
+async function getBrightness() {
+  await Brightness.getBrightnessAsync()
+}
+
+/**
+ * Turned off because of https://github.com/revelrylabs/bn-mobile-react/issues/398
+ * 
+ * Android doesn't return to initial brightness.
+ * `setSystemBrightness`, which might be the solution,
+ * is still experimental in Expo as of the time this comment was written.
+ */
+async function setBrightness(zeroToOne) {
+  return
+  await Brightness.setBrightnessAsync(zeroToOne)
+}
+
 export default class EventsTicket extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
@@ -32,12 +48,12 @@ export default class EventsTicket extends Component {
   }
 
   async doBrightness() {
-    this._prevBrightness = await Brightness.getBrightnessAsync()
-    await Brightness.setBrightnessAsync(1)
+    this._prevBrightness = await getBrightness()
+    await setBrightness(1)
   }
 
   async undoBrightness() {
-    await Brightness.setBrightnessAsync(this._prevBrightness)
+    await setBrightness(this._prevBrightness)
   }
 
   componentWillUnmount() {
