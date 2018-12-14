@@ -95,3 +95,5 @@ function proxyGet(server, prop) {
 }
 
 export const server = new Proxy(bigneonServer, {get: proxyGet})
+
+export const defaultEventSort = {sort: 'event_start', dir: 'asc'}
