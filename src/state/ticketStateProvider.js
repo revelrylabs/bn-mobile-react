@@ -11,6 +11,7 @@ class TicketsContainer extends Container {
 
     this.state = {
       tickets: [],
+      ticketsByEventId: {},
       purchasedTicket: null,
     };
 
@@ -23,6 +24,8 @@ class TicketsContainer extends Container {
       const response = await server.tickets.index()
 
       const {data, _paging} = response.data; // @TODO: pagination
+
+      const ticketsByEventId = {}
 
       const ticketGroups = {
         upcoming: [],
@@ -40,10 +43,13 @@ class TicketsContainer extends Container {
         event.formattedDoors = DateTime.fromISO(event.door_time).toFormat('t');
         event.formattedShow = DateTime.fromISO(event.event_start).toFormat('t');
 
-        ticketGroups[bucket].push({event, tickets});
+        const eventAndTicketsObject = {event, tickets}
+
+        ticketsByEventId[event.id] = eventAndTicketsObject
+        ticketGroups[bucket].push(eventAndTicketsObject);
       });
 
-      this.setState({tickets: ticketGroups});
+      this.setState({tickets: ticketGroups, ticketsByEventId});
 
     } catch (error) {
       apiErrorAlert(error, 'Loading tickets failed.')
@@ -54,11 +60,8 @@ class TicketsContainer extends Container {
     this.setState({purchasedTicket})
   }
 
-  // Can they view details for past or transfefred tickets?
-  ticketsForEvent = async (eventId, bucket = 'upcoming') => {
-    const {tickets} = this.state
-
-    return find(tickets[bucket], ({event, _tickets}) => eventId === event.id)
+  ticketsForEvent = (eventId) => {
+    return this.state.ticketsByEventId[eventId]
   }
 
   redeemTicketInfo = async (ticket_id) => { // eslint-disable-line complexity

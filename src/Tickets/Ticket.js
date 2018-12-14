@@ -67,7 +67,7 @@ export default class Ticket extends Component {
   }
 
   render() {
-    const {navigate, ticket} = this.props
+    const {navigate, ticket, qrEnabled} = this.props
     const {firstName, lastName} = this.state
 
     return (
@@ -122,7 +122,9 @@ export default class Ticket extends Component {
         </View>
 
         <View style={ticketWalletStyles.qrCodeContainer}>
-          {this.state.qrText !== '' ? <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} /> : null}
+          {qrEnabled && this.state.qrText ? (
+            <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} />
+          ) : null}
         </View>
 
         {false && // TODO: Re-enable when functionality is implemented.

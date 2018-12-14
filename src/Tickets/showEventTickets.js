@@ -39,11 +39,8 @@ export default class EventsTicket extends Component {
 
     this.state = {
       activeSlide: 0,
-      event: {},
-      tickets: [],
     }
 
-    this.event()
     this.doBrightness()
   }
 
@@ -60,21 +57,27 @@ export default class EventsTicket extends Component {
     this.undoBrightness()
   }
 
-  async event() {
+  get eventAndTickets() {
     const {
       screenProps: {store: {ticketsForEvent}},
       navigation: {state: {params: {eventId}}},
     } = this.props
 
-    const {event, tickets} = await ticketsForEvent(eventId)
+    return ticketsForEvent(eventId)
+  }
 
-    this.setState({event, tickets})
+  get event() {
+    return this.eventAndTickets.event
+  }
+
+  get tickets() {
+    return this.eventAndTickets.tickets
   }
 
   get ticketData() {
-    const {tickets, event} = this.state
+    const event = this.event || {}
 
-    return tickets.map((ticket) => ({
+    return this.tickets.map((ticket) => ({
       image: event.promo_image_url,
       name: event.name,
       venue: event.venue.name,
@@ -92,11 +95,13 @@ export default class EventsTicket extends Component {
 
   _renderItem = ({item, _index}) => {
     const {
-      navigation: {navigate},
+      navigation: {navigate, state: {params: {qrEnabled}}},
       screenProps: {store: {redeemTicketInfo}},
     } = this.props
 
-    return <Ticket ticket={item} navigate={navigate} redeemTicketInfo={redeemTicketInfo} />
+    console.log(this.props)
+
+    return <Ticket qrEnabled={qrEnabled} ticket={item} navigate={navigate} redeemTicketInfo={redeemTicketInfo} />
   }
 
   render() {
