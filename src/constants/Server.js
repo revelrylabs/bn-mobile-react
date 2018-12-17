@@ -116,4 +116,6 @@ function proxyGet(server, prop) {
 
 export const server = new Proxy(bigneonServer, {get: proxyGet})
 
-export const defaultEventSort = {sort: 'event_start', dir: 'asc'}
+// NOTE: As of when this was written, the capital A in "Asc" is intentional.
+// API server sends a 400 response if you try to use "asc" instead.
+export const defaultEventSort = {sort: 'event_start', dir: 'Asc'}
