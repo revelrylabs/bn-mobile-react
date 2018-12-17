@@ -1,7 +1,7 @@
 import {Constants} from 'expo'
 
 const RELEASE_CHANNEL = Constants.manifest.releaseChannel || 'dev'
-const WEB_STAGING = 'https://bigneon1:tar1@staging.bigneon.com'
+const WEB_STAGING = 'https://beta.bigneon.com'
 const WEB_PRODUCTION = 'https://prod-1-mobile-www.bigneon.com'
 const API_PRODUCTION = 'https://api.bigneon.com'
 
