@@ -36,11 +36,7 @@ export function apiErrorAlert(error, msg = DEFAULT_ERROR_MSG) {
 
   const {data} = response
 
-  if (!(data && data.error)) {
-    return msg
-  }
-
-  return alert(buildErrorMessage(data))
+ return alert(data && data.error && buildErrorMessage(data) || msg)
 }
 
 export async function retrieveTokens() {
