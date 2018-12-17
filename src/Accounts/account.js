@@ -87,7 +87,6 @@ export default class AccountDetails extends Component {
                 style={accountStyles.accountInputHeader}
                 defaultValue={user.first_name}
                 placeholderTextColor='#CCC'
-                underlineColorAndroid="transparent"
                 onChangeText={autotrim(this.updateUser('first_name'))}
               />
             </View>
@@ -100,7 +99,6 @@ export default class AccountDetails extends Component {
                 style={accountStyles.accountInputHeader}
                 defaultValue={user.last_name}
                 placeholderTextColor='#CCC'
-                underlineColorAndroid="transparent"
                 onChangeText={autotrim(this.updateUser('last_name'))}
               />
             </View>
@@ -113,7 +111,6 @@ export default class AccountDetails extends Component {
                 style={accountStyles.accountInputHeader}
                 defaultValue={user.phone}
                 placeholderTextColor='#CCC'
-                underlineColorAndroid="transparent"
                 onChangeText={autotrim(this.updateUser('phone'))}
               />
             </View>
@@ -127,7 +124,6 @@ export default class AccountDetails extends Component {
                 style={accountStyles.accountInputHeader}
                 defaultValue={user.email}
                 placeholderTextColor='#CCC'
-                underlineColorAndroid="transparent"
                 onChangeText={autotrim(this.updateUser('email'))}
               />
             </View>
@@ -140,7 +136,6 @@ export default class AccountDetails extends Component {
                 style={accountStyles.accountInputHeader}
                 placeholder="(hidden)"
                 placeholderTextColor='#CCC'
-                underlineColorAndroid="transparent"
                 onChangeText={this.updateUser('password')}
                 secureTextEntry
               />

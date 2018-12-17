@@ -28,13 +28,11 @@ export default function Billing() {
               style={billingStyles.billingInput}
               placeholder="**** **** **** 2386"
               placeholderTextColor='black'
-              underlineColorAndroid="transparent"
             />
             <TextInput
               style={[billingStyles.billingInput, billingStyles.billingInputLast]}
               placeholder="12/24"
               placeholderTextColor='black'
-              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -51,13 +49,11 @@ export default function Billing() {
               style={billingStyles.billingInput}
               placeholder="**** **** **** 2595"
               placeholderTextColor='black'
-              underlineColorAndroid="transparent"
             />
             <TextInput
               style={[billingStyles.billingInput, billingStyles.billingInputLast]}
               placeholder="04/21"
               placeholderTextColor='black'
-              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -76,7 +72,6 @@ export default function Billing() {
                 style={accountStyles.accountInputHeader}
                 placeholder="kookster9000@hottopic.com"
                 placeholderTextColor='black'
-                underlineColorAndroid="transparent"
               />
             </View>
           </View>

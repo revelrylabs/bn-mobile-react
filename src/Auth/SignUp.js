@@ -63,27 +63,23 @@ export default class SignUp extends Component {
             <TextInput
               style={formStyles.input}
               placeholder="First Name"
-              underlineColorAndroid="transparent"
               onChangeText={autotrim((first_name) => this.setState({first_name}))}
             />
             <TextInput
               style={formStyles.input}
               placeholder="Last Name"
-              underlineColorAndroid="transparent"
               onChangeText={autotrim((last_name) => this.setState({last_name}))}
             />
             <TextInput
               keyboardType="email-address"
               style={formStyles.input}
               placeholder="Email Address"
-              underlineColorAndroid="transparent"
               onChangeText={autotrim((email) => this.setState({email}))}
             />
             <TextInput
               style={formStyles.input}
               secureTextEntry
               placeholder="Password"
-              underlineColorAndroid="transparent"
               onChangeText={(password) => this.setState({password})}
             />
             <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>

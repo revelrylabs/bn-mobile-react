@@ -238,7 +238,6 @@ export default class EventsIndex extends Component {
               style={formStyles.searchInput}
               placeholder="Search artists, shows, venues..."
               searchIcon={{size: 24}}
-              underlineColorAndroid="transparent"
               disabled
             />
           </View>

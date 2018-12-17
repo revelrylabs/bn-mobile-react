@@ -55,7 +55,6 @@ export default class PasswordReset extends Component {
             style={formStyles.input}
             placeholder="Email Address"
             searchIcon={{size: 24}}
-            underlineColorAndroid="transparent"
             defaultValue={this.state.email}
             onChangeText={(email) => this.setState({email})}
           />
