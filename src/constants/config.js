@@ -1,80 +1,32 @@
 import {Constants} from 'expo'
 
-const basicAuthUsername = 'bigneon1'
-const basicAuthPassword = 'tar1'
+const RELEASE_CHANNEL = Constants.manifest.releaseChannel || 'dev'
+const WEB_STAGING = 'https://beta.bigneon.com'
+const WEB_PRODUCTION = 'https://prod-1-mobile-www.bigneon.com'
+const API_PRODUCTION = 'https://api.bigneon.com'
 
-const authString = `${basicAuthUsername}:${basicAuthPassword}@`
-
-const CONFIG = {
-  dev: {
-    apiURL: `https://${authString}staging.bigneon.com/api`,
-    baseURL: `https://${authString}staging.bigneon.com`,
-    stripeFormURL: `https://${authString}staging.bigneon.com`,
-    timeout: 3000,
-  },
-  staging: {
-    apiURL: `https://${authString}staging.bigneon.com/api`,
-    baseURL: `https://${authString}staging.bigneon.com`,
-    stripeFormURL: `https://${authString}staging.bigneon.com`,
-    timeout: 3000,
-  },
-  production: {
-    apiURL: 'https://api.bigneon.com',
-    baseURL: 'https://prod-1-mobile-www.bigneon.com',
-    stripeFormURL: 'https://prod-1-mobile-www.bigneon.com',
-    timeout: 10000,
-  },
+const defaultConfig = {
+  timeout: 3000,
 }
 
-export const apiURL = () => {
-  const {manifest: {releaseChannel}} = Constants
-
-  switch (releaseChannel) {
-  case 'staging':
-    return CONFIG.staging.apiURL
-  case 'production':
-    return CONFIG.production.apiURL
-  default:
-    return CONFIG.dev.apiURL
-  }
+const dev = {
+  ...defaultConfig,
+  baseURL: WEB_STAGING,
+  stripeFormURL: WEB_STAGING,
+  apiURL: `${WEB_STAGING}/api`,
+  timeout: 3000,
 }
 
-export const baseURL = () => {
-  const {manifest: {releaseChannel}} = Constants
-
-  switch (releaseChannel) {
-  case 'staging':
-    return CONFIG.staging.baseURL
-  case 'production':
-    return CONFIG.production.baseURL
-  default:
-    return CONFIG.dev.baseURL
-  }
+const staging = {
+  ...dev,
 }
 
-
-export const stripeFormURL = () => {
-  const {manifest: {releaseChannel}} = Constants
-
-  switch (releaseChannel) {
-  case 'staging':
-    return CONFIG.staging.stripeFormURL
-  case 'production':
-    return CONFIG.production.stripeFormURL
-  default:
-    return CONFIG.dev.stripeFormURL
-  }
+const production = {
+  ...defaultConfig,
+  baseURL: WEB_PRODUCTION,
+  stripeFormURL: WEB_PRODUCTION,
+  apiURL: API_PRODUCTION,
+  timeout: 10000,
 }
 
-export const timeout = () => {
-  const {manifest: {releaseChannel}} = Constants
-
-  switch (releaseChannel) {
-  case 'staging':
-    return CONFIG.staging.timeout
-  case 'production':
-    return CONFIG.production.timeout
-  default:
-    return CONFIG.dev.timeout
-  }
-}
+module.exports = {dev, staging, production}[RELEASE_CHANNEL]

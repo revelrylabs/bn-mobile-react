@@ -12,6 +12,22 @@ const styles = SharedStyles.createStyles()
 
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
+async function getBrightness() {
+  await Brightness.getBrightnessAsync()
+}
+
+/**
+ * Turned off because of https://github.com/revelrylabs/bn-mobile-react/issues/398
+ * 
+ * Android doesn't return to initial brightness.
+ * `setSystemBrightness`, which might be the solution,
+ * is still experimental in Expo as of the time this comment was written.
+ */
+async function setBrightness(zeroToOne) {
+  return
+  await Brightness.setBrightnessAsync(zeroToOne)
+}
+
 export default class EventsTicket extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
@@ -23,42 +39,45 @@ export default class EventsTicket extends Component {
 
     this.state = {
       activeSlide: 0,
-      event: {},
-      tickets: [],
     }
 
-    this.event()
     this.doBrightness()
   }
 
   async doBrightness() {
-    this._prevBrightness = await Brightness.getBrightnessAsync()
-    await Brightness.setBrightnessAsync(1)
+    this._prevBrightness = await getBrightness()
+    await setBrightness(1)
   }
 
   async undoBrightness() {
-    await Brightness.setBrightnessAsync(this._prevBrightness)
+    await setBrightness(this._prevBrightness)
   }
 
   componentWillUnmount() {
     this.undoBrightness()
   }
 
-  async event() {
+  get eventAndTickets() {
     const {
       screenProps: {store: {ticketsForEvent}},
       navigation: {state: {params: {eventId}}},
     } = this.props
 
-    const {event, tickets} = await ticketsForEvent(eventId)
+    return ticketsForEvent(eventId)
+  }
 
-    this.setState({event, tickets})
+  get event() {
+    return this.eventAndTickets.event
+  }
+
+  get tickets() {
+    return this.eventAndTickets.tickets
   }
 
   get ticketData() {
-    const {tickets, event} = this.state
+    const event = this.event || {}
 
-    return tickets.map((ticket) => ({
+    return this.tickets.map((ticket) => ({
       image: event.promo_image_url,
       name: event.name,
       venue: event.venue.name,
@@ -76,11 +95,13 @@ export default class EventsTicket extends Component {
 
   _renderItem = ({item, _index}) => {
     const {
-      navigation: {navigate},
+      navigation: {navigate, state: {params: {qrEnabled}}},
       screenProps: {store: {redeemTicketInfo}},
     } = this.props
 
-    return <Ticket ticket={item} navigate={navigate} redeemTicketInfo={redeemTicketInfo} />
+    console.log(this.props)
+
+    return <Ticket qrEnabled={qrEnabled} ticket={item} navigate={navigate} redeemTicketInfo={redeemTicketInfo} />
   }
 
   render() {

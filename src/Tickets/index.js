@@ -38,12 +38,12 @@ AnimatedTicket.propTypes = {
   springValue: PropTypes.object.isRequired,
 }
 
-const Ticket = ({navigate, ticket}) => {
+const Ticket = ({navigate, ticket, qrEnabled}) => {
   const {event, tickets} = ticket
 
   return (
     <View>
-      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets', {eventId: event.id})}>
+      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets', {eventId: event.id, qrEnabled})}>
         <View style={ticketStyles.ticketContainer}>
           <Image
             style={ticketStyles.eventImage}
@@ -93,7 +93,7 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket}) => {
+const TicketsView = ({qrEnabled, emptyText, tickets, navigate, springValue, purchasedTicket}) => {
   if (!tickets.length) {
     return <EmptyTickets text={emptyText} />
   }
@@ -106,7 +106,7 @@ const TicketsView = ({emptyText, tickets, navigate, springValue, purchasedTicket
         ticket={ticket}
         springValue={springValue}
       /> :
-      <Ticket key={ticket.event.name} navigate={navigate} ticket={ticket} />
+      <Ticket {...{navigate, qrEnabled}} key={ticket.event.name} ticket={ticket} />
   ))
 }
 
@@ -205,6 +205,7 @@ export default class MyTickets extends Component {
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
               purchasedTicket={purchasedTicket}
+              qrEnabled={this.state.activeTab === 'upcoming'}
             />
           </View>
 
