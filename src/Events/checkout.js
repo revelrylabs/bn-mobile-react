@@ -106,7 +106,7 @@ export default class Checkout extends Component {
     } else {
       return (
         <View style={styles.flexRowFlexStart}>
-          <Text>Please enter your payment information</Text>
+          <Text style={checkoutStyles.ticketSubHeaderPink}>Please enter your payment information</Text>
         </View>
       )
     }
