@@ -1,5 +1,5 @@
 import {Container} from 'unstated'
-import {server, apiErrorAlert} from '../constants/Server'
+import {server, apiErrorAlert, defaultEventSort} from '../constants/Server'
 import {baseURL} from '../constants/config'
 import {DateTime} from 'luxon'
 
@@ -63,7 +63,10 @@ class EventsContainer extends Container {
 
   getEvents = async (_location = null) => {
     try {
-      const [{data}, ..._rest] = await Promise.all([server.events.index(), this.fetchLocations()])
+      const [{data}, ..._rest] = await Promise.all([
+        server.events.index(defaultEventSort),
+        this.fetchLocations(),
+      ])
 
       data.data.forEach((event) => {
         if (!event.promo_image_url) {
