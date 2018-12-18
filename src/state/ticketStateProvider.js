@@ -13,9 +13,7 @@ class TicketsContainer extends Container {
       tickets: [],
       ticketsByEventId: {},
       purchasedTicket: null,
-    };
-
-    this.userTickets()
+    }
   }
 
   // Grabbing tickets from orders right now - not preserving any order-level details

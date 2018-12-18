@@ -1,123 +1,132 @@
 import {Container} from 'unstated'
 import {server, apiErrorAlert} from '../constants/Server'
 
+function itemIsTicket({item_type: type}) {
+  return type === 'Tickets'
+}
+
+function sumUnitPrices(items) {
+  return items.reduce((sum, {unit_price_in_cents: unitPrice}) => sum + unitPrice, 0)
+}
+
 /**
  *  Right now, this only does one ticket type for one event
  *  Will require some refactoring if purchasing ever evolve to involve
  *  muliple items ofdifferent types in one cart
  **/
 
-
-/* eslint-disable camelcase,space-before-function-paren,complexity */
+/* eslint-disable camelcase */
 class CartContainer extends Container {
-  constructor(props = {}) {
-    super(props);
-
+  async _resetState() {
     this.state = {
-      id: null, // Cart ID
+      isReady: false,
       ticketTypeId: null,
-      quantity: 1,
-      items: [],
-      total_in_cents: 0,
-      seconds_until_expiry: null,
-      selectedPaymentDetails: {},
+      response: null,
+      payment: null,
     }
   }
 
-  setPayment = async (selectedPaymentDetails) => {
-    this.setState({selectedPaymentDetails})
+  constructor() {
+    super()
+    this._resetState()
   }
 
-  selectTicket = async (ticketTypeId, _ticketPricingId) => {
-    // Dont preserve existing tickets - we dont do multi-ticket carts in mobile
-    if (this.state.ticketTypeId && ticketTypeId !== this.state.ticketTypeId) {
-      await this.updateQuantity(0)
-    }
+  get response() {
+    return this.state.response
+  }
 
-    this.setState((state) => {
-      return {
-        ticketTypeId,
-        quantity: state.quantity < 1 ? 1 : state.quantity,
-      }
-    }, async () => {
-      await this.updateCart()
+  get data() {
+    return this.response.data
+  }
+
+  get id() {
+    return this.data.id
+  }
+
+  get ticketTypeId() {
+    return this.state.ticketTypeId
+  }
+
+  get isReady() {
+    return this.state.isReady
+  }
+
+  get items() {
+    return this.data.items
+  }
+
+  get tickets() {
+    return this.items.filter(itemIsTicket)
+  }
+
+  get fees() {
+    return this.items.filter(x => !itemIsTicket(x))
+  }
+
+  get selectedTicket() {
+    return this.tickets[0]
+  }
+
+  get quantity() {
+    return this.selectedTicket.quantity
+  }
+
+  async addQuantity(x) {
+    return await this.setQuantity(this.quantity + x)
+  }
+
+  get ticketsCents() {
+    return sumUnitPrices(this.tickets)
+  }
+
+  get feesCents() {
+    return sumUnitPrices(this.fees)
+  }
+
+  get totalCents() {
+    return this.data.total_in_cents
+  }
+
+  async _delete() {
+    if (this.ticketTypeId && this.isReady) {
+      await server.cart.delete(this.ticketTypeId)
+    }
+    await this._resetState()
+  }
+
+  async setQuantity(quantity) {
+    const params = {items: [{ticket_type_id: this.ticketTypeId, quantity}]}
+    const response =  await server.cart.update(params)
+
+    await this.setState({response, isReady: true})
+
+    return response
+  }
+
+  async setTicketType(ticketTypeId) {
+    await this.setState({ticketTypeId})
+    return await this.setQuantity(1)
+  }
+
+  async setPayment(payment) {
+    return await this.setState({payment})
+  }
+
+  get payment() {
+    return this.state.payment
+  }
+
+  async placeOrder() {
+    await server.cart.checkout({
+      amount: this.totalCents,
+      method: {
+        type: 'Card',
+        provider: 'stripe',
+        token: this.payment.id,
+        save_payment_method: false,
+        set_default: false,
+      },
     })
-  }
-
-  updateQuantity = async (quantity) => {
-    this.setState({quantity}, async () => {
-      await this.updateCart()
-    })
-  }
-
-  updateCart = async () => {
-    const items = [{
-      ticket_type_id: this.state.ticketTypeId,
-      quantity: this.state.quantity,
-    }]
-
-    try {
-      const response = await server.cart.update({items})
-      const {data} = response;
-
-      if (data) {
-        this.replaceCartData(data);
-      }
-    } catch (error) {
-      apiErrorAlert(error, 'There was a problem updating your cart.')
-    }
-  }
-
-  refreshCart = async () => {
-    try {
-      const response = await server.cart.read()
-      const {data} = response;
-
-      if (data) {
-        this.replaceCartData(data);
-      }
-    } catch (error) {
-      apiErrorAlert(error, 'Loading cart details failed.')
-    }
-  }
-
-  replaceCartData = async (data) => {
-    const {id, items, total_in_cents, seconds_until_expiry} = data
-
-    this.setState({id, items, total_in_cents, seconds_until_expiry})
-  }
-
-  emptyCart = async () => {
-    // @TODO: delete from cart using API first
-    this.setState({
-      items: [],
-      id: null,
-      total_in_cents: 0,
-    })
-  }
-
-  placeOrder = async (onSuccess) => {
-    try {
-
-      const _resp = await server.cart.checkout({
-        amount: this.state.total_in_cents, // @TODO: remove this amount, we shouldn't be specifying it on the frontend
-        method: {
-          type: 'Card',
-          provider: 'stripe',
-          token: this.state.selectedPaymentDetails.id,
-          save_payment_method: false,
-          set_default: false,
-        },
-      })
-
-      await this.setState({selectedPaymentDetails: {}})
-      onSuccess()
-
-      return true
-    } catch (error) {
-      this.setState({selectedPaymentDetails: {}})
-      apiErrorAlert(error, 'There was an error checking out.')
-    }
   }
 }
 

@@ -6,6 +6,22 @@ import {View} from 'react-native';
 import {Video, Asset, AppLoading} from 'expo';
 import navigator from './src/navigators/navigator'
 import SharedStyles from './src/styles/shared/sharedStyles'
+import {EventsContainer} from './src/state/eventStateProvider'
+import {TicketsContainer} from './src/state/ticketStateProvider'
+import {CartContainer} from './src/state/cartStateProvider'
+import {AuthContainer} from './src/state/authStateProvider'
+
+const CONTAINERS = {}
+
+function addContainer(key, klass, ...args) {
+  CONTAINERS[key] = new klass(...args)
+  CONTAINERS[key].containers = CONTAINERS
+}
+
+addContainer('events', EventsContainer)
+addContainer('tickets', TicketsContainer)
+addContainer('cart', CartContainer)
+addContainer('auth', AuthContainer)
 
 const styles = SharedStyles.createStyles()
 const cacheSplashResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
@@ -62,6 +78,10 @@ export default class App extends Component {
       );
     }
 
-    return <Provider>{createElement(navigator)}</Provider>
+    return (
+      <Provider inject={Object.keys(CONTAINERS).map(key => CONTAINERS[key])}>
+        {createElement(navigator)}
+      </Provider>
+    )
   }
 }
