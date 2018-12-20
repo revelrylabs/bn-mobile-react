@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Linking, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
-import { Constants, WebBrowser } from 'expo';
+import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import {WebBrowser} from 'expo';
 import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -12,7 +12,7 @@ import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
 import {toDollars} from '../constants/money'
-import {flatMap, min, max, isEmpty, some, uniq} from 'lodash'
+import {min, max, isEmpty, some, uniq} from 'lodash'
 
 
 const styles = SharedStyles.createStyles()
@@ -23,10 +23,10 @@ const modalStyles = ModalStyles.createStyles()
 function priceRangeString(ticket_types) {
   const prices = ticket_types
     .map(({ticket_pricing: pricing}) => pricing)
-    .filter(pricing => pricing !== null)
+    .filter((pricing) => pricing !== null)
     .map(({price_in_cents: cents}) => cents)
 
-  return uniq([min(prices), max(prices)]).map(cents => `$${toDollars(cents)}`).join(' - ')
+  return uniq([min(prices), max(prices)]).map((cents) => `$${toDollars(cents)}`).join(' - ')
 }
 
 
@@ -125,7 +125,7 @@ export default class EventShow extends Component {
   clearEvent() {
     const {screenProps: {store}} = this.props
 
-    store.clearEvent()
+    store.clearEvent() // @TODO: Test this more - old events still in pop up.
   }
 
   async loadEvent() {
@@ -139,11 +139,6 @@ export default class EventShow extends Component {
 
   scrollToTop = () => {
     this.refComponent.scrollToOffset({offset: 0, animated: true});
-  }
-
-  toggleFavorite = (favorite) => {
-
-    this.setState({favorite})
   }
 
   changeScreen = (currentScreen) => {
@@ -182,6 +177,18 @@ export default class EventShow extends Component {
     )
   }
 
+  onPromoApply = async (promoCode = '') => {
+    if (promoCode === '') {
+      alert('You must enter a promotional code.')
+      return true
+    }
+
+    const {screenProps: {cart}} = this.props
+
+    cart.applyPromo(promoCode, () => { this.changeScreen('checkout') })
+
+  }
+
   onTicketSelection = async (ticketTypeId, ticketPricingId) => {
     const {screenProps: {cart}} = this.props
 
@@ -197,10 +204,10 @@ export default class EventShow extends Component {
       screenProps: {
         store: {toggleInterest},
         cart: {
-          state: {selectedPaymentDetails}
+          state: {selectedPaymentDetails},
         },
-        user: {access_token, refresh_token}
-      }
+        user: {access_token, refresh_token},
+      },
     } = this.props
 
     if (!event || isEmpty(event)) {
@@ -213,7 +220,14 @@ export default class EventShow extends Component {
     case 'details':
       return <Details event={event} onInterested={toggleInterest} />
     case 'tickets':
-      return <GetTickets event={event} onTicketSelection={this.onTicketSelection} changeScreen={this.changeScreen} />
+      return (
+        <GetTickets
+          event={event}
+          onTicketSelection={this.onTicketSelection}
+          changeScreen={this.changeScreen}
+          onPromoApply={this.onPromoApply}
+        />
+      )
     case 'checkout':
       return (
         <Checkout
@@ -237,37 +251,39 @@ export default class EventShow extends Component {
     }
   }
 
-  get getDetailPageButtonCta() {
-    const {event,currentScreen} = this.state
-    switch(event.override_status){
-      case 'PurchaseTickets':
-        return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
-      case 'SoldOut':
-        return {ctaText: 'Sold Out', enabled: (event.is_external ? false : true)}
-      case 'OnSaleSoon':
-        return {ctaText: 'On Sale Soon', enabled: (event.is_external ? false : true)}
-      case 'TicketsAtTheDoor':
-        return {ctaText: 'Tickets At The Door', enabled: (event.is_external ? false : true)}
-      case 'UseAccessCode':
-        return {ctaText: (!event.is_external ? 'Use Access Code' : 'Get Tickets via Web'), enabled: true}
-      case 'Free':
-        return {ctaText: (!event.is_external ? 'Free' : 'Free via Web'), enabled: true}
-      case 'Rescheduled':
-        return {ctaText: 'Rescheduled', enabled: false}
-      case 'Cancelled':
-        return {ctaText: 'Cancelled', enabled: false}
-      case 'OffSale':
-        return {ctaText: 'Off-Sale', enabled: false}
-      case 'Ended':
-        return {ctaText: 'Sale Ended', enabled: false}
-      default:
-        return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
+  get getDetailPageButtonCta() { // eslint-disable-line complexity
+    const {event, currentScreen} = this.state
+
+    switch (event.override_status) {
+    case 'PurchaseTickets':
+      return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
+    case 'SoldOut':
+      return {ctaText: 'Sold Out', enabled: (event.is_external ? false : true)}
+    case 'OnSaleSoon':
+      return {ctaText: 'On Sale Soon', enabled: (event.is_external ? false : true)}
+    case 'TicketsAtTheDoor':
+      return {ctaText: 'Tickets At The Door', enabled: (event.is_external ? false : true)}
+    case 'UseAccessCode':
+      return {ctaText: (!event.is_external ? 'Use Access Code' : 'Get Tickets via Web'), enabled: true}
+    case 'Free':
+      return {ctaText: (!event.is_external ? 'Free' : 'Free via Web'), enabled: true}
+    case 'Rescheduled':
+      return {ctaText: 'Rescheduled', enabled: false}
+    case 'Cancelled':
+      return {ctaText: 'Cancelled', enabled: false}
+    case 'OffSale':
+      return {ctaText: 'Off-Sale', enabled: false}
+    case 'Ended':
+      return {ctaText: 'Sale Ended', enabled: false}
+    default:
+      return {ctaText: (!event.is_external ? 'Purchase Tickets' : 'Get Tickets via Web'), enabled: true}
     }
   }
 
-  get getTickets() {
-    const {event,currentScreen} = this.state
+  get getTickets() { // eslint-disable-line complexity
+    const {event, currentScreen} = this.state
     const {ctaText, enabled} = this.getDetailPageButtonCta
+
     if (currentScreen === 'details' && this.canBuyTickets) {
       return (
         <View style={eventDetailsStyles.fixedFooter}>

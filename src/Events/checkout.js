@@ -6,7 +6,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {DateTime} from 'luxon'
-import {isEmpty, includes} from 'lodash'
+import {isEmpty, includes, some, find} from 'lodash'
 import {toDollars} from '../constants/money'
 
 const styles = SharedStyles.createStyles()
@@ -112,12 +112,16 @@ export default class Checkout extends Component {
     }
   }
 
-  cartItemInCents(itemType, exact = true) {
+  cartItemsByType(itemType, exact = true) {
     const {cart: {state: {items}}} = this.props
 
     return (items || [])
       // just the tickets
       .filter(({item_type}) => exact ? item_type === itemType : includes(item_type, itemType))
+  }
+
+  cartItemInCents(itemType, exact = true) {
+    return this.cartItemsByType(itemType, exact)
       // as their prices
       .map(({quantity, unit_price_in_cents}) => unit_price_in_cents * quantity)
       // summed
@@ -138,9 +142,60 @@ export default class Checkout extends Component {
     return toDollars(this.cartItemInCents('Fees', false), 2)
   }
 
-  render() {
+  get usedPromo() {
+    // Is there a ticket item in the cart with a promo code?
+    return some(this.cartItemsByType('Tickets'), (ticket) => !!ticket.redemption_code)
+  }
+
+  get promoTicket() {
+    return find(this.cartItemsByType('Tickets'), (ticket) => !!ticket.redemption_code)
+  }
+
+  get ticketModify() {
     const {selectedTicket} = this.state
-    const {event, cart: {state: {quantity}}} = this.props
+    const {cart: {state: {quantity}}} = this.props
+
+    if (this.usedPromo) {
+      const promoTicket = this.promoTicket
+
+      return (
+        <View style={checkoutStyles.rowContainer}>
+          <View style={checkoutStyles.row}>
+            <View>
+              <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Promotional Code</Text>
+              <Text style={checkoutStyles.ticketSubHeader}>{promoTicket.description}</Text>
+              <Text style={checkoutStyles.ticketSubHeader}>Code: {promoTicket.redemption_code}</Text>
+              <Text style={checkoutStyles.ticketSubHeader}>Quantity: {promoTicket.quantity}</Text>
+            </View>
+          </View>
+        </View>
+      )
+    } else {
+      return (
+        <View style={checkoutStyles.rowContainer}>
+          <View style={checkoutStyles.row}>
+            <View>
+              <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
+              <Text style={checkoutStyles.ticketSubHeader}>{selectedTicket.name}</Text>
+            </View>
+          </View>
+          <View style={checkoutStyles.row}>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.decrementTickets()}>
+              <Icon style={this.decrementStyle} name="remove-circle" />
+            </TouchableHighlight>
+            <Text style={checkoutStyles.quantityPrice}>{quantity}</Text>
+            <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.incrementTickets()}>
+              <Icon style={this.incrementStyle} name="add-circle" />
+            </TouchableHighlight>
+          </View>
+        </View>
+      )
+    }
+  }
+
+  render() {
+
+    const {event} = this.props
     const eventTime = DateTime.fromISO(event.event_start)
 
     return (
@@ -151,23 +206,7 @@ export default class Checkout extends Component {
             <Text style={checkoutStyles.header}>Checkout</Text>
           </View>
 
-          <View style={checkoutStyles.rowContainer}>
-            <View style={checkoutStyles.row}>
-              <View>
-                <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>{selectedTicket.name}</Text>
-              </View>
-            </View>
-            <View style={checkoutStyles.row}>
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.decrementTickets()}>
-                <Icon style={this.decrementStyle} name="remove-circle" />
-              </TouchableHighlight>
-              <Text style={checkoutStyles.quantityPrice}>{quantity}</Text>
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.incrementTickets()}>
-                <Icon style={this.incrementStyle} name="add-circle" />
-              </TouchableHighlight>
-            </View>
-          </View>
+          {this.ticketModify}
 
           <View style={checkoutStyles.rowContainer}>
             <View style={checkoutStyles.row}>

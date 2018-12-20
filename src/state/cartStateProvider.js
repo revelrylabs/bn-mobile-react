@@ -21,7 +21,14 @@ class CartContainer extends Container {
       total_in_cents: 0,
       seconds_until_expiry: null,
       selectedPaymentDetails: {},
+      redemption_code: null,
     }
+  }
+
+  applyPromo = async (redemption_code, onSuccess) => {
+    await this.updateQuantity(0)
+    await this.setState({redemption_code})
+    await this.replaceCart(true, onSuccess)
   }
 
   setPayment = async (selectedPaymentDetails) => {
@@ -34,35 +41,54 @@ class CartContainer extends Container {
       await this.updateQuantity(0)
     }
 
-    this.setState((state) => {
+    await this.setState((state) => {
       return {
         ticketTypeId,
         quantity: state.quantity < 1 ? 1 : state.quantity,
       }
-    }, async () => {
-      await this.updateCart()
     })
+    await this.replaceCart()
   }
 
   updateQuantity = async (quantity) => {
-    this.setState({quantity}, async () => {
-      await this.updateCart()
-    })
+    await this.setState({quantity})
+    await this.updateCart()
   }
 
-  updateCart = async () => {
-    const items = [{
+  cartItems(promoOnly) {
+    return promoOnly ? [] : [{
       ticket_type_id: this.state.ticketTypeId,
       quantity: this.state.quantity,
     }]
+  }
+
+  updateCart = async (promoOnly = false) => {
+    const items = this.cartItems(promoOnly)
 
     try {
-      const response = await server.cart.update({items})
+      const response = await server.cart.update({items, redemption_code: this.state.redemption_code})
       const {data} = response;
 
       if (data) {
         this.replaceCartData(data);
       }
+    } catch (error) {
+      apiErrorAlert(error, 'There was a problem updating your cart.')
+    }
+  }
+
+  replaceCart = async (promoOnly = false, onSuccess = () => {}) => {
+    const items = this.cartItems(promoOnly)
+
+    try {
+      const response = await server.cart.replace({items, redemption_code: this.state.redemption_code})
+      const {data} = response;
+
+      if (data) {
+        await this.replaceCartData(data);
+      }
+
+      onSuccess()
     } catch (error) {
       apiErrorAlert(error, 'There was a problem updating your cart.')
     }
@@ -93,6 +119,7 @@ class CartContainer extends Container {
       items: [],
       id: null,
       total_in_cents: 0,
+      redemption_code: null,
     })
   }
 

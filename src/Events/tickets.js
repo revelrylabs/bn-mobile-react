@@ -1,21 +1,26 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight, Image} from 'react-native'
+import {Text, View, TouchableHighlight, Image, TextInput} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
+import FormStyles from '../styles/shared/formStyles'
+import SharedStyles from '../styles/shared/sharedStyles'
 import emptyState from '../../assets/icon-empty-state.png'
 import {toDollars} from '../constants/money'
+import {autotrim} from '../string'
 
+const styles = SharedStyles.createStyles()
+const formStyles = FormStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
 
-function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
-  if (a === null && b == null) {
+function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) { // eslint-disable-line complexity
+  if (a === null && b === null) {
     return 0
   }
   if (a === null) {
@@ -87,7 +92,16 @@ function NoAvailableTickets() {
 export default class GetTickets extends Component {
   static propTypes = {
     onTicketSelection: PropTypes.func,
+    onPromoApply: PropTypes.func,
     event: PropTypes.object,
+  }
+
+  state = {
+    promoCode: '',
+  }
+
+  handlePromoSubmit = () => {
+    this.props.onPromoApply(this.state.promoCode)
   }
 
   get hasTickets() {
@@ -97,37 +111,43 @@ export default class GetTickets extends Component {
   get ticketList() {
     const {onTicketSelection, event: {ticket_types}} = this.props
 
-    return ticket_types.sort(ticketComparator).map(ticket => (
+    return ticket_types.sort(ticketComparator).map((ticket) => (
       <Ticket key={ticket.id} ticket={ticket} onTicketSelection={onTicketSelection} />
     ))
   }
 
-  render() {
-    const hasTickets = this.props.event
+  get hasTicketDisplay() {
+    return (
+      <View>
+        <View style={checkoutStyles.headerWrapper}>
+          <Text style={checkoutStyles.header}>Ticket Type</Text>
+        </View>
+        {this.ticketList}
+        <View style={checkoutStyles.rowContainer}>
+          <Text style={checkoutStyles.ticketHeader}>Promo Code</Text>
+        </View>
+        <View>
+          <TextInput
+            style={formStyles.input}
+            placeholder="Enter a Promo Code"
+            onChangeText={autotrim((promoCode) => this.setState({promoCode}))}
+          />
+        </View>
+        <View>
+          <TouchableHighlight style={styles.flexColumnCenter} onPress={this.handlePromoSubmit}>
+            <Text style={styles.buttonSecondaryText}>Apply Promo</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    )
+  }
 
+  render() {
     return (
       <View style={checkoutStyles.mainBody}>
         <View style={checkoutStyles.mainBodyContent}>
 
-          {this.hasTickets ? (
-            <View style={checkoutStyles.headerWrapper}>
-              <Text style={checkoutStyles.header}>Ticket Type</Text>
-            </View>
-          ) : null}
-
-          {this.hasTickets ? (
-            this.ticketList
-          ) : (
-            <View style={ticketStyles.emptyStateContainer}>
-              <Image
-                style={ticketStyles.emptyStateIcon}
-                source={emptyState}
-              />
-              <Text style={ticketStyles.emptyStateText}>
-                Looks like there are no tickets available at this time.
-              </Text>
-            </View>
-          )}
+          {this.hasTickets ? this.hasTicketDisplay : <NoAvailableTickets />}
 
         </View>
       </View>
