@@ -92,6 +92,11 @@ function CheckoutButton({onCheckout, disabled}) {
   )
 }
 
+CheckoutButton.propTypes = {
+  onCheckout: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+}
+
 export default class EventShow extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
@@ -185,8 +190,11 @@ export default class EventShow extends Component {
 
     const {screenProps: {cart}} = this.props
 
-    cart.applyPromo(promoCode, () => { this.changeScreen('checkout') })
+    cart.applyPromo(promoCode, () => {
+      this.changeScreen('checkout')
+    })
 
+    return null
   }
 
   onTicketSelection = async (ticketTypeId, ticketPricingId) => {
@@ -252,7 +260,7 @@ export default class EventShow extends Component {
   }
 
   get getDetailPageButtonCta() { // eslint-disable-line complexity
-    const {event, currentScreen} = this.state
+    const {event} = this.state
 
     switch (event.override_status) {
     case 'PurchaseTickets':
@@ -280,6 +288,12 @@ export default class EventShow extends Component {
     }
   }
 
+  onShowTicket = (event) => {
+    return event.is_external ? () => {
+      WebBrowser.openBrowserAsync(event.external_url)
+    } : () => this.changeScreen('tickets')
+  }
+
   get getTickets() { // eslint-disable-line complexity
     const {event, currentScreen} = this.state
     const {ctaText, enabled} = this.getDetailPageButtonCta
@@ -291,9 +305,7 @@ export default class EventShow extends Component {
           <View style={styles.buttonContainer}>
             <TouchableHighlight
               style={enabled ? styles.button : styles.buttonDisabled}
-              onPress={enabled ? (event.is_external ? () => {
-                WebBrowser.openBrowserAsync(event.external_url)
-              } : () => this.changeScreen('tickets')) : null}
+              onPress={enabled ? this.onShowTicket(event) : null}
             >
               <Text style={styles.buttonText}>{ctaText}</Text>
             </TouchableHighlight>
@@ -351,6 +363,7 @@ export default class EventShow extends Component {
       navigate('MyTickets')
     }, 3000)
 
+    return null
   }
 
 

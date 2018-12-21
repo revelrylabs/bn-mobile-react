@@ -1,19 +1,16 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, TouchableHighlight, Image, TextInput} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import AccountStyles from '../styles/account/accountStyles'
+import {Ticket} from './event_ticket';
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import FormStyles from '../styles/shared/formStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
 import emptyState from '../../assets/icon-empty-state.png'
-import {toDollars} from '../constants/money'
 import {autotrim} from '../string'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
-const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
@@ -30,49 +27,6 @@ function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) { // eslint-
     return -1
   }
   return b - a
-}
-
-class Ticket extends Component {
-  getOnPressHandler() {
-    const {ticket, onTicketSelection} = this.props
-
-    return ticket.ticket_pricing && (() => onTicketSelection(ticket.id, ticket.ticket_pricing.id))
-  }
-
-  get priceContent() {
-    const {ticket_pricing} = this.props.ticket
-
-    return ticket_pricing ? `$${toDollars(ticket_pricing.price_in_cents)}` : "N/A"
-  }
-
-  get subHeaderContent() {
-    const {ticket_pricing} = this.props.ticket
-
-    return ticket_pricing ? ticket_pricing.name : "SOLD OUT"
-  }
-
-  get icon() {
-    return this.props.ticket.ticket_pricing && (
-      <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-    )
-  }
-
-  render() {
-    return (
-      <TouchableHighlight key={this.props.ticket.id} onPress={this.getOnPressHandler()}>
-        <View style={checkoutStyles.rowContainer}>
-          <View style={checkoutStyles.row}>
-            <Text style={checkoutStyles.ticketPrice}>{this.priceContent}</Text>
-            <View>
-              <Text style={checkoutStyles.ticketHeader}>{this.props.ticket.name}</Text>
-              <Text style={checkoutStyles.ticketSubHeader}>{this.subHeaderContent}</Text>
-            </View>
-          </View>
-          {this.icon}
-        </View>
-      </TouchableHighlight>
-    )
-  }
 }
 
 function NoAvailableTickets() {

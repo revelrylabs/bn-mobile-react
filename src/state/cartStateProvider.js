@@ -26,8 +26,7 @@ class CartContainer extends Container {
   }
 
   applyPromo = async (redemption_code, onSuccess) => {
-    await this.updateQuantity(0)
-    await this.setState({redemption_code})
+    await this.setState({redemption_code, quantity: 1})
     await this.replaceCart(true, onSuccess)
   }
 
