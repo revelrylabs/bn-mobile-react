@@ -86,7 +86,7 @@ export default class GetTickets extends Component {
           />
           <View style={styles.buttonContainer}>
             <TouchableHighlight
-              underlayColor="rgba(0, 0, 0, 0)"
+              underlayColor="rgba(255, 34, 178, 0.2)"
               onPress={this.handlePromoSubmit}
               style={checkoutStyles.buttonSecondary}
             >
