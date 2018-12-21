@@ -123,10 +123,8 @@ export default class GetTickets extends Component {
           <Text style={checkoutStyles.header}>Ticket Type</Text>
         </View>
         {this.ticketList}
-        <View style={checkoutStyles.rowContainer}>
-          <Text style={checkoutStyles.ticketHeader}>Promo Code</Text>
-        </View>
-        <View>
+        <View style={styles.container}>
+          <Text style={[checkoutStyles.ticketHeader, styles.paddingBottom]}>Promo Code</Text>
           <TextInput
             style={formStyles.input}
             placeholder="Enter a Promo Code"
