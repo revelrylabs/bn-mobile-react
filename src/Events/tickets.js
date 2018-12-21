@@ -130,11 +130,15 @@ export default class GetTickets extends Component {
             placeholder="Enter a Promo Code"
             onChangeText={autotrim((promoCode) => this.setState({promoCode}))}
           />
-        </View>
-        <View>
-          <TouchableHighlight style={styles.flexColumnCenter} onPress={this.handlePromoSubmit}>
-            <Text style={styles.buttonSecondaryText}>Apply Promo</Text>
-          </TouchableHighlight>
+          <View style={styles.buttonContainer}>
+            <TouchableHighlight
+              underlayColor="rgba(0, 0, 0, 0)"
+              onPress={this.handlePromoSubmit}
+              style={checkoutStyles.buttonSecondary}
+            >
+              <Text style={styles.buttonSecondaryText}>Apply Promo Code</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
     )

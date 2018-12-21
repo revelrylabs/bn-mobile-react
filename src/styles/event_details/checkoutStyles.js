@@ -178,6 +178,15 @@ const CheckoutStyles = {
     marginHorizontal: globalMargin,
     marginBottom: globalPaddingLarge,
   },
+  buttonSecondary: {
+    backgroundColor: 'transparent',
+    borderColor: primaryColor,
+    borderRadius: 4,
+    borderWidth: 1,
+    flex: 1,
+    height: 40,
+    justifyContent: 'center',
+  },
 }
 
 function createStyles(overrides = {}) {
