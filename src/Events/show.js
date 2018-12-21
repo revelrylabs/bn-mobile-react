@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight} from 'react-native'
+import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight, KeyboardAvoidingView, Platform} from 'react-native'
 import {WebBrowser} from 'expo';
 import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -421,10 +421,11 @@ export default class EventShow extends Component {
           style={eventDetailsStyles.videoBkgd}
           source={{uri: event.promo_image_url}}
         />
-
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {this.showScreen}
-        </ScrollView>
+        <KeyboardAvoidingView behavior="position" enabled>
+          <ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+            {this.showScreen}
+          </ScrollView>
+        </KeyboardAvoidingView>
 
         <View style={eventDetailsStyles.backArrowWrapper}>
           {this.backArrow}
