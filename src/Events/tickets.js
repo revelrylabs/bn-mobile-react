@@ -80,12 +80,14 @@ export default class GetTickets extends Component {
         <View style={styles.container}>
           <Text style={[checkoutStyles.ticketHeader, styles.paddingBottom]}>Promo Code</Text>
           <TextInput
+            keyboardShouldPersistTaps='always'
             style={formStyles.input}
             placeholder="Enter a Promo Code"
             onChangeText={autotrim((promoCode) => this.setState({promoCode}))}
           />
           <View style={styles.buttonContainer}>
             <TouchableHighlight
+              keyboardShouldPersistTaps='always'
               underlayColor="rgba(0, 0, 0, 0)"
               onPress={this.handlePromoSubmit}
               style={checkoutStyles.buttonSecondary}
