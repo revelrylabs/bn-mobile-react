@@ -79,6 +79,19 @@ SuccessScreen.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
 }
 
+function CheckoutButton({onCheckout, disabled}) {
+  return (
+    <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
+      <TouchableHighlight
+        style={disabled ? styles.buttonDisabled : styles.button}
+        onPress={disabled ? null : onCheckout}
+      >
+        <Text style={styles.buttonText}>Purchase Ticket</Text>
+      </TouchableHighlight>
+    </View>
+  )
+}
+
 export default class EventShow extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
@@ -270,22 +283,16 @@ export default class EventShow extends Component {
   }
 
   get purchaseTicketButton() {
-    const {currentScreen} = this.state
-    
-    if (currentScreen === 'checkout') {
-      return (
-        <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={this.purchaseTicket}
-          >
-            <Text style={styles.buttonText}>Purchase Ticket</Text>
-          </TouchableHighlight>
-        </View>
-      )
+    if (this.state.currentScreen !== 'checkout') {
+      return null
     }
 
-    return null
+    return (
+      <CheckoutButton
+        onCheckout={this.purchaseTicket}
+        disabled={isEmpty(this.props.screenProps.cart.state.selectedPaymentDetails)}
+      />
+    )
   }
 
   purchaseTicket = async () => {
