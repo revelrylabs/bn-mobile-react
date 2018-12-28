@@ -23,6 +23,8 @@ addContainer('tickets', TicketsContainer)
 addContainer('cart', CartContainer)
 addContainer('auth', AuthContainer)
 
+const CONTAINERS_TO_INJECT = Object.keys(CONTAINERS).map(key => CONTAINERS[key])
+
 const styles = SharedStyles.createStyles()
 const cacheSplashResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
   const video = require('./splash.mp4')
@@ -79,7 +81,7 @@ export default class App extends Component {
     }
 
     return (
-      <Provider inject={Object.keys(CONTAINERS).map(key => CONTAINERS[key])}>
+      <Provider inject={CONTAINERS_TO_INJECT}>
         {createElement(navigator)}
       </Provider>
     )

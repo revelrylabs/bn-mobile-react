@@ -30,18 +30,10 @@ export default class Checkout extends Component {
     cart: PropTypes.object,
   }
 
-  canAddQuantity(diff) {
-    const quantity = this.props.cart.quantity + diff
-    const {available, limit_per_person: limit} = this.ticketType
-    const upperBound = limit ? limit : available
-
-    return quantity > 0 && quantity <= upperBound
-  }
-
   createQuantityButton(diff, icon) {
     return (
       <ChangeQuantityButton
-        enabled={this.canAddQuantity(diff)}
+        enabled={this.props.cart.canAddQuantity(diff)}
         onPress={() => this.props.cart.addQuantity(diff)}
         icon={icon}
         enabledStyle={checkoutStyles.removeIcon}

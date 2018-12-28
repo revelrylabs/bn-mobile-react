@@ -47,6 +47,25 @@ class CartContainer extends Container {
     return this.state.ticketTypeId
   }
 
+  get event() {
+    return this.containers.events.selectedEvent
+  }
+
+  get ticketType() {
+    return this.event.ticket_types.find(({id}) => id === this.ticketTypeId)
+  }
+
+  get eventTicketsThatWereAlreadyPurchased() {
+    console.log('tickets state', this.containers.tickets.ticketsForEvent(this.event.id))
+    return this.containers.tickets.ticketsForEvent(this.event.id)
+  }
+
+  get quantityAlreadyPurchased() {
+    const tix = this.eventTicketsThatWereAlreadyPurchased
+    console.log('tix', tix)
+    return 0
+  }
+
   get isReady() {
     return this.state.isReady
   }
@@ -69,6 +88,22 @@ class CartContainer extends Container {
 
   get quantity() {
     return this.selectedTicket.quantity
+  }
+
+  get limitPerCustomer() {
+    const {limit_per_person: limit, available} = this.ticketType
+    return limit ? Math.min(limit, available) : available
+  }
+
+  get limitForCart() {
+    return Math.max(this.quantity, this.limitPerCustomer - this.quantity)
+  }
+
+  canAddQuantity(x) {
+    const foo = this.quantityAlreadyPurchased
+    const quantity = this.quantity + x
+
+    return quantity > 0 && quantity <= this.limitForCart
   }
 
   async addQuantity(x) {
@@ -96,7 +131,10 @@ class CartContainer extends Container {
 
   async setQuantity(quantity) {
     const params = {items: [{ticket_type_id: this.ticketTypeId, quantity}]}
-    const response =  await server.cart.update(params)
+    const [response, _] =  await Promise.all([
+      server.cart.update(params),
+      this.containers.tickets.userTickets(),
+    ])
 
     await this.setState({response, isReady: true})
 

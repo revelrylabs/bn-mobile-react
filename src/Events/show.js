@@ -290,7 +290,7 @@ export default class EventShow extends Component {
     return (
       <CheckoutButton
         onCheckout={this.purchaseTicket}
-        disabled={isEmpty(this.props.screenProps.cart.state.selectedPaymentDetails)}
+        disabled={!this.props.screenProps.cart.payment}
       />
     )
   }
