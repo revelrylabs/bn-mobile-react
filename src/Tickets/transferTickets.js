@@ -3,13 +3,13 @@ import {PropTypes} from 'prop-types'
 import {Modal, ScrollView, Text, View, Image, TouchableHighlight, TextInput} from 'react-native';
 import CircleCheckBox from 'react-native-circle-checkbox'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import SharedStyles from '../styles/shared/sharedStyles'
+import SharedStyles, { backgroundColor } from '../styles/shared/sharedStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import TicketTransferStyles from '../styles/tickets/ticketTransferStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import FormStyles from '../styles/shared/formStyles'
-import {autotrim} from '../string'
+import {autotrim, pluralize} from '../string'
 
 const styles = SharedStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
@@ -79,12 +79,15 @@ export default class TransferTickets extends Component {
     return keys.filter((key) => checkboxes[key]);
   }
 
-  toggleCheck = (id) => {
-    return (checked) => {
-      const {checkboxes} = this.state
+  setChecked = (id, bool) => {
+    const checkboxes = {...this.state.checkboxes}
 
-      this.setState({checkboxes: {...checkboxes, [id]: checked}});
-    }
+    checkboxes[id] = bool
+    this.setState({checkboxes})
+  }
+
+  toggleCheck = (id) => {
+    return (checked) => this.setChecked(id, checked)
   }
 
   transferCount = () => {
@@ -139,9 +142,19 @@ export default class TransferTickets extends Component {
           </View>
 
           <View style={modalStyles.contentRoundedWrapper}>
+
+            <TextInput
+              keyboardType="email-address"
+              style={[formStyles.input, {backgroundColor: 'white'}]}
+              placeholder="Recipient email or phone"
+              searchIcon={{size: 24}}
+              underlineColorAndroid="transparent"
+              onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
+            />
+
             <ScrollView showsVerticalScrollIndicator={false}>
 
-              <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
+              <Text style={modalStyles.headerSecondary}>Select tickets to transfer</Text>
 
               {this.tickets.map(({id, ticket_type_name: name}) => (
                 <Card key={id}>
@@ -162,23 +175,12 @@ export default class TransferTickets extends Component {
                   </View>
                 </Card>
               ))}
-
-              <Card>
-                <TextInput
-                  keyboardType="email-address"
-                  style={formStyles.input}
-                  placeholder="Email or phone"
-                  searchIcon={{size: 24}}
-                  underlineColorAndroid="transparent"
-                  onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
-                />
-              </Card>
             </ScrollView>
           </View>
 
           <View style={[styles.buttonContainer, styles.marginHorizontal]}>
             <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]} onPress={this.transfer}>
-              <Text style={styles.buttonText}>Transfer {this.transferCount()} Tickets..</Text>
+              <Text style={styles.buttonText}>Transfer {pluralize(this.transferCount(), 'Ticket')}...</Text>
             </TouchableHighlight>
           </View>
 

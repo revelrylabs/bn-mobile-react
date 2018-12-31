@@ -3,3 +3,9 @@
 export function autotrim(fn) {
   return (value) => fn(typeof value === 'string' ? value.trim() : value)
 }
+
+export function pluralize(count, singular, plural = null) {
+  const noun = count === 1 ? singular : (plural || `${singular}s`)
+
+  return `${count} ${noun}`
+}
