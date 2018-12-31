@@ -127,20 +127,25 @@ export default class Ticket extends Component {
           ) : null}
         </View>
 
-        {false && // TODO: Re-enable when functionality is implemented.
         <View style={ticketWalletStyles.bottomNav}>
+        {false && // TODO: Re-enable when functionality is implemented.
           <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
             <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-            <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+            <Text style={ticketWalletStyles.bottomNavLinkText}>{'' || 'ADD TO WALLET'}</Text>
           </View>
-          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('TransferTickets')}>
+        }
+          <TouchableHighlight
+            underlayColor="rgba(0, 0, 0, 0)"
+            onPress={
+              () => navigate('TransferTickets', {eventId: ticket.eventId, firstName, lastName})
+            }
+          >
             <View style={ticketWalletStyles.bottomNavLinkContainer}>
               <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
               <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
             </View>
           </TouchableHighlight>
         </View>
-        }
       </View>
     )
   }

@@ -21,19 +21,33 @@ export default class TransferTickets extends Component {
     super(props)
 
     this.state = {
-      checkboxes: this.buildCheckBoxState(props.tickets)
+      checkboxes: this.buildCheckBoxState(this.tickets),
     };
   }
 
-  // this is made up ticket data that will need to be restructured and renamed
-  // for real data
-  static defaultProps = {
-    tickets: [
-      {id: 1, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
-      {id: 2, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
-      {id: 3, label: 'Brittany Gay', type: 'GENERAL ADMISSION'},
-      {id: 4, label: 'Alexandra ReallyLongLastName', type: 'GENERAL ADMISSION'},
-    ],
+  get tickets() {
+    const {
+      navigation: {state: {params: {eventId}}},
+      screenProps: {store: {ticketsForEvent}},
+    } = this.props
+
+    return ticketsForEvent(eventId).tickets
+  }
+
+  get firstName() {
+    const {navigation: {state: {params: {firstName}}}} = this.props
+
+    return firstName
+  }
+
+  get lastName() {
+    const {navigation: {state: {params: {lastName}}}} = this.props
+
+    return lastName
+  }
+
+  get label() {
+    return `${this.firstName} ${this.lastName}`
   }
 
   buildCheckBoxState(tickets) {
@@ -43,6 +57,13 @@ export default class TransferTickets extends Component {
         [ticket.id]: false,
       };
     }, {});
+  }
+
+  get transferTickets() {
+    const {checkboxes} = this.state
+    const keys = Object.keys(checkboxes);
+
+    return keys.filter((key) => checkboxes[key]);
   }
 
   toggleCheck = (id) => {
@@ -79,8 +100,8 @@ export default class TransferTickets extends Component {
               styleCheckboxContainer={styles.marginRight}
             />
             <View>
-              <Text style={ticketStyles.ticketHolderHeader}>{ticket.label}</Text>
-              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.type}</Text>
+              <Text style={ticketStyles.ticketHolderHeader}>{this.label}</Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.ticket_type_name}</Text>
             </View>
           </View>
         </View>
@@ -89,7 +110,7 @@ export default class TransferTickets extends Component {
   }
 
   render() {
-    const {navigation, tickets} = this.props
+    const {navigation} = this.props
     const {checkboxes} = this.state
 
     return (
@@ -114,7 +135,7 @@ export default class TransferTickets extends Component {
 
               <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
 
-              {tickets.map((ticket) => {
+              {this.tickets.map((ticket) => {
                 return this.renderCheckBox(checkboxes[ticket.id], ticket)
               })}
 

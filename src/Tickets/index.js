@@ -28,7 +28,7 @@ function EmptyTickets({text}) {
 
 const AnimatedTicket = ({navigate, ticket, springValue}) => (
   <Animated.View style={{transform: [{scale: springValue}]}}>
-    <Ticket navigate={navigate} ticket={ticket} />
+    <Ticket navigate={navigate} ticket={ticket} qrEnabled />
   </Animated.View>
 )
 
@@ -116,7 +116,7 @@ TicketsView.propTypes = {
   springValue: PropTypes.object.isRequired,
 }
 
-const EMPTY_TEXT_FOR_ACTIVE_TAB = { 
+const EMPTY_TEXT_FOR_ACTIVE_TAB = {
   upcoming: 'Looks like you don’t have any upcoming events! Why not tap Explore and have a look?',
   past: 'Looks like you haven’t attended any events yet! Why not tap Explore and find your first?',
   transfer: 'Looks like you haven’t transfered any tickets yet. Know anyone that wants to go?',

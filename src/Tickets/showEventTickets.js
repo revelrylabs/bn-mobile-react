@@ -18,7 +18,7 @@ async function getBrightness() {
 
 /**
  * Turned off because of https://github.com/revelrylabs/bn-mobile-react/issues/398
- * 
+ *
  * Android doesn't return to initial brightness.
  * `setSystemBrightness`, which might be the solution,
  * is still experimental in Expo as of the time this comment was written.
@@ -99,9 +99,14 @@ export default class EventsTicket extends Component {
       screenProps: {store: {redeemTicketInfo}},
     } = this.props
 
-    console.log(this.props)
-
-    return <Ticket qrEnabled={qrEnabled} ticket={item} navigate={navigate} redeemTicketInfo={redeemTicketInfo} />
+    return (
+      <Ticket
+        qrEnabled={qrEnabled}
+        ticket={item}
+        navigate={navigate}
+        redeemTicketInfo={redeemTicketInfo}
+      />
+    )
   }
 
   render() {
