@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
-import {Modal, ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
+import {Modal, ScrollView, Text, View, Image, TouchableHighlight, TextInput} from 'react-native';
 import CircleCheckBox from 'react-native-circle-checkbox'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -8,20 +8,33 @@ import TicketStyles from '../styles/tickets/ticketStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import TicketTransferStyles from '../styles/tickets/ticketTransferStyles'
 import ModalStyles from '../styles/shared/modalStyles'
+import FormStyles from '../styles/shared/formStyles'
+import {autotrim} from '../string'
 
 const styles = SharedStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
+const formStyles = FormStyles.createStyles()
 
-
+function Card({children}) {
+  return (
+    <View style={styles.flexRowCenter}>
+      <View style={ticketTransferStyles.cardContainer}>
+        {children}
+      </View>
+    </View>
+  )
+}
 export default class TransferTickets extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      isSubmitting: false,
       checkboxes: this.buildCheckBoxState(this.tickets),
+      emailOrPhone: '',
     };
   }
 
@@ -85,28 +98,23 @@ export default class TransferTickets extends Component {
     }, 0)
   }
 
-  renderCheckBox(checked, ticket) {
-    return (
-      <View style={styles.flexRowCenter} key={ticket.id}>
-        <View style={ticketTransferStyles.cardContainer}>
-          <View style={styles.flexRowFlexStart}>
-            <CircleCheckBox
-              checked={checked}
-              onToggle={this.toggleCheck(ticket.id)}
-              innerColor="#FF20B1"
-              outerColor="#FF20B1"
-              innerSize={15}
-              outerSize={29}
-              styleCheckboxContainer={styles.marginRight}
-            />
-            <View>
-              <Text style={ticketStyles.ticketHolderHeader}>{this.label}</Text>
-              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.ticket_type_name}</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    )
+  transfer = async () => {
+    if (this.state.isSubmitting) {
+      return
+    }
+
+    this.setState({isSubmitting: true})
+    try {
+      const {checkboxes, emailOrPhone} = this.state
+      const ticketIds = Object.keys(checkboxes).filter(key => checkboxes[key])
+
+      await this.props.screenProps.store.transferTickets(emailOrPhone, ticketIds)
+
+      alert('Tickets transferred!')
+      this.props.navigation.navigate('MyTicketList')
+    } finally {
+      this.setState({isSubmitting: false})
+    }
   }
 
   render() {
@@ -135,15 +143,41 @@ export default class TransferTickets extends Component {
 
               <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
 
-              {this.tickets.map((ticket) => {
-                return this.renderCheckBox(checkboxes[ticket.id], ticket)
-              })}
+              {this.tickets.map(({id, ticket_type_name: name}) => (
+                <Card key={id}>
+                  <View style={styles.flexRowFlexStart}>
+                    <CircleCheckBox
+                      checked={checkboxes[id]}
+                      onToggle={this.toggleCheck(id)}
+                      innerColor="#FF20B1"
+                      outerColor="#FF20B1"
+                      innerSize={15}
+                      outerSize={29}
+                      styleCheckboxContainer={styles.marginRight}
+                    />
+                    <View>
+                      <Text style={ticketStyles.ticketHolderHeader}>{this.label}</Text>
+                      <Text style={ticketStyles.ticketHolderSubheader}>{name}</Text>
+                    </View>
+                  </View>
+                </Card>
+              ))}
 
+              <Card>
+                <TextInput
+                  keyboardType="email-address"
+                  style={formStyles.input}
+                  placeholder="Email or phone"
+                  searchIcon={{size: 24}}
+                  underlineColorAndroid="transparent"
+                  onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
+                />
+              </Card>
             </ScrollView>
           </View>
 
           <View style={[styles.buttonContainer, styles.marginHorizontal]}>
-            <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]}>
+            <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]} onPress={this.transfer}>
               <Text style={styles.buttonText}>Transfer {this.transferCount()} Tickets..</Text>
             </TouchableHighlight>
           </View>

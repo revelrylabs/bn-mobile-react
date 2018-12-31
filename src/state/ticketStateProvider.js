@@ -22,11 +22,8 @@ class TicketsContainer extends Container {
   userTickets = async () => {
     try {
       const response = await server.tickets.index()
-
       const {data, _paging} = response.data; // @TODO: pagination
-
       const ticketsByEventId = {}
-
       const ticketGroups = {
         upcoming: [],
         past: [],
@@ -73,6 +70,17 @@ class TicketsContainer extends Container {
     } catch (error) {
       apiErrorAlert(error, 'Creating QR code failed failed.')
     }
+  }
+
+  transferTickets = async (emailOrPhone, ticketIds) => {
+    const payload = {
+      email: '', // There's a bug in the API lib that's asking for this, but the server uses email_or_phone
+      email_or_phone: emailOrPhone,
+      ticket_ids: ticketIds,
+      validity_period_in_seconds: 60 * 60 * 24, // TODO make this config based
+    }
+
+    await server.tickets.transfer.send(payload)
   }
 }
 
