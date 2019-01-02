@@ -167,7 +167,11 @@ export default class EventShow extends Component {
 
   // If no ticket types, or no ticket pricings, we cant buy tickets
   get canBuyTickets() {
-    const {event: {ticket_types}} = this.state
+    const {event: {ticket_types, is_external}} = this.state
+
+    if (is_external) {
+      return true
+    }
 
     return some(ticket_types, (ticket) => !isEmpty(ticket.ticket_pricing))
   }
