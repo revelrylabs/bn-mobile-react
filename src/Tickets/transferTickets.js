@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
-import {Modal, ScrollView, Text, View, Image, TouchableHighlight, TextInput} from 'react-native';
+import {Modal, ScrollView, Text, View, Image, TouchableHighlight, TextInput, Alert} from 'react-native';
 import CircleCheckBox from 'react-native-circle-checkbox'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles, { backgroundColor } from '../styles/shared/sharedStyles'
@@ -105,18 +105,21 @@ export default class TransferTickets extends Component {
     if (this.state.isSubmitting) {
       return
     }
-
     this.setState({isSubmitting: true})
-    try {
-      const {checkboxes, emailOrPhone} = this.state
-      const ticketIds = Object.keys(checkboxes).filter(key => checkboxes[key])
 
+    const {checkboxes, emailOrPhone} = this.state
+    const ticketIds = Object.keys(checkboxes).filter(key => checkboxes[key])
+
+    try {
       await this.props.screenProps.store.transferTickets(emailOrPhone, ticketIds)
 
-      alert('Tickets transferred!')
-      this.props.navigation.navigate('MyTicketList')
-    } finally {
+      const onDismiss = () => {
+        this.props.navigation.popToTop()
+      }
+      Alert.alert('Alert', 'Tickets transferred!', [{text: 'OK', onPress: onDismiss}], {onDismiss})
+    } catch (error) {
       this.setState({isSubmitting: false})
+      throw error
     }
   }
 
