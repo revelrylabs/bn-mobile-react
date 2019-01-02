@@ -21,10 +21,18 @@ const modalStyles = ModalStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
 function priceRangeString(ticket_types) {
+  if (!ticket_types) {
+    return null
+  }
+
   const prices = ticket_types
     .map(({ticket_pricing: pricing}) => pricing)
     .filter(pricing => pricing !== null)
     .map(({price_in_cents: cents}) => cents)
+
+  if (!prices.length) {
+    return null
+  }
 
   return uniq([min(prices), max(prices)]).map(cents => `$${toDollars(cents)}`).join(' - ')
 }
@@ -165,22 +173,17 @@ export default class EventShow extends Component {
     this.setState({showSuccessModal})
   }
 
-  // If no ticket types, or no ticket pricings, we cant buy tickets
-  get canBuyTickets() {
-    const {event: {ticket_types, is_external}} = this.state
+  get ticketRange() {
+    const str = priceRangeString(this.state.event.ticket_types)
 
-    if (is_external) {
-      return true
+    if (!str) {
+      return null
     }
 
-    return some(ticket_types, (ticket) => !isEmpty(ticket.ticket_pricing))
-  }
-
-  get ticketRange() {
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
         <Text style={eventDetailsStyles.priceHeader}>
-          {priceRangeString(this.state.event.ticket_types)}
+          {str}
         </Text>
       </View>
     )
@@ -272,10 +275,10 @@ export default class EventShow extends Component {
   get getTickets() {
     const {event,currentScreen} = this.state
     const {ctaText, enabled} = this.getDetailPageButtonCta
-    if (currentScreen === 'details' && this.canBuyTickets) {
+    if (currentScreen === 'details') {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
-          {enabled && !event.is_external ? this.ticketRange : null}
+          {enabled && this.ticketRange}
           <View style={styles.buttonContainer}>
             <TouchableHighlight
               style={enabled ? styles.button : styles.buttonDisabled}
