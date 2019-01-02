@@ -167,7 +167,11 @@ export default class EventShow extends Component {
 
   // If no ticket types, or no ticket pricings, we cant buy tickets
   get canBuyTickets() {
-    const {event: {ticket_types,is_external}} = this.state
+    const {event: {ticket_types, is_external}} = this.state
+
+    if (is_external) {
+      return true
+    }
 
     return some(ticket_types, (ticket) => !isEmpty(ticket.ticket_pricing))
   }
@@ -176,7 +180,7 @@ export default class EventShow extends Component {
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
         <Text style={eventDetailsStyles.priceHeader}>
-          {this.canBuyTickets ? priceRangeString(this.state.event.ticket_types) : "No tickets currently available"}
+          {priceRangeString(this.state.event.ticket_types)}
         </Text>
       </View>
     )
@@ -268,7 +272,7 @@ export default class EventShow extends Component {
   get getTickets() {
     const {event,currentScreen} = this.state
     const {ctaText, enabled} = this.getDetailPageButtonCta
-    if (currentScreen === 'details') {
+    if (currentScreen === 'details' && this.canBuyTickets) {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
           {enabled && !event.is_external ? this.ticketRange : null}
