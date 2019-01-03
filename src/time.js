@@ -3,8 +3,7 @@ import {DateTime} from 'luxon'
 const DEFAULT_TIME_ZONE = 'America/Los_Angeles'
 
 export function eventDateTimes({door_time, event_start, venue: {timezone}}) {
-  const zone = timezone || DEFAULT_TIME_ZONE
-  const toDateTime = (iso) => DateTime.fromISO(iso, {zone})
+  const toDateTime = (iso) => DateTime.fromISO(iso, {zone: 'utc'}).setZone(timezone || DEFAULT_TIME_ZONE)
   
   return {
     door_time: toDateTime(door_time),
