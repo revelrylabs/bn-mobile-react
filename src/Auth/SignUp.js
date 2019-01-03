@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {View, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import {Feather} from '@expo/vector-icons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
@@ -90,9 +91,12 @@ export default class SignUp extends Component {
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
-                style={loginStyles.button}
+                style={loginStyles.buttonIconWrapper}
               >
-                <Text style={loginStyles.buttonSecondaryText}>Add Profile Picture</Text>
+                <View style={styles.buttonIconContainer}>
+                  <Feather style={loginStyles.buttonIcon} name="camera" />
+                  <Text style={loginStyles.buttonIconText}>Add Profile Picture</Text>
+                </View>
               </TouchableHighlight>
             </View>
 

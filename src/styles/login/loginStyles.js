@@ -106,15 +106,21 @@ const LoginStyles = {
     fontSize: sectionHeaderFontSize,
     textAlign: 'center',
   },
-  buttonIcon: {
+  buttonIconWrapper: {
     backgroundColor: 'transparent',
-    borderColor: textColor,
+    borderColor: disabledHeaderColor,
     borderRadius: 4,
     borderWidth: 1,
     flex: 1,
-    flexDirection: 'row',
+    // flexDirection: 'row',
     height: 60,
     justifyContent: 'center',
+  },
+  buttonIconText: {
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: sectionHeaderFontSize,
+    textAlign: 'center',
   },
 
   // TEXT STYLES
