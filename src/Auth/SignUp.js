@@ -91,11 +91,11 @@ export default class SignUp extends Component {
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
-                style={loginStyles.buttonIconWrapper}
+                style={loginStyles.buttonTertiary}
               >
                 <View style={styles.buttonIconContainer}>
-                  <Feather style={loginStyles.buttonIcon} name="camera" />
-                  <Text style={loginStyles.buttonIconText}>Add Profile Picture</Text>
+                  <Feather style={loginStyles.buttonTertiaryIcon} name="camera" />
+                  <Text style={loginStyles.buttonTertiaryText}>Add Profile Picture</Text>
                 </View>
               </TouchableHighlight>
             </View>
