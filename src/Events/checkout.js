@@ -43,12 +43,11 @@ export default class Checkout extends Component {
   }
 
   get incrementButton() {
-    console.log(this.ticketType)
     return this.createQuantityButton(1, 'add-circle')
   }
 
   get decrementButton() {
-    return this.createQuantityButton(1, 'remove-circle')
+    return this.createQuantityButton(-1, 'remove-circle')
   }
 
   get ticketType() {
@@ -81,6 +80,8 @@ export default class Checkout extends Component {
     const {event, cart} = this.props
     const eventTime = eventDateTimes(event).event_start
 
+    console.log('render')
+
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
         <View style={checkoutStyles.mainBodyContent}>
@@ -98,7 +99,7 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               {this.decrementButton}
-              <Text style={checkoutStyles.quantityPrice}>{cart.quantity}</Text>
+              <Text style={checkoutStyles.quantityPrice}>{cart.requestedQuantity}</Text>
               {this.incrementButton}
             </View>
           </View>

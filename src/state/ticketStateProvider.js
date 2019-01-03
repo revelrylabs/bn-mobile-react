@@ -23,7 +23,7 @@ class TicketsContainer extends Container {
 
       const {data, _paging} = response.data; // @TODO: pagination
 
-      console.log('tickets data', data)
+      // console.log('tickets data', data)
 
       const ticketsByEventId = {}
 

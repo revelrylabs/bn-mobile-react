@@ -19,6 +19,7 @@ function sumUnitPrices(items) {
 class CartContainer extends Container {
   async _resetState() {
     this.state = {
+      requestedQuantity: 1,
       isReady: false,
       ticketTypeId: null,
       response: null,
@@ -47,6 +48,10 @@ class CartContainer extends Container {
     return this.state.ticketTypeId
   }
 
+  get requestedQuantity() {
+    return this.state.requestedQuantity
+  }
+
   get event() {
     return this.containers.events.selectedEvent
   }
@@ -56,13 +61,13 @@ class CartContainer extends Container {
   }
 
   get eventTicketsThatWereAlreadyPurchased() {
-    console.log('tickets state', this.containers.tickets.ticketsForEvent(this.event.id))
+    // console.log('tickets state', this.containers.tickets.ticketsForEvent(this.event.id))
     return this.containers.tickets.ticketsForEvent(this.event.id)
   }
 
   get quantityAlreadyPurchased() {
     const tix = this.eventTicketsThatWereAlreadyPurchased
-    console.log('tix', tix)
+    // console.log('tix', tix)
     return 0
   }
 
@@ -83,31 +88,23 @@ class CartContainer extends Container {
   }
 
   get selectedTicket() {
-    return this.tickets[0]
+    return this.tickets.find(({ticket_type_id: id}) => id === this.ticketTypeId)
   }
 
   get quantity() {
     return this.selectedTicket.quantity
   }
 
-  get limitPerCustomer() {
-    const {limit_per_person: limit, available} = this.ticketType
-    return limit ? Math.min(limit, available) : available
-  }
-
-  get limitForCart() {
-    return Math.max(this.quantity, this.limitPerCustomer - this.quantity)
+  get maxAdditionalQuantity() {
+    return this.data.limited_tickets_remaining.find(({ticket_type_id: id}) => id === this.ticketTypeId).tickets_remaining
   }
 
   canAddQuantity(x) {
-    const foo = this.quantityAlreadyPurchased
-    const quantity = this.quantity + x
-
-    return quantity > 0 && quantity <= this.limitForCart
+    return this.requestedQuantity + x > 0 && x <= this.maxAdditionalQuantity
   }
 
   async addQuantity(x) {
-    return await this.setQuantity(this.quantity + x)
+    return await this.setQuantity(this.requestedQuantity + x)
   }
 
   get ticketsCents() {
@@ -130,9 +127,21 @@ class CartContainer extends Container {
   }
 
   async setQuantity(quantity) {
-    const params = {items: [{ticket_type_id: this.ticketTypeId, quantity}]}
+    console.log(quantity)
+    await this.setState({requestedQuantity: quantity})
+    const quantityDebounceKey = this._quantityDebounceKey = new Date().getTime()
+    setTimeout(() => {
+      if (quantityDebounceKey === this._quantityDebounceKey) {
+        this._commitQuantity()
+      }
+    }, 100)
+  }
+
+  async _commitQuantity() {
+    console.log('commit')
+    const params = {items: [{ticket_type_id: this.ticketTypeId, quantity: this.state.requestedQuantity}]}
     const [response, _] =  await Promise.all([
-      server.cart.update(params),
+      server.cart.replace(params),
       this.containers.tickets.userTickets(),
     ])
 
@@ -142,8 +151,8 @@ class CartContainer extends Container {
   }
 
   async setTicketType(ticketTypeId) {
-    await this.setState({ticketTypeId})
-    return await this.setQuantity(1)
+    await this.setState({ticketTypeId, requestedQuantity: 1})
+    return await this._commitQuantity()
   }
 
   async setPayment(payment) {
