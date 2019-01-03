@@ -86,6 +86,16 @@ export default class SignUp extends Component {
               underlineColorAndroid="transparent"
               onChangeText={(password) => this.setState({password})}
             />
+
+            <View style={loginStyles.buttonContainer}>
+              <TouchableHighlight
+                underlayColor="rgba(0, 0, 0, 0)"
+                style={loginStyles.buttonSecondary}
+              >
+                <Text style={loginStyles.buttonSecondaryText}>Add Profile Picture</Text>
+              </TouchableHighlight>
+            </View>
+            
             <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
               <LinearGradient
                 start={{x: 0, y: 0}}
@@ -100,10 +110,10 @@ export default class SignUp extends Component {
 
           <View>
             <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
-            <View 
+            <View
               style={{flexDirection: 'row',justifyContent: 'center'}}
             >
-            <TouchableHighlight 
+            <TouchableHighlight
               style={{flexDirection:'column'}}
               onPress={ () => {
                 WebBrowser.openBrowserAsync('https://www.bigneon.com/terms.html')
