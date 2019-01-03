@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
-import {DateTime} from 'luxon'
+import {eventDateTimes} from '../time'
 import {isEmpty, includes} from 'lodash'
 import {toDollars} from '../constants/money'
 
@@ -79,7 +79,7 @@ export default class Checkout extends Component {
 
   render() {
     const {event, cart} = this.props
-    const eventTime = DateTime.fromISO(event.event_start)
+    const eventTime = eventDateTimes(event).event_start
 
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
