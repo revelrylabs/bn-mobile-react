@@ -74,7 +74,7 @@ const LoginStyles = {
   buttonContainer: {
     flexDirection: 'row',
     marginBottom: globalMargin,
-    width: fullWidth - globalPaddingMedium,
+    width: '100%',
   },
   button: {
     backgroundColor: primaryColor,
@@ -105,6 +105,16 @@ const LoginStyles = {
     fontFamily: globalFontRegular,
     fontSize: sectionHeaderFontSize,
     textAlign: 'center',
+  },
+  buttonIcon: {
+    backgroundColor: 'transparent',
+    borderColor: textColor,
+    borderRadius: 4,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    height: 60,
+    justifyContent: 'center',
   },
 
   // TEXT STYLES

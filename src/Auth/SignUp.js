@@ -90,12 +90,12 @@ export default class SignUp extends Component {
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
-                style={loginStyles.buttonSecondary}
+                style={loginStyles.button}
               >
                 <Text style={loginStyles.buttonSecondaryText}>Add Profile Picture</Text>
               </TouchableHighlight>
             </View>
-            
+
             <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
               <LinearGradient
                 start={{x: 0, y: 0}}
