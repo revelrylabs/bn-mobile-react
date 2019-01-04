@@ -80,8 +80,6 @@ export default class Checkout extends Component {
     const {event, cart} = this.props
     const eventTime = eventDateTimes(event).event_start
 
-    console.log('render')
-
     return (
       <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
         <View style={checkoutStyles.mainBodyContent}>

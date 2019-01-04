@@ -6,7 +6,7 @@ function itemIsTicket({item_type: type}) {
 }
 
 function sumUnitPrices(items) {
-  return items.reduce((sum, {unit_price_in_cents: unitPrice}) => sum + unitPrice, 0)
+  return items.reduce((sum, {unit_price_in_cents: unitPrice, quantity}) => sum + unitPrice * quantity, 0)
 }
 
 /**
@@ -21,6 +21,7 @@ class CartContainer extends Container {
     this.state = {
       requestedQuantity: 1,
       isReady: false,
+      isChangingQuantity: false,
       ticketTypeId: null,
       response: null,
       payment: null,
@@ -44,14 +45,6 @@ class CartContainer extends Container {
     return this.data.id
   }
 
-  get ticketTypeId() {
-    return this.state.ticketTypeId
-  }
-
-  get requestedQuantity() {
-    return this.state.requestedQuantity
-  }
-
   get event() {
     return this.containers.events.selectedEvent
   }
@@ -60,15 +53,16 @@ class CartContainer extends Container {
     return this.event.ticket_types.find(({id}) => id === this.ticketTypeId)
   }
 
-  get eventTicketsThatWereAlreadyPurchased() {
-    // console.log('tickets state', this.containers.tickets.ticketsForEvent(this.event.id))
-    return this.containers.tickets.ticketsForEvent(this.event.id)
+  get ticketTypeId() {
+    return this.state.ticketTypeId
   }
 
-  get quantityAlreadyPurchased() {
-    const tix = this.eventTicketsThatWereAlreadyPurchased
-    // console.log('tix', tix)
-    return 0
+  get quantity() {
+    return this.selectedTicket.quantity
+  }
+
+  get requestedQuantity() {
+    return this.state.requestedQuantity
   }
 
   get isReady() {
@@ -91,16 +85,18 @@ class CartContainer extends Container {
     return this.tickets.find(({ticket_type_id: id}) => id === this.ticketTypeId)
   }
 
-  get quantity() {
-    return this.selectedTicket.quantity
-  }
-
   get maxAdditionalQuantity() {
     return this.data.limited_tickets_remaining.find(({ticket_type_id: id}) => id === this.ticketTypeId).tickets_remaining
   }
 
+  get maxCommittableQuantity() {
+    return this.quantity + this.maxAdditionalQuantity
+  }
+
   canAddQuantity(x) {
-    return this.requestedQuantity + x > 0 && x <= this.maxAdditionalQuantity
+    const newQuantity = this.requestedQuantity + x
+
+    return newQuantity > 0 && newQuantity <= this.maxCommittableQuantity
   }
 
   async addQuantity(x) {
@@ -126,9 +122,8 @@ class CartContainer extends Container {
     await this._resetState()
   }
 
-  async setQuantity(quantity) {
-    console.log(quantity)
-    await this.setState({requestedQuantity: quantity})
+  setQuantity(quantity) {
+    this.setState({requestedQuantity: quantity, isChangingQuantity: true})
     const quantityDebounceKey = this._quantityDebounceKey = new Date().getTime()
     setTimeout(() => {
       if (quantityDebounceKey === this._quantityDebounceKey) {
@@ -138,16 +133,25 @@ class CartContainer extends Container {
   }
 
   async _commitQuantity() {
-    console.log('commit')
     const params = {items: [{ticket_type_id: this.ticketTypeId, quantity: this.state.requestedQuantity}]}
-    const [response, _] =  await Promise.all([
-      server.cart.replace(params),
-      this.containers.tickets.userTickets(),
-    ])
 
-    await this.setState({response, isReady: true})
-
-    return response
+    try {
+      const response = await server.cart.replace(params)
+      // set these first so we can calculate actual quantity
+      await this.setState({response, isReady: true})
+      // if the actual quantity and the requested quantity match, we're probably done updating
+      // if they don't match, most likely there's another cart update in progress
+      if (this.quantity === this.requestedQuantity) {
+        await this.setState({isChangingQuantity: false})
+      }
+      return response
+    } catch (error) {
+      apiErrorAlert(error)
+      if (this.isReady) {
+        await this.setState({requestedQuantity: this.quantity})
+        return this.response
+      }
+    }
   }
 
   async setTicketType(ticketTypeId) {
@@ -161,6 +165,16 @@ class CartContainer extends Container {
 
   get payment() {
     return this.state.payment
+  }
+
+  // we disable the purchase button and indicate it's busy until this is false
+  get isChangingQuantity() {
+    return this.state.isChangingQuantity
+  }
+
+  // can't place an order until there's payment info and quantity isn't changing anymore
+  get canPlaceOrder() {
+    return this.payment && !this.isChangingQuantity
   }
 
   async placeOrder() {

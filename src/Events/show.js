@@ -87,14 +87,14 @@ SuccessScreen.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
 }
 
-function CheckoutButton({onCheckout, disabled}) {
+function CheckoutButton({onCheckout, disabled, busy}) {
   return (
     <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
       <TouchableHighlight
         style={disabled ? styles.buttonDisabled : styles.button}
         onPress={disabled ? null : onCheckout}
       >
-        <Text style={styles.buttonText}>Purchase Ticket</Text>
+        <Text style={styles.buttonText}>{busy ? 'Updating...' :' Purchase Ticket'}</Text>
       </TouchableHighlight>
     </View>
   )
@@ -297,7 +297,8 @@ export default class EventShow extends Component {
     return (
       <CheckoutButton
         onCheckout={this.purchaseTicket}
-        disabled={!this.props.screenProps.cart.payment}
+        disabled={!this.props.screenProps.cart.canPlaceOrder}
+        busy={this.props.screenProps.cart.isChangingQuantity}
       />
     )
   }
