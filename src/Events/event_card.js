@@ -31,7 +31,7 @@ export default class EventsIndex extends Component {
     if (min_ticket_price) {
       return (
         <View style={styles.priceTagContainer}>
-          <Text style={styles.priceTag}>{`$${toDollars(min_ticket_price)}`}</Text>
+          <Text style={styles.priceTag}>{`$${toDollars(min_ticket_price, 0)}`}</Text>
         </View>
       )
     } else {

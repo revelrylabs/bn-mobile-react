@@ -34,7 +34,7 @@ function priceRangeString(ticket_types) {
     return null
   }
 
-  return uniq([min(prices), max(prices)]).map(cents => `$${toDollars(cents)}`).join(' - ')
+  return uniq([min(prices), max(prices)]).map(cents => `$${toDollars(cents, 0)}`).join(' - ')
 }
 
 
@@ -87,14 +87,14 @@ SuccessScreen.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
 }
 
-function CheckoutButton({onCheckout, disabled}) {
+function CheckoutButton({onCheckout, disabled, busy}) {
   return (
     <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
       <TouchableHighlight
         style={disabled ? styles.buttonDisabled : styles.button}
         onPress={disabled ? null : onCheckout}
       >
-        <Text style={styles.buttonText}>Purchase Ticket</Text>
+        <Text style={styles.buttonText}>{busy ? 'Updating...' :' Purchase Ticket'}</Text>
       </TouchableHighlight>
     </View>
   )
@@ -158,10 +158,8 @@ export default class EventShow extends Component {
     this.setState({currentScreen})
   }
 
-  selectPayment = async (selectedPaymentDetails) => {
-    const {screenProps: {cart}} = this.props
-
-    await cart.setPayment(selectedPaymentDetails)
+  selectPayment = async (payment) => {
+    await this.props.screenProps.cart.setPayment(payment)
     this.changeScreen('checkout')
   }
 
@@ -190,10 +188,7 @@ export default class EventShow extends Component {
   }
 
   onTicketSelection = async (ticketTypeId, ticketPricingId) => {
-    const {screenProps: {cart}} = this.props
-
-    await cart.emptyCart()
-    await cart.selectTicket(ticketTypeId, ticketPricingId)
+    await this.props.screenProps.cart.setTicketType(ticketTypeId)
     this.changeScreen('checkout')
   }
 
@@ -203,9 +198,7 @@ export default class EventShow extends Component {
     const {
       screenProps: {
         store: {toggleInterest},
-        cart: {
-          state: {selectedPaymentDetails}
-        },
+        cart: {payment},
         user: {access_token, refresh_token}
       }
     } = this.props
@@ -233,7 +226,7 @@ export default class EventShow extends Component {
       return (
         <PaymentTypes
           changeScreen={this.changeScreen}
-          selectedPaymentDetails={selectedPaymentDetails}
+          selectedPaymentDetails={payment}
           selectPayment={this.selectPayment}
           access_token={access_token}
           refresh_token={refresh_token}
@@ -304,7 +297,8 @@ export default class EventShow extends Component {
     return (
       <CheckoutButton
         onCheckout={this.purchaseTicket}
-        disabled={isEmpty(this.props.screenProps.cart.state.selectedPaymentDetails)}
+        disabled={!this.props.screenProps.cart.canPlaceOrder}
+        busy={this.props.screenProps.cart.isChangingQuantity}
       />
     )
   }
@@ -312,36 +306,38 @@ export default class EventShow extends Component {
   purchaseTicket = async () => {
     const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
 
-    if (isEmpty(cart.state.selectedPaymentDetails)) {
+    if (!cart.payment) {
       alert('Please enter your payment details');
       return false
     }
 
     this.setState({showLoadingModal: true})
+    try {
+      await cart.placeOrder()
+      setPurchasedTicket(cart.id)
 
-    await cart.placeOrder(() => setPurchasedTicket(cart.state.id))
+      await this.setState({
+        showLoadingModal: false,
+        showSuccessModal: true,
+      })
 
-    // @TODO: Need to wrap this in a try, or as a const, so we can skip the nav if it fails
-    await this.setState({
-      showLoadingModal: false,
-      showSuccessModal: true,
-    })
+      const resetAction = StackActions.reset({
+        index: 0,
+        key: 'Explore',
+        actions: [
+          NavigationActions.navigate({routeName: 'Home'}),
+        ],
+      })
 
-    const resetAction = StackActions.reset({
-      index: 0,
-      key: 'Explore',
-      actions: [
-        NavigationActions.navigate({routeName: 'Home'}),
-      ],
-    })
+      setTimeout(() => {
+        this.props.navigation.dispatch(resetAction)
 
-    setTimeout(() => {
-      this.props.navigation.dispatch(resetAction)
-
-      // Navigate to the tickets tab to see the new ticket
-      navigate('MyTickets')
-    }, 3000)
-
+        // Navigate to the tickets tab to see the new ticket
+        navigate('MyTickets')
+      }, 3000)
+    } finally {
+      this.setState({showLoadingModal: false})
+    }
   }
 
 
