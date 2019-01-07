@@ -9,6 +9,8 @@ import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 import { Constants, WebBrowser } from 'expo';
 import { autotrim } from '../string';
+import {accessCameraRoll, selectCameraRollImage} from '../image'
+import {uploadImageToCloudinary} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -53,6 +55,20 @@ export default class SignUp extends Component {
     await auth.signUp({email, password, first_name, last_name}, navigate)
   }
 
+  onPressPictureButton = async () => {
+    if (await accessCameraRoll()) {
+      const base64 = await selectCameraRollImage()
+
+      if (base64) {
+        // TODO: start upload indicator
+        const url = await uploadImageToCloudinary(base64)
+        // TODO: stop upload indicator
+        // TODO: save cloudinary url into data to submit to api
+        // TODO: handle errors (and don't forget to stop upload indicator when errors are thrown)
+      }
+    }
+  }
+
   render() {
     return (
       <KeyboardAvoidingView style={loginStyles.container} behavior="padding" enabled>
@@ -92,6 +108,7 @@ export default class SignUp extends Component {
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
                 style={loginStyles.buttonTertiary}
+                onPress={this.onPressPictureButton}
               >
                 <View style={styles.buttonIconContainer}>
                   <Feather style={loginStyles.buttonTertiaryIcon} name="camera" />
