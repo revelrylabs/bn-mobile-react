@@ -5,6 +5,8 @@ import AccountStyles from '../styles/account/accountStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import avatarPlaceholder from '../../assets/avatar-female.png'
 import {autotrim} from '../string'
+import {accessCameraRoll, selectCameraRollImage} from '../image'
+import {uploadImageToCloudinary} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -19,15 +21,31 @@ export default class AccountDetails extends Component {
     }
   }
 
-  updateUser = (attr) => (value) => {
+  _updateUser(attr, value) {
     const user = {...this.state.user}
 
     user[attr] = value
     this.setState({user})
   }
 
+  updateUser = (attr) => (value) => this._updateUser(attr, value)
+
+  async prepareUserChanges() {
+    const {user, newProfilePic} = this.state
+    const changes = {...user}
+
+    if (newProfilePic) {
+      changes.profile_pic_url = await uploadImageToCloudinary(newProfilePic)
+    }
+
+    console.log('changes', changes)
+
+    return changes
+  }
+
   saveChanges = async () => {
-    const result = await this.props.screenProps.auth.updateCurrentUser(this.state.user)
+    const changes = await this.prepareUserChanges()
+    const result = await this.props.screenProps.auth.updateCurrentUser(changes)
 
     if (result.error) {
       this.onSaveChangesError(result)
@@ -49,6 +67,16 @@ export default class AccountDetails extends Component {
     alert(`There was a problem:\n\n${msg}`)
   }
 
+  onPressPictureButton = async () => {
+    if (await accessCameraRoll()) {
+      this.setState({newProfilePic: await selectCameraRollImage()})
+    }
+  }
+
+  get profilePicSourceToDisplay() {
+    return {uri: this.state.newProfilePic || this.state.user.profile_pic_url}
+  }
+
   render() {
     const {
       props: {
@@ -60,8 +88,6 @@ export default class AccountDetails extends Component {
       }
     } = this
 
-    console.log(user)
-
     return (
       <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
         <View style={styles.paddingVerticalMedium}>
@@ -70,11 +96,11 @@ export default class AccountDetails extends Component {
               <View style={[ticketWalletStyles.avatarContainer, accountStyles.avatarContainer]}>
                 <Image
                   style={ticketWalletStyles.avatar}
-                  source={{uri: user.profile_pic_url}}
+                  source={this.profilePicSourceToDisplay}
                 />
               </View>
               <TouchableHighlight style={styles.flexColumnCenter}>
-                <Text style={styles.buttonSecondaryText} onPress={() => navigate('ChangePhoto')}>Change Profile Photo</Text>
+                <Text style={styles.buttonSecondaryText} onPress={this.onPressPictureButton}>Change Profile Photo</Text>
               </TouchableHighlight>
             </View>
           </View>
