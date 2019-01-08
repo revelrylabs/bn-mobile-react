@@ -60,17 +60,17 @@ export default class AccountDetails extends Component {
       }
     } = this
 
+    console.log(user)
+
     return (
       <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
         <View style={styles.paddingVerticalMedium}>
-
-          {false &&  // TODO: Re-enable when functionality is implemented.
           <View style={accountStyles.rowContainer}>
             <View style={accountStyles.row}>
               <View style={[ticketWalletStyles.avatarContainer, accountStyles.avatarContainer]}>
                 <Image
                   style={ticketWalletStyles.avatar}
-                  source={avatarPlaceholder}
+                  source={{uri: user.profile_pic_url}}
                 />
               </View>
               <TouchableHighlight style={styles.flexColumnCenter}>
@@ -78,7 +78,6 @@ export default class AccountDetails extends Component {
               </TouchableHighlight>
             </View>
           </View>
-          }
 
           <View style={accountStyles.inputContainer}>
             <View style={accountStyles.row}>

@@ -42,31 +42,15 @@ export default class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
-      first_name: '',
-      last_name: '',
     }
   }
 
   signUp = async () => {
     const {screenProps: {auth}, navigation: {navigate}} = this.props
-    const {email, password, first_name, last_name} = this.state
+    const {email, password} = this.state
 
     // Should register & login on success
-    await auth.signUp({email, password, first_name, last_name}, navigate)
-  }
-
-  onPressPictureButton = async () => {
-    if (await accessCameraRoll()) {
-      const base64 = await selectCameraRollImage()
-
-      if (base64) {
-        // TODO: start upload indicator
-        const url = await uploadImageToCloudinary(base64)
-        // TODO: stop upload indicator
-        // TODO: save cloudinary url into data to submit to api
-        // TODO: handle errors (and don't forget to stop upload indicator when errors are thrown)
-      }
-    }
+    await auth.signUp({email, password}, navigate)
   }
 
   render() {
@@ -77,18 +61,6 @@ export default class SignUp extends Component {
             <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
               Create your account
             </Text>
-            <TextInput
-              style={formStyles.input}
-              placeholder="First Name"
-              underlineColorAndroid="transparent"
-              onChangeText={autotrim((first_name) => this.setState({first_name}))}
-            />
-            <TextInput
-              style={formStyles.input}
-              placeholder="Last Name"
-              underlineColorAndroid="transparent"
-              onChangeText={autotrim((last_name) => this.setState({last_name}))}
-            />
             <TextInput
               keyboardType="email-address"
               style={formStyles.input}
@@ -103,19 +75,6 @@ export default class SignUp extends Component {
               underlineColorAndroid="transparent"
               onChangeText={(password) => this.setState({password})}
             />
-
-            <View style={loginStyles.buttonContainer}>
-              <TouchableHighlight
-                underlayColor="rgba(0, 0, 0, 0)"
-                style={loginStyles.buttonTertiary}
-                onPress={this.onPressPictureButton}
-              >
-                <View style={styles.buttonIconContainer}>
-                  <Feather style={loginStyles.buttonTertiaryIcon} name="camera" />
-                  <Text style={loginStyles.buttonTertiaryText}>Add Profile Picture</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
 
             <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
               <LinearGradient
