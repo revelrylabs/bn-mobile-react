@@ -9,6 +9,8 @@ import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 import { Constants, WebBrowser } from 'expo';
 import { autotrim } from '../string';
+import {accessCameraRoll, selectCameraRollImage} from '../image'
+import {uploadImageToCloudinary} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -40,17 +42,15 @@ export default class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
-      first_name: '',
-      last_name: '',
     }
   }
 
   signUp = async () => {
     const {screenProps: {auth}, navigation: {navigate}} = this.props
-    const {email, password, first_name, last_name} = this.state
+    const {email, password} = this.state
 
     // Should register & login on success
-    await auth.signUp({email, password, first_name, last_name}, navigate)
+    await auth.signUp({email, password}, navigate)
   }
 
   render() {
@@ -61,18 +61,6 @@ export default class SignUp extends Component {
             <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
               Create your account
             </Text>
-            <TextInput
-              style={formStyles.input}
-              placeholder="First Name"
-              underlineColorAndroid="transparent"
-              onChangeText={autotrim((first_name) => this.setState({first_name}))}
-            />
-            <TextInput
-              style={formStyles.input}
-              placeholder="Last Name"
-              underlineColorAndroid="transparent"
-              onChangeText={autotrim((last_name) => this.setState({last_name}))}
-            />
             <TextInput
               keyboardType="email-address"
               style={formStyles.input}
@@ -87,18 +75,6 @@ export default class SignUp extends Component {
               underlineColorAndroid="transparent"
               onChangeText={(password) => this.setState({password})}
             />
-
-            <View style={loginStyles.buttonContainer}>
-              <TouchableHighlight
-                underlayColor="rgba(0, 0, 0, 0)"
-                style={loginStyles.buttonTertiary}
-              >
-                <View style={styles.buttonIconContainer}>
-                  <Feather style={loginStyles.buttonTertiaryIcon} name="camera" />
-                  <Text style={loginStyles.buttonTertiaryText}>Add Profile Picture</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
 
             <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.signUp}>
               <LinearGradient
