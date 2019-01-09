@@ -7,6 +7,7 @@ import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
+import EventScannerStyles from '../styles/account/eventScannerStyles'
 import { Constants, WebBrowser } from 'expo';
 import { autotrim } from '../string';
 import {accessCameraRoll, selectCameraRollImage} from '../image'
@@ -15,6 +16,7 @@ import {uploadImageToCloudinary} from '../cloudinary'
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
+const eventScannerStyles = EventScannerStyles.createStyles()
 
 /* eslint-disable camelcase,space-before-function-paren */
 
@@ -112,11 +114,6 @@ export default class SignUpNext extends Component {
               underlineColorAndroid="transparent"
               onChangeText={autotrim((last_name) => this.setState({last_name}))}
             />
-            <View style={loginStyles.profileImageWrapper}>
-              {this.profilePicUrl && (
-                <Image source={{uri: this.profilePicUrl}} style={loginStyles.profileImage} />
-              )}
-            </View>
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
@@ -140,6 +137,22 @@ export default class SignUpNext extends Component {
                 <Text style={loginStyles.buttonText}>{"That's me. Let's find some shows."}</Text>
               </LinearGradient>
             </TouchableHighlight>
+
+            {this.profilePicUrl && (
+              <View style={loginStyles.profileImageWrapper}>
+                <View style={eventScannerStyles.pillContainer}>
+                  <View style={styles.flexRowFlexStartCenter}>
+                      <Image source={{uri: this.profilePicUrl}} style={loginStyles.profileImage} />
+                    <View>
+                      <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Your Name</Text>
+                      <Text style={eventScannerStyles.pillTextSubheader}>VIP Access</Text>
+                    </View>
+                    <Feather style={eventScannerStyles.checkIcon} name="check-circle" />
+                  </View>
+                </View>
+              </View>
+            )}
+
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

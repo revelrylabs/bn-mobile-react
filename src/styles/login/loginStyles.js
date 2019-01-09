@@ -174,17 +174,16 @@ const LoginStyles = {
     width: 135,
   },
 
-  // UPLOAD PROFILE IMAGE STYLES
+  // PROFILE IMAGE STYLES
   profileImageWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    paddingTop: globalPaddingLarge,
   },
   profileImage: {
     height: 55,
     borderColor: 'transparent',
     borderWidth: 1,
     borderRadius: 55/2,
-    marginBottom: globalPaddingMedium,
+    marginRight: globalMargin,
     width: 55,
   }
 }
