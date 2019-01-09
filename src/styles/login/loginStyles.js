@@ -70,7 +70,7 @@ const LoginStyles = {
     width: fullWidth,
   },
   disclaimerWrapper: {
-    paddingTop: globalPaddingLarge, 
+    paddingTop: globalPaddingLarge,
   },
 
   // BUTTONS
@@ -173,6 +173,20 @@ const LoginStyles = {
     marginTop: globalPaddingJumbo,
     width: 135,
   },
+
+  // UPLOAD PROFILE IMAGE STYLES
+  profileImageWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  profileImage: {
+    height: 55,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    borderRadius: 55/2,
+    marginBottom: globalPaddingMedium,
+    width: 55,
+  }
 }
 
 function createStyles(overrides = {}) {

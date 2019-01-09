@@ -112,9 +112,11 @@ export default class SignUpNext extends Component {
               underlineColorAndroid="transparent"
               onChangeText={autotrim((last_name) => this.setState({last_name}))}
             />
-            {this.profilePicUrl && (
-              <Image source={{uri: this.profilePicUrl}} style={{width: 95, height: 95}} />
-            )}
+            <View style={loginStyles.profileImageWrapper}>
+              {this.profilePicUrl && (
+                <Image source={{uri: this.profilePicUrl}} style={loginStyles.profileImage} />
+              )}
+            </View>
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
