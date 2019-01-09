@@ -69,6 +69,9 @@ const LoginStyles = {
     paddingVertical: globalPaddingLarge,
     width: fullWidth,
   },
+  disclaimerWrapper: {
+    paddingTop: globalPaddingLarge, 
+  },
 
   // BUTTONS
   buttonContainer: {
@@ -136,7 +139,14 @@ const LoginStyles = {
   mutedText: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: bodyFontSize - 2,
+  },
+  smallText: {
+    backgroundColor: 'transparent',
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize - 2,
+    paddingBottom: globalPaddingTiny,
+    textAlign: 'center',
   },
 
   // ICON STYLES

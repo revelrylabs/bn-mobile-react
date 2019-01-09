@@ -58,6 +58,9 @@ export default class SignUp extends Component {
       <KeyboardAvoidingView style={loginStyles.container} behavior="padding" enabled>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
+            <Text style={loginStyles.smallText}>
+              Secure your experiences
+            </Text>
             <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
               Create your account
             </Text>
@@ -88,27 +91,23 @@ export default class SignUp extends Component {
             </TouchableHighlight>
           </View>
 
-          <View>
+          <View style={loginStyles.disclaimerWrapper}>
             <Text style={[loginStyles.mutedText, styles.textCenter]}>By signing up you agree to our</Text>
-            <View
-              style={{flexDirection: 'row',justifyContent: 'center'}}
-            >
-            <TouchableHighlight
-              style={{flexDirection:'column'}}
-              onPress={ () => {
-                WebBrowser.openBrowserAsync('https://www.bigneon.com/terms.html')
-              }}>
-              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service</Text>
-            </TouchableHighlight>
-            <Text style={{flexDirection:'column'}}> &amp; </Text>
-            <TouchableHighlight
-              style={{flexDirection:'column'}}
-              onPress={ () => {
-                WebBrowser.openBrowserAsync('https://www.bigneon.com/privacy.html')
-              }}
-            >
-              <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Privacy Policy</Text>
-            </TouchableHighlight>
+            <View style={{flexDirection: 'row',justifyContent: 'center'}}>
+              <TouchableHighlight
+                onPress={ () => {
+                  WebBrowser.openBrowserAsync('https://www.bigneon.com/terms.html')
+                }}>
+                <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Terms of Service</Text>
+              </TouchableHighlight>
+              <Text style={loginStyles.mutedText}> &amp; </Text>
+              <TouchableHighlight
+                onPress={ () => {
+                  WebBrowser.openBrowserAsync('https://www.bigneon.com/privacy.html')
+                }}
+              >
+                <Text style={[loginStyles.mutedText, styles.textCenter, styles.textUnderline]}>Privacy Policy</Text>
+              </TouchableHighlight>
             </View>
           </View>
         </ScrollView>

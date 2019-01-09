@@ -96,7 +96,7 @@ export default class SignUpNext extends Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
-              Create your account
+              Make your tickets... yours.
             </Text>
             <TextInput
               defaultValue={this.currentUser.first_name}
@@ -135,7 +135,7 @@ export default class SignUpNext extends Component {
                 colors={['#5491CC', '#9A68B2', '#E53D96']}
                 style={loginStyles.button}
               >
-                <Text style={loginStyles.buttonText}>{"Let's Do This"}</Text>
+                <Text style={loginStyles.buttonText}>{"That's me. Let's find some shows."}</Text>
               </LinearGradient>
             </TouchableHighlight>
           </View>
