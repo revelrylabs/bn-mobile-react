@@ -3,7 +3,6 @@ import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'reac
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
-import avatarPlaceholder from '../../assets/avatar-female.png'
 import {autotrim} from '../string'
 import {accessCameraRoll, selectCameraRollImage} from '../image'
 import {uploadImageToCloudinary} from '../cloudinary'
@@ -74,7 +73,9 @@ export default class AccountDetails extends Component {
   }
 
   get profilePicSourceToDisplay() {
-    return {uri: this.state.newProfilePic || this.state.user.profile_pic_url}
+    const uri = this.state.newProfilePic || this.state.user.profile_pic_url
+
+    return uri ? {uri} : null
   }
 
   render() {
