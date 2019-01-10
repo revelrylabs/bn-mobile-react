@@ -8,8 +8,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
-import { Constants, WebBrowser } from 'expo';
-import { autotrim } from '../string';
+import {autotrim, username} from '../string'
 import {accessCameraRoll, selectCameraRollImage} from '../image'
 import {uploadImageToCloudinary} from '../cloudinary'
 
@@ -50,6 +49,10 @@ export default class SignUpNext extends Component {
 
   get currentUser() {
     return this.props.screenProps.auth.state.currentUser.user
+  }
+
+  get username() {
+    return username({...this.currentUser, ...this.state})
   }
 
   get profilePicUrl() {
@@ -144,8 +147,10 @@ export default class SignUpNext extends Component {
                   <View style={styles.flexRowFlexStartCenter}>
                       <Image source={{uri: this.profilePicUrl}} style={loginStyles.profileImage} />
                     <View>
-                      <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Your Name</Text>
-                      <Text style={eventScannerStyles.pillTextSubheader}>VIP Access</Text>
+                      <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>{this.username}</Text>
+                      {false && ( // TODO: enable when API data available
+                        <Text style={eventScannerStyles.pillTextSubheader}>VIP Access</Text>
+                      )}
                     </View>
                     <Feather style={eventScannerStyles.checkIcon} name="check-circle" />
                   </View>
