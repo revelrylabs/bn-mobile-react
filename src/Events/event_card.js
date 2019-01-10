@@ -22,7 +22,7 @@ export default class EventsIndex extends Component {
   }
 
   get scheduleText() {
-    return eventDateTimes(this.props.event).event_start.toFormat('EEE, MMMM d')
+    return eventDateTimes(this.props.event.localized_times).event_start.toFormat('EEE, MMMM d')
   }
 
   get priceTag() {
