@@ -91,6 +91,7 @@ const TicketWalletStyles = {
     fontFamily: globalFontRegular,
     fontSize: bodyFontSize,
     color: white,
+    paddingRight: globalPaddingSmall,
     paddingVertical: globalPaddingTiny,
   },
 

@@ -1,7 +1,6 @@
 import {Container} from 'unstated'
 import {server, apiErrorAlert} from '../constants/Server'
-import {DateTime} from 'luxon'
-import {find} from 'lodash'
+import {eventDateTimes, eventIsInPast} from '../time'
 
 /* eslint-disable camelcase,space-before-function-paren */
 
@@ -13,9 +12,7 @@ class TicketsContainer extends Container {
       tickets: [],
       ticketsByEventId: {},
       purchasedTicket: null,
-    };
-
-    this.userTickets()
+    }
   }
 
   // Grabbing tickets from orders right now - not preserving any order-level details
@@ -34,11 +31,12 @@ class TicketsContainer extends Container {
       data.forEach((ticketGroup) => {
         const event = ticketGroup[0];
         const tickets = ticketGroup[1];
-        const bucket = DateTime.fromISO(event.event_start) < DateTime.local() ? 'past' : 'upcoming'
+        const bucket = eventIsInPast(event) ? 'past' : 'upcoming'
+        const {event_start, door_time} = eventDateTimes(event)
 
-        event.formattedDate = DateTime.fromISO(event.event_start).toFormat('EEE, MMMM d');
-        event.formattedDoors = DateTime.fromISO(event.door_time).toFormat('t');
-        event.formattedShow = DateTime.fromISO(event.event_start).toFormat('t');
+        event.formattedDate = event_start.toFormat('EEE, MMMM d')
+        event.formattedDoors = door_time.toFormat('t')
+        event.formattedStart = event_start.toFormat('t')
 
         const eventAndTicketsObject = {event, tickets}
 
