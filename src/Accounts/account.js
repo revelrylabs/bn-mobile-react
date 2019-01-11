@@ -71,7 +71,9 @@ export default class AccountDetails extends Component {
   }
 
   get profilePicSourceToDisplay() {
-    return {uri: this.state.newProfilePic || this.state.user.profile_pic_url}
+    const uri = this.state.newProfilePic || this.state.user.profile_pic_url
+
+    return uri ? {uri} : null
   }
 
   render() {

@@ -69,6 +69,9 @@ const LoginStyles = {
     paddingVertical: globalPaddingLarge,
     width: fullWidth,
   },
+  disclaimerWrapper: {
+    paddingTop: globalPaddingLarge,
+  },
 
   // BUTTONS
   buttonContainer: {
@@ -136,7 +139,14 @@ const LoginStyles = {
   mutedText: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: bodyFontSize - 2,
+  },
+  smallText: {
+    backgroundColor: 'transparent',
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize - 2,
+    paddingBottom: globalPaddingTiny,
+    textAlign: 'center',
   },
 
   // ICON STYLES
@@ -163,6 +173,19 @@ const LoginStyles = {
     marginTop: globalPaddingJumbo,
     width: 135,
   },
+
+  // PROFILE IMAGE STYLES
+  profileImageWrapper: {
+    paddingTop: globalPaddingLarge,
+  },
+  profileImage: {
+    height: 55,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    borderRadius: 55/2,
+    marginRight: globalMargin,
+    width: 55,
+  }
 }
 
 function createStyles(overrides = {}) {

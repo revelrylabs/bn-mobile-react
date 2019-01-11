@@ -13,9 +13,7 @@ class TicketsContainer extends Container {
       tickets: [],
       ticketsByEventId: {},
       purchasedTicket: null,
-    };
-
-    this.userTickets()
+    }
   }
 
   // Grabbing tickets from orders right now - not preserving any order-level details
@@ -24,6 +22,8 @@ class TicketsContainer extends Container {
       const response = await server.tickets.index()
 
       const {data, _paging} = response.data; // @TODO: pagination
+
+      // console.log('tickets data', data)
 
       const ticketsByEventId = {}
 

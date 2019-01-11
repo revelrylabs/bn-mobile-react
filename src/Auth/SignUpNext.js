@@ -7,14 +7,15 @@ import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
-import { Constants, WebBrowser } from 'expo';
-import { autotrim } from '../string';
+import EventScannerStyles from '../styles/account/eventScannerStyles'
+import {autotrim, username} from '../string'
 import {accessCameraRoll, selectCameraRollImage} from '../image'
 import {uploadImageToCloudinary} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
+const eventScannerStyles = EventScannerStyles.createStyles()
 
 /* eslint-disable camelcase,space-before-function-paren */
 
@@ -48,6 +49,10 @@ export default class SignUpNext extends Component {
 
   get currentUser() {
     return this.props.screenProps.auth.state.currentUser.user
+  }
+
+  get username() {
+    return username({...this.currentUser, ...this.state})
   }
 
   get profilePicUrl() {
@@ -96,7 +101,7 @@ export default class SignUpNext extends Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
-              Create your account
+              Make your tickets... yours.
             </Text>
             <TextInput
               defaultValue={this.currentUser.first_name}
@@ -112,9 +117,6 @@ export default class SignUpNext extends Component {
               underlineColorAndroid="transparent"
               onChangeText={autotrim((last_name) => this.setState({last_name}))}
             />
-            {this.profilePicUrl && (
-              <Image source={{uri: this.profilePicUrl}} style={{width: 95, height: 95}} />
-            )}
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
@@ -135,9 +137,27 @@ export default class SignUpNext extends Component {
                 colors={['#5491CC', '#9A68B2', '#E53D96']}
                 style={loginStyles.button}
               >
-                <Text style={loginStyles.buttonText}>{"Let's Do This"}</Text>
+                <Text style={loginStyles.buttonText}>{"That's me. Let's find some shows."}</Text>
               </LinearGradient>
             </TouchableHighlight>
+
+            {this.profilePicUrl && (
+              <View style={loginStyles.profileImageWrapper}>
+                <View style={eventScannerStyles.pillContainer}>
+                  <View style={styles.flexRowFlexStartCenter}>
+                      <Image source={{uri: this.profilePicUrl}} style={loginStyles.profileImage} />
+                    <View>
+                      <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>{this.username}</Text>
+                      {false && ( // TODO: enable when API data available
+                        <Text style={eventScannerStyles.pillTextSubheader}>VIP Access</Text>
+                      )}
+                    </View>
+                    <Feather style={eventScannerStyles.checkIcon} name="check-circle" />
+                  </View>
+                </View>
+              </View>
+            )}
+
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

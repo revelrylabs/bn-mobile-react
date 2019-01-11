@@ -20,12 +20,26 @@ class EventsContainer extends Container {
 
     this.state = {
       events: [],
+      eventsById: {},
+      ticketTypesById: {},
       paging: {},
       lastUpdate: null,
       locations: [],
       selectedLocationId: null,
       selectedEvent: {},
     };
+  }
+
+  get eventsById() {
+    return this.state.eventsById
+  }
+
+  get ticketTypesById() {
+    return this.state.ticketTypesById
+  }
+
+  get selectedEvent() {
+    return this.state.selectedEvent
   }
 
   locationsPromise = null
@@ -67,16 +81,21 @@ class EventsContainer extends Container {
         server.events.index(defaultEventSort),
         this.fetchLocations(),
       ])
+      const eventsById = {}
+      const ticketTypesById = {}
 
       data.data.forEach((event) => {
         if (!event.promo_image_url) {
           event.promo_image_url = `${baseURL}/images/event-placeholder.png`
         }
+        eventsById[event.id] = event
       })
 
       this.setState({
         lastUpdate: DateTime.local(),
         events: data.data,
+        eventsById,
+        ticketTypesById,
         paging: data.paging,
       })
     } catch (error) {

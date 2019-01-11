@@ -15,6 +15,14 @@ const checkoutStyles = CheckoutStyles.createStyles()
 
 /*  eslint-disable camelcase */
 
+function ChangeQuantityButton({icon, enabledStyle, disabledStyle, onPress, enabled}) {
+  return (
+    <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={enabled ? onPress : null}>
+      <Icon style={enabled ? enabledStyle : disabledStyle} name={icon} />
+    </TouchableHighlight>
+  )
+}
+
 export default class Checkout extends Component {
   static propTypes = {
     changeScreen: PropTypes.func,
@@ -22,85 +30,41 @@ export default class Checkout extends Component {
     cart: PropTypes.object,
   }
 
-  constructor(props) {
-    super(props)
-
-    // const {cart: {state}} = props
-    this.state = {
-      selectedTicket: this.selectedTicket,
-    }
+  createQuantityButton(diff, icon) {
+    return (
+      <ChangeQuantityButton
+        enabled={this.props.cart.canAddQuantity(diff)}
+        onPress={() => this.props.cart.addQuantity(diff)}
+        icon={icon}
+        enabledStyle={checkoutStyles.removeIcon}
+        disabledStyle={checkoutStyles.removeIconDisabled}
+      />
+    )
   }
 
-  get selectedTicket() {
-    const {event: {ticket_types}, cart: {state: {ticketTypeId}}} = this.props
-
-    return ticket_types.find((ticket) => ticket.id === ticketTypeId)
+  get incrementButton() {
+    return this.createQuantityButton(1, 'add-circle')
   }
 
-  get allowIncrement() {
-    const {cart: {state: {quantity}}} = this.props
-    const {selectedTicket: {increment, limit_per_person}} = this.state
-
-    if (!limit_per_person) {
-      return true
-    }
-
-    return quantity + increment <= limit_per_person
+  get decrementButton() {
+    return this.createQuantityButton(-1, 'remove-circle')
   }
 
-  incrementTickets = () => {
-    const {cart: {updateQuantity, state: {quantity}}} = this.props
-    const {selectedTicket: {increment}} = this.state
-
-    if (this.allowIncrement) {
-      this.setState({quantity: quantity + increment}, () => {
-        updateQuantity(this.state.quantity)
-      })
-    }
-
-    return null
-  }
-
-  get incrementStyle() {
-    return this.allowIncrement ? checkoutStyles.addIcon : checkoutStyles.addIconDisabled
-  }
-
-  get allowDecrement() {
-    const {cart: {state: {quantity}}} = this.props
-    const {selectedTicket: {increment}} = this.state
-
-    return quantity - increment >= 0
-  }
-
-  decrementTickets = () => {
-    const {cart: {updateQuantity, state: {quantity}}} = this.props
-    const {selectedTicket: {increment}} = this.state
-
-    if (this.allowDecrement) {
-      this.setState({quantity: quantity - increment}, () => {
-        updateQuantity(this.state.quantity)
-      })
-    }
-
-    return null
-  }
-
-  get decrementStyle() {
-    return this.allowDecrement ? checkoutStyles.removeIcon : checkoutStyles.removeIconDisabled
+  get ticketType() {
+    return this.props.event.ticket_types.find(({id}) => id === this.props.cart.selectedTicket.ticket_type_id)
   }
 
   get paymentSelected() {
-    const {cart: {state: {selectedPaymentDetails}}} = this.props
-    const selected = !isEmpty(selectedPaymentDetails)
+    const {cart: {payment}} = this.props
 
-    if (selected) {
+    if (payment) {
       return (
         <View style={styles.flexRowFlexStart}>
           <Image
             style={checkoutStyles.iconPaymentSmall}
             source={require('../../assets/icon-visa-pay.png')}
           />
-          <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** {selectedPaymentDetails.last4}</Text>
+          <Text style={checkoutStyles.ticketSubHeaderPink}>**** **** **** {payment.last4}</Text>
         </View>
       )
     } else {
@@ -112,35 +76,8 @@ export default class Checkout extends Component {
     }
   }
 
-  cartItemInCents(itemType, exact = true) {
-    const {cart: {state: {items}}} = this.props
-
-    return (items || [])
-      // just the tickets
-      .filter(({item_type}) => exact ? item_type === itemType : includes(item_type, itemType))
-      // as their prices
-      .map(({quantity, unit_price_in_cents}) => unit_price_in_cents * quantity)
-      // summed
-      .reduce((sum, price) => sum + price, 0)
-  }
-
-  get ticketsTotal() {
-    return toDollars(this.cartItemInCents('Tickets'), 2)
-  }
-
-  get subtotal() {
-    const {cart: {state: {total_in_cents}}} = this.props
-
-    return toDollars(total_in_cents, 2)
-  }
-
-  get fees() {
-    return toDollars(this.cartItemInCents('Fees', false), 2)
-  }
-
   render() {
-    const {selectedTicket} = this.state
-    const {event, cart: {state: {quantity}}} = this.props
+    const {event, cart} = this.props
     const eventTime = eventDateTimes(event).event_start
 
     return (
@@ -155,17 +92,13 @@ export default class Checkout extends Component {
             <View style={checkoutStyles.row}>
               <View>
                 <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>{selectedTicket.name}</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>{this.ticketType.name}</Text>
               </View>
             </View>
             <View style={checkoutStyles.row}>
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.decrementTickets()}>
-                <Icon style={this.decrementStyle} name="remove-circle" />
-              </TouchableHighlight>
-              <Text style={checkoutStyles.quantityPrice}>{quantity}</Text>
-              <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.incrementTickets()}>
-                <Icon style={this.incrementStyle} name="add-circle" />
-              </TouchableHighlight>
+              {this.decrementButton}
+              <Text style={checkoutStyles.quantityPrice}>{cart.requestedQuantity}</Text>
+              {this.incrementButton}
             </View>
           </View>
 
@@ -199,8 +132,8 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>${this.ticketsTotal} USD</Text>
-                <Text style={checkoutStyles.ticketSubHeader}>${this.fees} USD</Text>
+                <Text style={[checkoutStyles.ticketSubHeader, styles.marginBottomSmall]}>${toDollars(cart.ticketsCents)} USD</Text>
+                <Text style={checkoutStyles.ticketSubHeader}>${toDollars(cart.feesCents)} USD</Text>
               </View>
             </View>
           </View>
@@ -213,7 +146,7 @@ export default class Checkout extends Component {
             </View>
             <View style={checkoutStyles.row}>
               <View>
-                <Text style={checkoutStyles.ticketHeader}>${this.subtotal} USD</Text>
+                <Text style={checkoutStyles.ticketHeader}>${toDollars(cart.totalCents)} USD</Text>
               </View>
             </View>
           </View>
