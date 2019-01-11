@@ -3,7 +3,6 @@ import {Text, View, Image, TextInput, ScrollView, TouchableHighlight} from 'reac
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
-import avatarPlaceholder from '../../assets/avatar-female.png'
 import {autotrim} from '../string'
 import {accessCameraRoll, selectCameraRollImage} from '../image'
 import {uploadImageToCloudinary} from '../cloudinary'
@@ -37,8 +36,6 @@ export default class AccountDetails extends Component {
     if (newProfilePic) {
       changes.profile_pic_url = await uploadImageToCloudinary(newProfilePic)
     }
-
-    console.log('changes', changes)
 
     return changes
   }
@@ -85,7 +82,7 @@ export default class AccountDetails extends Component {
       },
       state: {
         user,
-      }
+      },
     } = this
 
     return (

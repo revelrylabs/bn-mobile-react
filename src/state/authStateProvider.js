@@ -5,8 +5,8 @@ import {server, refreshWithToken, apiErrorAlert} from '../constants/Server'
 /* eslint-disable camelcase,space-before-function-paren */
 
 function shouldDoAdditionalSignUpStep(currentUser) {
-  console.log('currentUser', currentUser)
   const {first_name: first, last_name: last} = currentUser
+
   return !(first && last)
 }
 
@@ -31,7 +31,7 @@ class AuthContainer extends Container {
 
     await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
     const currentUser = await this.getCurrentUser(navigate, access_token, refresh_token, refresh)
-    
+
     if (shouldDoAdditionalSignUpStep(currentUser)) {
       navigate('SignUpNext')
     } else {
