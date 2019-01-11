@@ -3,6 +3,13 @@ import {AsyncStorage} from 'react-native'
 import {server, refreshWithToken, apiErrorAlert} from '../constants/Server'
 
 /* eslint-disable camelcase,space-before-function-paren */
+
+function shouldDoAdditionalSignUpStep(currentUser) {
+  const {first_name: first, last_name: last} = currentUser
+
+  return !(first && last)
+}
+
 class AuthContainer extends Container {
   constructor(props = {}) {
     super(props);
@@ -23,8 +30,13 @@ class AuthContainer extends Container {
     const {data: {access_token, refresh_token}} = resp
 
     await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
-    await this.getCurrentUser(navigate, access_token, refresh_token, refresh)
-    navigate('AuthLoading')
+    const currentUser = await this.getCurrentUser(navigate, access_token, refresh_token, refresh)
+
+    if (shouldDoAdditionalSignUpStep(currentUser)) {
+      navigate('SignUpNext')
+    } else {
+      navigate('AuthLoading')
+    }
   }
 
   logOut = async (navigate) => { // eslint-disable-line space-before-function-paren
@@ -41,9 +53,10 @@ class AuthContainer extends Container {
       if (setToken) {
         await refreshWithToken(refresh_token)
       }
-      const myUserResponse = await server.users.current()
+      const {data: currentUser} = await server.users.current()
 
-      await this.setState({currentUser: myUserResponse.data, access_token, refresh_token})
+      await this.setState({currentUser, access_token, refresh_token})
+      return currentUser.user
     } catch (error) {
       apiErrorAlert(error, 'There was a problem logging you in.')
 
@@ -59,7 +72,7 @@ class AuthContainer extends Container {
       await this.setState({currentUser: data})
       return data
     } catch (error) {
-      return error.response.data
+      apiErrorAlert(error, 'There was an error updating your profile.')
     }
   }
 
