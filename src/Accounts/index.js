@@ -62,6 +62,8 @@ export default class Account extends Component {
   constructor(props) {
     super(props)
 
+    this.props.screenProps.auth.identify()
+
     this.state = {
       showQRModal: false,
       user: this.user,
