@@ -40,11 +40,11 @@ export default class TransferTickets extends Component {
 
   get tickets() {
     const {
-      navigation: {state: {params: {eventId}}},
+      navigation: {state: {params: {activeTab, eventId}}},
       screenProps: {store: {ticketsForEvent}},
     } = this.props
 
-    return ticketsForEvent(eventId).tickets
+    return ticketsForEvent(activeTab, eventId).tickets
   }
 
   get firstName() {

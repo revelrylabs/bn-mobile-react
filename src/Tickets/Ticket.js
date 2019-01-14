@@ -67,7 +67,7 @@ export default class Ticket extends Component {
   }
 
   render() {
-    const {navigate, ticket, qrEnabled} = this.props
+    const {navigate, ticket, activeTab} = this.props
     const {firstName, lastName} = this.state
 
     return (
@@ -122,7 +122,7 @@ export default class Ticket extends Component {
         </View>
 
         <View style={ticketWalletStyles.qrCodeContainer}>
-          {qrEnabled && this.state.qrText ? (
+          {activeTab === 'upcoming' && this.state.qrText ? (
             <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} />
           ) : null}
         </View>
@@ -134,10 +134,11 @@ export default class Ticket extends Component {
             <Text style={ticketWalletStyles.bottomNavLinkText}>{'' || 'ADD TO WALLET'}</Text>
           </View>
         }
+        {activeTab != 'transfer' && (
           <TouchableHighlight
             underlayColor="rgba(0, 0, 0, 0)"
             onPress={
-              () => navigate('TransferTickets', {eventId: ticket.eventId, firstName, lastName})
+              () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
             }
           >
             <View style={ticketWalletStyles.bottomNavLinkContainer}>
@@ -145,6 +146,7 @@ export default class Ticket extends Component {
               <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
             </View>
           </TouchableHighlight>
+        )}
         </View>
       </View>
     )

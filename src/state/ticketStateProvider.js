@@ -10,7 +10,6 @@ class TicketsContainer extends Container {
 
     this.state = {
       tickets: [],
-      ticketsByEventId: {},
       purchasedTicket: null,
     }
   }
@@ -19,33 +18,41 @@ class TicketsContainer extends Container {
   userTickets = async () => {
     try {
       const response = await server.tickets.index()
-      const {data, _paging} = response.data; // @TODO: pagination
-      const ticketsByEventId = {}
-      const ticketGroups = {
+      const {data, _paging} = response.data // @TODO: pagination
+      const tabData = {
         upcoming: [],
         past: [],
         transfer: [],
-      };
+      }
 
-      // @TODO: api data structure will eventually change
-      data.forEach((ticketGroup) => {
-        const event = ticketGroup[0];
-        const tickets = ticketGroup[1];
-        const bucket = eventIsInPast(event) ? 'past' : 'upcoming'
+      data.forEach(([event, tix]) => {
+        const untransferredCategory = eventIsInPast(event) ? 'past' : 'upcoming'
         const {event_start, door_time} = eventDateTimes(event)
 
         event.formattedDate = event_start.toFormat('EEE, MMMM d')
         event.formattedDoors = door_time.toFormat('t')
         event.formattedStart = event_start.toFormat('t')
 
-        const eventAndTicketsObject = {event, tickets}
+        const categories = {
+          'upcoming': [],
+          'past': [],
+          'transfer': [],
+        }
 
-        ticketsByEventId[event.id] = eventAndTicketsObject
-        ticketGroups[bucket].push(eventAndTicketsObject);
-      });
+        tix.forEach(ticket => {
+          categories[ticket.pending_transfer ? 'transfer' : untransferredCategory].push(ticket)
+        })
 
-      this.setState({tickets: ticketGroups, ticketsByEventId});
+        Object.keys(categories).forEach(key => {
+          const tickets = categories[key]
 
+          if (tickets.length) {
+            tabData[key].push({event, tickets})
+          }
+        })
+      })
+
+      this.setState({tickets: tabData})
     } catch (error) {
       apiErrorAlert(error, 'Loading tickets failed.')
     }
@@ -55,8 +62,8 @@ class TicketsContainer extends Container {
     this.setState({purchasedTicket})
   }
 
-  ticketsForEvent = (eventId) => {
-    return this.state.ticketsByEventId[eventId]
+  ticketsForEvent = (activeTab, eventId) => {
+    return this.state.tickets[activeTab].find(({event: {id}}) => id === eventId)
   }
 
   redeemTicketInfo = async (ticket_id) => { // eslint-disable-line complexity
