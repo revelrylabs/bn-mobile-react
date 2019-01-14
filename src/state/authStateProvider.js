@@ -1,6 +1,8 @@
 import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
+
 import {server, refreshWithToken, apiErrorAlert} from '../constants/Server'
+import {identify, track} from '../constants/analytics';
 
 /* eslint-disable camelcase,space-before-function-paren */
 
@@ -76,6 +78,16 @@ class AuthContainer extends Container {
     }
   }
 
+  identify = async (action = '') => {
+    const {currentUser: {user: {id, first_name, last_name, email}}} = this.state
+
+    await identify({id, firstName: first_name, lastName: last_name, email})
+
+    if (action !== '') {
+      track(action)
+    }
+  }
+
   signUp = async (formData, navigate) => {
     try {
       const response = await server.users.createAndLogin({
@@ -86,7 +98,8 @@ class AuthContainer extends Container {
         phone: '',
       })
 
-      this.setLoginData(response, navigate, true)
+      await this.setLoginData(response, navigate, true)
+      this.identify('Signed Up')
     } catch (error) {
       apiErrorAlert(error, 'There was an error creating your account.')
     }
@@ -96,7 +109,8 @@ class AuthContainer extends Container {
     try {
       const resp = await server.auth.authenticate(formData)
 
-      this.setLoginData(resp, navigate)
+      await this.setLoginData(resp, navigate)
+      this.identify('Signed In')
     } catch (error) {
       apiErrorAlert(error, 'There was a problem logging in.')
 

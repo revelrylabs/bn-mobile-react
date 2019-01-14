@@ -47,6 +47,7 @@ export default class AccountDetails extends Component {
     if (result.error) {
       this.onSaveChangesError(result)
     } else {
+      this.props.screenProps.auth.identify()
       this.onSaveChangesSuccess(result)
     }
   }
