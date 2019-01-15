@@ -22,9 +22,6 @@ export default class EventsIndex extends Component {
   }
 
   get scheduleText() {
-    console.log("EVENTZZZ", this.props.event);
-    
-
     return eventDateTimes(this.props.event.localized_times).event_start.toFormat('EEE, MMMM d')
   }
 
