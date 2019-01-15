@@ -6,7 +6,6 @@ import Notifications from './notifications'
 import Billing from './billing'
 import OrderHistory from './orderHistory'
 import SignedOut from './signedOut'
-import ChangePhoto from './changePhoto'
 import EventManager from './eventManager'
 import EventScanner from './eventScanner'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -43,12 +42,6 @@ const ROUTES = {
   AccountDetails: {
     screen: AccountDetails,
     navigationOptions: ({navigation}) => (defaultNavOptions('Account', navigation)),
-  },
-  ChangePhoto: {
-    screen: ChangePhoto,
-    navigationOptions: {
-      title: 'Change Photo',
-    },
   },
   SignedOut: {
     screen: SignedOut,
