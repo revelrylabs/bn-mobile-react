@@ -28,7 +28,7 @@ function EmptyTickets({text}) {
 
 const AnimatedTicket = ({navigate, ticket, springValue}) => (
   <Animated.View style={{transform: [{scale: springValue}]}}>
-    <Ticket navigate={navigate} ticket={ticket} />
+    <Ticket navigate={navigate} ticket={ticket} qrEnabled />
   </Animated.View>
 )
 
@@ -38,12 +38,12 @@ AnimatedTicket.propTypes = {
   springValue: PropTypes.object.isRequired,
 }
 
-const Ticket = ({navigate, ticket, qrEnabled}) => {
+const Ticket = ({navigate, ticket, activeTab}) => {
   const {event, tickets} = ticket
 
   return (
     <View>
-      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets', {eventId: event.id, qrEnabled})}>
+      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets', {eventId: event.id, activeTab})}>
         <View style={ticketStyles.ticketContainer}>
           <Image
             style={ticketStyles.eventImage}
@@ -93,7 +93,7 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({qrEnabled, emptyText, tickets, navigate, springValue, purchasedTicket}) => {
+const TicketsView = ({activeTab, emptyText, tickets, navigate, springValue, purchasedTicket}) => {
   if (!tickets.length) {
     return <EmptyTickets text={emptyText} />
   }
@@ -106,7 +106,12 @@ const TicketsView = ({qrEnabled, emptyText, tickets, navigate, springValue, purc
         ticket={ticket}
         springValue={springValue}
       /> :
-      <Ticket {...{navigate, qrEnabled}} key={ticket.event.name} ticket={ticket} />
+      <Ticket
+        navigate={navigate}
+        activeTab={activeTab}
+        key={ticket.event.name}
+        ticket={ticket}
+      />
   ))
 }
 
@@ -205,7 +210,7 @@ export default class MyTickets extends Component {
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
               purchasedTicket={purchasedTicket}
-              qrEnabled={this.state.activeTab === 'upcoming'}
+              activeTab={this.state.activeTab}
             />
           </View>
 
