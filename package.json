@@ -17,7 +17,10 @@
     "debug": "open \"rndebugger://set-debugger-loc?host=localhost&port=19001\""
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   },
   "dependencies": {
     "big.js": "^5.2.2",
