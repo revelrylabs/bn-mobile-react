@@ -67,7 +67,7 @@ export default class Ticket extends Component {
   }
 
   render() {
-    const {navigate, ticket, qrEnabled} = this.props
+    const {navigate, ticket, activeTab} = this.props
     const {firstName, lastName} = this.state
 
     return (
@@ -93,8 +93,8 @@ export default class Ticket extends Component {
               </View>
             </View>
             <View>
-              <Text style={ticketStyles.header}>{ticket.name}</Text>
-              <Text style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.formattedDate} {ticket.formattedStart}  &bull;  {ticket.venue}</Text>
+              <Text numberOfLines={1} style={ticketStyles.header}>{ticket.name}</Text>
+              <Text numberOfLines={1} style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.starts} &bull; {ticket.venue}</Text>
               <TouchableHighlight onPress={this.openVenueDirections}>
                 <View style={styles.iconLinkContainer}>
                     <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
@@ -122,25 +122,32 @@ export default class Ticket extends Component {
         </View>
 
         <View style={ticketWalletStyles.qrCodeContainer}>
-          {qrEnabled && this.state.qrText ? (
+          {activeTab === 'upcoming' && this.state.qrText ? (
             <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} />
           ) : null}
         </View>
 
-        {false && // TODO: Re-enable when functionality is implemented.
         <View style={ticketWalletStyles.bottomNav}>
+        {false && // TODO: Re-enable when functionality is implemented.
           <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
             <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-            <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+            <Text style={ticketWalletStyles.bottomNavLinkText}>{'' || 'ADD TO WALLET'}</Text>
           </View>
-          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('TransferTickets')}>
+        }
+        {activeTab != 'transfer' && (
+          <TouchableHighlight
+            underlayColor="rgba(0, 0, 0, 0)"
+            onPress={
+              () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
+            }
+          >
             <View style={ticketWalletStyles.bottomNavLinkContainer}>
               <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
               <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
             </View>
           </TouchableHighlight>
+        )}
         </View>
-        }
       </View>
     )
   }

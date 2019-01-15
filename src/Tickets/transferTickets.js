@@ -1,39 +1,66 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types'
-import {Modal, ScrollView, Text, View, Image, TouchableHighlight} from 'react-native';
+import {Modal, ScrollView, Text, View, Image, TouchableHighlight, TextInput, Alert} from 'react-native';
 import CircleCheckBox from 'react-native-circle-checkbox'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import SharedStyles from '../styles/shared/sharedStyles'
+import SharedStyles, { backgroundColor } from '../styles/shared/sharedStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import TicketTransferStyles from '../styles/tickets/ticketTransferStyles'
 import ModalStyles from '../styles/shared/modalStyles'
+import FormStyles from '../styles/shared/formStyles'
+import {autotrim, pluralize} from '../string'
 
 const styles = SharedStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
+const formStyles = FormStyles.createStyles()
 
-
+function Card({children}) {
+  return (
+    <View style={styles.flexRowCenter}>
+      <View style={ticketTransferStyles.cardContainer}>
+        {children}
+      </View>
+    </View>
+  )
+}
 export default class TransferTickets extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      checkboxes: this.buildCheckBoxState(props.tickets)
+      isSubmitting: false,
+      checkboxes: this.buildCheckBoxState(this.tickets),
+      emailOrPhone: '',
     };
   }
 
-  // this is made up ticket data that will need to be restructured and renamed
-  // for real data
-  static defaultProps = {
-    tickets: [
-      {id: 1, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
-      {id: 2, label: 'Anna Behrensmeyer', type: 'GENERAL ADMISSION'},
-      {id: 3, label: 'Brittany Gay', type: 'GENERAL ADMISSION'},
-      {id: 4, label: 'Alexandra ReallyLongLastName', type: 'GENERAL ADMISSION'},
-    ],
+  get tickets() {
+    const {
+      navigation: {state: {params: {activeTab, eventId}}},
+      screenProps: {store: {ticketsForEvent}},
+    } = this.props
+
+    return ticketsForEvent(activeTab, eventId).tickets
+  }
+
+  get firstName() {
+    const {navigation: {state: {params: {firstName}}}} = this.props
+
+    return firstName
+  }
+
+  get lastName() {
+    const {navigation: {state: {params: {lastName}}}} = this.props
+
+    return lastName
+  }
+
+  get label() {
+    return `${this.firstName} ${this.lastName}`
   }
 
   buildCheckBoxState(tickets) {
@@ -45,12 +72,22 @@ export default class TransferTickets extends Component {
     }, {});
   }
 
-  toggleCheck = (id) => {
-    return (checked) => {
-      const {checkboxes} = this.state
+  get transferTickets() {
+    const {checkboxes} = this.state
+    const keys = Object.keys(checkboxes);
 
-      this.setState({checkboxes: {...checkboxes, [id]: checked}});
-    }
+    return keys.filter((key) => checkboxes[key]);
+  }
+
+  setChecked = (id, bool) => {
+    const checkboxes = {...this.state.checkboxes}
+
+    checkboxes[id] = bool
+    this.setState({checkboxes})
+  }
+
+  toggleCheck = (id) => {
+    return (checked) => this.setChecked(id, checked)
   }
 
   transferCount = () => {
@@ -64,32 +101,30 @@ export default class TransferTickets extends Component {
     }, 0)
   }
 
-  renderCheckBox(checked, ticket) {
-    return (
-      <View style={styles.flexRowCenter} key={ticket.id}>
-        <View style={ticketTransferStyles.cardContainer}>
-          <View style={styles.flexRowFlexStart}>
-            <CircleCheckBox
-              checked={checked}
-              onToggle={this.toggleCheck(ticket.id)}
-              innerColor="#FF20B1"
-              outerColor="#FF20B1"
-              innerSize={15}
-              outerSize={29}
-              styleCheckboxContainer={styles.marginRight}
-            />
-            <View>
-              <Text style={ticketStyles.ticketHolderHeader}>{ticket.label}</Text>
-              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.type}</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    )
+  transfer = async () => {
+    if (this.state.isSubmitting) {
+      return
+    }
+    this.setState({isSubmitting: true})
+
+    const {checkboxes, emailOrPhone} = this.state
+    const ticketIds = Object.keys(checkboxes).filter(key => checkboxes[key])
+
+    try {
+      await this.props.screenProps.store.transferTickets(emailOrPhone, ticketIds)
+
+      const onDismiss = () => {
+        this.props.navigation.popToTop()
+      }
+      Alert.alert('Alert', 'Tickets transferred!', [{text: 'OK', onPress: onDismiss}], {onDismiss})
+    } catch (error) {
+      this.setState({isSubmitting: false})
+      throw error
+    }
   }
 
   render() {
-    const {navigation, tickets} = this.props
+    const {navigation} = this.props
     const {checkboxes} = this.state
 
     return (
@@ -110,20 +145,45 @@ export default class TransferTickets extends Component {
           </View>
 
           <View style={modalStyles.contentRoundedWrapper}>
+
+            <TextInput
+              keyboardType="email-address"
+              style={[formStyles.input, {backgroundColor: 'white'}]}
+              placeholder="Recipient email or phone"
+              searchIcon={{size: 24}}
+              underlineColorAndroid="transparent"
+              onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
+            />
+
             <ScrollView showsVerticalScrollIndicator={false}>
 
-              <Text style={modalStyles.headerSecondary}>Select the ticket(s) you want to transfer</Text>
+              <Text style={modalStyles.headerSecondary}>Select tickets to transfer</Text>
 
-              {tickets.map((ticket) => {
-                return this.renderCheckBox(checkboxes[ticket.id], ticket)
-              })}
-
+              {this.tickets.map(({id, ticket_type_name: name}) => (
+                <Card key={id}>
+                  <View style={styles.flexRowFlexStart}>
+                    <CircleCheckBox
+                      checked={checkboxes[id]}
+                      onToggle={this.toggleCheck(id)}
+                      innerColor="#FF20B1"
+                      outerColor="#FF20B1"
+                      innerSize={15}
+                      outerSize={29}
+                      styleCheckboxContainer={styles.marginRight}
+                    />
+                    <View>
+                      <Text style={ticketStyles.ticketHolderHeader}>{this.label}</Text>
+                      <Text style={ticketStyles.ticketHolderSubheader}>{name}</Text>
+                    </View>
+                  </View>
+                </Card>
+              ))}
             </ScrollView>
           </View>
 
           <View style={[styles.buttonContainer, styles.marginHorizontal]}>
-            <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]}>
-              <Text style={styles.buttonText}>Transfer {this.transferCount()} Tickets..</Text>
+            <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]} onPress={this.transfer}>
+              <Text style={styles.buttonText}>Transfer {pluralize(this.transferCount(), 'Ticket')}...</Text>
             </TouchableHighlight>
           </View>
 

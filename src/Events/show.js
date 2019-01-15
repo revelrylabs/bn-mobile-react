@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight, KeyboardAvoidingView, Platform} from 'react-native'
+import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight, KeyboardAvoidingView} from 'react-native'
 import {WebBrowser} from 'expo';
 import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -12,7 +12,7 @@ import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
 import {toDollars} from '../constants/money'
-import {min, max, isEmpty, some, uniq} from 'lodash'
+import {min, max, isEmpty, uniq} from 'lodash'
 
 
 const styles = SharedStyles.createStyles()
@@ -21,12 +21,20 @@ const modalStyles = ModalStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
 function priceRangeString(ticket_types) {
+  if (!ticket_types) {
+    return null
+  }
+
   const prices = ticket_types
     .map(({ticket_pricing: pricing}) => pricing)
     .filter((pricing) => pricing !== null)
     .map(({price_in_cents: cents}) => cents)
 
-  return uniq([min(prices), max(prices)]).map((cents) => `$${toDollars(cents)}`).join(' - ')
+  if (!prices.length) {
+    return null
+  }
+
+  return uniq([min(prices), max(prices)]).map((cents) => `$${toDollars(cents, 0)}`).join(' - ')
 }
 
 
@@ -79,14 +87,14 @@ SuccessScreen.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
 }
 
-function CheckoutButton({onCheckout, disabled}) {
+function CheckoutButton({onCheckout, disabled, busy}) {
   return (
     <View style={[styles.buttonContainer, eventDetailsStyles.fixedFooter]}>
       <TouchableHighlight
         style={disabled ? styles.buttonDisabled : styles.button}
         onPress={disabled ? null : onCheckout}
       >
-        <Text style={styles.buttonText}>Purchase Ticket</Text>
+        <Text style={styles.buttonText}>{busy ? 'Updating...' : ' Purchase Ticket'}</Text>
       </TouchableHighlight>
     </View>
   )
@@ -95,6 +103,7 @@ function CheckoutButton({onCheckout, disabled}) {
 CheckoutButton.propTypes = {
   onCheckout: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  busy: PropTypes.bool,
 }
 
 export default class EventShow extends Component {
@@ -150,10 +159,8 @@ export default class EventShow extends Component {
     this.setState({currentScreen})
   }
 
-  selectPayment = async (selectedPaymentDetails) => {
-    const {screenProps: {cart}} = this.props
-
-    await cart.setPayment(selectedPaymentDetails)
+  selectPayment = async (payment) => {
+    await this.props.screenProps.cart.setPayment(payment)
     this.changeScreen('checkout')
   }
 
@@ -165,18 +172,17 @@ export default class EventShow extends Component {
     this.setState({showSuccessModal})
   }
 
-  // If no ticket types, or no ticket pricings, we cant buy tickets
-  get canBuyTickets() {
-    const {event: {ticket_types}} = this.state
-
-    return some(ticket_types, (ticket) => !isEmpty(ticket.ticket_pricing))
-  }
-
   get ticketRange() {
+    const str = priceRangeString(this.state.event.ticket_types)
+
+    if (!str) {
+      return null
+    }
+
     return (
       <View style={eventDetailsStyles.priceHeaderWrapper}>
         <Text style={eventDetailsStyles.priceHeader}>
-          {priceRangeString(this.state.event.ticket_types)}
+          {str}
         </Text>
       </View>
     )
@@ -197,11 +203,8 @@ export default class EventShow extends Component {
     return null
   }
 
-  onTicketSelection = async (ticketTypeId, ticketPricingId) => {
-    const {screenProps: {cart}} = this.props
-
-    await cart.emptyCart()
-    await cart.selectTicket(ticketTypeId, ticketPricingId)
+  onTicketSelection = async (ticketTypeId, _ticketPricingId) => {
+    await this.props.screenProps.cart.setTicketType(ticketTypeId)
     this.changeScreen('checkout')
   }
 
@@ -211,9 +214,7 @@ export default class EventShow extends Component {
     const {
       screenProps: {
         store: {toggleInterest},
-        cart: {
-          state: {selectedPaymentDetails},
-        },
+        cart: {payment},
         user: {access_token, refresh_token},
       },
     } = this.props
@@ -248,7 +249,7 @@ export default class EventShow extends Component {
       return (
         <PaymentTypes
           changeScreen={this.changeScreen}
-          selectedPaymentDetails={selectedPaymentDetails}
+          selectedPaymentDetails={payment}
           selectPayment={this.selectPayment}
           access_token={access_token}
           refresh_token={refresh_token}
@@ -298,10 +299,10 @@ export default class EventShow extends Component {
     const {event, currentScreen} = this.state
     const {ctaText, enabled} = this.getDetailPageButtonCta
 
-    if (currentScreen === 'details' && this.canBuyTickets) {
+    if (currentScreen === 'details') {
       return (
         <View style={eventDetailsStyles.fixedFooter}>
-          {enabled && !event.is_external ? this.ticketRange : null}
+          {enabled && this.ticketRange}
           <View style={styles.buttonContainer}>
             <TouchableHighlight
               style={enabled ? styles.button : styles.buttonDisabled}
@@ -325,7 +326,8 @@ export default class EventShow extends Component {
     return (
       <CheckoutButton
         onCheckout={this.purchaseTicket}
-        disabled={isEmpty(this.props.screenProps.cart.state.selectedPaymentDetails)}
+        disabled={!this.props.screenProps.cart.canPlaceOrder}
+        busy={this.props.screenProps.cart.isChangingQuantity}
       />
     )
   }
@@ -333,37 +335,38 @@ export default class EventShow extends Component {
   purchaseTicket = async () => {
     const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
 
-    if (isEmpty(cart.state.selectedPaymentDetails)) {
+    if (!cart.payment) {
       alert('Please enter your payment details');
       return false
     }
 
     this.setState({showLoadingModal: true})
+    try {
+      await cart.placeOrder()
+      setPurchasedTicket(cart.id)
 
-    await cart.placeOrder(() => setPurchasedTicket(cart.state.id))
+      await this.setState({
+        showLoadingModal: false,
+        showSuccessModal: true,
+      })
 
-    // @TODO: Need to wrap this in a try, or as a const, so we can skip the nav if it fails
-    await this.setState({
-      showLoadingModal: false,
-      showSuccessModal: true,
-    })
+      const resetAction = StackActions.reset({
+        index: 0,
+        key: 'Explore',
+        actions: [
+          NavigationActions.navigate({routeName: 'Home'}),
+        ],
+      })
 
-    const resetAction = StackActions.reset({
-      index: 0,
-      key: 'Explore',
-      actions: [
-        NavigationActions.navigate({routeName: 'Home'}),
-      ],
-    })
+      setTimeout(() => {
+        this.props.navigation.dispatch(resetAction)
 
-    setTimeout(() => {
-      this.props.navigation.dispatch(resetAction)
-
-      // Navigate to the tickets tab to see the new ticket
-      navigate('MyTickets')
-    }, 3000)
-
-    return null
+        // Navigate to the tickets tab to see the new ticket
+        navigate('MyTickets')
+      }, 3000)
+    } finally {
+      this.setState({showLoadingModal: false})
+    }
   }
 
 
