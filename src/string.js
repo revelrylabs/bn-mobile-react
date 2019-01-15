@@ -9,3 +9,7 @@ export function pluralize(count, singular, plural = null) {
 
   return `${count} ${noun}`
 }
+
+export function username({first_name: first, last_name: last, email}) {
+  return [first, last].join(' ').trim() || email
+}

@@ -8,6 +8,7 @@ import ModalStyles from '../styles/shared/modalStyles'
 import coverPhotoPlaceholder from '../../assets/account-placeholder-bkgd.png'
 import qrCodePlaceholder from '../../assets/qr-code-placeholder.png'
 import qrCodeIcon from '../../assets/qr-code-small.png'
+import {username} from '../string'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -61,6 +62,8 @@ export default class Account extends Component {
   constructor(props) {
     super(props)
 
+    this.props.screenProps.auth.identify()
+
     this.state = {
       showQRModal: false,
       user: this.user,
@@ -110,7 +113,7 @@ export default class Account extends Component {
 
           <View style={accountStyles.accountHeaderWrapper}>
             <View>
-              <Text style={accountStyles.accountEmailHeader}>{user.first_name} {user.last_name}</Text>
+              <Text style={accountStyles.accountEmailHeader}>{username(user)}</Text>
               <View style={accountStyles.emailWrapper}>
                 <Icon style={accountStyles.emailIcon} name="mail" />
                 <Text style={accountStyles.accountEmail}>{user.email}</Text>

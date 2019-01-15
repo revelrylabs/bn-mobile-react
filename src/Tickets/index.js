@@ -131,7 +131,7 @@ export default class MyTickets extends Component {
 
   constructor(props) {
     super(props)
-
+    this.props.screenProps.auth.identify()
     this.springValue = new Animated.Value(0.3)
 
     this.state = {
