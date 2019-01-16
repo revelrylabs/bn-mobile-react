@@ -99,6 +99,10 @@ class CartContainer extends Container {
     return newQuantity > 0 && newQuantity <= this.maxCommittableQuantity
   }
 
+  async clearCart() {
+    await this._resetState()
+  }
+
   async addQuantity(x) {
     return await this.setQuantity(this.requestedQuantity + x)
   }
@@ -178,16 +182,20 @@ class CartContainer extends Container {
   }
 
   async placeOrder() {
-    await server.cart.checkout({
-      amount: this.totalCents,
-      method: {
-        type: 'Card',
-        provider: 'stripe',
-        token: this.payment.id,
-        save_payment_method: false,
-        set_default: false,
-      },
-    })
+    try {
+      await server.cart.checkout({
+        amount: this.totalCents,
+        method: {
+          type: 'Card',
+          provider: 'stripe',
+          token: this.payment.id,
+          save_payment_method: false,
+          set_default: false,
+        },
+      })
+    } catch(error) {
+      apiErrorAlert(error)
+    }
   }
 }
 
