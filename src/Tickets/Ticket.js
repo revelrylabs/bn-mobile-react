@@ -13,6 +13,7 @@ const styles = SharedStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
+/* eslint-disable camelcase */
 export default class Ticket extends Component {
   static propTypes = {
     navigate: PropTypes.func.isRequired,
@@ -38,6 +39,7 @@ export default class Ticket extends Component {
     const {redeem_key} = this.state
     const {ticket: {ticketId, eventId}} = this.props
     const qrObj = {type: 0, data: {redeem_key, id: ticketId, event_id: eventId, extra: ''}};
+
     this.setState({qrText: JSON.stringify(qrObj)})
   }
 
@@ -57,7 +59,7 @@ export default class Ticket extends Component {
   openVenueDirections = () => {
     const {ticket} = this.props
     const {venue} = ticket
-    let daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+    const daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
 
     if (Platform.OS === 'ios') {
       Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
@@ -66,7 +68,7 @@ export default class Ticket extends Component {
     }
   }
 
-  render() {
+  render() { // eslint-disable-line complexity
     const {navigate, ticket, activeTab} = this.props
     const {firstName, lastName} = this.state
 
@@ -128,25 +130,25 @@ export default class Ticket extends Component {
         </View>
 
         <View style={ticketWalletStyles.bottomNav}>
-        {false && // TODO: Re-enable when functionality is implemented.
-          <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
-            <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-            <Text style={ticketWalletStyles.bottomNavLinkText}>{'' || 'ADD TO WALLET'}</Text>
-          </View>
-        }
-        {activeTab != 'transfer' && (
-          <TouchableHighlight
-            underlayColor="rgba(0, 0, 0, 0)"
-            onPress={
-              () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
-            }
-          >
-            <View style={ticketWalletStyles.bottomNavLinkContainer}>
-              <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
-              <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
+          {false && // TODO: Re-enable when functionality is implemented.
+            <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
+              <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
+              <Text style={ticketWalletStyles.bottomNavLinkText}>{'' || 'ADD TO WALLET'}</Text>
             </View>
-          </TouchableHighlight>
-        )}
+          }
+          {activeTab !== 'transfer' && (
+            <TouchableHighlight
+              underlayColor="rgba(0, 0, 0, 0)"
+              onPress={
+                () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
+              }
+            >
+              <View style={ticketWalletStyles.bottomNavLinkContainer}>
+                <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
+                <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
+              </View>
+            </TouchableHighlight>
+          )}
         </View>
       </View>
     )

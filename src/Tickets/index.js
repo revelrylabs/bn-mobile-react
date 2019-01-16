@@ -80,7 +80,7 @@ const Ticket = ({navigate, ticket, activeTab}) => {
           </View>
           <View>
             <Text style={[ticketStyles.detailsBottomHeader, ticketStyles.detailsLast]}>SHOW</Text>
-            <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{event.formattedShow}</Text>
+            <Text style={[ticketStyles.detailsBottomText, ticketStyles.detailsLast]}>{event.formattedStart}</Text>
           </View>
         </View>
       </View>
