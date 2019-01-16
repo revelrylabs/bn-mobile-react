@@ -116,7 +116,7 @@ export default class TransferTickets extends Component {
       const onDismiss = () => {
         this.props.navigation.popToTop()
       }
-      Alert.alert('Alert', 'Tickets transferred!', [{text: 'OK', onPress: onDismiss}], {onDismiss})
+      Alert.alert('Transfer Complete', 'Tickets have been successfully transferred!', [{text: 'OK', onPress: onDismiss}], {onDismiss})
     } catch (error) {
       this.setState({isSubmitting: false})
       throw error
@@ -126,7 +126,7 @@ export default class TransferTickets extends Component {
   render() {
     const {navigation} = this.props
     const {checkboxes} = this.state
-
+    let disabled = this.transferCount() < 1;
     return (
       <Modal>
         <View style={ticketWalletStyles.modalContainer}>
@@ -157,8 +157,6 @@ export default class TransferTickets extends Component {
 
             <ScrollView showsVerticalScrollIndicator={false}>
 
-              <Text style={modalStyles.headerSecondary}>Select tickets to transfer</Text>
-
               {this.tickets.map(({id, ticket_type_name: name}) => (
                 <Card key={id}>
                   <View style={styles.flexRowFlexStart}>
@@ -172,8 +170,8 @@ export default class TransferTickets extends Component {
                       styleCheckboxContainer={styles.marginRight}
                     />
                     <View>
-                      <Text style={ticketStyles.ticketHolderHeader}>{this.label}</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>{name}</Text>
+                      <Text style={ticketStyles.ticketHolderHeader}>{name}</Text>
+                      <Text style={ticketStyles.ticketHolderSubheader}>{this.label}</Text>
                     </View>
                   </View>
                 </Card>
@@ -182,11 +180,13 @@ export default class TransferTickets extends Component {
           </View>
 
           <View style={[styles.buttonContainer, styles.marginHorizontal]}>
-            <TouchableHighlight style={[styles.button, modalStyles.bottomRadius]} onPress={this.transfer}>
-              <Text style={styles.buttonText}>Transfer {pluralize(this.transferCount(), 'Ticket')}...</Text>
+            <TouchableHighlight
+              style={disabled ? [styles.buttonDisabled, modalStyles.bottomRadius] : [styles.button, modalStyles.bottomRadius]}
+              onPress={disabled ? null : onPress=this.transfer}
+            >
+              <Text style={styles.buttonText}>{disabled ? 'No Tickets Selected' : 'Transfer ' + pluralize(this.transferCount(), 'Ticket')}</Text>
             </TouchableHighlight>
           </View>
-
         </View>
       </Modal>
     )
