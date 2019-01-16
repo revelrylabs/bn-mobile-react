@@ -185,9 +185,10 @@ class CartContainer extends Container {
     }
   }
 
-  applyPromo = async (redemption_code, onSuccess) => {
-    await this.setState({redemption_code, quantity: 1})
-    await this.replaceCart(true, onSuccess)
+  applyPromo = async (redemptionCode) => {
+    const response = await server.redemptionCodes.read({ code: redemptionCode })
+    console.log(response.data);
+
   }
 
   async setTicketType(ticketTypeId) {
