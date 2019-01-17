@@ -18,6 +18,7 @@ export default class Ticket extends Component {
   static propTypes = {
     navigate: PropTypes.func.isRequired,
     ticket: PropTypes.object.isRequired,
+    activeTab: PropTypes.string,
   }
 
   constructor(props) {
@@ -68,8 +69,54 @@ export default class Ticket extends Component {
     }
   }
 
-  render() { // eslint-disable-line complexity
+  get ticketBottomRow() {
     const {navigate, ticket, activeTab} = this.props
+    const {firstName, lastName} = this.state
+
+    return (
+      <View style={ticketWalletStyles.bottomNav}>
+        {false && // TODO: Re-enable when functionality is implemented -- issue #253
+          <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
+            <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
+            <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+          </View>
+        }
+        {activeTab !== 'transfer' && (
+          <TouchableHighlight
+            underlayColor="rgba(0, 0, 0, 0)"
+            onPress={
+              () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
+            }
+          >
+            <View style={ticketWalletStyles.bottomNavLinkContainer}>
+              <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
+              <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
+            </View>
+          </TouchableHighlight>
+        )}
+      </View>
+    )
+  }
+
+  get qrContainer() {
+    const {activeTab} = this.props
+
+    return (
+      <View style={ticketWalletStyles.qrCodeContainer}>
+        {activeTab === 'upcoming' && this.state.qrText ? (
+          <QRCode
+            size={200}
+            fgColor="white"
+            bgColor="black"
+            value={this.state.qrText}
+          />
+        ) : null}
+      </View>
+    )
+  }
+
+  render() {
+    const {ticket} = this.props
     const {firstName, lastName} = this.state
 
     return (
@@ -99,8 +146,8 @@ export default class Ticket extends Component {
               <Text numberOfLines={1} style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.starts} &bull; {ticket.venue}</Text>
               <TouchableHighlight onPress={this.openVenueDirections}>
                 <View style={styles.iconLinkContainer}>
-                    <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
-                    <Icon style={ticketWalletStyles.iconLink} name="call-made" />
+                  <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
+                  <Icon style={ticketWalletStyles.iconLink} name="call-made" />
                 </View>
               </TouchableHighlight>
             </View>
@@ -123,33 +170,9 @@ export default class Ticket extends Component {
           </View>
         </View>
 
-        <View style={ticketWalletStyles.qrCodeContainer}>
-          {activeTab === 'upcoming' && this.state.qrText ? (
-            <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} />
-          ) : null}
-        </View>
+        {this.qrContainer}
 
-        <View style={ticketWalletStyles.bottomNav}>
-          {false && // TODO: Re-enable when functionality is implemented.
-            <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
-              <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-              <Text style={ticketWalletStyles.bottomNavLinkText}>{'' || 'ADD TO WALLET'}</Text>
-            </View>
-          }
-          {activeTab !== 'transfer' && (
-            <TouchableHighlight
-              underlayColor="rgba(0, 0, 0, 0)"
-              onPress={
-                () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
-              }
-            >
-              <View style={ticketWalletStyles.bottomNavLinkContainer}>
-                <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
-                <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
-              </View>
-            </TouchableHighlight>
-          )}
-        </View>
+        {this.ticketBottomRow}
       </View>
     )
   }
