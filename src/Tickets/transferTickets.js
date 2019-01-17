@@ -11,6 +11,7 @@ import ModalStyles from '../styles/shared/modalStyles'
 import FormStyles from '../styles/shared/formStyles'
 import {autotrim, pluralize} from '../string'
 import qrCodeIcon from '../../assets/qr-code-small.png'
+import {BarCodeScanner, Permissions} from 'expo';
 
 const styles = SharedStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
@@ -29,7 +30,8 @@ function Card({children}) {
   )
 }
 
-const QRCodeScanner = ({toggleModal,modalVisible}) => (
+const QRCodeScanner = ({toggleModal,modalVisible,handleBarCodeScanned}) => (
+  
   <Modal
     onRequestClose={() => {
       toggleModal(!modalVisible)
@@ -39,16 +41,21 @@ const QRCodeScanner = ({toggleModal,modalVisible}) => (
   >
     <View style={modalStyles.modalContainer}>
       <View style={modalStyles.contentWrapper}>
-        <Text style={modalStyles.headerSecondary}>This code can be scanned to receive ticket transfers, upgrades, and more!</Text>
+        <BarCodeScanner
+          onBarCodeRead={handleBarCodeScanned}
+          style={{height: 250, width: 250}}
+        />
+        <Text style={modalStyles.headerSecondary}>Scan the recipients barcode found in their Big Neon account tab.</Text>
+        
         <View style={[styles.buttonContainer, {borderRadius: 6}]}>
           <TouchableHighlight
             style={[styles.button, {borderRadius: 6}]}
-            name="close"
+            name="Cancel"
             onPress={() => {
-              toggleModal(!modalVisible)
+              toggleModal(false)
             }}
           >
-            <Text style={styles.buttonText}>Got It</Text>
+            <Text style={styles.buttonText}>Cancel</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -58,6 +65,7 @@ const QRCodeScanner = ({toggleModal,modalVisible}) => (
 QRCodeScanner.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   modalVisible: PropTypes.bool.isRequired,
+  handleBarCodeScanned: PropTypes.func.isRequired
 }
 export default class TransferTickets extends Component {
   constructor(props) {
@@ -67,11 +75,27 @@ export default class TransferTickets extends Component {
       isSubmitting: false,
       checkboxes: this.buildCheckBoxState(this.tickets),
       emailOrPhone: '',
-      showQRModal: false
+      showQRModal: false,
+      hasCameraPermission: null,
+      scannedEmail: null
     };
   }
+
+  handleBarCodeScanned = async ({_type, data}) => {
+    parsedScan = JSON.parse(data)
+    if(this.state.scannedEmail === parsedScan.email){
+      return;
+    }
+    this.setState({scannedEmail: parsedScan.email});
+    this.toggleQRModal(false);
+
+  }
+  
   toggleQRModal = (visible) => {
     this.setState({showQRModal: visible})
+    if(visible && !this.state.hasCameraPermission){
+     this.cameraPermissions()
+    }
   }
   get tickets() {
     const {
@@ -125,6 +149,11 @@ export default class TransferTickets extends Component {
     return (checked) => this.setChecked(id, checked)
   }
 
+  validRecipient = () => {
+    //TODO Validate email/phone 
+    return this.state.emailOrPhone != ''
+  }
+
   transferCount = () => {
     const {checkboxes} = this.state
 
@@ -134,6 +163,11 @@ export default class TransferTickets extends Component {
       }
       return acc
     }, 0)
+  }
+
+  cameraPermissions = async () => {
+    const {status} = await Permissions.askAsync(Permissions.CAMERA)
+    this.setState({hasCameraPermission: status === 'granted'})
   }
 
   transfer = async () => {
@@ -160,15 +194,16 @@ export default class TransferTickets extends Component {
 
   render() {
     const {navigation} = this.props
-    const {checkboxes} = this.state
+    const {checkboxes,scannedEmail } = this.state
     const {
       state: {showQRModal},
     } = this
-    let disabled = this.transferCount() < 1;
+    let disabled = !this.validRecipient() || this.transferCount() < 1;
+    let disabledText = !this.validRecipient() ? "Valid Recipient Required" : this.transferCount() < 1 ? "No Tickets Selected" : "";
     return (
       <Modal>
         <View style={ticketWalletStyles.modalContainer}>
-        <QRCodeScanner toggleModal={this.toggleQRModal} modalVisible={showQRModal} />
+        <QRCodeScanner handleBarCodeScanned={this.handleBarCodeScanned} toggleModal={this.toggleQRModal} modalVisible={showQRModal} />
           <Image
             style={ticketWalletStyles.modalBkgdImage}
             source={require('../../assets/modal-bkgd.jpg')}
@@ -184,24 +219,32 @@ export default class TransferTickets extends Component {
           </View>
 
           <View style={modalStyles.contentRoundedWrapper}>
-          <Text style={[modalStyles.headerSecondary,{paddingVertical:10,backgroundColor:"white"}]}>Add Recipient</Text>
-        
-            <TextInput
-              keyboardType="email-address"
-              style={[formStyles.input, {backgroundColor: 'white'}]}
-              placeholder="Recipient email or phone"
-              searchIcon={{size: 24}}
-              underlineColorAndroid="transparent"
-              onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
-            />
-            
-            <TouchableHighlight onPress={() => this.toggleQRModal(true)}>
-              <Image
-                style={ticketTransferStyles.qrCodeSmall}
-                source={qrCodeIcon}
-              />
-            </TouchableHighlight>
-            <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={[modalStyles.headerSecondary,{paddingVertical:15,backgroundColor:"white"}]}>Add Recipient</Text>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                backgroundColor: 'white',
+                height: 50
+              }}>
+              <View>
+                <TextInput
+                  keyboardType="email-address"
+                  style={[formStyles.input, {backgroundColor: 'white',width:'100%', paddingLeft:20}]}
+                  placeholder="Recipient email or phone or scan"
+                  searchIcon={{size: 24}}
+                  underlineColorAndroid="transparent"
+                  value={this.state.scannedEmail}
+                  onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
+                />  
+              </View>
+              <TouchableHighlight onPress={() => this.toggleQRModal(true)}>
+                <Image
+                  style={[ticketTransferStyles.qrCodeSmall,{marginRight: 10}]}
+                  source={qrCodeIcon}
+                />
+              </TouchableHighlight>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false} style={{paddingTop:10}}>
 
               {this.tickets.map(({id, ticket_type_name: name}) => (
                 <Card key={id}>
@@ -217,7 +260,7 @@ export default class TransferTickets extends Component {
                     />
                     <View>
                       <Text style={ticketStyles.ticketHolderHeader}>{name}</Text>
-                      <Text style={ticketStyles.ticketHolderSubheader}>{this.label}</Text>
+                      <Text style={ticketStyles.ticketHolderSubheader}>{id}</Text>
                     </View>
                   </View>
                 </Card>
@@ -230,7 +273,7 @@ export default class TransferTickets extends Component {
               style={disabled ? [styles.buttonDisabled, modalStyles.bottomRadius] : [styles.button, modalStyles.bottomRadius]}
               onPress={disabled ? null : onPress=this.transfer}
             >
-              <Text style={styles.buttonText}>{disabled ? 'No Tickets Selected' : 'Transfer ' + pluralize(this.transferCount(), 'Ticket')}</Text>
+              <Text style={styles.buttonText}>{disabled ? disabledText : 'Transfer ' + pluralize(this.transferCount(), 'Ticket')}</Text>
             </TouchableHighlight>
           </View>
         </View>
