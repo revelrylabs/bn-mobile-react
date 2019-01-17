@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0",
+    "sdkVersion": "31.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
     "version": "1.0.16",

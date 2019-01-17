@@ -27,7 +27,7 @@ class TicketsContainer extends Container {
 
       data.forEach(([event, tix]) => {
         const untransferredCategory = eventIsInPast(event) ? 'past' : 'upcoming'
-        const {event_start, door_time} = eventDateTimes(event)
+        const {event_start, door_time} = eventDateTimes(event.localized_times)
 
         event.formattedDate = event_start.toFormat('EEE, MMMM d')
         event.formattedDoors = door_time.toFormat('t')
@@ -39,11 +39,11 @@ class TicketsContainer extends Container {
           'transfer': [],
         }
 
-        tix.forEach(ticket => {
+        tix.forEach((ticket) => {
           categories[ticket.pending_transfer ? 'transfer' : untransferredCategory].push(ticket)
         })
 
-        Object.keys(categories).forEach(key => {
+        Object.keys(categories).forEach((key) => {
           const tickets = categories[key]
 
           if (tickets.length) {

@@ -7,15 +7,9 @@ export function analyticsInit() {
 }
 
 export async function identify(params) {
-  const {id, ...properties} = params
+  const {id, firstName, lastName, email} = params
 
-  if (Platform.OS === 'ios') {
-    Segment.identifyWithTraits(id, ...properties)
-  } else {
-    // Quick Android hack. Check if this is fixed in SDK 31.
-    Segment.identify(id)
-  }
-
+  Segment.identifyWithTraits(id, {firstName, lastName, email})
 }
 
 export function track(action) {
