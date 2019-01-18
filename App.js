@@ -3,7 +3,7 @@ import {Provider} from 'unstated'
 import {loadFonts} from './assets/fonts'
 import {loadImages} from './assets'
 import {View} from 'react-native';
-import {Video, Asset, AppLoading} from 'expo';
+import {Video, Asset, AppLoading, SplashScreen} from 'expo';
 import navigator from './src/navigators/navigator'
 import SharedStyles from './src/styles/shared/sharedStyles'
 import {EventsContainer} from './src/state/eventStateProvider'
@@ -47,6 +47,8 @@ export default class App extends Component {
   }
 
   _cacheResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
+    SplashScreen.hide();
+
     setTimeout(() => {
       this.setState({isSplashDone: true});
     }, 3000);
