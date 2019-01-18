@@ -8,6 +8,7 @@ import ModalStyles from '../styles/shared/modalStyles'
 import coverPhotoPlaceholder from '../../assets/account-placeholder-bkgd.png'
 import qrCodePlaceholder from '../../assets/qr-code-placeholder.png'
 import qrCodeIcon from '../../assets/qr-code-small.png'
+import ReactQRCode from 'react-native-qrcode';
 import {username} from '../string'
 
 const styles = SharedStyles.createStyles()
@@ -25,14 +26,11 @@ const QRCode = ({_qrCode, toggleModal, modalVisible}) => (
   >
     <View style={modalStyles.modalContainer}>
       <View style={modalStyles.contentWrapper}>
-        <Image
-          style={modalStyles.qrCode}
-          source={qrCodePlaceholder}
-        />
-        <Text style={modalStyles.header}>Show this to complete a ticket transfer.</Text>
-        <View style={styles.buttonContainer}>
+        <ReactQRCode size={200} fgColor="white" bgColor="black" value={_qrCode} />
+        <Text style={modalStyles.headerSecondary}>This code can be scanned to receive ticket transfers, upgrades, and more!</Text>
+        <View style={[styles.buttonContainer, {borderRadius: 6}]}>
           <TouchableHighlight
-            style={styles.button}
+            style={[styles.button, {borderRadius: 6}]}
             name="close"
             onPress={() => {
               toggleModal(!modalVisible)
@@ -89,7 +87,7 @@ export default class Account extends Component {
 
     return (
       <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
-        <QRCode _qrCode="" toggleModal={this.toggleQRModal} modalVisible={showQRModal} />
+        <QRCode _qrCode={JSON.stringify({email: user.email, id: user.id})} toggleModal={this.toggleQRModal} modalVisible={showQRModal} />
         <View style={accountStyles.accountBkgdContainer}>
           <Image
             style={accountStyles.accountBkgd}

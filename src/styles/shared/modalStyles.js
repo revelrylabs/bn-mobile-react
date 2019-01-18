@@ -34,13 +34,14 @@ const ModalStyles = {
     flexDirection: 'column',
     height: fullHeight,
     justifyContent: 'center',
-    paddingHorizontal: globalPadding,
+    paddingHorizontal: globalPadding
   },
   contentWrapper: {
     alignItems: 'center',
     backgroundColor: containerDarkColor,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingJumbo,
+    borderRadius: 6
   },
   contentRoundedWrapper: {
     backgroundColor: containerDarkColor,

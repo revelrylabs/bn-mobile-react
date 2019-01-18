@@ -81,7 +81,7 @@ export default class Ticket extends Component {
             <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
           </View>
         }
-        {activeTab !== 'transfer' && (
+        {activeTab === 'upcoming' && (
           <TouchableHighlight
             underlayColor="rgba(0, 0, 0, 0)"
             onPress={
@@ -94,6 +94,18 @@ export default class Ticket extends Component {
             </View>
           </TouchableHighlight>
         )}
+        {activeTab === 'past' && (
+          <View style={ticketWalletStyles.bottomNavLinkContainer}>
+            <Text style={ticketWalletStyles.bottomNavLinkText}>This event has ended</Text>
+          </View>
+        )
+        }
+        {activeTab === 'transfer' && (
+          <View style={ticketWalletStyles.bottomNavLinkContainer}>
+            <Text style={ticketWalletStyles.bottomNavLinkText}>This ticket was transferred</Text>
+          </View>
+        )
+        }
       </View>
     )
   }
@@ -110,7 +122,11 @@ export default class Ticket extends Component {
             bgColor="black"
             value={this.state.qrText}
           />
-        ) : null}
+        ) : 
+        <Image
+          style={{width:150, height:150}}
+          source={require('../../assets/heart-white.png')}
+        />}
       </View>
     )
   }
@@ -164,8 +180,8 @@ export default class Ticket extends Component {
             </View>
             }
             <View>
-              <Text style={ticketStyles.ticketHolderHeader}>{firstName} {lastName}</Text>
-              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.ticketType}</Text>
+              <Text style={ticketStyles.ticketHolderHeader}>{ticket.ticketType}</Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>{firstName} {lastName}</Text>
             </View>
           </View>
         </View>
