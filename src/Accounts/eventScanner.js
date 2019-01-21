@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, View, TouchableHighlight} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
+import {server} from '../constants/Server'
 
 import {
   MaterialIcons,
@@ -98,6 +99,25 @@ export default class EventScanner extends Component {
     )
   }
 
+  get event() {
+    return this.props.screenProps.eventManager.state.eventToScan
+  }
+
+  toggleCheckInMode = async () => {
+    let {checkInMode} = this.state
+
+    checkInMode = checkInMode === 'automatic' ? 'manual' : 'automatic'
+
+    this.setState({checkInMode})
+
+    if (checkInMode === 'automatic') {
+      return
+    }
+
+    const response = await server.events.guests.index({event_id: this.event.id, query: ''})
+    console.log(response.data)
+  }
+
   render() {
     const {hasCameraPermission, checkInMode} = this.state;
     const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
@@ -112,10 +132,12 @@ export default class EventScanner extends Component {
 
     return (
       <View>
-        <BarCodeScanner
-          onBarCodeRead={this.handleBarCodeScanned}
-          style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
-        />
+        {checkInMode === 'automatic' && (
+          <BarCodeScanner
+            onBarCodeRead={this.handleBarCodeScanned}
+            style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
+          />
+        )}
 
         <View style={eventScannerStyles.eventScannerContainer}>
 
@@ -130,7 +152,7 @@ export default class EventScanner extends Component {
               />
             </View>
             {/* TODO: add a bit of state for auto/manual modes and a toggle handler */}
-            <TouchableHighlight style={eventScannerStyles.pillContainer}>
+            <TouchableHighlight style={eventScannerStyles.pillContainer} onPress={this.toggleCheckInMode}>
               <View style={styles.flexRowCenter}>
                 <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
                 <Text style={eventScannerStyles.pillTextPrimary}>{checkInMode.toUpperCase()}</Text>
