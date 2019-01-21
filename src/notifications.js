@@ -1,3 +1,4 @@
+import {Platform} from 'react-native'
 import {server} from './constants/Server'
 import {Permissions, Notifications} from 'expo'
 
@@ -34,5 +35,13 @@ export async function getPushToken() {
 
 // TODO: save to API server
 export async function savePushToken(token) {
-  throw new Error('not implemented')
+  await server.users.deviceTokens.create({token, token_source: 'expo'})
+}
+
+export async function registerPushTokenIfPermitted() {
+  const token = await getPushToken()
+
+  if (token) {
+    await savePushToken(token)
+  }
 }
