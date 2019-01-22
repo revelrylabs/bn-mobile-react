@@ -121,6 +121,7 @@ export default class ManualCheckin extends Component {
         <View style={checkoutStyles.mainBodyContent}>
 
           <View style={styles.container}>
+            <Text style={styles.sectionHeader}>All Guests</Text>
             <View style={formStyles.searchContainer}>
               <SearchBox style={formStyles.searchInput}>
                 textInput={{
