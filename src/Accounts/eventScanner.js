@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import {Text, View, TouchableHighlight} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
 import {server} from '../constants/Server'
-
 import {
   MaterialIcons,
   EvilIcons,
 } from '@expo/vector-icons'
-
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
+import ManualCheckin from './manual-checkin'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -114,8 +113,7 @@ export default class EventScanner extends Component {
       return
     }
 
-    const response = await server.events.guests.index({event_id: this.event.id, query: ''})
-    console.log(response.data)
+    this.props.screenProps.eventManager.prepareManualMode()
   }
 
   render() {
@@ -162,6 +160,10 @@ export default class EventScanner extends Component {
           </View>
 
           {this.statusMessage(scanResult)}
+
+          {checkInMode === 'manual' && (
+            <ManualCheckin {...this.props.screenProps.eventManager.state} />
+          )}
 
           {/* TODO: fill in guest info panel, remove whitespace style workaround */}
           <View>
