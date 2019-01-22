@@ -106,8 +106,7 @@ const ModalStyles = {
     color: textColor,
     fontFamily: globalFontRegular,
     fontSize: sectionHeaderFontSize,
-    paddingHorizontal: globalPaddingLarge,
-    paddingVertical: globalPaddingLarge,
+    paddingVertical: globalPadding,
     textAlign: 'center',
   },
   locationText: {
