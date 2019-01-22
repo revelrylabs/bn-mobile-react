@@ -220,24 +220,24 @@ export default class TransferTickets extends Component {
 
           <View style={modalStyles.contentRoundedWrapper}>
             <View style={styles.container}>
-              <Text style={modalStyles.headerSecondary}>Add Recipient</Text>
-                <View>
-                  <TextInput
-                    keyboardType="email-address"
-                    style={formStyles.input}
-                    placeholder="Recipient email or phone or scan"
-                    searchIcon={{size: 24}}
-                    underlineColorAndroid="transparent"
-                    value={this.state.scannedEmail}
-                    onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
-                  />
-                </View>
+              <View style={styles.flexRowSpaceBetween}>
+                <Text style={modalStyles.headerSecondary}>Add Recipient</Text>
                 <TouchableHighlight onPress={() => this.toggleQRModal(true)}>
                   <Image
-                    style={[ticketTransferStyles.qrCodeSmall,{marginRight: 10}]}
+                    style={[ticketTransferStyles.qrCodeSmall, styles.marginLeftTiny]}
                     source={qrCodeIcon}
                   />
                 </TouchableHighlight>
+              </View>
+              <TextInput
+                keyboardType="email-address"
+                style={formStyles.input}
+                placeholder="Recipient email or phone or scan"
+                searchIcon={{size: 24}}
+                underlineColorAndroid="transparent"
+                value={this.state.scannedEmail}
+                onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
+              />
             </View>
             <ScrollView showsVerticalScrollIndicator={false} style={{paddingTop:10}}>
 
