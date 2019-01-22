@@ -58,6 +58,12 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
   )
 }
 
+function SearchBox({textInput}) {
+  return (
+    <TextInput {...textInput} />
+  )
+}
+
 export default class ManualCheckin extends Component {
   state = {
     selectedGuest: null,
@@ -86,8 +92,8 @@ export default class ManualCheckin extends Component {
   }
 
   get innerContent() {
-    const {filterText, selectedGuest} = this.state
-    const {isFetchingGuests, guests} = this.props
+    const {selectedGuest} = this.state
+    const {isFetchingGuests, guests, guestListQuery} = this.props
 
     if (selectedGuest !== null) {
       return (
@@ -101,10 +107,12 @@ export default class ManualCheckin extends Component {
 
     return (
       <View>
-        <TextInput
-          defaultValue={filterText}
-          onChangeText={this.searchGuestList}
-          placeholder="Search for guest"
+        <SearchBox
+          textInput={{
+            defaultValue: guestListQuery,
+            onChangeText: this.searchGuestList,
+            placeholder: "Search for guest",
+          }}
         />
 
         {isFetchingGuests && (
