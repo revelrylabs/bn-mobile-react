@@ -20,6 +20,7 @@ export class EventManagerContainer extends Container {
       eventToScan: {},
       guests: [],
       isFetchingGuests: false,
+      guestListQuery: '',
     }
   }
 
@@ -47,14 +48,14 @@ export class EventManagerContainer extends Container {
     this.setState({eventToScan: event, guests: []});
   }
 
-  prepareManualMode = async () => {
-    await this.setState({isFetchingGuests: true})
+  searchGuestList = async (guestListQuery = '') => {
+    await this.setState({isFetchingGuests: true, guestListQuery})
 
     const {id} = this.state.eventToScan
-    const {data: {data: guests, paging: _paging}} = await server.events.guests.index({event_id: id, query: ''})
+    const {data: {data: guests, paging: _paging}} = await server.events.guests.index({event_id: id, query: guestListQuery})
 
-    // Still fetching for the same event ID as when we started? (Nobody changed it yet?)
-    if (this.state.eventToScan.id === id) {
+    // Still fetching the same thing? (or subsequently fetched something else?)
+    if (this.state.eventToScan.id === id && this.state.guestListQuery === guestListQuery) {
       await this.setState({guests, isFetchingGuests: false})
     }
   }

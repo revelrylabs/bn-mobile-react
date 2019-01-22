@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableHighlight} from 'react-native'
+import {View, Text, TouchableHighlight, TextInput} from 'react-native'
 import {price, usernameLastFirst} from '../string'
 
 function BusyState() {
@@ -60,7 +60,15 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
 
 export default class ManualCheckin extends Component {
   state = {
-    selectedGuest: null
+    selectedGuest: null,
+  }
+
+  componentDidMount() {
+    this.searchGuestList()
+  }
+
+  searchGuestList = (...args) => {
+    this.props.searchGuestList(...args)
   }
 
   selectGuest = (selectedGuest) => {
@@ -78,7 +86,7 @@ export default class ManualCheckin extends Component {
   }
 
   get innerContent() {
-    const {selectedGuest} = this.state
+    const {filterText, selectedGuest} = this.state
     const {isFetchingGuests, guests} = this.props
 
     if (selectedGuest !== null) {
@@ -91,15 +99,23 @@ export default class ManualCheckin extends Component {
       )
     }
 
-    if (isFetchingGuests) {
-      return <BusyState />
-    }
-
     return (
-      <GuestList
-        guests={guests}
-        onSelect={this.selectGuest}
-      />
+      <View>
+        <TextInput
+          defaultValue={filterText}
+          onChangeText={this.searchGuestList}
+          placeholder="Search for guest"
+        />
+
+        {isFetchingGuests && (
+          <BusyState />
+        )}
+
+        <GuestList
+          guests={guests}
+          onSelect={this.selectGuest}
+        />
+      </View>
     )
   }
 

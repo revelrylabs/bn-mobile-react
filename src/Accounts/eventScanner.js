@@ -112,8 +112,6 @@ export default class EventScanner extends Component {
     if (checkInMode === 'automatic') {
       return
     }
-
-    this.props.screenProps.eventManager.prepareManualMode()
   }
 
   render() {
@@ -162,7 +160,7 @@ export default class EventScanner extends Component {
           {this.statusMessage(scanResult)}
 
           {checkInMode === 'manual' && (
-            <ManualCheckin {...this.props.screenProps.eventManager.state} />
+            <ManualCheckin {...eventManager.state} searchGuestList={eventManager.searchGuestList} />
           )}
 
           {/* TODO: fill in guest info panel, remove whitespace style workaround */}
