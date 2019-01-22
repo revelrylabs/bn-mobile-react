@@ -126,8 +126,6 @@ const TicketWalletStyles = {
   // QR CODE STYLES
   qrCodeContainer: {
     backgroundColor: containerDarkColor,
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     padding: globalPadding,
