@@ -143,8 +143,11 @@ export default class EventShow extends Component {
   }
 
   async loadEvent() {
-    const {screenProps: {store}} = this.props
+    const {screenProps: {store, cart}} = this.props
     const {eventId} = this.state
+
+    // Clear any pre-existing cart data from earlier transactions
+    await cart.clearCart()
 
     if (eventId) {
       store.getEvent(eventId)

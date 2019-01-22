@@ -13,10 +13,12 @@ const styles = SharedStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
+/* eslint-disable camelcase */
 export default class Ticket extends Component {
   static propTypes = {
     navigate: PropTypes.func.isRequired,
     ticket: PropTypes.object.isRequired,
+    activeTab: PropTypes.string,
   }
 
   constructor(props) {
@@ -38,6 +40,7 @@ export default class Ticket extends Component {
     const {redeem_key} = this.state
     const {ticket: {ticketId, eventId}} = this.props
     const qrObj = {type: 0, data: {redeem_key, id: ticketId, event_id: eventId, extra: ''}};
+
     this.setState({qrText: JSON.stringify(qrObj)})
   }
 
@@ -57,7 +60,7 @@ export default class Ticket extends Component {
   openVenueDirections = () => {
     const {ticket} = this.props
     const {venue} = ticket
-    let daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+    const daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
 
     if (Platform.OS === 'ios') {
       Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
@@ -66,8 +69,70 @@ export default class Ticket extends Component {
     }
   }
 
-  render() {
+  get ticketBottomRow() {
     const {navigate, ticket, activeTab} = this.props
+    const {firstName, lastName} = this.state
+
+    return (
+      <View style={ticketWalletStyles.bottomNav}>
+        {false && // TODO: Re-enable when functionality is implemented -- issue #253
+          <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
+            <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
+            <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+          </View>
+        }
+        {activeTab === 'upcoming' && (
+          <TouchableHighlight
+            underlayColor="rgba(0, 0, 0, 0)"
+            onPress={
+              () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
+            }
+          >
+            <View style={ticketWalletStyles.bottomNavLinkContainer}>
+              <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
+              <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
+            </View>
+          </TouchableHighlight>
+        )}
+        {activeTab === 'past' && (
+          <View style={ticketWalletStyles.bottomNavLinkContainer}>
+            <Text style={ticketWalletStyles.bottomNavLinkText}>This event has ended</Text>
+          </View>
+        )
+        }
+        {activeTab === 'transfer' && (
+          <View style={ticketWalletStyles.bottomNavLinkContainer}>
+            <Text style={ticketWalletStyles.bottomNavLinkText}>This ticket was transferred</Text>
+          </View>
+        )
+        }
+      </View>
+    )
+  }
+
+  get qrContainer() {
+    const {activeTab} = this.props
+
+    return (
+      <View style={ticketWalletStyles.qrCodeContainer}>
+        {activeTab === 'upcoming' && this.state.qrText ? (
+          <QRCode
+            size={200}
+            fgColor="white"
+            bgColor="black"
+            value={this.state.qrText}
+          />
+        ) : 
+        <Image
+          style={{width:150, height:150}}
+          source={require('../../assets/heart-white.png')}
+        />}
+      </View>
+    )
+  }
+
+  render() {
+    const {ticket} = this.props
     const {firstName, lastName} = this.state
 
     return (
@@ -97,8 +162,8 @@ export default class Ticket extends Component {
               <Text numberOfLines={1} style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.starts} &bull; {ticket.venue}</Text>
               <TouchableHighlight onPress={this.openVenueDirections}>
                 <View style={styles.iconLinkContainer}>
-                    <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
-                    <Icon style={ticketWalletStyles.iconLink} name="call-made" />
+                  <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
+                  <Icon style={ticketWalletStyles.iconLink} name="call-made" />
                 </View>
               </TouchableHighlight>
             </View>
@@ -115,39 +180,15 @@ export default class Ticket extends Component {
             </View>
             }
             <View>
-              <Text style={ticketStyles.ticketHolderHeader}>{firstName} {lastName}</Text>
-              <Text style={ticketStyles.ticketHolderSubheader}>{ticket.ticketType}</Text>
+              <Text style={ticketStyles.ticketHolderHeader}>{ticket.ticketType}</Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>{firstName} {lastName}</Text>
             </View>
           </View>
         </View>
 
-        <View style={ticketWalletStyles.qrCodeContainer}>
-          {activeTab === 'upcoming' && this.state.qrText ? (
-            <QRCode size={200} fgColor="white" bgColor="black" value={this.state.qrText} />
-          ) : null}
-        </View>
+        {this.qrContainer}
 
-        <View style={ticketWalletStyles.bottomNav}>
-        {false && // TODO: Re-enable when functionality is implemented.
-          <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
-            <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-            <Text style={ticketWalletStyles.bottomNavLinkText}>{'' || 'ADD TO WALLET'}</Text>
-          </View>
-        }
-        {activeTab != 'transfer' && (
-          <TouchableHighlight
-            underlayColor="rgba(0, 0, 0, 0)"
-            onPress={
-              () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
-            }
-          >
-            <View style={ticketWalletStyles.bottomNavLinkContainer}>
-              <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
-              <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
-            </View>
-          </TouchableHighlight>
-        )}
-        </View>
+        {this.ticketBottomRow}
       </View>
     )
   }
