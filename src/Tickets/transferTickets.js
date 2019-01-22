@@ -31,7 +31,7 @@ function Card({children}) {
 }
 
 const QRCodeScanner = ({toggleModal,modalVisible,handleBarCodeScanned}) => (
-  
+
   <Modal
     onRequestClose={() => {
       toggleModal(!modalVisible)
@@ -46,7 +46,7 @@ const QRCodeScanner = ({toggleModal,modalVisible,handleBarCodeScanned}) => (
           style={{height: 250, width: 250}}
         />
         <Text style={modalStyles.headerSecondary}>Scan the recipients barcode found in their Big Neon account tab.</Text>
-        
+
         <View style={[styles.buttonContainer, {borderRadius: 6}]}>
           <TouchableHighlight
             style={[styles.button, {borderRadius: 6}]}
@@ -90,7 +90,7 @@ export default class TransferTickets extends Component {
     this.toggleQRModal(false);
 
   }
-  
+
   toggleQRModal = (visible) => {
     this.setState({showQRModal: visible})
     if(visible && !this.state.hasCameraPermission){
@@ -150,7 +150,7 @@ export default class TransferTickets extends Component {
   }
 
   validRecipient = () => {
-    //TODO Validate email/phone 
+    //TODO Validate email/phone
     return this.state.emailOrPhone != ''
   }
 
@@ -219,30 +219,25 @@ export default class TransferTickets extends Component {
           </View>
 
           <View style={modalStyles.contentRoundedWrapper}>
-          <Text style={[modalStyles.headerSecondary,{paddingVertical:15,backgroundColor:"white"}]}>Add Recipient</Text>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                backgroundColor: 'white',
-                height: 50
-              }}>
-              <View>
-                <TextInput
-                  keyboardType="email-address"
-                  style={[formStyles.input, {backgroundColor: 'white',width:'100%', paddingLeft:20}]}
-                  placeholder="Recipient email or phone or scan"
-                  searchIcon={{size: 24}}
-                  underlineColorAndroid="transparent"
-                  value={this.state.scannedEmail}
-                  onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
-                />  
+            <View style={styles.container}>
+              <View style={styles.flexRowSpaceBetween}>
+                <Text style={modalStyles.headerSecondary}>Add Recipient</Text>
+                <TouchableHighlight onPress={() => this.toggleQRModal(true)}>
+                  <Image
+                    style={[ticketTransferStyles.qrCodeSmall, styles.marginLeftTiny]}
+                    source={qrCodeIcon}
+                  />
+                </TouchableHighlight>
               </View>
-              <TouchableHighlight onPress={() => this.toggleQRModal(true)}>
-                <Image
-                  style={[ticketTransferStyles.qrCodeSmall,{marginRight: 10}]}
-                  source={qrCodeIcon}
-                />
-              </TouchableHighlight>
+              <TextInput
+                keyboardType="email-address"
+                style={formStyles.input}
+                placeholder="Recipient email or phone or scan"
+                searchIcon={{size: 24}}
+                underlineColorAndroid="transparent"
+                value={this.state.scannedEmail}
+                onChangeText={autotrim((emailOrPhone) => this.setState({emailOrPhone}))}
+              />
             </View>
             <ScrollView showsVerticalScrollIndicator={false} style={{paddingTop:10}}>
 

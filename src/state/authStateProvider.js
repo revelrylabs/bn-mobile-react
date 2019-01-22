@@ -2,7 +2,8 @@ import {Container} from 'unstated'
 import {AsyncStorage} from 'react-native'
 
 import {server, refreshWithToken, apiErrorAlert} from '../constants/Server'
-import {identify, track} from '../constants/analytics';
+import {registerPushTokenIfPermitted} from '../notifications'
+import {identify, track} from '../constants/analytics'
 
 /* eslint-disable camelcase,space-before-function-paren */
 
@@ -58,6 +59,7 @@ class AuthContainer extends Container {
       const {data: currentUser} = await server.users.current()
 
       await this.setState({currentUser, access_token, refresh_token})
+      registerPushTokenIfPermitted()
       return currentUser.user
     } catch (error) {
       apiErrorAlert(error, 'There was a problem logging you in.')
