@@ -1,11 +1,15 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableHighlight, TextInput} from 'react-native'
+import {View, Text, TouchableHighlight, TextInput, Image} from 'react-native'
 import {price, usernameLastFirst} from '../string'
 import SharedStyles from '../styles/shared/sharedStyles'
+import FormStyles from '../styles/shared/formStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
+import CheckoutStyles from '../styles/event_details/checkoutStyles'
 
 const styles = SharedStyles.createStyles()
+const formStyles = FormStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
+const checkoutStyles = CheckoutStyles.createStyles()
 
 function BusyState() {
   return (
@@ -113,30 +117,37 @@ export default class ManualCheckin extends Component {
     }
 
     return (
-      <View>
-        <SearchBox
-          textInput={{
-            defaultValue: guestListQuery,
-            onChangeText: this.searchGuestList,
-            placeholder: "Search for guest",
-          }}
-        />
+      <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
+        <View style={checkoutStyles.mainBodyContent}>
 
-        {isFetchingGuests && (
-          <BusyState />
-        )}
+          <View style={styles.container}>
+            <View style={formStyles.searchContainer}>
+              <SearchBox style={formStyles.searchInput}>
+                textInput={{
+                  defaultValue: guestListQuery,
+                  onChangeText: this.searchGuestList,
+                  placeholder: "Search for guests",
+                }}
+              </SearchBox>
+            </View>
+          </View>
 
-        <GuestList
-          guests={guests}
-          onSelect={this.selectGuest}
-        />
+          {isFetchingGuests && (
+            <BusyState />
+          )}
+
+          <GuestList
+            guests={guests}
+            onSelect={this.selectGuest}
+          />
+        </View>
       </View>
     )
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View>
         {this.innerContent}
       </View>
     )
