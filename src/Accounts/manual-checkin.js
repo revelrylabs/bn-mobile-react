@@ -1,10 +1,17 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableHighlight, TextInput} from 'react-native'
 import {price, usernameLastFirst} from '../string'
+import SharedStyles from '../styles/shared/sharedStyles'
+import TicketStyles from '../styles/tickets/ticketStyles'
+
+const styles = SharedStyles.createStyles()
+const ticketStyles = TicketStyles.createStyles()
 
 function BusyState() {
   return (
-    <Text>Hang on a sec...</Text>
+    <View style={ticketStyles.emptyStateContainer}>
+      <Text style={ticketStyles.emptyStateText}>Hang on a sec...</Text>
+    </View>
   )
 }
 
