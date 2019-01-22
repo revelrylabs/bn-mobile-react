@@ -29,13 +29,11 @@ export const bodyFontSizeSmall = 14
 export const avatarIconFontSize = 28
 
 const DoormanStyles = {
-  // CONTAINER STYLES
-  sectionHeader: {
+  // TEXT STYLES
+  bodyText: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
-    marginBottom: globalMarginSmall,
-    paddingHorizontal: globalPadding,
+    fontSize: bodyFontSizeSmall,
   },
 
   // ROW STYLES

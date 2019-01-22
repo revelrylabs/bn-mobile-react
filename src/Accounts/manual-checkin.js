@@ -3,11 +3,13 @@ import {View, Text, TouchableHighlight, TextInput, Image} from 'react-native'
 import {price, usernameLastFirst} from '../string'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
+import DoormanStyles from '../styles/account/doormanStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
+const doormanStyles = DoormanStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
 
@@ -21,14 +23,18 @@ function BusyState() {
 
 function GuestTicketCard({guest, onSelect}) {
   return (
-    <TouchableHighlight onPress={() => onSelect(guest)}>
-      <View>
-        <Text>{usernameLastFirst(guest)}</Text>
-        <Text>{guest.ticket_type}</Text>
-        <Text>{price(guest.price_in_cents)}</Text>
-        <Text>{guest.status}</Text>
+    <View style={doormanStyles.rowContainer}>
+      <View style={doormanStyles.row}>
+        <TouchableHighlight onPress={() => onSelect(guest)}>
+          <View>
+            <Text style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
+            <Text style={doormanStyles.bodyText}>{guest.ticket_type}</Text>
+            <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)}</Text>
+            <Text style={doormanStyles.bodyText}>{guest.status}</Text>
+          </View>
+        </TouchableHighlight>
       </View>
-    </TouchableHighlight>
+    </View>
   )
 }
 
