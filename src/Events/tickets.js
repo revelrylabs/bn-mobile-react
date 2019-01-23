@@ -14,6 +14,17 @@ const ticketStyles = TicketStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
 
+function ticketFilter({status, ticket_pricing}) {
+  switch (status) {
+  case 'SoldOut':
+    return true
+  case 'Published':
+    return !!ticket_pricing
+  default:
+    return false
+  }
+}
+
 function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
   if (a === null && b == null) {
     return 0
@@ -41,9 +52,16 @@ class Ticket extends Component {
   }
 
   get subHeaderContent() {
-    const {ticket_pricing} = this.props.ticket
+    const {status, ticket_pricing} = this.props.ticket
 
-    return ticket_pricing ? ticket_pricing.name : "SOLD OUT"
+    switch (status) {
+    case 'SoldOut':
+      return 'SOLD OUT'
+    case 'Published':
+      return ticket_pricing.name
+    default:
+      return null
+    }
   }
 
   get icon() {
@@ -90,34 +108,27 @@ export default class GetTickets extends Component {
     event: PropTypes.object,
   }
 
-  get hasTickets() {
-    return this.props.event.ticket_types.length > 0
-  }
-
-  get ticketList() {
-    const {onTicketSelection, event: {ticket_types}} = this.props
-
-    return ticket_types.sort(ticketComparator).map(ticket => (
-      <Ticket key={ticket.id} ticket={ticket} onTicketSelection={onTicketSelection} />
-    ))
+  get ticketsToDisplay() {
+    return this.props.event.ticket_types.filter(ticketFilter).sort(ticketComparator)
   }
 
   render() {
-    const hasTickets = this.props.event
+    const tickets = this.ticketsToDisplay
+    const hasTickets = tickets.length > 0
 
     return (
       <View style={checkoutStyles.mainBody}>
         <View style={checkoutStyles.mainBodyContent}>
 
-          {this.hasTickets ? (
+          {hasTickets ? (
             <View style={checkoutStyles.headerWrapper}>
               <Text style={checkoutStyles.header}>Ticket Type</Text>
             </View>
           ) : null}
 
-          {this.hasTickets ? (
-            this.ticketList
-          ) : (
+          {hasTickets ? tickets.map(ticket => (
+            <Ticket key={ticket.id} ticket={ticket} onTicketSelection={this.props.onTicketSelection} />
+          )) : (
             <View style={ticketStyles.emptyStateContainer}>
               <Image
                 style={ticketStyles.emptyStateIcon}
