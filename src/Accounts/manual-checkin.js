@@ -6,11 +6,13 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import DoormanStyles from '../styles/account/doormanStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
+import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
+const eventDetailsStyles = EventDetailsStyles.createStyles()
 
 function BusyState() {
   return (
@@ -62,16 +64,31 @@ function GuestList({guests, onSelect}) {
 function GuestToCheckIn({guest, onCancel, onCheckIn}) {
   return (
     <View>
-      <Text>{usernameLastFirst(guest)}</Text>
-      <Text>{guest.ticket_type}</Text>
-      <Text>{price(guest.price_in_cents)}</Text>
-      <Text>{guest.status}</Text>
-      <TouchableHighlight onPress={() => onCancel(guest)}>
-        <Text>Cancel</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => onCheckIn(guest)}>
-        <Text>Check In</Text>
-      </TouchableHighlight>
+      <View style={doormanStyles.rowContainer}>
+        <View style={doormanStyles.row}>
+          <View>
+            <Text style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
+            <Text style={doormanStyles.bodyText}>{guest.ticket_type}</Text>
+            <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)} | {guest.status}</Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
+        <TouchableHighlight
+          style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
+          onPress={() => onCancel(guest)}
+        >
+            <Text style={eventDetailsStyles.buttonRoundedText}>Cancel</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
+          onPress={() => onCheckIn(guest)}
+        >
+          <Text style={eventDetailsStyles.buttonRoundedActiveText}>Complete Check-In</Text>
+        </TouchableHighlight>
+      </View>
+
     </View>
   )
 }
@@ -115,11 +132,15 @@ export default class ManualCheckin extends Component {
 
     if (selectedGuest !== null) {
       return (
-        <GuestToCheckIn
-          guest={selectedGuest}
-          onCancel={this.unselectGuest}
-          onCheckIn={this.checkInGuest}
-        />
+        <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
+          <View style={doormanStyles.mainBodyContent}>
+            <GuestToCheckIn
+              guest={selectedGuest}
+              onCancel={this.unselectGuest}
+              onCheckIn={this.checkInGuest}
+            />
+          </View>
+        </View>
       )
     }
 
