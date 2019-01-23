@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, View, TouchableHighlight} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
-import {server} from '../constants/Server'
 import {
   MaterialIcons,
   EvilIcons,
