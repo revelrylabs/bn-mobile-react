@@ -111,6 +111,7 @@ export default class ManualCheckin extends Component {
   }
 
   searchGuestList = (...args) => {
+    console.log(...args)
     this.props.searchGuestList(...args)
   }
 
@@ -123,7 +124,6 @@ export default class ManualCheckin extends Component {
   }
 
   checkInGuest = (guest) => {
-    console.log(guest)
     alert(`TODO: check in ticket ID ${guest.id}`)
     this.unselectGuest()
   }
@@ -154,14 +154,14 @@ export default class ManualCheckin extends Component {
             <View style={styles.container}>
               <Text style={doormanStyles.sectionHeader}>All Guests</Text>
               <View style={doormanStyles.searchContainer}>
-                <SearchBox>
+                <SearchBox
                   textInput={{
                     defaultValue: guestListQuery,
                     onChangeText: this.searchGuestList,
                     placeholder: "Search for guests",
-                  }},
-                  style={doormanStyles.searchInput},
-                </SearchBox>
+                  }}
+                  style={doormanStyles.searchInput}
+                />
               </View>
             </View>
 
