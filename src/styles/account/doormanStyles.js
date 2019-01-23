@@ -25,8 +25,7 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 export const sectionHeaderFontSize = 24
-export const bodyFontSizeSmall = 14
-export const avatarIconFontSize = 28
+export const bodyFontSizeSmall = 15
 
 const DoormanStyles = {
   // TEXT STYLES
@@ -34,6 +33,7 @@ const DoormanStyles = {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
     fontSize: bodyFontSizeSmall,
+    paddingTop: globalPaddingTiny,
   },
 
   // ROW STYLES

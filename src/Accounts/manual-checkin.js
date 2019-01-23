@@ -29,8 +29,7 @@ function GuestTicketCard({guest, onSelect}) {
           <View>
             <Text style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
             <Text style={doormanStyles.bodyText}>{guest.ticket_type}</Text>
-            <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)}</Text>
-            <Text style={doormanStyles.bodyText}>{guest.status}</Text>
+            <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)} | {guest.status}</Text>
           </View>
         </TouchableHighlight>
       </View>
