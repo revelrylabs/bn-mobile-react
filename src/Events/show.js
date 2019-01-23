@@ -191,8 +191,12 @@ export default class EventShow extends Component {
   }
 
   onTicketSelection = async (ticketTypeId, ticketPricingId) => {
-    await this.props.screenProps.cart.setTicketType(ticketTypeId)
-    this.changeScreen('checkout')
+    try {
+      await this.props.screenProps.cart.setTicketType(ticketTypeId)
+      this.changeScreen('checkout')
+    } catch (_error) {
+      // something went wrong. error alert should have shown.
+    }
   }
 
   /* eslint-disable-next-line complexity */
