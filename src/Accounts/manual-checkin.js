@@ -74,19 +74,21 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
         </View>
       </View>
 
-      <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
-        <TouchableHighlight
-          style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
-          onPress={() => onCancel(guest)}
-        >
-            <Text style={eventDetailsStyles.buttonRoundedText}>Cancel</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
-          onPress={() => onCheckIn(guest)}
-        >
-          <Text style={eventDetailsStyles.buttonRoundedActiveText}>Complete Check-In</Text>
-        </TouchableHighlight>
+      <View style={styles.container}>
+        <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
+          <TouchableHighlight
+            style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
+            onPress={() => onCancel(guest)}
+          >
+              <Text style={eventDetailsStyles.buttonRoundedText}>Cancel</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
+            onPress={() => onCheckIn(guest)}
+          >
+            <Text style={eventDetailsStyles.buttonRoundedActiveText}>Complete Check-In</Text>
+          </TouchableHighlight>
+        </View>
       </View>
 
     </View>
