@@ -1,17 +1,18 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableHighlight, TextInput, Image} from 'react-native'
+import {ScrollView, View, Text, TouchableHighlight, TextInput, Image} from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import {price, usernameLastFirst} from '../string'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import DoormanStyles from '../styles/account/doormanStyles'
+import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
-import CheckoutStyles from '../styles/event_details/checkoutStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
+const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
-const checkoutStyles = CheckoutStyles.createStyles()
 
 function BusyState() {
   return (
@@ -24,15 +25,18 @@ function BusyState() {
 function GuestTicketCard({guest, onSelect}) {
   return (
     <View style={doormanStyles.rowContainer}>
-      <View style={doormanStyles.row}>
-        <TouchableHighlight onPress={() => onSelect(guest)}>
+      <TouchableHighlight onPress={() => onSelect(guest)}>
+        <View style={doormanStyles.row}>
           <View>
             <Text style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
             <Text style={doormanStyles.bodyText}>{guest.ticket_type}</Text>
             <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)} | {guest.status}</Text>
           </View>
-        </TouchableHighlight>
-      </View>
+        </View>
+      </TouchableHighlight>
+      <TouchableHighlight onPress={() => onSelect(guest)}>
+        <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+      </TouchableHighlight>
     </View>
   )
 }
@@ -122,32 +126,48 @@ export default class ManualCheckin extends Component {
     }
 
     return (
-      <View style={[checkoutStyles.mainBody, checkoutStyles.checkoutMainBody]}>
-        <View style={checkoutStyles.mainBodyContent}>
+      <ScrollView>
+        <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
+          <View style={doormanStyles.mainBodyContent}>
 
-          <View style={styles.container}>
-            <Text style={styles.sectionHeader}>All Guests</Text>
-            <View style={formStyles.searchContainer}>
-              <SearchBox style={formStyles.searchInput}>
+            <View style={styles.container}>
+              <Text style={doormanStyles.sectionHeader}>All Guests</Text>
+              <SearchBox style={formStyles.searchContainer}>
                 textInput={{
                   defaultValue: guestListQuery,
                   onChangeText: this.searchGuestList,
                   placeholder: "Search for guests",
-                }}
+                }},
+                style={formStyles.searchInput},
               </SearchBox>
+
+              <View style={formStyles.searchContainer}>
+                <Image
+                  style={formStyles.searchIcon}
+                  source={require('../../assets/icon-search.png')}
+                />
+                <TextInput
+                  style={formStyles.searchInput}
+                  placeholder="Search artists, shows, venues..."
+                  searchIcon={{size: 24}}
+                  underlineColorAndroid="transparent"
+                  disabled
+                />
+              </View>
             </View>
+
+            {isFetchingGuests && (
+              <BusyState />
+            )}
+
+            <GuestList
+              guests={guests}
+              onSelect={this.selectGuest}
+            />
           </View>
-
-          {isFetchingGuests && (
-            <BusyState />
-          )}
-
-          <GuestList
-            guests={guests}
-            onSelect={this.selectGuest}
-          />
         </View>
-      </View>
+        <View style={doormanStyles.spacer} />
+      </ScrollView>
     )
   }
 

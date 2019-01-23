@@ -11,6 +11,7 @@ import {
   iconFontSize,
   globalFontRegular,
   globalFontMedium,
+  globalFontSemiBold,
   globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
@@ -28,7 +29,37 @@ export const sectionHeaderFontSize = 24
 export const bodyFontSizeSmall = 15
 
 const DoormanStyles = {
+  // MAIN BODY STYLES
+  mainBody: {
+    backgroundColor: 'transparent',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingHorizontal: 0,
+    minHeight: '100%',
+    marginTop: 240,
+  },
+  checkoutMainBody: {
+    marginTop: 100,
+  },
+  mainBodyContent: {
+    backgroundColor: 'white',
+    borderTopRightRadius: 30/2,
+    borderTopLeftRadius: 30/2,
+    height: fullHeight,
+    paddingTop: globalPaddingMedium,
+    minHeight: '100%',
+  },
+  spacer: {
+    height: 100,
+  },
+
   // TEXT STYLES
+  sectionHeader: {
+    backgroundColor: 'transparent',
+    color: sectionHeaderColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: sectionHeaderFontSize,
+  },
   bodyText: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
