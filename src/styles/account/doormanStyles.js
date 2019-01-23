@@ -53,6 +53,25 @@ const DoormanStyles = {
     height: 100,
   },
 
+  // SEARCH STYLES
+  searchContainer: {
+    backgroundColor: disabledColor,
+    borderColor: 'transparent',
+    borderRadius: 7,
+    borderWidth: 1,
+    height: 40,
+    marginVertical: globalMarginSmall,
+    padding: globalPaddingSmall,
+  },
+  searchInput: {
+    backgroundColor: disabledColor,
+    color: textColor,
+    fontFamily: globalFontRegular,
+    fontSize: bodyFontSize,
+    marginTop: globalPaddingTiny,
+    width: '100%',
+  },
+
   // TEXT STYLES
   sectionHeader: {
     backgroundColor: 'transparent',

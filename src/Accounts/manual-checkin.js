@@ -3,13 +3,11 @@ import {ScrollView, View, Text, TouchableHighlight, TextInput, Image} from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {price, usernameLastFirst} from '../string'
 import SharedStyles from '../styles/shared/sharedStyles'
-import FormStyles from '../styles/shared/formStyles'
 import DoormanStyles from '../styles/account/doormanStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 
 const styles = SharedStyles.createStyles()
-const formStyles = FormStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
@@ -132,27 +130,15 @@ export default class ManualCheckin extends Component {
 
             <View style={styles.container}>
               <Text style={doormanStyles.sectionHeader}>All Guests</Text>
-              <SearchBox style={formStyles.searchContainer}>
-                textInput={{
-                  defaultValue: guestListQuery,
-                  onChangeText: this.searchGuestList,
-                  placeholder: "Search for guests",
-                }},
-                style={formStyles.searchInput},
-              </SearchBox>
-
-              <View style={formStyles.searchContainer}>
-                <Image
-                  style={formStyles.searchIcon}
-                  source={require('../../assets/icon-search.png')}
-                />
-                <TextInput
-                  style={formStyles.searchInput}
-                  placeholder="Search artists, shows, venues..."
-                  searchIcon={{size: 24}}
-                  underlineColorAndroid="transparent"
-                  disabled
-                />
+              <View style={doormanStyles.searchContainer}>
+                <SearchBox>
+                  textInput={{
+                    defaultValue: guestListQuery,
+                    onChangeText: this.searchGuestList,
+                    placeholder: "Search for guests",
+                  }},
+                  style={doormanStyles.searchInput},
+                </SearchBox>
               </View>
             </View>
 
