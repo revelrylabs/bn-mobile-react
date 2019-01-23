@@ -141,19 +141,23 @@ class CartContainer extends Container {
 
     try {
       const response = await server.cart.replace(params)
+
       // set these first so we can calculate actual quantity
       await this.setState({response, isReady: true})
+
       // if the actual quantity and the requested quantity match, we're probably done updating
       // if they don't match, most likely there's another cart update in progress
       if (this.quantity === this.requestedQuantity) {
         await this.setState({isChangingQuantity: false})
       }
-      return response
     } catch (error) {
       apiErrorAlert(error)
+
       if (this.isReady) {
         await this.setState({requestedQuantity: this.quantity})
         return this.response
+      } else {
+        throw error
       }
     }
   }
