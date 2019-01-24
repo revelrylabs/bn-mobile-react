@@ -18,6 +18,9 @@ export class EventManagerContainer extends Container {
       scanResult: null,
       events: [],
       eventToScan: {},
+      guests: [],
+      isFetchingGuests: false,
+      guestListQuery: '',
     }
   }
 
@@ -42,7 +45,19 @@ export class EventManagerContainer extends Container {
   }
 
   scanForEvent = async (event) => {
-    this.setState({eventToScan: event});
+    this.setState({eventToScan: event, guests: []});
+  }
+
+  searchGuestList = async (guestListQuery = '') => {
+    await this.setState({isFetchingGuests: true, guestListQuery})
+
+    const {id} = this.state.eventToScan
+    const {data: {data: guests, paging: _paging}} = await server.events.guests.index({event_id: id, query: guestListQuery})
+
+    // Still fetching the same thing? (or subsequently fetched something else?)
+    if (this.state.eventToScan.id === id && this.state.guestListQuery === guestListQuery) {
+      await this.setState({guests, isFetchingGuests: false})
+    }
   }
 
   _transfer = async () => {
