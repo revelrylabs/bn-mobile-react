@@ -20,23 +20,32 @@ export class Ticket extends Component {
   getOnPressHandler() {
     const {ticket, onTicketSelection} = this.props
 
-    return ticket.ticket_pricing && (() => onTicketSelection(ticket.id, ticket.ticket_pricing.id));
+    return ticket.ticket_pricing && (() => onTicketSelection(ticket.id, ticket.ticket_pricing.id))
   }
 
   get priceContent() {
-    const {ticket_pricing} = this.props.ticket;
+    const {ticket_pricing} = this.props.ticket
 
-    return ticket_pricing ? `$${toDollars(ticket_pricing.price_in_cents)}` : 'N/A';
+    return ticket_pricing ? `$${toDollars(ticket_pricing.price_in_cents)}` : 'N/A'
   }
 
   get subHeaderContent() {
-    const {ticket_pricing} = this.props.ticket;
+    const {status, ticket_pricing} = this.props.ticket
 
-    return ticket_pricing ? ticket_pricing.name : 'SOLD OUT';
+    switch (status) {
+    case 'SoldOut':
+      return 'SOLD OUT'
+    case 'Published':
+      return ticket_pricing.name
+    default:
+      return null
+    }
   }
 
   get icon() {
-    return this.props.ticket.ticket_pricing && <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />;
+    return this.props.ticket.ticket_pricing && (
+      <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+    )
   }
 
   render() {
@@ -56,3 +65,4 @@ export class Ticket extends Component {
     )
   }
 }
+

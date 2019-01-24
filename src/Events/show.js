@@ -150,7 +150,7 @@ export default class EventShow extends Component {
     await cart.clearCart()
 
     if (eventId) {
-      store.getEvent(eventId)
+      await store.getEvent(eventId)
     }
   }
 
@@ -197,18 +197,24 @@ export default class EventShow extends Component {
       return true
     }
 
-    const {screenProps: {cart}} = this.props
+    const {screenProps: {cart, store}} = this.props
 
-    cart.applyPromo(promoCode, () => {
-      this.changeScreen('checkout')
-    })
+    await cart.addPromo(promoCode)
+    await store.eventPromo(cart.promoCode)
+    // () => {
+    //   this.changeScreen('checkout')
+    // }
 
     return null
   }
 
   onTicketSelection = async (ticketTypeId, _ticketPricingId) => {
-    await this.props.screenProps.cart.setTicketType(ticketTypeId)
-    this.changeScreen('checkout')
+    try {
+      await this.props.screenProps.cart.setTicketType(ticketTypeId)
+      this.changeScreen('checkout')
+    } catch (_error) {
+      // something went wrong. error alert should have shown.
+    }
   }
 
   /* eslint-disable-next-line complexity */

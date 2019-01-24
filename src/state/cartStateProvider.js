@@ -36,6 +36,10 @@ class CartContainer extends Container {
     this._resetState()
   }
 
+  get promoCode() {
+    return this.state.redemption_code
+  }
+
   get response() {
     return this.state.response
   }
@@ -157,6 +161,9 @@ class CartContainer extends Container {
 
   async _commitQuantity() {
     const onSuccess = async (response) => {
+
+      // if the actual quantity and the requested quantity match, we're probably done updating
+      // if they don't match, most likely there's another cart update in progress
       if (this.quantity === this.requestedQuantity) {
         await this.setState({isChangingQuantity: false})
       }
@@ -168,6 +175,8 @@ class CartContainer extends Container {
       if (this.isReady) {
         await this.setState({requestedQuantity: this.quantity})
         return this.response
+      } else {
+        throw error
       }
 
       return null
@@ -188,10 +197,8 @@ class CartContainer extends Container {
     }
   }
 
-  applyPromo = async (redemptionCode) => {
-    const response = await server.redemptionCodes.read({ code: redemptionCode })
-    console.log(response.data);
-
+  addPromo = async (redemption_code) => {
+    await this.setState({redemption_code})
   }
 
   async setTicketType(ticketTypeId) {

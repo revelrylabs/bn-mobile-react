@@ -110,13 +110,19 @@ class EventsContainer extends Container {
   getEvent = async (id) => {
     try {
       const {data} = await server.events.read({id})
+      const ticketTypesById = {}
 
       if (!data.promo_image_url) {
         data.promo_image_url = `${baseURL}/images/event-placeholder.png`
       }
 
+      data.ticket_types.forEach((ttype) => {
+        ticketTypesById[ttype.id] = ttype
+      })
+
       this.setState({
         selectedEvent: {...data},
+        ticketTypesById,
       })
     } catch (error) {
       apiErrorAlert(error)
@@ -144,6 +150,24 @@ class EventsContainer extends Container {
         this.getEvent(id)
       }
     }
+  }
+
+  async eventPromo(redemptionCode) {
+    const response = await server.redemptionCodes.read({ code: redemptionCode })
+    console.log("RESP", response);
+    
+    newTicket = response.data.ticket_type
+
+    const ticketTypesById = this.state.ticketTypesById
+
+    console.log('First TT', ticketTypesById);
+
+    ticketTypesById[newTicket.id] = newTicket
+
+    console.log('2nd TT', ticketTypesById);
+
+
+    this.setState({ticketTypesById})
   }
 }
 

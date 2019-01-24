@@ -1,12 +1,11 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Modal, Text, View, Image, TouchableHighlight} from 'react-native'
+import {ScrollView, Modal, Text, View, Image, TouchableHighlight, Button, Linking} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import coverPhotoPlaceholder from '../../assets/account-placeholder-bkgd.png'
-import qrCodePlaceholder from '../../assets/qr-code-placeholder.png'
 import qrCodeIcon from '../../assets/qr-code-small.png'
 import ReactQRCode from 'react-native-qrcode';
 import {username} from '../string'
@@ -192,6 +191,7 @@ export default class Account extends Component {
             </TouchableHighlight>
           </Fragment>
           || null}
+          <Button onPress={() => Linking.openURL('mailto:fansupport@bigneon.com')} title="Contact Support" />
         </View>
       </ScrollView>
     )

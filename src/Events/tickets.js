@@ -16,7 +16,18 @@ const ticketStyles = TicketStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
 
-function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) { // eslint-disable-line complexity
+function ticketFilter({status, ticket_pricing}) {
+  switch (status) {
+  case 'SoldOut':
+    return true
+  case 'Published':
+    return !!ticket_pricing
+  default:
+    return false
+  }
+}
+
+function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
   if (a === null && b === null) {
     return 0
   }
@@ -58,15 +69,21 @@ export default class GetTickets extends Component {
     this.props.onPromoApply(this.state.promoCode)
   }
 
+  get ticketsToDisplay() {
+    // console.log('TTs', this.props.event.ticket_types)
+    
+
+
+    return this.props.event.ticket_types.filter(ticketFilter).sort(ticketComparator)
+  }
+
   get hasTickets() {
-    return this.props.event.ticket_types.length > 0
+    return this.ticketsToDisplay.length > 0
   }
 
   get ticketList() {
-    const {onTicketSelection, event: {ticket_types}} = this.props
-
-    return ticket_types.sort(ticketComparator).map((ticket) => (
-      <Ticket key={ticket.id} ticket={ticket} onTicketSelection={onTicketSelection} />
+    return this.ticketsToDisplay.map((ticket) => (
+      <Ticket key={ticket.id} ticket={ticket} onTicketSelection={this.props.onTicketSelection} />
     ))
   }
 
@@ -104,9 +121,7 @@ export default class GetTickets extends Component {
     return (
       <View style={checkoutStyles.mainBody}>
         <View style={checkoutStyles.mainBodyContent}>
-
           {this.hasTickets ? this.hasTicketDisplay : <NoAvailableTickets />}
-
         </View>
       </View>
     )
