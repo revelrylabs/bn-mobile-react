@@ -184,7 +184,7 @@ export default class Account extends Component {
               <View style={accountStyles.rowContainer}>
                 <View style={accountStyles.row}>
                   <Icon style={accountStyles.accountIcon} name="filter-center-focus" />
-                  <Text style={accountStyles.accountHeader}>Doorman</Text>
+                  <Text style={accountStyles.accountHeader}>Doorperson</Text>
                 </View>
                 <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
               </View>
