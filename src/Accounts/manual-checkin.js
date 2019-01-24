@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TouchableHighlight, TextInput, Image} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import {price, usernameLastFirst} from '../string'
+import {price, username, usernameLastFirst} from '../string'
 import SharedStyles from '../styles/shared/sharedStyles'
 import DoormanStyles from '../styles/account/doormanStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
+import {server, apiErrorAlert} from '../constants/Server'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
@@ -110,9 +111,8 @@ export default class ManualCheckin extends Component {
     this.searchGuestList()
   }
 
-  searchGuestList = (...args) => {
-    console.log(...args)
-    this.props.searchGuestList(...args)
+  searchGuestList = (query) => {
+    this.props.searchGuestList(query)
   }
 
   selectGuest = (selectedGuest) => {
@@ -123,9 +123,18 @@ export default class ManualCheckin extends Component {
     this.selectGuest(null)
   }
 
-  checkInGuest = (guest) => {
-    alert(`TODO: check in ticket ID ${guest.id}`)
-    this.unselectGuest()
+  checkInGuest = async (guest) => {
+    const {event_id, id: ticket_id, redeem_key} = guest
+
+    try {
+      await server.events.tickets.redeem({event_id, ticket_id, redeem_key})
+      alert(`Checked in ${username(guest)}`)
+    } catch (error) {
+      apiErrorAlert(error)
+    } finally {
+      this.searchGuestList()
+      this.unselectGuest()
+    }
   }
 
   get innerContent() {
