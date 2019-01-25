@@ -2,6 +2,7 @@ import {Container} from 'unstated'
 import {server, apiErrorAlert, defaultEventSort} from '../constants/Server'
 import {baseURL} from '../constants/config'
 import {DateTime} from 'luxon'
+import {map} from 'lodash'
 
 const LOCATIONS_FETCH_MIN_MINUTES = 15
 
@@ -40,6 +41,39 @@ class EventsContainer extends Container {
 
   get selectedEvent() {
     return this.state.selectedEvent
+  }
+
+  ticketFilter({status, ticket_pricing}) {
+    switch (status) {
+    case 'SoldOut':
+      return true
+    case 'Published':
+      return !!ticket_pricing
+    default:
+      return false
+    }
+  }
+
+  ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
+    if (a === null && b === null) {
+      return 0
+    }
+    if (a === null) {
+      return 1
+    }
+    if (b === null) {
+      return -1
+    }
+    return b - a
+  }
+
+  get ticketsToDisplay() {
+    const {ticketTypesById} = this.state
+
+    ticketTypes = map(ticketTypesById, (ticket, _id) => ticket)
+
+
+    return ticketTypes ? ticketTypes.filter(this.ticketFilter).sort(this.ticketComparator) : []
   }
 
   locationsPromise = null
@@ -154,18 +188,10 @@ class EventsContainer extends Container {
 
   async eventPromo(redemptionCode) {
     const response = await server.redemptionCodes.read({ code: redemptionCode })
-    console.log("RESP", response);
-    
-    newTicket = response.data.ticket_type
-
     const ticketTypesById = this.state.ticketTypesById
 
-    console.log('First TT', ticketTypesById);
-
+    newTicket = response.data.ticket_type
     ticketTypesById[newTicket.id] = newTicket
-
-    console.log('2nd TT', ticketTypesById);
-
 
     this.setState({ticketTypesById})
   }

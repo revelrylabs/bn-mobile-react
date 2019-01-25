@@ -20,13 +20,13 @@ export class Ticket extends Component {
   getOnPressHandler() {
     const {ticket, onTicketSelection} = this.props
 
-    return ticket.ticket_pricing && (() => onTicketSelection(ticket.id, ticket.ticket_pricing.id))
+    return ticket.ticket_pricing && (() => onTicketSelection(ticket))
   }
 
   get priceContent() {
     const {ticket_pricing} = this.props.ticket
 
-    return ticket_pricing ? `$${toDollars(ticket_pricing.price_in_cents)}` : 'N/A'
+    return ticket_pricing ? `$${toDollars(ticket_pricing.price_in_cents - ticket_pricing.discount_in_cents)}` : 'N/A'
   }
 
   get subHeaderContent() {

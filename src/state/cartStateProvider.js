@@ -23,7 +23,7 @@ class CartContainer extends Container {
       requestedQuantity: 1,
       isReady: false,
       isChangingQuantity: false,
-      ticketTypeId: null,
+      selectedTicket: {},
       response: null,
       payment: null,
       items: [],
@@ -61,7 +61,11 @@ class CartContainer extends Container {
   }
 
   get ticketTypeId() {
-    return this.state.ticketTypeId
+    return this.state.selectedTicket.id
+  }
+
+  get appliedPromo() {
+    return this.state.selectedTicket.redemption_code
   }
 
   get quantity() {
@@ -136,8 +140,7 @@ class CartContainer extends Container {
 
   get replaceParams() {
     return {
-      items: [{ticket_type_id: this.ticketTypeId, quantity: this.state.requestedQuantity}],
-      redemption_code: this.state.redemption_code,
+      items: [{ticket_type_id: this.ticketTypeId, redemption_code: this.appliedPromo, quantity: this.state.requestedQuantity}],
     }
   }
 
@@ -178,8 +181,6 @@ class CartContainer extends Container {
       } else {
         throw error
       }
-
-      return null
     }
 
     this.replaceCart(onSuccess, onError)
@@ -201,8 +202,8 @@ class CartContainer extends Container {
     await this.setState({redemption_code})
   }
 
-  async setTicketType(ticketTypeId) {
-    await this.setState({ticketTypeId, requestedQuantity: 1})
+  async setTicketType(id, redemption_code) {
+    await this.setState({selectedTicket: {id, redemption_code}, requestedQuantity: 1})
     return await this._commitQuantity()
   }
 

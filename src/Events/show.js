@@ -208,9 +208,9 @@ export default class EventShow extends Component {
     return null
   }
 
-  onTicketSelection = async (ticketTypeId, _ticketPricingId) => {
+  onTicketSelection = async (ticketType) => {
     try {
-      await this.props.screenProps.cart.setTicketType(ticketTypeId)
+      await this.props.screenProps.cart.setTicketType(ticketType.id, ticketType.redemption_code)
       this.changeScreen('checkout')
     } catch (_error) {
       // something went wrong. error alert should have shown.
@@ -222,7 +222,7 @@ export default class EventShow extends Component {
     const {event, currentScreen} = this.state
     const {
       screenProps: {
-        store: {toggleInterest},
+        store: {toggleInterest, ticketsToDisplay},
         cart: {payment},
         user: {access_token, refresh_token},
       },
@@ -241,6 +241,7 @@ export default class EventShow extends Component {
       return (
         <GetTickets
           event={event}
+          ticketsToDisplay={ticketsToDisplay}
           onTicketSelection={this.onTicketSelection}
           changeScreen={this.changeScreen}
           onPromoApply={this.onPromoApply}
