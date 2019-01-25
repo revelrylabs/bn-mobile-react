@@ -162,39 +162,28 @@ class CartContainer extends Container {
     }, 100)
   }
 
+
   async _commitQuantity() {
-    const onSuccess = async (response) => {
+    try {
+      const response = await server.cart.replace(this.replaceParams)
 
-      // if the actual quantity and the requested quantity match, we're probably done updating
-      // if they don't match, most likely there's another cart update in progress
-      if (this.quantity === this.requestedQuantity) {
-        await this.setState({isChangingQuantity: false})
-      }
+      // set these first so we can calculate actual quantity
+      await this.setState({response, isReady: true})
+    } catch (error) {
+      apiErrorAlert(error)
 
-      return response
-    }
-
-    const onError = async (_error) => {
       if (this.isReady) {
         await this.setState({requestedQuantity: this.quantity})
         return this.response
       } else {
         throw error
       }
-    }
-
-    this.replaceCart(onSuccess, onError)
-  }
-
-  replaceCart = async (onSuccess = () => {}, onError = () => {}) => {
-    try {
-      const response = await server.cart.replace(this.replaceParams)
-
-      await this.setState({response, isReady: true})
-      onSuccess(response)
-    } catch (error) {
-      apiErrorAlert(error, 'There was a problem updating your cart.')
-      onError(error)
+    } finally {
+      // if the actual quantity and the requested quantity match, we're probably done updating
+      // if they don't match, most likely there's another cart update in progress
+      if (this.quantity === this.requestedQuantity) {
+        await this.setState({isChangingQuantity: false})
+      }
     }
   }
 

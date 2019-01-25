@@ -1,3 +1,5 @@
+import Big from 'big.js'
+
 // Typically used with React TextInput `onChangeText.
 // Takes a 1-arg function and returns a function that trims the arg if it's a string.
 export function autotrim(fn) {
@@ -12,4 +14,22 @@ export function pluralize(count, singular, plural = null) {
 
 export function username({first_name: first, last_name: last, email}) {
   return [first, last].join(' ').trim() || email
+}
+
+export function usernameLastFirst({first_name: first, last_name: last, email}) {
+  return [last, first].join(', ').trim() || email
+}
+
+export function price(cents) {
+  if (cents === 0) {
+    return 'Free'
+  }
+
+  const dollars = new Big(cents)
+    .div(100)
+    .round(2)
+    .toFixed(2)
+    .replace(/\.00$/, '')
+
+  return `$${dollars}`
 }

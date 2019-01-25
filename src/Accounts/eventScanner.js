@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, View, TouchableHighlight} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
-
 import {
   MaterialIcons,
   EvilIcons,
 } from '@expo/vector-icons'
-
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
+import ManualCheckin from './manual-checkin'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -98,6 +97,22 @@ export default class EventScanner extends Component {
     )
   }
 
+  get event() {
+    return this.props.screenProps.eventManager.state.eventToScan
+  }
+
+  toggleCheckInMode = async () => {
+    let {checkInMode} = this.state
+
+    checkInMode = checkInMode === 'automatic' ? 'manual' : 'automatic'
+
+    this.setState({checkInMode})
+
+    if (checkInMode === 'automatic') {
+      return
+    }
+  }
+
   render() {
     const {hasCameraPermission, checkInMode} = this.state;
     const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
@@ -112,10 +127,12 @@ export default class EventScanner extends Component {
 
     return (
       <View>
-        <BarCodeScanner
-          onBarCodeRead={this.handleBarCodeScanned}
-          style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
-        />
+        {checkInMode === 'automatic' && (
+          <BarCodeScanner
+            onBarCodeRead={this.handleBarCodeScanned}
+            style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
+          />
+        )}
 
         <View style={eventScannerStyles.eventScannerContainer}>
 
@@ -130,7 +147,7 @@ export default class EventScanner extends Component {
               />
             </View>
             {/* TODO: add a bit of state for auto/manual modes and a toggle handler */}
-            <TouchableHighlight style={eventScannerStyles.pillContainer}>
+            <TouchableHighlight style={eventScannerStyles.pillContainer} onPress={this.toggleCheckInMode}>
               <View style={styles.flexRowCenter}>
                 <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
                 <Text style={eventScannerStyles.pillTextPrimary}>{checkInMode.toUpperCase()}</Text>
@@ -140,6 +157,10 @@ export default class EventScanner extends Component {
           </View>
 
           {this.statusMessage(scanResult)}
+
+          {checkInMode === 'manual' && (
+            <ManualCheckin {...eventManager.state} searchGuestList={eventManager.searchGuestList} />
+          )}
 
           {/* TODO: fill in guest info panel, remove whitespace style workaround */}
           <View>
