@@ -187,13 +187,17 @@ class EventsContainer extends Container {
   }
 
   async eventPromo(redemptionCode) {
-    const response = await server.redemptionCodes.read({ code: redemptionCode })
-    const ticketTypesById = this.state.ticketTypesById
+    try {
+      const response = await server.redemptionCodes.read({ code: redemptionCode })
+      const ticketTypesById = this.state.ticketTypesById
 
-    newTicket = response.data.ticket_type
-    ticketTypesById[newTicket.id] = newTicket
+      newTicket = response.data.ticket_type
+      ticketTypesById[newTicket.id] = newTicket
 
-    this.setState({ticketTypesById})
+      this.setState({ticketTypesById})
+    } catch (error) {
+      apiErrorAlert(error, 'There was a problem applying this promotional code.')
+    }
   }
 }
 

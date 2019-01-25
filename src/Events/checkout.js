@@ -88,7 +88,6 @@ export default class Checkout extends Component {
               <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Promotional Code</Text>
               <Text style={checkoutStyles.ticketSubHeader}>{promoTicket.description}</Text>
               <Text style={checkoutStyles.ticketSubHeader}>Code: {promoTicket.redemption_code}</Text>
-              <Text style={checkoutStyles.ticketSubHeader}>Quantity: {promoTicket.quantity}</Text>
             </View>
           </View>
         </View>
