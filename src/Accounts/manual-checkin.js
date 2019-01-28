@@ -15,6 +15,10 @@ const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 
+function shouldAllowCheckIn({status}) {
+  return status === 'Purchased'
+}
+
 function BusyState() {
   return (
     <View style={ticketStyles.emptyStateContainer}>
@@ -23,17 +27,38 @@ function BusyState() {
   )
 }
 
+function guestStatusBadgeStyle(status) {
+  switch (status) {
+  case 'Purchased':
+    return {color: 'white', backgroundColor: 'green'}
+  default:
+    null
+  }
+}
+
+function TicketStatusBadge({status, style}) {
+  return (
+    <Text style={[guestStatusBadgeStyle(status), style]}>{status}</Text>
+  )
+}
+
+function GuestRowContent({guest}) {
+  return (
+    <View style={doormanStyles.row}>
+      <View>
+        <Text style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
+        <TicketStatusBadge status={guest.status} />
+        <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)} | {guest.ticket_type}</Text>
+      </View>
+    </View>
+  )
+}
+
 function GuestTicketCard({guest, onSelect}) {
   return (
     <View style={doormanStyles.rowContainer}>
       <TouchableHighlight onPress={() => onSelect(guest)}>
-        <View style={doormanStyles.row}>
-          <View>
-            <Text style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
-            <Text style={doormanStyles.bodyText}>{guest.ticket_type}</Text>
-            <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)} | {guest.status}</Text>
-          </View>
-        </View>
+        <GuestRowContent guest={guest} />
       </TouchableHighlight>
       <TouchableHighlight onPress={() => onSelect(guest)}>
         <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
@@ -66,13 +91,7 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
   return (
     <View>
       <View style={doormanStyles.rowContainer}>
-        <View style={doormanStyles.row}>
-          <View>
-            <Text style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
-            <Text style={doormanStyles.bodyText}>{guest.ticket_type}</Text>
-            <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)} | {guest.status}</Text>
-          </View>
-        </View>
+        <GuestRowContent guest={guest} />
       </View>
 
       <View style={styles.container}>
@@ -81,14 +100,16 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
             style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
             onPress={() => onCancel(guest)}
           >
-              <Text style={eventDetailsStyles.buttonRoundedText}>Cancel</Text>
+            <Text style={eventDetailsStyles.buttonRoundedText}>Back to List</Text>
           </TouchableHighlight>
-          <TouchableHighlight
-            style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
-            onPress={() => onCheckIn(guest)}
-          >
-            <Text style={eventDetailsStyles.buttonRoundedActiveText}>Complete Check-In</Text>
-          </TouchableHighlight>
+          {shouldAllowCheckIn(guest) ? (
+            <TouchableHighlight
+              style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
+              onPress={() => onCheckIn(guest)}
+            >
+              <Text style={eventDetailsStyles.buttonRoundedActiveText}>Complete Check-In</Text>
+            </TouchableHighlight>
+          ) : null}
         </View>
       </View>
 
