@@ -197,13 +197,9 @@ export default class EventShow extends Component {
       return true
     }
 
-    const {screenProps: {cart, store}} = this.props
+    const {screenProps: {store}} = this.props
 
-    await cart.addPromo(promoCode)
-    await store.eventPromo(cart.promoCode)
-    // () => {
-    //   this.changeScreen('checkout')
-    // }
+    await store.eventPromo(promoCode)
 
     return null
   }

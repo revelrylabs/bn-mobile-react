@@ -14,6 +14,29 @@ const _SAMPLE_AVATARS = [
 
 /* eslint-disable complexity,space-before-function-paren,camelcase */
 
+function ticketFilter({status, ticket_pricing}) {
+  switch (status) {
+  case 'SoldOut':
+    return true
+  case 'Published':
+    return !!ticket_pricing
+  default:
+    return false
+  }
+}
+
+function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
+  if (a === null && b === null) {
+    return 0
+  }
+  if (a === null) {
+    return 1
+  }
+  if (b === null) {
+    return -1
+  }
+  return b - a
+}
 class EventsContainer extends Container {
 
   constructor(props = {}) {
@@ -43,37 +66,13 @@ class EventsContainer extends Container {
     return this.state.selectedEvent
   }
 
-  ticketFilter({status, ticket_pricing}) {
-    switch (status) {
-    case 'SoldOut':
-      return true
-    case 'Published':
-      return !!ticket_pricing
-    default:
-      return false
-    }
-  }
-
-  ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
-    if (a === null && b === null) {
-      return 0
-    }
-    if (a === null) {
-      return 1
-    }
-    if (b === null) {
-      return -1
-    }
-    return b - a
-  }
-
   get ticketsToDisplay() {
     const {ticketTypesById} = this.state
 
     ticketTypes = map(ticketTypesById, (ticket, _id) => ticket)
 
 
-    return ticketTypes ? ticketTypes.filter(this.ticketFilter).sort(this.ticketComparator) : []
+    return ticketTypes ? ticketTypes.filter(ticketFilter).sort(ticketComparator) : []
   }
 
   locationsPromise = null
@@ -192,6 +191,11 @@ class EventsContainer extends Container {
       const ticketTypesById = this.state.ticketTypesById
 
       newTicket = response.data.ticket_type
+
+      if (!(newTicket.id in ticketTypesById)) {
+        return new Error('This Promo Code is not valid for this event')
+      }
+
       ticketTypesById[newTicket.id] = newTicket
 
       this.setState({ticketTypesById})

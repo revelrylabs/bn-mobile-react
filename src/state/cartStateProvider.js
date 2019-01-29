@@ -23,21 +23,17 @@ class CartContainer extends Container {
       requestedQuantity: 1,
       isReady: false,
       isChangingQuantity: false,
-      selectedTicket: {},
+      ticketTypeId: null,
+      ticketPromo: null,
       response: null,
       payment: null,
       items: [],
-      redemption_code: null,
     }
   }
 
   constructor() {
     super()
     this._resetState()
-  }
-
-  get promoCode() {
-    return this.state.redemption_code
   }
 
   get response() {
@@ -60,12 +56,12 @@ class CartContainer extends Container {
     return this.event.ticket_types.find(({id}) => id === this.ticketTypeId)
   }
 
-  get ticketTypeId() {
-    return this.state.selectedTicket.id
+  get ticketPromo() {
+    return this.state.ticketPromo
   }
 
-  get appliedPromo() {
-    return this.state.selectedTicket.redemption_code
+  get ticketTypeId() {
+    return this.state.ticketTypeId
   }
 
   get quantity() {
@@ -140,7 +136,7 @@ class CartContainer extends Container {
 
   get replaceParams() {
     return {
-      items: [{ticket_type_id: this.ticketTypeId, redemption_code: this.appliedPromo, quantity: this.state.requestedQuantity}],
+      items: [{ticket_type_id: this.ticketTypeId, redemption_code: this.ticketPromo, quantity: this.state.requestedQuantity}],
     }
   }
 
@@ -187,12 +183,8 @@ class CartContainer extends Container {
     }
   }
 
-  addPromo = async (redemption_code) => {
-    await this.setState({redemption_code})
-  }
-
-  async setTicketType(id, redemption_code) {
-    await this.setState({selectedTicket: {id, redemption_code}, requestedQuantity: 1})
+  async setTicketType(ticketTypeId, ticketPromo) {
+    await this.setState({ticketTypeId, ticketPromo, requestedQuantity: 1})
     return await this._commitQuantity()
   }
 
