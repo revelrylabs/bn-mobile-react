@@ -1,6 +1,5 @@
 import {Container} from 'unstated'
 import {server, apiErrorAlert} from '../constants/Server'
-import {some} from 'lodash'
 
 function itemIsTicket({item_type: type}) {
   return type === 'Tickets'
@@ -126,8 +125,8 @@ class CartContainer extends Container {
   }
 
   get usedPromo() {
-    // Is there a ticket item in the cart with a promo code?
-    return some(this.tickets, (ticket) => !!ticket.redemption_code)
+    // Return true if any ticket's redemption_code is truthy
+    return !!this.tickets.find(({redemption_code: code}) => code === this.ticketPromo)
   }
 
   get promoTickets() {
