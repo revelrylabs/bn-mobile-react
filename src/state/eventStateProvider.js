@@ -115,7 +115,6 @@ class EventsContainer extends Container {
         this.fetchLocations(),
       ])
       const eventsById = {}
-      const ticketTypesById = {}
 
       data.data.forEach((event) => {
         if (!event.promo_image_url) {
@@ -128,7 +127,6 @@ class EventsContainer extends Container {
         lastUpdate: DateTime.local(),
         events: data.data,
         eventsById,
-        ticketTypesById,
         paging: data.paging,
       })
     } catch (error) {
@@ -193,7 +191,7 @@ class EventsContainer extends Container {
       newTicket = response.data.ticket_type
 
       if (!(newTicket.id in ticketTypesById)) {
-        return new Error('This Promo Code is not valid for this event')
+        throw {response: { data: {error: 'This Promo Code is not valid for this event'}}}
       }
 
       ticketTypesById[newTicket.id] = newTicket
