@@ -89,19 +89,17 @@ const DoormanStyles = {
 
   // ROW STYLES
   rowContainer: {
-    alignItems: 'center',
     backgroundColor: white,
     borderBottomColor: borderColor,
     borderBottomWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingSmall,
     width: fullWidth,
   },
   row: {
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
 
   // BADGE STYLES

@@ -60,10 +60,10 @@ function GuestTicketCard({guest, onSelect}) {
   return (
     <View style={doormanStyles.rowContainer}>
       <TouchableHighlight onPress={() => onSelect(guest)}>
-        <GuestRowContent guest={guest} />
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => onSelect(guest)}>
-        <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+        <View style={doormanStyles.row}>
+          <GuestRowContent guest={guest} />
+          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+        </View>
       </TouchableHighlight>
     </View>
   )
