@@ -59,7 +59,7 @@ function GuestRowContent({guest}) {
 function GuestTicketCard({guest, onSelect}) {
   return (
     <View style={doormanStyles.rowContainer}>
-      <TouchableHighlight onPress={() => onSelect(guest)}>
+      <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => onSelect(guest)}>
         <View style={doormanStyles.row}>
           <GuestRowContent guest={guest} />
           <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
