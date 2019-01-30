@@ -313,7 +313,7 @@ export default class EventShow extends Component {
   purchaseTicket = async () => {
     const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
 
-    if (!cart.payment) {
+    if (cart.totalCents && !cart.payment) {
       alert('Please enter your payment details');
       return false
     }
