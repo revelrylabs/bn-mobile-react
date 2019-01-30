@@ -21,6 +21,10 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
+export const badgePrimary = '#9013FE'
+export const badgeSuccess = '#47C68A'
+export const badgeAlarm = '#FE1313'
+
 
 export const sectionHeaderFontSize = 24
 export const bodyFontSizeSmall = 15
@@ -102,7 +106,7 @@ const DoormanStyles = {
 
   // BADGE STYLES
   ticketStatusBadgeWrapper: {
-    backgroundColor: '#47C68A',
+    backgroundColor: badgeSuccess,
     borderColor: 'transparent',
     borderWidth: 1,
     borderBottomRightRadius: 8,
