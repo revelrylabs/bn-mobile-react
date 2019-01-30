@@ -117,7 +117,6 @@ export default class EventShow extends Component {
       showLoadingModal: false,
       showSuccessModal: false,
     }
-    this.scrollView = null;
     this.loadEvent()
   }
 
