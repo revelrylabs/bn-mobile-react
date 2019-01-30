@@ -117,7 +117,7 @@ export default class EventShow extends Component {
       showLoadingModal: false,
       showSuccessModal: false,
     }
-
+    this.scrollView = null;
     this.loadEvent()
   }
 
@@ -148,10 +148,6 @@ export default class EventShow extends Component {
     }
   }
 
-  scrollToTop = () => {
-    this.refComponent.scrollToOffset({offset: 0, animated: true});
-  }
-
   toggleFavorite = (favorite) => {
 
     this.setState({favorite})
@@ -159,6 +155,11 @@ export default class EventShow extends Component {
 
   changeScreen = (currentScreen) => {
     this.setState({currentScreen})
+    this.scrollView.scrollTo({
+      y: 10,
+      x: 0,
+      animated: true
+    });
   }
 
   selectPayment = async (payment) => {
@@ -403,7 +404,7 @@ export default class EventShow extends Component {
           source={{uri: event.promo_image_url}}
         />
 
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView ref={c => (this.scrollView = c)} showsVerticalScrollIndicator={false}>
           {this.showScreen}
         </ScrollView>
 
