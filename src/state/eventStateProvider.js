@@ -62,6 +62,10 @@ class EventsContainer extends Container {
     return this.state.ticketTypesById
   }
 
+  get ticketTypeIds() {
+    return map(this.ticketTypesById, (_ticket, id) => id)
+  }
+
   get selectedEvent() {
     return this.state.selectedEvent
   }
@@ -183,24 +187,13 @@ class EventsContainer extends Container {
     }
   }
 
-  async eventPromo(redemptionCode) {
-    try {
-      const response = await server.redemptionCodes.read({ code: redemptionCode })
-      const ticketTypesById = this.state.ticketTypesById
+  async replaceTicketType(ticket_type) {
+    const {ticketTypesById} = this.state
 
-      newTicket = response.data.ticket_type
-
-      if (!(newTicket.id in ticketTypesById)) {
-        throw {response: { data: {error: 'This Promo Code is not valid for this event'}}}
-      }
-
-      ticketTypesById[newTicket.id] = newTicket
-
-      this.setState({ticketTypesById})
-    } catch (error) {
-      apiErrorAlert(error, 'There was a problem applying this promotional code.')
-    }
+    ticketTypesById[ticket_type.id] = ticket_type
+    await this.setState({ticketTypesById})
   }
+
 }
 
 export {

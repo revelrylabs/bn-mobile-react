@@ -12,6 +12,8 @@ import PaymentTypes from './payments'
 import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
 import {toDollars} from '../constants/money'
+import {server, apiErrorAlert} from '../constants/Server'
+
 import {min, max, isEmpty, uniq} from 'lodash'
 
 
@@ -154,6 +156,10 @@ export default class EventShow extends Component {
     }
   }
 
+  get store() {
+    return this.props.screenProps.store
+  }
+
   scrollToTop = () => {
     this.refComponent.scrollToOffset({offset: 0, animated: true});
   }
@@ -191,17 +197,26 @@ export default class EventShow extends Component {
     )
   }
 
-  onPromoApply = async (promoCode = '') => {
-    if (promoCode === '') {
+  onPromoApply = async (code = '') => {
+    if (code === '') {
       alert('You must enter a promotional code.')
-      return true
+      return
     }
 
-    const {screenProps: {store}} = this.props
+    try {
+      const response = await server.redemptionCodes.read({code})
+      const {data: {ticket_type}} = response
 
-    await store.eventPromo(promoCode)
+      if (!this.store.ticketTypeIds.includes(ticket_type.id)) {
+        alert ('This Promo Code is not valid for this event')
+        return
+      }
 
-    return null
+      this.store.replaceTicketType(ticket_type)
+    } catch (error) {
+      apiErrorAlert(error, 'There was a problem applying this promotional code.')
+    }
+
   }
 
   onTicketSelection = async (ticketType) => {
