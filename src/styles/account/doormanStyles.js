@@ -1,23 +1,19 @@
 import {
-  primaryColor,
   textColor,
   sectionHeaderColor,
   white,
   borderColor,
-  containerDarkColor,
-  disabledHeaderColor,
   disabledColor,
   bodyFontSize,
-  iconFontSize,
+  subnavFontSize,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
-  globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
-  globalMarginSmall,
+  globalMargin,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -101,6 +97,16 @@ const DoormanStyles = {
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+  },
+
+  // BADGE STYLES
+  ticketStatusBadge: {
+    color: white,
+    fontFamily: globalFontMedium,
+    fontSize: subnavFontSize,
+    marginLeft: globalMargin,
+    padding: globalPaddingTiny,
+    textTransform: 'uppercase',
   },
 }
 
