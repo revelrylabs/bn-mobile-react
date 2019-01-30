@@ -30,7 +30,7 @@ function BusyState() {
 function guestStatusBadgeStyle(status) {
   switch (status) {
   case 'Purchased':
-    return {color: 'white'}
+    return doormanStyles.ticketPurchasedBadgeWrapper
   default:
     null
   }
@@ -38,7 +38,7 @@ function guestStatusBadgeStyle(status) {
 
 function TicketStatusBadge({status, style}) {
   return (
-    <Text style={[guestStatusBadgeStyle(status), doormanStyles.ticketStatusBadge]}>{status}</Text>
+    <Text style={doormanStyles.ticketStatusBadge}>{status}</Text>
   )
 }
 
@@ -47,7 +47,7 @@ function GuestRowContent({guest}) {
     <View>
       <View style={styles.flexRowSpaceBetween}>
         <Text numberOfLines={1} style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
-        <View style={doormanStyles.ticketStatusBadgeWrapper}>
+        <View style={[doormanStyles.ticketStatusBadgeWrapper, guestStatusBadgeStyle(guest.status)]}>
           <TicketStatusBadge status={guest.status} />
         </View>
       </View>
