@@ -14,6 +14,7 @@ import {
   globalPaddingSmall,
   globalPaddingTiny,
   globalMargin,
+  globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -100,12 +101,20 @@ const DoormanStyles = {
   },
 
   // BADGE STYLES
+  ticketStatusBadgeWrapper: {
+    backgroundColor: '#47C68A',
+    borderColor: 'transparent',
+    borderWidth: 1,
+    borderBottomRightRadius: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    marginLeft: globalMargin,
+  },
   ticketStatusBadge: {
-    color: white,
     fontFamily: globalFontMedium,
     fontSize: subnavFontSize,
-    marginLeft: globalMargin,
-    padding: globalPaddingTiny,
+    letterSpacing: 0.5,
+    padding: globalPaddingTiny - 2,
     textTransform: 'uppercase',
   },
 }
