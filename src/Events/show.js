@@ -129,6 +129,16 @@ export default class EventShow extends Component {
     }
   }
 
+  scrollToTop() {
+    this.scrollView.scrollTo({y: 10, x: 0, animated: true})
+  }
+
+  componentDidUpdate(_prevProps, {currentScreen}) {
+    if (currentScreen !== this.state.currentScreen) {
+      this.scrollToTop()
+    }
+  }
+
   clearEvent() {
     const {screenProps: {store}} = this.props
 
@@ -154,11 +164,6 @@ export default class EventShow extends Component {
 
   changeScreen = (currentScreen) => {
     this.setState({currentScreen})
-    this.scrollView.scrollTo({
-      y: 10,
-      x: 0,
-      animated: true
-    });
   }
 
   selectPayment = async (payment) => {
