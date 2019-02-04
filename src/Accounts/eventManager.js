@@ -44,7 +44,8 @@ export default class EventManager extends Component {
           </View>
           <View style={eventManagerStyles.textWrapper}>
             <Text numberOfLines={1} style={styles.headerSecondary}>{event.name}</Text>
-            <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>{event.venue.name} &bull; {event.scheduleText}</Text>
+            {/* TODO: API endpoint does not contain venue info or localized times */}
+            {/* <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>{event.venue.name} &bull; {event.scheduleText}</Text> */}
           </View>
           <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
         </View>
