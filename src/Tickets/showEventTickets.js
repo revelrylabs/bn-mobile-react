@@ -7,6 +7,7 @@ import Ticket from './Ticket'
 import SharedStyles from '../styles/shared/sharedStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import {Brightness} from 'expo'
+import {optimizeCloudinaryImage} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 
@@ -78,7 +79,7 @@ export default class EventsTicket extends Component {
     const event = this.event || {}
 
     return this.tickets.map((ticket) => ({
-      image: event.promo_image_url,
+      image: optimizeCloudinaryImage(event.promo_image_url),
       name: event.name,
       venue: event.venue.name,
       location: `${event.venue.city}, ${event.venue.state}`,
