@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TouchableHighlight, TextInput, Image} from 'react-native'
+import {ScrollView, View, Text, TouchableHighlight, TextInput, Image, FlatList, StyleSheet} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {price, username, usernameLastFirst} from '../string'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -43,6 +43,7 @@ function TicketStatusBadge({status, style}) {
 }
 
 function GuestRowContent({guest}) {
+  console.log('price', guest)
   return (
     <View>
       <View style={styles.flexRowSpaceBetween}>
@@ -75,18 +76,24 @@ function EmptyState() {
   )
 }
 
-function GuestList({guests, onSelect}) {
+function GuestList({guests, onSelect, ...rest}) {
   if (guests.length === 0) {
     return <EmptyState />
   }
 
-  return guests.map((guest) => (
-    <GuestTicketCard
-      key={guest.id}
-      guest={guest}
-      onSelect={onSelect}
+  return (
+    <FlatList
+      {...rest}
+      data={guests}
+      keyExtractor={({id}) => id}
+      renderItem={({item}) => (
+        <GuestTicketCard
+          guest={item}
+          onSelect={onSelect}
+        />
+      )}
     />
-  ))
+  )
 }
 
 function GuestToCheckIn({guest, onCancel, onCheckIn}) {
@@ -160,7 +167,7 @@ export default class ManualCheckin extends Component {
     }
   }
 
-  get innerContent() {
+  render() {
     const {selectedGuest} = this.state
     const {isFetchingGuests, guests, guestListQuery} = this.props
 
@@ -179,43 +186,33 @@ export default class ManualCheckin extends Component {
     }
 
     return (
-      <ScrollView>
-        <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
-          <View style={doormanStyles.mainBodyContent}>
+      <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
+        <View style={[doormanStyles.mainBodyContent]}>
 
-            <View style={styles.container}>
-              <Text style={doormanStyles.sectionHeader}>All Guests</Text>
-              <View style={doormanStyles.searchContainer}>
-                <SearchBox
-                  textInput={{
-                    defaultValue: guestListQuery,
-                    onChangeText: this.searchGuestList,
-                    placeholder: "Search for guests",
-                  }}
-                  style={doormanStyles.searchInput}
-                />
-              </View>
+          <View style={styles.container}>
+            <Text style={doormanStyles.sectionHeader}>All Guests</Text>
+            <View style={doormanStyles.searchContainer}>
+              <SearchBox
+                textInput={{
+                  defaultValue: guestListQuery,
+                  onChangeText: this.searchGuestList,
+                  placeholder: "Search for guests",
+                }}
+                style={doormanStyles.searchInput}
+              />
             </View>
-
-            {isFetchingGuests && (
-              <BusyState />
-            )}
-
-            <GuestList
-              guests={guests}
-              onSelect={this.selectGuest}
-            />
           </View>
-        </View>
-        <View style={doormanStyles.spacer} />
-      </ScrollView>
-    )
-  }
 
-  render() {
-    return (
-      <View>
-        {this.innerContent}
+          {isFetchingGuests && (
+            <BusyState />
+          )}
+
+          <GuestList
+            style={{flex: 1}}
+            guests={guests}
+            onSelect={this.selectGuest}
+          />
+        </View>
       </View>
     )
   }
