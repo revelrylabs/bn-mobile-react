@@ -6,6 +6,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import EventCardStyles from '../styles/shared/eventCardStyles'
 import {eventDateTimes} from '../time'
 import {toDollars} from '../constants/money'
+import {optimizeCloudinaryImage} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const eventCardStyles = EventCardStyles.createStyles()
@@ -49,7 +50,7 @@ export default class EventsIndex extends Component {
           <View style={eventCardStyles.eventContainer}>
             <Image
               style={eventCardStyles.eventImage}
-              source={{uri: event.promo_image_url}}
+              source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
             />
             <View style={eventCardStyles.detailsContainer}>
               <View style={eventCardStyles.sectionTop}>

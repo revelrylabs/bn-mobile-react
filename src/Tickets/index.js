@@ -9,6 +9,7 @@ import emptyState from '../../assets/icon-empty-state.png'
 import imageOverlay from '../../assets/event-img-overlay.png'
 import {some} from 'lodash'
 import {NavigationEvents} from 'react-navigation'
+import {optimizeCloudinaryImage} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
@@ -47,7 +48,7 @@ const Ticket = ({navigate, ticket, activeTab}) => {
         <View style={ticketStyles.ticketContainer}>
           <Image
             style={ticketStyles.eventImage}
-            source={{uri: event.promo_image_url}}
+            source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
           />
           <Image
             style={ticketStyles.eventImageOverlay}

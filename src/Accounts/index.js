@@ -9,6 +9,7 @@ import coverPhotoPlaceholder from '../../assets/account-placeholder-bkgd.png'
 import qrCodeIcon from '../../assets/qr-code-small.png'
 import ReactQRCode from 'react-native-qrcode';
 import {username} from '../string'
+import {optimizeCloudinaryImage} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -90,7 +91,7 @@ export default class Account extends Component {
         <View style={accountStyles.accountBkgdContainer}>
           <Image
             style={accountStyles.accountBkgd}
-            source={user.cover_photo_url || coverPhotoPlaceholder}
+            source={optimizeCloudinaryImage(user.cover_photo_url) || coverPhotoPlaceholder}
           />
           {false &&  // TODO: Re-enable when functionality is implemented.
           <View style={accountStyles.accountPhotoContainer}>
