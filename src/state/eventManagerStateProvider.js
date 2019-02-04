@@ -32,7 +32,7 @@ export class EventManagerContainer extends Container {
   getEvents = async () => {
     try {
 
-      const {data} = await server.events.index(defaultEventSort)
+      const {data} = await server.events.checkins(defaultEventSort)
 
       this.setState({
         // lastUpdate: DateTime.local(),
