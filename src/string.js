@@ -1,5 +1,7 @@
 import Big from 'big.js'
 
+const NAME_MISSING = '[unknown]'
+
 // Typically used with React TextInput `onChangeText.
 // Takes a 1-arg function and returns a function that trims the arg if it's a string.
 export function autotrim(fn) {
@@ -12,12 +14,16 @@ export function pluralize(count, singular, plural = null) {
   return `${count} ${noun}`
 }
 
+function buildName(parts, joiner, email) {
+  return parts.filter(x => x).join(joiner).trim() || email || NAME_MISSING
+}
+
 export function username({first_name: first, last_name: last, email}) {
-  return [first, last].join(' ').trim() || email
+  return buildName([first, last], ' ', email)
 }
 
 export function usernameLastFirst({first_name: first, last_name: last, email}) {
-  return [last, first].join(', ').trim() || email
+  return buildName([last, first], ', ', email)
 }
 
 export function price(cents) {
