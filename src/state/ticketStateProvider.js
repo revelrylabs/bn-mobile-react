@@ -63,7 +63,7 @@ class TicketsContainer extends Container {
   }
 
   ticketsForEvent = (activeTab, eventId) => {
-    return this.state.tickets[activeTab].find(({event: {id}}) => id === eventId)
+    return this.state.tickets[activeTab || 'upcoming'].find(({event: {id}}) => id === eventId)
   }
 
   redeemTicketInfo = async (ticket_id) => { // eslint-disable-line complexity

@@ -125,7 +125,6 @@ export default class EventShow extends Component {
       showLoadingModal: false,
       showSuccessModal: false,
     }
-
     this.loadEvent()
   }
 
@@ -136,6 +135,16 @@ export default class EventShow extends Component {
     if (selectedEvent) {
       this.setState({event: selectedEvent})
     }
+  }
+
+  componentDidUpdate(_prevProps, {currentScreen}) {
+    if (currentScreen !== this.state.currentScreen) {
+      this.scrollToTop()
+    }
+  }
+
+  scrollToTop() {
+    this.scrollView.scrollTo({y: 10, x: 0, animated: true})
   }
 
   clearEvent() {
@@ -160,8 +169,9 @@ export default class EventShow extends Component {
     return this.props.screenProps.store
   }
 
-  scrollToTop = () => {
-    this.refComponent.scrollToOffset({offset: 0, animated: true});
+  toggleFavorite = (favorite) => {
+
+    this.setState({favorite})
   }
 
   changeScreen = (currentScreen) => {
@@ -356,7 +366,7 @@ export default class EventShow extends Component {
   purchaseTicket = async () => {
     const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
 
-    if (!cart.payment) {
+    if (cart.totalCents && !cart.payment) {
       alert('Please enter your payment details');
       return false
     }
@@ -445,8 +455,8 @@ export default class EventShow extends Component {
           style={eventDetailsStyles.videoBkgd}
           source={{uri: event.promo_image_url}}
         />
-        <KeyboardAvoidingView behavior="position" enabled>
-          <ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          <ScrollView ref={c => (this.scrollView = c)} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
             {this.showScreen}
           </ScrollView>
         </KeyboardAvoidingView>

@@ -1,22 +1,19 @@
 import {
-  primaryColor,
   textColor,
   sectionHeaderColor,
   white,
   borderColor,
-  containerDarkColor,
-  disabledHeaderColor,
   disabledColor,
   bodyFontSize,
-  iconFontSize,
+  subnavFontSize,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
-  globalPaddingLarge,
   globalPaddingMedium,
   globalPadding,
   globalPaddingSmall,
   globalPaddingTiny,
+  globalMargin,
   globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
@@ -24,6 +21,10 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
+export const badgePrimary = '#1E1E1E'
+export const badgeSuccess = '#47C68A'
+export const badgeAlarm = '#FE1313'
+
 
 export const sectionHeaderFontSize = 24
 export const bodyFontSizeSmall = 15
@@ -88,19 +89,39 @@ const DoormanStyles = {
 
   // ROW STYLES
   rowContainer: {
-    alignItems: 'center',
     backgroundColor: white,
     borderBottomColor: borderColor,
     borderBottomWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingSmall,
     width: fullWidth,
   },
   row: {
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+  },
+
+  // BADGE STYLES
+  ticketStatusBadgeWrapper: {
+    backgroundColor: badgePrimary,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    borderBottomRightRadius: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    marginLeft: globalMargin,
+  },
+  ticketPurchasedBadgeWrapper: {
+    backgroundColor: badgeSuccess,
+  },
+  ticketStatusBadge: {
+    color: white,
+    fontFamily: globalFontMedium,
+    fontSize: subnavFontSize,
+    letterSpacing: 0.5,
+    padding: globalPaddingTiny - 2,
+    textTransform: 'uppercase',
   },
 }
 

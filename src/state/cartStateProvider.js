@@ -202,21 +202,23 @@ class CartContainer extends Container {
 
   // can't place an order until there's payment info and quantity isn't changing anymore
   get canPlaceOrder() {
-    return this.payment && !this.isChangingQuantity
+    return !this.isChangingQuantity && !this.totalCents || this.payment
   }
 
   async placeOrder() {
+    const {totalCents: amount} = this
+    const method = amount ? {
+      type: 'Card',
+      provider: 'stripe',
+      token: this.payment.id,
+      save_payment_method: false,
+      set_default: false,
+    } : {
+      type: 'Free',
+    }
+
     try {
-      await server.cart.checkout({
-        amount: this.totalCents,
-        method: {
-          type: 'Card',
-          provider: 'stripe',
-          token: this.payment.id,
-          save_payment_method: false,
-          set_default: false,
-        },
-      })
+      await server.cart.checkout({amount, method})
     } catch(error) {
       apiErrorAlert(error)
     }

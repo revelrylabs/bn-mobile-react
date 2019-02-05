@@ -71,6 +71,7 @@ export default class Ticket extends Component {
 
   get ticketBottomRow() {
     const {navigate, ticket, activeTab} = this.props
+    const {eventId, ticketId} = ticket
     const {firstName, lastName} = this.state
 
     return (
@@ -85,7 +86,7 @@ export default class Ticket extends Component {
           <TouchableHighlight
             underlayColor="rgba(0, 0, 0, 0)"
             onPress={
-              () => navigate('TransferTickets', {activeTab, eventId: ticket.eventId, firstName, lastName})
+              () => navigate('TransferTickets', {activeTab, ticketId, eventId, firstName, lastName})
             }
           >
             <View style={ticketWalletStyles.bottomNavLinkContainer}>

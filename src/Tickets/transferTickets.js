@@ -73,12 +73,12 @@ export default class TransferTickets extends Component {
 
     this.state = {
       isSubmitting: false,
-      checkboxes: this.buildCheckBoxState(this.tickets),
+      checkboxes: {[props.navigation.state.params.ticketId]: true},
       emailOrPhone: '',
       showQRModal: false,
       hasCameraPermission: null,
       scannedEmail: null
-    };
+    }
   }
 
   handleBarCodeScanned = async ({_type, data}) => {
@@ -122,15 +122,6 @@ export default class TransferTickets extends Component {
     return `${this.firstName} ${this.lastName}`
   }
 
-  buildCheckBoxState(tickets) {
-    return tickets.reduce((acc, ticket) => {
-      return {
-        ...acc,
-        [ticket.id]: false,
-      };
-    }, {});
-  }
-
   get transferTickets() {
     const {checkboxes} = this.state
     const keys = Object.keys(checkboxes);
@@ -141,7 +132,12 @@ export default class TransferTickets extends Component {
   setChecked = (id, bool) => {
     const checkboxes = {...this.state.checkboxes}
 
-    checkboxes[id] = bool
+    if (bool) {
+      checkboxes[id] = bool
+    } else {
+      delete checkboxes[id]
+    }
+
     this.setState({checkboxes})
   }
 
@@ -149,20 +145,13 @@ export default class TransferTickets extends Component {
     return (checked) => this.setChecked(id, checked)
   }
 
-  validRecipient = () => {
+  get hasValidRecipient() {
     //TODO Validate email/phone
     return this.state.emailOrPhone != ''
   }
 
-  transferCount = () => {
-    const {checkboxes} = this.state
-
-    return Object.keys(checkboxes).reduce((acc, id) => {
-      if (checkboxes[id]) {
-        return acc += 1
-      }
-      return acc
-    }, 0)
+  get transferCount() {
+    return Object.keys(this.state.checkboxes).length
   }
 
   cameraPermissions = async () => {
@@ -194,12 +183,20 @@ export default class TransferTickets extends Component {
 
   render() {
     const {navigation} = this.props
-    const {checkboxes,scannedEmail } = this.state
-    const {
-      state: {showQRModal},
-    } = this
-    let disabled = !this.validRecipient() || this.transferCount() < 1;
-    let disabledText = !this.validRecipient() ? "Valid Recipient Required" : this.transferCount() < 1 ? "No Tickets Selected" : "";
+    const {checkboxes, showQRModal} = this.state
+    const {hasValidRecipient, transferCount} = this
+
+    let disabled = true
+    let buttonText = `Transfer ${pluralize(transferCount, 'Ticket')}`
+
+    if (!hasValidRecipient) {
+      buttonText = 'Valid Recipient Required'
+    } else if (!transferCount) {
+      buttonText = 'No Tickets Selected'
+    } else {
+      disabled = false
+    }
+
     return (
       <Modal>
         <View style={ticketWalletStyles.modalContainer}>
@@ -268,7 +265,7 @@ export default class TransferTickets extends Component {
               style={disabled ? [styles.buttonDisabled, modalStyles.bottomRadius] : [styles.button, modalStyles.bottomRadius]}
               onPress={disabled ? null : onPress=this.transfer}
             >
-              <Text style={styles.buttonText}>{disabled ? disabledText : 'Transfer ' + pluralize(this.transferCount(), 'Ticket')}</Text>
+              <Text style={styles.buttonText}>{buttonText}</Text>
             </TouchableHighlight>
           </View>
         </View>
