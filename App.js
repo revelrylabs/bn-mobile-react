@@ -1,98 +1,94 @@
+const startTime = new Date().getTime()
+
 import React, {Component, createElement} from 'react'
 import {Provider} from 'unstated'
-import {loadFonts} from './assets/fonts'
-import {loadImages} from './assets'
-import {View} from 'react-native';
-import {Video, Asset, AppLoading, SplashScreen} from 'expo';
+import {loadAssets, splashVideo, loadSplashVideo} from './assets'
+import {View} from 'react-native'
+import {Video} from 'expo'
 import navigator from './src/navigators/navigator'
+import {loadContainers} from './src/state'
 import SharedStyles from './src/styles/shared/sharedStyles'
-import {EventsContainer} from './src/state/eventStateProvider'
-import {TicketsContainer} from './src/state/ticketStateProvider'
-import {CartContainer} from './src/state/cartStateProvider'
-import {AuthContainer} from './src/state/authStateProvider'
-import {analyticsInit} from './src/constants/analytics';
-
-const CONTAINERS = {}
-
-function addContainer(key, klass, ...args) {
-  CONTAINERS[key] = new klass(...args)
-  CONTAINERS[key].containers = CONTAINERS
-}
-
-addContainer('events', EventsContainer)
-addContainer('tickets', TicketsContainer)
-addContainer('cart', CartContainer)
-addContainer('auth', AuthContainer)
-
-const CONTAINERS_TO_INJECT = Object.keys(CONTAINERS).map((key) => CONTAINERS[key])
+import {analyticsInit} from './src/constants/analytics'
 
 const styles = SharedStyles.createStyles()
-const cacheSplashResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
-  const video = require('./splash.mp4')
 
-  return Asset.fromModule(video).downloadAsync()
+function Splash({onFinish}) {
+  let didFinishOnce = false
+  const onPlaybackStatusUpdate = ({didJustFinish}) => {
+    if (!didFinishOnce && didJustFinish) {
+      onFinish()
+    }
+  }
+
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Video
+        style={styles.splashVideo}
+        source={splashVideo}
+        resizeMode="cover"
+        shouldPlay
+        onPlaybackStatusUpdate={onPlaybackStatusUpdate}
+      />
+    </View>
+  )
+}
+
+function Main({containers}) {
+  return (
+    <Provider inject={containers}>
+      {createElement(navigator)}
+    </Provider>
+  )
 }
 
 export default class App extends Component {
-  constructor() {
-    super()
-
-    analyticsInit()
-  }
-
   state = {
-    isAppReady: false,
-    isSplashReady: false,
-    isSplashDone: false,
+    splash: false,
+    assets: false,
+    navigator: false,
+    containers: null,
+    isSplashFinished: false,
   }
 
-  _cacheResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
-    SplashScreen.hide();
-
-    setTimeout(() => {
-      this.setState({isSplashDone: true});
-    }, 3000);
-    await loadFonts()
-    await loadImages()
-    this.setState({isAppReady: true});
+  componentDidMount() {
+    analyticsInit()
+    this.playSplash()
+    this.loadAssets()
+    this.loadContainers()
   }
 
-  // Sign Out Code
-  // _signOutAsync = async () => {
-  //   await AsyncStorage.clear();
-  //   this.props.navigation.navigate('Auth');
-  // };
+  async playSplash() {
+    this.setState({splash: await loadSplashVideo()})
+  }
+
+  async loadAssets() {
+    this.setState({assets: await loadAssets()})
+  }
+
+  async loadContainers() {
+    this.setState({containers: await loadContainers()})
+  }
+
+  get isReadyForSplash() {
+    return !!this.state.splash
+  }
+
+  get isReadyForMain() {
+    return this.state.isSplashFinished
+      && this.state.assets
+      && this.state.containers
+  }
 
   render() {
-    if (!this.state.isSplashReady) {
-      return (
-        <AppLoading
-          startAsync={cacheSplashResourcesAsync}
-          onFinish={() => this.setState({isSplashReady: true})}
-          onError={console.warn} // eslint-disable-line no-console
-          autoHideSplash={false}
-        />
-      )
+    if (this.isReadyForMain) {
+      return <Main containers={this.state.containers} />
     }
 
-    if (!this.state.isAppReady || !this.state.isSplashDone) {
-      return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Video
-            style={styles.splashVideo}
-            source={require('./splash.mp4')}
-            onLoad={this._cacheResourcesAsync}
-            resizeMode="cover"
-            shouldPlay
-          />
-        </View>
-      );
+    if (this.isReadyForSplash) {
+      console.log(new Date().getTime() - startTime)
+      return <Splash onFinish={() => this.setState({isSplashFinished: true})} />
     }
 
-    return (
-      <Provider inject={CONTAINERS_TO_INJECT}>
-        {createElement(navigator)}
-      </Provider>
-    )
+    return null
   }
 }

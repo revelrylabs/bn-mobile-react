@@ -5,12 +5,6 @@ import {DateTime} from 'luxon'
 
 const LOCATIONS_FETCH_MIN_MINUTES = 15
 
-const _SAMPLE_AVATARS = [
-  require('../../assets/avatar-female.png'),
-  require('../../assets/avatar-male.png'),
-  require('../../assets/avatar-female.png'),
-]
-
 /* eslint-disable complexity,space-before-function-paren,camelcase */
 
 class EventsContainer extends Container {
