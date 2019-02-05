@@ -6,7 +6,6 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import {eventDateTimes} from '../time'
-import {isEmpty, includes} from 'lodash'
 import {toDollars} from '../constants/money'
 
 const styles = SharedStyles.createStyles()
@@ -76,6 +75,28 @@ export default class Checkout extends Component {
     }
   }
 
+  get promoDetails() {
+    const {cart} = this.props
+
+    if (cart.usedPromo) {
+      const promoTickets = cart.promoTickets
+
+      return promoTickets.map((promoTicket) => (
+        <View style={checkoutStyles.rowContainer} key={promoTicket.id}>
+          <View style={checkoutStyles.row}>
+            <View>
+              <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Promotional Code</Text>
+              <Text style={checkoutStyles.ticketSubHeader}>{promoTicket.description}</Text>
+              <Text style={checkoutStyles.ticketSubHeader}>Code: {promoTicket.redemption_code}</Text>
+            </View>
+          </View>
+        </View>
+      ))
+    }
+
+    return null
+  }
+
   render() {
     const {event, cart} = this.props
     const {ticketsCents, feesCents, totalCents} = cart
@@ -88,6 +109,8 @@ export default class Checkout extends Component {
           <View style={checkoutStyles.headerWrapper}>
             <Text style={checkoutStyles.header}>Checkout</Text>
           </View>
+
+          {this.promoDetails}
 
           <View style={checkoutStyles.rowContainer}>
             <View style={checkoutStyles.row}>
