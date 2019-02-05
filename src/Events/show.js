@@ -13,9 +13,8 @@ import Checkout from './checkout'
 import ModalStyles from '../styles/shared/modalStyles'
 import {toDollars} from '../constants/money'
 import {server, apiErrorAlert} from '../constants/Server'
-
 import {min, max, isEmpty, uniq} from 'lodash'
-
+import {optimizeCloudinaryImage} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -453,7 +452,7 @@ export default class EventShow extends Component {
         <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
-          source={{uri: event.promo_image_url}}
+          source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
         />
         <KeyboardAvoidingView behavior="padding" enabled>
           <ScrollView ref={c => (this.scrollView = c)} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>

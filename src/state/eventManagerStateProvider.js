@@ -32,7 +32,7 @@ export class EventManagerContainer extends Container {
   getEvents = async () => {
     try {
 
-      const {data} = await server.events.index(defaultEventSort)
+      const {data} = await server.events.checkins(defaultEventSort)
 
       this.setState({
         // lastUpdate: DateTime.local(),
@@ -73,44 +73,28 @@ export class EventManagerContainer extends Container {
 
   _resetScanResult = () => {
     setTimeout(() => {
-      this.setState({scanResult: null});
+      this.setState({scanned: false, scanError: null});
     }, SCAN_MESSAGE_TIMEOUT)
   }
 
   redeem = async (json) => {
-    const event_id = this.state.eventToScan.id
-
-    let ticket = null
     try {
-      ticket = JSON.parse(json)
-    } catch (_e) {
-      vibe.sad()
-      return await this.setState({scanResult: 'serverError', ticketInfo: {}}, this._resetScanResult)
-    }
+      const {id: ticket_id, redeem_key} = JSON.parse(json)
 
-    try {
+      if (!redeem_key) {
+        throw new Error('missing_redeem_key')
+      }
 
       await server.events.tickets.redeem({
-        event_id,
-        ticket_id: ticket.data.id,
-        redeem_key: ticket.data.redeem_key,
+        event_id: this.state.eventToScan.id,
+        ticket_id,
+        redeem_key,
       })
-      await this.setState({scanResult: 'success'}, this._resetScanResult)
+      await this.setState({scanned: true, scanError: null}, this._resetScanResult)
       vibe.happy()
-    } catch (e) {
+    } catch (scanError) {
       vibe.sad()
-      if (!e.response) {
-        throw e
-      }
-
-      const {error} = e.response.data
-
-      switch (error) {
-      case 'Ticket has already been redeemed.':
-        return await this.setState({scanResult: 'alreadyRedeemed'}, this._resetScanResult)
-      default:
-        return await this.setState({scanResult: 'serverError', ticketInfo: {}}, this._resetScanResult)
-      }
+      await this.setState({scanned: true, scanError})
     }
   }
 }

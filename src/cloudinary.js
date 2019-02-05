@@ -18,3 +18,32 @@ export async function uploadImageToCloudinary(file) {
 
   return (await response.json()).secure_url
 }
+
+export const imageQuality = {
+  AUTO: '',
+  ECO: 'eco',
+  LOW: 'low',
+  GOOD: 'good',
+  BEST: 'best',
+}
+
+export function optimizeCloudinaryImage(url, quality = imageQuality.LOW) {
+  if (typeof url !== 'string') {
+    return url
+  }
+
+  const matches = url.match(/^(https?:\/\/res.cloudinary.com\/[^\/]+\/image\/upload)\/(.*)$/)
+
+  if (!matches) {
+    return url
+  }
+
+  const [_, base, details] = matches
+  const qualityParam = ['q_auto', quality].filter(x => x).join(':')
+  const newUrl = [base, qualityParam, details].join('/')
+
+  return newUrl
+}
+
+// So you can do optimizeCoudinaryImage.LOW, optimizeCloudinaryImage.BEST, etc.
+Object.assign(optimizeCloudinaryImage, imageQuality)

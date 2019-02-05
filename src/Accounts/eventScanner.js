@@ -21,24 +21,53 @@ function delay(time) {
   }));
 }
 
-const SCAN_MESSAGES = {
-  success: 'Ticket valid!',
-  alreadyRedeemed: 'Already redeemed',
-  serverError: 'We found an issue',
-};
+const SCAN_ALERT_CONFIG = {
+  success: {
+    text: 'Ticket valid!',
+    icon: 'check',
+    style: eventScannerStyles.messageIconSuccess,
+  },
+  alreadyRedeemed: {
+    text: 'Already redeemed.',
+    icon: 'close-o',
+    style: eventScannerStyles.messageIconCancel,
+  },
+  error: {
+    icon: 'exclamation',
+    style: eventScannerStyles.messageIconError,
+  }
+}
 
-const SCAN_STYLES = {
-  success: 'messageIconSuccess',
-  alreadyRedeemed: 'messageIconCancel',
-  serverError: 'messageIconError',
-};
+function getStatusAlertConfig(error) {
+  if (!error) {
+    return SCAN_ALERT_CONFIG.success
+  }
 
-// EvilIcons names
-const SCAN_ICONS = {
-  success: 'check',
-  alreadyRedeemed: 'close-o',
-  serverError: 'exclamation',
-};
+  if (error.response) {
+    const text = error.response.data.error
+
+    if (text === 'Ticket has already been redeemed.') {
+      return SCAN_ALERT_CONFIG.alreadyRedeemed
+    }
+
+    return {...SCAN_ALERT_CONFIG.error, text}
+  }
+
+  if (error.name === 'SyntaxError') {
+    return {...SCAN_ALERT_CONFIG.error, text: 'QR code is not valid.'}
+  }
+
+  const {message} = error
+
+  if (message === 'missing_redeem_key') {
+    return {
+      ...SCAN_ALERT_CONFIG.error,
+      text: 'The guest may have pulled their tickets up before the doors were supposed to open. If the doors are open now, have them close and re-open their tickets list.',
+    }
+  }
+
+  return {...SCAN_ALERT_CONFIG.error, text: error.message}
+}
 
 // TODO: this should probably use eventToScan state (see eventManager and
 // eventManagerStateProvider) to validate tickets against currently selected event
@@ -80,19 +109,19 @@ export default class EventScanner extends Component {
     await eventManager.redeem(data);
   }
 
-  statusMessage(type) {
-    if (type === null) {
-      return;
+  get statusMessage() {
+    const {scanned, scanError} = this.props.screenProps.eventManager.state
+
+    if (!scanned) {
+      return null
     }
 
-    const copy = SCAN_MESSAGES[type];
-    const scanStyles = SCAN_STYLES[type];
-    const icon = SCAN_ICONS[type];
+    const {text, icon, style} = getStatusAlertConfig(scanError)
 
     return (
       <View style={eventScannerStyles.messageContainer}>
-        <EvilIcons style={eventScannerStyles[scanStyles]} name={icon} />
-        <Text style={eventScannerStyles.messageText}>{copy}</Text>
+        <EvilIcons style={style} name={icon} />
+        <Text style={eventScannerStyles.messageText}>{text}</Text>
       </View>
     )
   }
@@ -156,7 +185,7 @@ export default class EventScanner extends Component {
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
 
-          {this.statusMessage(scanResult)}
+          {this.statusMessage}
 
           {checkInMode === 'manual' && (
             <ManualCheckin {...eventManager.state} searchGuestList={eventManager.searchGuestList} />
