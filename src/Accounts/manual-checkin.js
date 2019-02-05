@@ -212,6 +212,8 @@ export default class ManualCheckin extends Component {
             guests={guests}
             onSelect={this.selectGuest}
           />
+          <View style={doormanStyles.spacer} />
+
         </View>
       </View>
     )

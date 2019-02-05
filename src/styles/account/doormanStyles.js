@@ -47,11 +47,11 @@ const DoormanStyles = {
     borderTopRightRadius: 30/2,
     borderTopLeftRadius: 30/2,
     height: fullHeight,
-    paddingTop: globalPaddingMedium,
+    paddingTop: globalPaddingSmall,
     minHeight: '100%',
   },
   spacer: {
-    height: 100,
+    height: 200,
   },
 
   // SEARCH STYLES
