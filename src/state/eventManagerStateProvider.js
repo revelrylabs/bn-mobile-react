@@ -79,7 +79,7 @@ export class EventManagerContainer extends Container {
 
   redeem = async (json) => {
     try {
-      const {id: ticket_id, redeem_key} = JSON.parse(json)
+      const {data: {id: ticket_id, redeem_key}} = JSON.parse(json)
 
       if (!redeem_key) {
         throw new Error('missing_redeem_key')
