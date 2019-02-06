@@ -158,7 +158,7 @@ export default class EventScanner extends Component {
       <View>
         {checkInMode === 'automatic' && (
           <BarCodeScanner
-            onBarCodeRead={this.handleBarCodeScanned}
+            onBarCodeScanned={this.handleBarCodeScanned}
             style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
           />
         )}
