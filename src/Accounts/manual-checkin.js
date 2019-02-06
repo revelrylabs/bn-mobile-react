@@ -43,7 +43,6 @@ function TicketStatusBadge({status, style}) {
 }
 
 function GuestRowContent({guest}) {
-  console.log('price', guest)
   return (
     <View>
       <View style={styles.flexRowSpaceBetween}>
