@@ -90,11 +90,13 @@ export class EventManagerContainer extends Container {
         ticket_id,
         redeem_key,
       })
-      await this.setState({scanned: true, scanError: null}, this._resetScanResult)
+      this.setState({scanned: true, scanError: null})
       vibe.happy()
     } catch (scanError) {
       vibe.sad()
-      await this.setState({scanned: true, scanError})
+      this.setState({scanned: true, scanError})
+    } finally {
+      this._resetScanResult()
     }
   }
 }
