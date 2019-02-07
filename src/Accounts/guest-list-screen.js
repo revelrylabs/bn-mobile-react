@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View} from 'react-native'
-import GuestList from './manual-checkin'
+import GuestList from './guest-list-checkin'
 
 export default class GuestListScreen extends Component {
   render() {

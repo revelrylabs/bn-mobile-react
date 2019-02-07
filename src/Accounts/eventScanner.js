@@ -9,7 +9,7 @@ import {
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
-import ManualCheckin from './manual-checkin'
+import ManualCheckin from './guest-list-checkin'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
