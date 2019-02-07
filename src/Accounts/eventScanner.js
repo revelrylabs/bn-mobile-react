@@ -195,8 +195,8 @@ export default class EventScanner extends Component {
           <View>
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
-          {/* <View>
-            <View style={eventScannerStyles.headerActionsWrapper}>
+          <View>
+            {/* <View style={eventScannerStyles.headerActionsWrapper}>
               <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
                 <View style={styles.flexRowFlexStartCenter}>
                   <View style={ticketWalletStyles.avatarContainer}>
@@ -213,18 +213,16 @@ export default class EventScanner extends Component {
                 </View>
               </View>
             </View>
-
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={eventScannerStyles.mainBody}>
-                <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
-                  <View style={styles.flexRowSpaceBetween}>
-                    <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
-                    <MaterialIcons style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
-                  </View>
+          */}
+            <TouchableHighlight style={eventScannerStyles.mainBody} onPress={() => navigate('GuestList')}>
+              <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
+                <View style={styles.flexRowSpaceBetween}>
+                  <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
+                  <MaterialIcons style={eventScannerStyles.arrowUpIcon} name="keyboard-arrow-right" />
                 </View>
               </View>
-            </ScrollView>
-          </View> */}
+            </TouchableHighlight>
+          </View>
 
         </View>
 

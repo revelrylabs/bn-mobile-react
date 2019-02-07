@@ -10,6 +10,7 @@ import EventManager from './eventManager'
 import EventScanner from './eventScanner'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import NavigationStyles from '../styles/shared/navigationStyles'
+import GuestList from './guest-list-screen'
 
 const navigationStyles = NavigationStyles.createStyles()
 
@@ -22,14 +23,38 @@ const returnToSettings = (navigation) => (
   </TouchableHighlight>
 )
 
-const defaultNavOptions = (title, navigation) => {
+function Back({navigate, text, route}) {
+  return (
+    <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate(route || 'Account')}>
+      <View style={navigationStyles.headerLeftWrapper}>
+        <Icon style={navigationStyles.backButton} name="keyboard-arrow-left" />
+        <Text style={navigationStyles.headerLeftTitle}>{text || 'Settings'}</Text>
+      </View>
+    </TouchableHighlight>
+  )
+}
+
+STYLE_OPTIONS = {
+  headerStyle: navigationStyles.navigationContainer,
+  headerTitleStyle: navigationStyles.headerTitle,
+  headerBackTitleStyle: navigationStyles.headerBackTitle,
+}
+
+function _configureNav({navigate}, {title, back}) {
+  const backProps = {...(back || {}), navigate}
+
   return {
     title,
-    headerLeft: returnToSettings(navigation),
-    headerStyle: navigationStyles.navigationContainer,
-    headerTitleStyle: navigationStyles.headerTitle,
-    headerBackTitleStyle: navigationStyles.headerBackTitle,
+    headerLeft: <Back {...backProps} />,
   }
+}
+
+function navOptions(opts = {}) {
+  return ({navigation}) => _configureNav(navigation, opts)
+}
+
+function defaultNavOptions(title, navigation) {
+  return _configureNav(navigation, {title})
 }
 
 const ROUTES = {
@@ -71,6 +96,10 @@ const ROUTES = {
       header: null,
     },
   },
+  GuestList: {
+    screen: GuestList,
+    navigationOptions: navOptions({title: 'Guest List', back: {route: 'EventScanner', text: 'Scan Tickets'}})
+  }
 }
 
 export default ROUTES
