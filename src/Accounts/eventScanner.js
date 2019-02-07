@@ -9,7 +9,6 @@ import {
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
-import ManualCheckin from './guest-list-checkin'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -156,12 +155,10 @@ export default class EventScanner extends Component {
 
     return (
       <View>
-        {checkInMode === 'automatic' && (
-          <BarCodeScanner
-            onBarCodeRead={this.handleBarCodeScanned}
-            style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
-          />
-        )}
+        <BarCodeScanner
+          onBarCodeRead={this.handleBarCodeScanned}
+          style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
+        />
 
         <View style={eventScannerStyles.eventScannerContainer}>
 
@@ -175,7 +172,7 @@ export default class EventScanner extends Component {
                 }}
               />
             </View>
-            {/* TODO: add a bit of state for auto/manual modes and a toggle handler */}
+
             <TouchableHighlight style={eventScannerStyles.pillContainer} onPress={this.toggleCheckInMode}>
               <View style={styles.flexRowCenter}>
                 <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
@@ -186,10 +183,6 @@ export default class EventScanner extends Component {
           </View>
 
           {this.statusMessage}
-
-          {checkInMode === 'manual' && (
-            <ManualCheckin {...eventManager.state} searchGuestList={eventManager.searchGuestList} />
-          )}
 
           {/* TODO: fill in guest info panel, remove whitespace style workaround */}
           <View>
