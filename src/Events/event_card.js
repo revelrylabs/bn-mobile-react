@@ -78,7 +78,7 @@ export default class EventsIndex extends Component {
           <View style={eventCardStyles.detailsContainerBottom}>
             <Text style={eventCardStyles.header}>{event.name}</Text>
             <Text style={eventCardStyles.details}>{this.scheduleText}</Text>
-            <Text>{this.location}</Text>
+            <Text style={eventCardStyles.details}>{this.location}</Text>
           </View>
 
         </View>
