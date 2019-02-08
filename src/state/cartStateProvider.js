@@ -209,7 +209,7 @@ class CartContainer extends Container {
     const {totalCents: amount} = this
     const method = amount ? {
       type: 'Card',
-      provider: 'stripe',
+      provider: 'Stripe',
       token: this.payment.id,
       save_payment_method: false,
       set_default: false,
