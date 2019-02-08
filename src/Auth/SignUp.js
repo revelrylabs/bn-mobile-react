@@ -66,6 +66,7 @@ export default class SignUp extends Component {
             </Text>
             <TextInput
               keyboardType="email-address"
+              autoCapitalize="none"
               style={formStyles.input}
               placeholder="Email Address"
               underlineColorAndroid="transparent"
