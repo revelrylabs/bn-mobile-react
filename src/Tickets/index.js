@@ -27,9 +27,9 @@ function EmptyTickets({text}) {
   )
 }
 
-const AnimatedTicket = ({navigate, ticket, springValue}) => (
+const AnimatedTicket = ({navigate, ticket, springValue, activeTab, setPurchasedTicket}) => (
   <Animated.View style={{transform: [{scale: springValue}]}}>
-    <Ticket navigate={navigate} ticket={ticket} qrEnabled />
+    <Ticket navigate={navigate} ticket={ticket} activeTab={activeTab} setPurchasedTicket={setPurchasedTicket} />
   </Animated.View>
 )
 
@@ -39,12 +39,18 @@ AnimatedTicket.propTypes = {
   springValue: PropTypes.object.isRequired,
 }
 
-const Ticket = ({navigate, ticket, activeTab}) => {
+const Ticket = ({navigate, ticket, activeTab, setPurchasedTicket}) => {
   const {event, tickets} = ticket
 
   return (
     <View>
-      <TouchableHighlight underlayColor="#F5F6F7" onPress={() => navigate('EventTickets', {eventId: event.id, activeTab})}>
+      <TouchableHighlight 
+        underlayColor="#F5F6F7" 
+        onPress={() => {
+          setPurchasedTicket(null)
+          navigate('EventTickets', {eventId: event.id, activeTab})
+        }}
+      >
         <View style={ticketStyles.ticketContainer}>
           <Image
             style={ticketStyles.eventImage}
@@ -94,7 +100,7 @@ Ticket.propTypes = {
   ticket: PropTypes.object.isRequired,
 }
 
-const TicketsView = ({activeTab, emptyText, tickets, navigate, springValue, purchasedTicket}) => {
+const TicketsView = ({activeTab, emptyText, tickets, navigate, springValue, purchasedTicket, setPurchasedTicket}) => {
   if (!tickets.length) {
     return <EmptyTickets text={emptyText} />
   }
@@ -105,13 +111,16 @@ const TicketsView = ({activeTab, emptyText, tickets, navigate, springValue, purc
         key={ticket.event.name}
         navigate={navigate}
         ticket={ticket}
+        activeTab={activeTab}
         springValue={springValue}
+        setPurchasedTicket={setPurchasedTicket}
       /> :
       <Ticket
         navigate={navigate}
         activeTab={activeTab}
         key={ticket.event.name}
         ticket={ticket}
+        setPurchasedTicket={setPurchasedTicket}
       />
   ))
 }
@@ -173,6 +182,11 @@ export default class MyTickets extends Component {
     this.spring()
   }
 
+  changeTab = (tab) => {
+    this.props.screenProps.store.setPurchasedTicket(null)
+    this.setState({activeTab: tab})
+  }
+
   render() {
     const {
       navigation: {navigate},
@@ -194,13 +208,13 @@ export default class MyTickets extends Component {
         </View>
         <View style={styles.subnavContainer}>
           <View style={this.tabWrapperStyle('upcoming')}>
-            <Text style={this.tabStyle('upcoming')} onPress={() => this.setState({activeTab: 'upcoming'})}>UPCOMING</Text>
+            <Text style={this.tabStyle('upcoming')} onPress={() => this.changeTab('upcoming')}>UPCOMING</Text>
           </View>
           <View style={this.tabWrapperStyle('past')}>
-            <Text style={this.tabStyle('past')} onPress={() => this.setState({activeTab: 'past'})}>PAST</Text>
+            <Text style={this.tabStyle('past')} onPress={() => this.changeTab('past')}>PAST</Text>
           </View>
           <View style={this.tabWrapperStyle('transfer')}>
-            <Text style={this.tabStyle('transfer')} onPress={() => this.setState({activeTab: 'transfer'})}>TRANSFERS</Text>
+            <Text style={this.tabStyle('transfer')} onPress={() => this.changeTab('transfer')}>TRANSFERS</Text>
           </View>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -212,6 +226,7 @@ export default class MyTickets extends Component {
               springValue={this.springValue}
               purchasedTicket={purchasedTicket}
               activeTab={this.state.activeTab}
+              setPurchasedTicket={setPurchasedTicket}
             />
           </View>
 
