@@ -1,8 +1,5 @@
 import {Container} from 'unstated'
 import {server, apiErrorAlert, defaultEventSort} from '../constants/Server'
-import * as vibe from '../vibe'
-
-const SCAN_MESSAGE_TIMEOUT = 3000;
 
 /* eslint-disable camelcase,space-before-function-paren */
 export class EventManagerContainer extends Container {
@@ -10,12 +7,6 @@ export class EventManagerContainer extends Container {
     super(props);
 
     this.state = {
-      loggedIn: false,
-      statusMessage: '',
-      statusIcon: '',
-      ticketInfo: {},
-      scanType: 'redeem',
-      scanResult: null,
       events: [],
       eventToScan: {},
       guests: [],
@@ -58,23 +49,6 @@ export class EventManagerContainer extends Container {
     if (this.state.eventToScan.id === id && this.state.guestListQuery === guestListQuery) {
       await this.setState({guests, isFetchingGuests: false})
     }
-  }
-
-  _transfer = async () => {
-    try {
-
-      const _result = await server.tickets.transfer.receive(this.state.ticketInfo);
-
-      this.setState({scanType: '', statusMessage: 'Successfully Transferred', ticketInfo: {}});
-    } catch (e) {
-      this.setState({statusMessage: e.message || 'Error From Server', ticketInfo: {}});
-    }
-  };
-
-  _resetScanResult = () => {
-    setTimeout(() => {
-      this.setState({scanned: false, scanError: null});
-    }, SCAN_MESSAGE_TIMEOUT)
   }
 
   // this just unpacks the barcode scanner result, nothing else
