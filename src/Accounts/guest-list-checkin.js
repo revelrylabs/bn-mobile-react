@@ -15,8 +15,8 @@ const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 
-function shouldAllowCheckIn({status}) {
-  return status === 'Purchased'
+function shouldAllowCheckIn({status, redeem_key}) {
+  return status === 'Purchased' && redeem_key
 }
 
 function BusyState() {
@@ -118,6 +118,11 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
               <Text style={eventDetailsStyles.buttonRoundedActiveText}>Complete Check-In</Text>
             </TouchableHighlight>
           ) : null}
+        </View>
+        <View style={[styles.flexRowSpaceBetween, styles.paddingTop]}>
+          {guest.redeem_key ? null : (
+            <Text>Missing redeem key. Cannot check in at this time.</Text>
+          )}
         </View>
       </View>
 

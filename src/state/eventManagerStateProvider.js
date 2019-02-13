@@ -77,26 +77,28 @@ export class EventManagerContainer extends Container {
     }, SCAN_MESSAGE_TIMEOUT)
   }
 
-  redeem = async (json) => {
-    try {
-      const {data: {id: ticket_id, redeem_key}} = JSON.parse(json)
+  // this just unpacks the barcode scanner result, nothing else
+  readCode = ({data: json}) => {
+    const {data} = JSON.parse(json)
 
-      if (!redeem_key) {
-        throw new Error('missing_redeem_key')
-      }
-
-      await server.events.tickets.redeem({
-        event_id: this.state.eventToScan.id,
-        ticket_id,
-        redeem_key,
-      })
-      this.setState({scanned: true, scanError: null})
-      vibe.happy()
-    } catch (scanError) {
-      vibe.sad()
-      this.setState({scanned: true, scanError})
-    } finally {
-      this._resetScanResult()
+    if (!data.redeem_key) {
+      throw new Error('missing_redeem_key')
     }
+
+    return data
+  }
+
+  // we need to display more ticket info sometimes
+  getTicketDetails = async ({id}) => {
+    return (await server.tickets.read({id})).data
+  }
+
+  // take the data we got from `readCode` and actually redeem that ticket
+  redeem = async ({id: ticket_id, redeem_key}) => {
+    await server.events.tickets.redeem({
+      event_id: this.state.eventToScan.id,
+      ticket_id,
+      redeem_key,
+    })
   }
 }
