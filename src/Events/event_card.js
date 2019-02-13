@@ -40,6 +40,12 @@ export default class EventsIndex extends Component {
     }
   }
 
+  get location() {
+    const {event: {venue: {city, state}}} = this.props
+
+    return state ? `${city}, ${state}` : city
+  }
+
   render() {
     const {onPress, event} = this.props
 
@@ -72,6 +78,7 @@ export default class EventsIndex extends Component {
           <View style={eventCardStyles.detailsContainerBottom}>
             <Text style={eventCardStyles.header}>{event.name}</Text>
             <Text style={eventCardStyles.details}>{this.scheduleText}</Text>
+            <Text style={eventCardStyles.details}>{this.location}</Text>
           </View>
 
         </View>
