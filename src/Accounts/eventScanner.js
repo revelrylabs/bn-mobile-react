@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Text, View, TouchableHighlight} from 'react-native';
-import {BarCodeScanner, Permissions} from 'expo';
+import React, {Component, Fragment} from 'react'
+import PropTypes from 'prop-types'
+import {Text, View, TouchableHighlight} from 'react-native'
+import {BarCodeScanner, Permissions} from 'expo'
 import {
   MaterialIcons,
   EvilIcons,
@@ -9,18 +9,14 @@ import {
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
-import ManualCheckin from './manual-checkin'
+import * as vibe from '../vibe'
+import {username} from '../string'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const eventScannerStyles = EventScannerStyles.createStyles()
-
-function delay(time) {
-  return new Promise(((resolve, _reject) => {
-    setTimeout(() => resolve(), time);
-  }));
-}
-
+const DELAY_SLOW = 3000
+const DELAY_FAST = 1500
 const SCAN_ALERT_CONFIG = {
   success: {
     text: 'Ticket valid!',
@@ -38,7 +34,8 @@ const SCAN_ALERT_CONFIG = {
   }
 }
 
-function getStatusAlertConfig(error) {
+// props for the StatusMessage component, based on the presence and type of error
+function getStatusMessageConfig(error) {
   if (!error) {
     return SCAN_ALERT_CONFIG.success
   }
@@ -69,6 +66,73 @@ function getStatusAlertConfig(error) {
   return {...SCAN_ALERT_CONFIG.error, text: error.message}
 }
 
+// The little UI bit that toggles between scan modes
+function ModeControl({mode, toggle}) {
+  return (
+    <TouchableHighlight style={eventScannerStyles.pillContainer} onPress={toggle}>
+      <View style={styles.flexRowCenter}>
+        <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
+        <Text style={eventScannerStyles.pillTextPrimary}>{mode.toUpperCase()}</Text>
+      </View>
+    </TouchableHighlight>
+  )
+}
+
+// The default bottom tab that lets you bounce over to the guest list
+function GuestListTab({navigate}) {
+  return (
+    <TouchableHighlight style={eventScannerStyles.mainBody} onPress={() => navigate('GuestList')}>
+      <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
+        <View style={styles.flexRowSpaceBetween}>
+          <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
+        </View>
+      </View>
+    </TouchableHighlight>
+  )
+}
+
+// The alternative bottom tab that displays your scanned ticket details when you've done a manual mode scan
+function TicketDetailsTab({user, ticket: {ticket_type_name}, isBusy, cancel, checkIn}) {
+  return (
+    <TouchableHighlight style={eventScannerStyles.mainBody}>
+      <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
+        <View style={styles.flexRowSpaceBetween}>
+          <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>{username(user)}</Text>
+          <Text numberOfLines={2} style={eventScannerStyles.descriptionSubheader}>{ticket_type_name}</Text>
+        </View>
+        <View style={styles.flexRowSpaceBetween}>
+          {isBusy ? (
+            <Text>Checking in...</Text>
+          ) : (
+            <Fragment>
+              <TouchableHighlight
+                style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
+              >
+                <Text style={eventDetailsStyles.buttonRoundedText} onPress={cancel}>Cancel</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
+              >
+                <Text style={eventDetailsStyles.buttonRoundedActiveText} onPress={checkIn}>Check In</Text>
+              </TouchableHighlight>
+            </Fragment>
+          )}
+        </View>
+      </View>
+    </TouchableHighlight>
+  )
+}
+
+// Displays error and success
+function StatusMessage({text, icon, style}) {
+  return (
+    <View style={eventScannerStyles.messageContainer}>
+      <EvilIcons style={style} name={icon} />
+      <Text style={eventScannerStyles.messageText}>{text}</Text>
+    </View>
+  )
+}
+
 // TODO: this should probably use eventToScan state (see eventManager and
 // eventManagerStateProvider) to validate tickets against currently selected event
 export default class EventScanner extends Component {
@@ -79,8 +143,12 @@ export default class EventScanner extends Component {
 
   state = {
     hasCameraPermission: null,
-    read: null,
     checkInMode: 'automatic',
+    showStatusMessage: false,
+    error: null,
+    scannedCode: null,
+    ticketDetails: null,
+    isCommittingManualCheckIn: false,
   }
 
   async componentWillMount() {
@@ -89,79 +157,144 @@ export default class EventScanner extends Component {
     this.setState({hasCameraPermission: status === 'granted'})
   }
 
-  debounce = false;
-
-  // TODO: switch scan handler based on mode (or perhaps just remove scanner in manual mode?)
-  handleBarCodeScanned = async ({_type, data}) => {
-    const {screenProps: {eventManager}} = this.props;
-
-    await delay(500);
-
-    if (this.state.read === data) {
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => {
-        this.setState({read: null})
-      }, 1500);
-      return;
+  onBarCodeRead = async (scanResult) => {
+    // don't scan while we're mid-checkin
+    if (this.isScanningDisabled) {
+      return
     }
-    this.setState({read: data});
+    // this gets re-enabled by _reset()
+    this.isScanningDisabled = true
 
-    await eventManager.redeem(data);
+    try {
+      const code = this.props.screenProps.eventManager.readCode(scanResult)
+
+      switch (this.state.checkInMode) {
+      case 'automatic':
+        return await this._redeem(code)
+      case 'manual':
+        return await this._startManual(code)
+      }
+    } catch (error) {
+      this._finishCheckIn(error)
+    }
+  }
+
+  // take us back to the beginning of the "let's scan a ticket" process
+  _reset() {
+    // unlock so we can scan again
+    this.isScanningDisabled = false
+
+    this.setState({
+      showStatusMessage: false,
+      error: null,
+      scannedCode: null,
+      ticketDetails: null,
+      isCommittingManualCheckIn: false,
+    })
+  }
+
+  // trigger the final check-in success or failure feedback, wait a little bit, then reset
+  _finishCheckIn(error = null) {
+    let delay
+
+    if (error) {
+      this.setState({error})
+      vibe.sad()
+      delay = DELAY_SLOW
+    } else {
+      vibe.happy()
+      delay = this.state.checkInMode === 'automatic' ? DELAY_SLOW : DELAY_FAST
+    }
+
+    this.setState({showStatusMessage: true})
+    setTimeout(() => this._reset(), delay)
+  }
+
+  // actually redeem the ticket
+  async _redeem(code) {
+    await this.props.screenProps.eventManager.redeem(code)
+    this._finishCheckIn()
+  }
+
+  // pull up the ticket info and the UI for letting the door person confirm check-in
+  async _startManual(scannedCode) {
+    const ticketDetails = await this.props.screenProps.eventManager.getTicketDetails(scannedCode)
+    vibe.happy()
+    this.setState({scannedCode, ticketDetails})
+  }
+
+  // clear out the current manual-mode-scanned ticket and start over
+  cancelManual = () => {
+    this._reset()
+  }
+
+  // take the current manual-mode-scanned ticket and redeem it
+  commitManual = async () => {
+    try {
+      this.setState({isCommittingManualCheckIn: true})
+      await this._redeem(this.state.scannedCode)
+    } catch (error) {
+      this._finishCheckIn(error)
+    }
   }
 
   get statusMessage() {
-    const {scanned, scanError} = this.props.screenProps.eventManager.state
+    const {showStatusMessage, error} = this.state
 
-    if (!scanned) {
-      return null
-    }
-
-    const {text, icon, style} = getStatusAlertConfig(scanError)
-
-    return (
-      <View style={eventScannerStyles.messageContainer}>
-        <EvilIcons style={style} name={icon} />
-        <Text style={eventScannerStyles.messageText}>{text}</Text>
-      </View>
-    )
+    return showStatusMessage ? (
+      <StatusMessage {...getStatusMessageConfig(error)} />
+    ) : null
   }
 
   get event() {
     return this.props.screenProps.eventManager.state.eventToScan
   }
 
-  toggleCheckInMode = async () => {
-    let {checkInMode} = this.state
-
-    checkInMode = checkInMode === 'automatic' ? 'manual' : 'automatic'
-
+  setCheckInMode = (checkInMode) => {
+    this._reset() // don't forget to reset everything when doing a mode switch
     this.setState({checkInMode})
+  }
 
-    if (checkInMode === 'automatic') {
-      return
-    }
+  toggleCheckInMode = () => {
+    this._reset()
+    this.setCheckInMode(this.state.checkInMode === 'automatic' ? 'manual' : 'automatic')
+  }
+
+  // if we have the details of ticket to show, we do that; otherwise we link to the guest list
+  get bottomTab() {
+    const {
+      isCommittingManualCheckIn,
+      ticketDetails,
+    } = this.state
+
+    return ticketDetails ? (
+      <TicketDetailsTab
+        {...ticketDetails}
+        isBusy={isCommittingManualCheckIn}
+        cancel={this.cancelManual}
+        checkIn={this.commitManual}
+      />
+    ) : (
+      <GuestListTab navigate={this.props.navigation.navigate} />
+    )
   }
 
   render() {
-    const {hasCameraPermission, checkInMode} = this.state;
-    const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
-    const {scanResult} = eventManager.state;
+    const {hasCameraPermission, checkInMode, isCommittingManualCheckIn} = this.state
 
     if (hasCameraPermission === null) {
-      return <Text>Requesting for camera permission</Text>;
+      return <Text>Requesting for camera permission</Text>
     }
     if (hasCameraPermission === false) {
-      return <Text>No access to camera</Text>;
+      return <Text>No access to camera</Text>
     }
 
     return (
       <View>
-        {checkInMode === 'automatic' && (
-          <BarCodeScanner
-            onBarCodeRead={this.handleBarCodeScanned}
-            style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
-          />
-        )}
+        <BarCodeScanner
+          onBarCodeRead={this.onBarCodeRead}
+          style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
+        />
 
         <View style={eventScannerStyles.eventScannerContainer}>
 
@@ -171,60 +304,26 @@ export default class EventScanner extends Component {
                 style={eventDetailsStyles.backArrow}
                 name="close"
                 onPress={() => {
-                  navigate('ManageEvents')
+                  this.props.navigation.navigate('ManageEvents')
                 }}
               />
             </View>
-            {/* TODO: add a bit of state for auto/manual modes and a toggle handler */}
-            <TouchableHighlight style={eventScannerStyles.pillContainer} onPress={this.toggleCheckInMode}>
-              <View style={styles.flexRowCenter}>
-                <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
-                <Text style={eventScannerStyles.pillTextPrimary}>{checkInMode.toUpperCase()}</Text>
-              </View>
-            </TouchableHighlight>
+
+            {/* Don't let the user change mode while manual check-in is finishing */}
+            {isCommittingManualCheckIn ? null : (
+              <ModeControl mode={checkInMode} toggle={this.toggleCheckInMode} />
+            )}
+
+            {/* TODO: remove whitespace style workaround */}
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
 
           {this.statusMessage}
 
-          {checkInMode === 'manual' && (
-            <ManualCheckin {...eventManager.state} searchGuestList={eventManager.searchGuestList} />
-          )}
+          {/* TODO: remove whitespace style workaround */}
+          <Text>&nbsp; &nbsp; &nbsp;</Text>
 
-          {/* TODO: fill in guest info panel, remove whitespace style workaround */}
-          <View>
-            <Text>&nbsp; &nbsp; &nbsp;</Text>
-          </View>
-          {/* <View>
-            <View style={eventScannerStyles.headerActionsWrapper}>
-              <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
-                <View style={styles.flexRowFlexStartCenter}>
-                  <View style={ticketWalletStyles.avatarContainer}>
-                    <Image
-                      style={ticketWalletStyles.avatar}
-                      source={require('../../assets/avatar-female.png')}
-                    />
-                  </View>
-                  <View>
-                    <Text style={eventScannerStyles.pillTextWhite}>Anna Behrensmeyer</Text>
-                    <Text style={eventScannerStyles.pillTextSubheader}>General Admission</Text>
-                  </View>
-                  <MaterialIcons style={eventScannerStyles.checkIcon} name="check-circle" />
-                </View>
-              </View>
-            </View>
-
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={eventScannerStyles.mainBody}>
-                <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
-                  <View style={styles.flexRowSpaceBetween}>
-                    <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
-                    <MaterialIcons style={eventScannerStyles.arrowUpIcon} name="arrow-upward" />
-                  </View>
-                </View>
-              </View>
-            </ScrollView>
-          </View> */}
+          {this.bottomTab}
 
         </View>
 
