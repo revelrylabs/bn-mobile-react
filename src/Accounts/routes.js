@@ -14,15 +14,6 @@ import GuestList from './guest-list-screen'
 
 const navigationStyles = NavigationStyles.createStyles()
 
-const returnToSettings = (navigation) => (
-  <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigation.navigate('Account')}>
-    <View style={navigationStyles.headerLeftWrapper}>
-      <Icon style={navigationStyles.backButton} name="keyboard-arrow-left" />
-      <Text style={navigationStyles.headerLeftTitle}>Settings</Text>
-    </View>
-  </TouchableHighlight>
-)
-
 function Back({navigate, text, route}) {
   return (
     <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate(route || 'Account')}>
