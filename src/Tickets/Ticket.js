@@ -14,6 +14,29 @@ const ticketStyles = TicketStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
 
 /* eslint-disable camelcase */
+
+function TicketBottomRow({children}) {
+  return (
+    <View style={ticketWalletStyles.bottomNav}>
+      {false && // TODO: Re-enable when functionality is implemented -- issue #253
+        <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
+          <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
+          <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+        </View>
+      }
+      {children}
+    </View>
+  )
+}
+
+function staticBottomText(text) {
+  return (
+    <View style={ticketWalletStyles.bottomNavLinkContainer}>
+      <Text style={ticketWalletStyles.bottomNavLinkText}>{text}</Text>
+    </View>
+  )
+}
+
 export default class Ticket extends Component {
   static propTypes = {
     navigate: PropTypes.func.isRequired,
@@ -41,7 +64,7 @@ export default class Ticket extends Component {
     const {ticket: {status, ticketId, eventId}} = this.props
 
     if (status === 'Redeemed') {
-      return true
+      return
     }
 
     const qrObj = {type: 0, data: {redeem_key, id: ticketId, event_id: eventId, extra: ''}};
@@ -74,13 +97,7 @@ export default class Ticket extends Component {
     }
   }
 
-  staticBottomText(text) {
-    return (
-      <View style={ticketWalletStyles.bottomNavLinkContainer}>
-        <Text style={ticketWalletStyles.bottomNavLinkText}>{text}</Text>
-      </View>
-    )
-  }
+
 
   get bottomText() {
     const {navigate, ticket, activeTab} = this.props
@@ -90,7 +107,7 @@ export default class Ticket extends Component {
     switch (activeTab) {
     case 'upcoming':
       if (status === 'Redeemed') {
-        return this.staticBottomText('Redeemed')
+        return staticBottomText('Redeemed')
       } else {
         return (
           <TouchableHighlight
@@ -107,26 +124,12 @@ export default class Ticket extends Component {
         )
       }
     case 'past':
-      return this.staticBottomText('This event has ended')
+      return staticBottomText('This event has ended')
     case 'transfer':
-      return this.staticBottomText('This ticket was transferred')
+      return staticBottomText('This ticket was transferred')
     default:
       return null
     }
-  }
-
-  get ticketBottomRow() {
-    return (
-      <View style={ticketWalletStyles.bottomNav}>
-        {false && // TODO: Re-enable when functionality is implemented -- issue #253
-          <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
-            <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-            <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
-          </View>
-        }
-        {this.bottomText}
-      </View>
-    )
   }
 
   get qrContainer() {
@@ -141,11 +144,12 @@ export default class Ticket extends Component {
             bgColor="black"
             value={this.state.qrText}
           />
-        ) :
-        <Image
-          style={{width: 150, height: 150}}
-          source={require('../../assets/heart-white.png')}
-        />}
+        ) : (
+          <Image
+            style={{width: 150, height: 150}}
+            source={require('../../assets/heart-white.png')}
+          />
+        )}
       </View>
     )
   }
@@ -207,7 +211,7 @@ export default class Ticket extends Component {
 
         {this.qrContainer}
 
-        {this.ticketBottomRow}
+        <TicketBottomRow>{this.bottomText}</TicketBottomRow>
       </View>
     )
   }
