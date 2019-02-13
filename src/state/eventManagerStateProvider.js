@@ -1,8 +1,5 @@
 import {Container} from 'unstated'
 import {server, apiErrorAlert, defaultEventSort} from '../constants/Server'
-import * as vibe from '../vibe'
-
-const SCAN_MESSAGE_TIMEOUT = 3000;
 
 /* eslint-disable camelcase,space-before-function-paren */
 export class EventManagerContainer extends Container {
@@ -10,12 +7,6 @@ export class EventManagerContainer extends Container {
     super(props);
 
     this.state = {
-      loggedIn: false,
-      statusMessage: '',
-      statusIcon: '',
-      ticketInfo: {},
-      scanType: 'redeem',
-      scanResult: null,
       events: [],
       eventToScan: {},
       guests: [],
@@ -60,43 +51,28 @@ export class EventManagerContainer extends Container {
     }
   }
 
-  _transfer = async () => {
-    try {
+  // this just unpacks the barcode scanner result, nothing else
+  readCode = ({data: json}) => {
+    const {data} = JSON.parse(json)
 
-      const _result = await server.tickets.transfer.receive(this.state.ticketInfo);
-
-      this.setState({scanType: '', statusMessage: 'Successfully Transferred', ticketInfo: {}});
-    } catch (e) {
-      this.setState({statusMessage: e.message || 'Error From Server', ticketInfo: {}});
+    if (!data.redeem_key) {
+      throw new Error('missing_redeem_key')
     }
-  };
 
-  _resetScanResult = () => {
-    setTimeout(() => {
-      this.setState({scanned: false, scanError: null});
-    }, SCAN_MESSAGE_TIMEOUT)
+    return data
   }
 
-  redeem = async (json) => {
-    try {
-      const {data: {id: ticket_id, redeem_key}} = JSON.parse(json)
+  // we need to display more ticket info sometimes
+  getTicketDetails = async ({id}) => {
+    return (await server.tickets.read({id})).data
+  }
 
-      if (!redeem_key) {
-        throw new Error('missing_redeem_key')
-      }
-
-      await server.events.tickets.redeem({
-        event_id: this.state.eventToScan.id,
-        ticket_id,
-        redeem_key,
-      })
-      this.setState({scanned: true, scanError: null})
-      vibe.happy()
-    } catch (scanError) {
-      vibe.sad()
-      this.setState({scanned: true, scanError})
-    } finally {
-      this._resetScanResult()
-    }
+  // take the data we got from `readCode` and actually redeem that ticket
+  redeem = async ({id: ticket_id, redeem_key}) => {
+    await server.events.tickets.redeem({
+      event_id: this.state.eventToScan.id,
+      ticket_id,
+      redeem_key,
+    })
   }
 }
