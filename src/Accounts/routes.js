@@ -34,7 +34,7 @@ function Back({navigate, text, route}) {
   )
 }
 
-STYLE_OPTIONS = {
+const STYLE_OPTIONS = {
   headerStyle: navigationStyles.navigationContainer,
   headerTitleStyle: navigationStyles.headerTitle,
   headerBackTitleStyle: navigationStyles.headerBackTitle,
@@ -46,6 +46,7 @@ function _configureNav({navigate}, {title, back}) {
   return {
     title,
     headerLeft: <Back {...backProps} />,
+    ...STYLE_OPTIONS,
   }
 }
 
