@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight} from 'react-native'
-import {BarCodeScanner, Permissions} from 'expo'
+import {Text, View, TouchableHighlight, Image, StyleSheet} from 'react-native'
+import {BarCodeScanner, Permissions, BlurView} from 'expo'
 import {
   MaterialIcons,
   EvilIcons,
@@ -9,12 +9,15 @@ import {
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
+import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import * as vibe from '../vibe'
 import {username} from '../string'
+import {imageSourceUrl} from '../image'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
 const eventScannerStyles = EventScannerStyles.createStyles()
+const ticketWalletStyles = TicketWalletStyles.createStyles()
 const DELAY_SLOW = 3000
 const DELAY_FAST = 1500
 const SCAN_ALERT_CONFIG = {
@@ -78,45 +81,66 @@ function ModeControl({mode, toggle}) {
   )
 }
 
+function BottomTab({children}) {
+  return (
+    <View style={eventScannerStyles.mainBody}>{children}</View>
+  )
+}
+
 // The default bottom tab that lets you bounce over to the guest list
 function GuestListTab({navigate}) {
   return (
-    <TouchableHighlight style={eventScannerStyles.mainBody} onPress={() => navigate('GuestList')}>
-      <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
-        <View style={styles.flexRowSpaceBetween}>
-          <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
-        </View>
+    <TouchableHighlight style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]} onPress={() => navigate('GuestList')}>
+      <View style={styles.flexRowSpaceBetween}>
+        <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
       </View>
     </TouchableHighlight>
   )
 }
 
 // The alternative bottom tab that displays your scanned ticket details when you've done a manual mode scan
-function TicketDetailsTab({user, ticket: {ticket_type_name}, isBusy, cancel, checkIn}) {
+function TicketDetailsTab({isBusy, cancel, checkIn}) {
   return (
-    <TouchableHighlight style={eventScannerStyles.mainBody}>
-      <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
-        <View style={styles.flexRowSpaceBetween}>
-          <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>{username(user)}</Text>
-          <Text numberOfLines={2} style={eventScannerStyles.descriptionSubheader}>{ticket_type_name}</Text>
-        </View>
-        <View style={styles.flexRowSpaceBetween}>
-          {isBusy ? (
-            <Text>Checking in...</Text>
-          ) : (
-            <Fragment>
-              <TouchableHighlight
-                style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
-              >
-                <Text style={eventDetailsStyles.buttonRoundedText} onPress={cancel}>Cancel</Text>
-              </TouchableHighlight>
-              <TouchableHighlight
-                style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
-              >
-                <Text style={eventDetailsStyles.buttonRoundedActiveText} onPress={checkIn}>Check In</Text>
-              </TouchableHighlight>
-            </Fragment>
-          )}
+    <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
+      <View style={styles.flexRowSpaceBetween}>
+        {isBusy ? (
+          <Text>Checking in...</Text>
+        ) : (
+          <Fragment>
+            <TouchableHighlight
+              style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
+            >
+              <Text style={eventDetailsStyles.buttonRoundedText} onPress={cancel}>Cancel</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
+            >
+              <Text style={eventDetailsStyles.buttonRoundedActiveText} onPress={checkIn}>Check In</Text>
+            </TouchableHighlight>
+          </Fragment>
+        )}
+      </View>
+    </View>
+  )
+}
+
+function TicketDetailsPill({user, ticket, onPress}) {
+  return (
+    <TouchableHighlight style={eventScannerStyles.headerActionsWrapper} onPress={onPress}>
+      <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
+        <View style={styles.flexRowFlexStartCenter}>
+          <View style={ticketWalletStyles.avatarContainer}>
+            <Image
+              style={ticketWalletStyles.avatar}
+              loadingIndicatorSource={require('../../assets/avatar-female.png')}
+              source={imageSourceUrl(user.profile_pic_url)}
+            />
+          </View>
+          <View>
+            <Text style={eventScannerStyles.pillTextWhite}>{username(user)}</Text>
+            <Text style={eventScannerStyles.pillTextSubheader}>{ticket.ticket_type_name}</Text>
+          </View>
+          {/* <MaterialIcons style={eventScannerStyles.checkIcon} name="check-circle" /> */}
         </View>
       </View>
     </TouchableHighlight>
@@ -133,6 +157,22 @@ function StatusMessage({text, icon, style}) {
   )
 }
 
+// Throw this after another absolute fill view to darken/blur it
+// Might only darken and not blur on Android?
+function BlurOverlay() {
+  return (
+    <BlurView tint="dark" intensity={90} style={StyleSheet.absoluteFill} />
+  )
+}
+
+const RESET_STATE = {
+  showStatusMessage: false,
+  error: null,
+  scannedCode: null,
+  isWaitingToConfirmManualCheckIn: false,
+  isCommittingManualCheckIn: false,
+}
+
 // TODO: this should probably use eventToScan state (see eventManager and
 // eventManagerStateProvider) to validate tickets against currently selected event
 export default class EventScanner extends Component {
@@ -143,12 +183,9 @@ export default class EventScanner extends Component {
 
   state = {
     hasCameraPermission: null,
-    checkInMode: 'automatic',
-    showStatusMessage: false,
-    error: null,
-    scannedCode: null,
+    checkInMode: 'manual',
     ticketDetails: null,
-    isCommittingManualCheckIn: false,
+    ...RESET_STATE,
   }
 
   async componentWillMount() {
@@ -183,14 +220,7 @@ export default class EventScanner extends Component {
   _reset() {
     // unlock so we can scan again
     this.isScanningDisabled = false
-
-    this.setState({
-      showStatusMessage: false,
-      error: null,
-      scannedCode: null,
-      ticketDetails: null,
-      isCommittingManualCheckIn: false,
-    })
+    this.setState(RESET_STATE)
   }
 
   // trigger the final check-in success or failure feedback, wait a little bit, then reset
@@ -216,11 +246,25 @@ export default class EventScanner extends Component {
     this._finishCheckIn()
   }
 
+  async _getTicketDetails(scannedCode) {
+    const ticketDetails = await this.props.screenProps.eventManager.getTicketDetails(scannedCode)
+    this.setState({ticketDetails})
+    return ticketDetails
+  }
+
+  async _startAutomatic(scannedCode) {
+    this.setState({scannedCode, ticketDetails: null})
+    await Promise.all([
+      this._getTicketDetails(scannedCode),
+      this._redeem(scannedCode),
+    ])
+  }
+
   // pull up the ticket info and the UI for letting the door person confirm check-in
   async _startManual(scannedCode) {
-    const ticketDetails = await this.props.screenProps.eventManager.getTicketDetails(scannedCode)
+    await this._getTicketDetails(scannedCode)
+    this.setState({scannedCode, isWaitingToConfirmManualCheckIn: true})
     vibe.happy()
-    this.setState({scannedCode, ticketDetails})
   }
 
   // clear out the current manual-mode-scanned ticket and start over
@@ -261,15 +305,14 @@ export default class EventScanner extends Component {
   }
 
   // if we have the details of ticket to show, we do that; otherwise we link to the guest list
-  get bottomTab() {
+  get bottomTabContent() {
     const {
+      isWaitingToConfirmManualCheckIn,
       isCommittingManualCheckIn,
-      ticketDetails,
     } = this.state
 
-    return ticketDetails ? (
+    return isWaitingToConfirmManualCheckIn ? (
       <TicketDetailsTab
-        {...ticketDetails}
         isBusy={isCommittingManualCheckIn}
         cancel={this.cancelManual}
         checkIn={this.commitManual}
@@ -279,7 +322,16 @@ export default class EventScanner extends Component {
     )
   }
 
+  get ticketDetailsPill() {
+    const {ticketDetails} = this.state
+
+    return ticketDetails ? (
+      <TicketDetailsPill {...ticketDetails} />
+    ) : null
+  }
+
   render() {
+    const {statusMessage} = this
     const {hasCameraPermission, checkInMode, isCommittingManualCheckIn} = this.state
 
     if (hasCameraPermission === null) {
@@ -293,8 +345,11 @@ export default class EventScanner extends Component {
       <View>
         <BarCodeScanner
           onBarCodeRead={this.onBarCodeRead}
-          style={{position: 'absolute', top: 0, height: '100%', width: '100%'}}
+          style={StyleSheet.absoluteFill}
         />
+
+        {/* When there's a status message, throw an overlay on the camera to make things readable */}
+        {statusMessage && <BlurOverlay />}
 
         <View style={eventScannerStyles.eventScannerContainer}>
 
@@ -318,12 +373,16 @@ export default class EventScanner extends Component {
             <Text>&nbsp; &nbsp; &nbsp;</Text>
           </View>
 
-          {this.statusMessage}
+          {statusMessage}
 
-          {/* TODO: remove whitespace style workaround */}
-          <Text>&nbsp; &nbsp; &nbsp;</Text>
+          <BottomTab>
+            {this.ticketDetailsPill}
 
-          {this.bottomTab}
+            {/* TODO: remove whitespace style workaround */}
+            <Text>&nbsp; &nbsp; &nbsp;</Text>
+
+            {this.bottomTabContent}
+          </BottomTab>
 
         </View>
 

@@ -1,4 +1,5 @@
 import {Permissions, ImagePicker} from 'expo'
+import {optimizeCloudinaryImage} from './cloudinary'
 
 export async function accessCameraRoll() {
   const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL)
@@ -13,4 +14,12 @@ export async function selectCameraRollImage() {
   })
 
   return cancelled ? null : `data:${type}/${uri.match(/^.*(\.[^\.]+)$/)[1]};base64,${base64}`
+}
+
+export function imageSourceUrl(uri, quality) {
+  if (!uri) {
+    return null
+  }
+
+  return {uri: optimizeCloudinaryImage(uri, quality)}
 }
