@@ -91,6 +91,7 @@ export default class EventsTicket extends Component {
       ticketType: ticket.ticket_type_name,
       eventId: event.id,
       ticketId: ticket.id,
+      status: ticket.status,
     }))
   }
 
