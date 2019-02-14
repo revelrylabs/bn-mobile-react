@@ -246,14 +246,16 @@ export default class EventScanner extends Component {
     this._finishCheckIn()
   }
 
+  // fetch ticket details and save in state
   async _getTicketDetails(scannedCode) {
     const ticketDetails = await this.props.screenProps.eventManager.getTicketDetails(scannedCode)
     this.setState({ticketDetails})
     return ticketDetails
   }
 
+  // fetch ticket details and redeem the code simultaneously
   async _startAutomatic(scannedCode) {
-    this.setState({scannedCode, ticketDetails: null})
+    this.setState({scannedCode, ticketDetails: null}) // previous ticketDetails should get cleared out while we're waiting to reduce confusion
     await Promise.all([
       this._getTicketDetails(scannedCode),
       this._redeem(scannedCode),
