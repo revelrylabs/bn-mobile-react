@@ -13,6 +13,8 @@ import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import * as vibe from '../vibe'
 import {username} from '../string'
 import {imageSourceUrl} from '../image'
+import ticketScanLog from '../ticket-scan-log'
+import {DateTime} from 'luxon'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -124,7 +126,21 @@ function TicketDetailsTab({isBusy, cancel, checkIn}) {
   )
 }
 
-function TicketDetailsPill({user, ticket, onPress}) {
+function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
+  let redeemedText = ''
+  
+  if (ticket.status === 'Redeemed') {
+    redeemedText = redeemedAt ? (
+      `You checked them in ${DateTime.fromJSDate(redeemedAt).toRelative()}`
+    ) : (
+      'Redeemed'
+    )
+  }
+
+  const redeemedContent = redeemedText && (
+    <Text style={eventScannerStyles.pillTextSubheader}>{redeemedText}</Text>
+  )
+
   return (
     <TouchableHighlight style={eventScannerStyles.headerActionsWrapper} onPress={onPress}>
       <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
@@ -139,6 +155,7 @@ function TicketDetailsPill({user, ticket, onPress}) {
           <View>
             <Text style={eventScannerStyles.pillTextWhite}>{username(user)}</Text>
             <Text style={eventScannerStyles.pillTextSubheader}>{ticket.ticket_type_name}</Text>
+            {redeemedContent}
           </View>
           {/* <MaterialIcons style={eventScannerStyles.checkIcon} name="check-circle" /> */}
         </View>
@@ -243,12 +260,17 @@ export default class EventScanner extends Component {
   // actually redeem the ticket
   async _redeem(code) {
     await this.props.screenProps.eventManager.redeem(code)
+    ticketScanLog.logRedeemedAt(code)
     this._finishCheckIn()
   }
 
   // fetch ticket details and save in state
   async _getTicketDetails(scannedCode) {
     const ticketDetails = await this.props.screenProps.eventManager.getTicketDetails(scannedCode)
+
+    // decorate with info from our scan log
+    ticketDetails.redeemedAt = ticketScanLog.getRedeemedAt(ticketDetails.ticket)
+
     this.setState({ticketDetails})
     return ticketDetails
   }
