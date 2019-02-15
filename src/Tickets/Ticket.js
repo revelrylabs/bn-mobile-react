@@ -18,12 +18,6 @@ const ticketWalletStyles = TicketWalletStyles.createStyles()
 function TicketBottomRow({children}) {
   return (
     <View style={ticketWalletStyles.bottomNav}>
-      {false && // TODO: Re-enable when functionality is implemented -- issue #253
-        <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
-          <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-          <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
-        </View>
-      }
       {children}
     </View>
   )
@@ -59,11 +53,17 @@ export default class Ticket extends Component {
     this.ticketDetails()
   }
 
+  get skipQR() {
+    const {redeem_key} = this.state
+
+    return !redeem_key || redeem_key === '' || this.props.ticket.status === 'Redeemed'
+  }
+
   buildQRText() {
     const {redeem_key} = this.state
-    const {ticket: {status, ticketId, eventId}} = this.props
+    const {ticket: {ticketId, eventId}} = this.props
 
-    if (status === 'Redeemed') {
+    if (this.skipQR) {
       return
     }
 
@@ -97,19 +97,22 @@ export default class Ticket extends Component {
     }
   }
 
-
-
-  get bottomText() {
+  get upcomingTabText() {
     const {navigate, ticket, activeTab} = this.props
     const {eventId, ticketId, status} = ticket
     const {firstName, lastName} = this.state
 
-    switch (activeTab) {
-    case 'upcoming':
-      if (status === 'Redeemed') {
-        return staticBottomText('Redeemed')
-      } else {
-        return (
+    if (status === 'Redeemed') {
+      return staticBottomText('Redeemed')
+    } else {
+      return (
+        <View>
+          {false && // TODO: Re-enable when functionality is implemented -- issue #253
+            <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
+              <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
+              <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+            </View>
+          }
           <TouchableHighlight
             underlayColor="rgba(0, 0, 0, 0)"
             onPress={
@@ -121,8 +124,15 @@ export default class Ticket extends Component {
               <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
             </View>
           </TouchableHighlight>
-        )
-      }
+        </View>
+      )
+    }
+  }
+
+  get bottomRow() {
+    switch (this.props.activeTab) {
+    case 'upcoming':
+      return this.upcomingTabText
     case 'past':
       return staticBottomText('This event has ended')
     case 'transfer':
@@ -135,23 +145,36 @@ export default class Ticket extends Component {
   get qrContainer() {
     const {activeTab} = this.props
 
-    return (
-      <View style={ticketWalletStyles.qrCodeContainer}>
-        {activeTab === 'upcoming' && this.state.qrText ? (
+    if (activeTab === 'upcoming') {
+      if (this.state.qrText) {
+        return (
           <QRCode
             size={200}
             fgColor="white"
             bgColor="black"
             value={this.state.qrText}
           />
-        ) : (
-          <Image
-            style={{width: 150, height: 150}}
-            source={require('../../assets/heart-white.png')}
-          />
-        )}
-      </View>
-    )
+        )
+      } else {
+        return (
+          <View>
+            <Text>
+              To protect you and your purchase against fraudulent activity the QR code used to grant access to the event will be hidden until closer to the event door time.
+            </Text>
+            <Text>
+              Screenshots of this ticket may not be honored by the venue.
+            </Text>
+          </View>
+        )
+      }
+    } else {
+      return (
+        <Image
+          style={{width: 150, height: 150}}
+          source={require('../../assets/heart-white.png')}
+        />
+      )
+    }
   }
 
   render() {
@@ -209,9 +232,11 @@ export default class Ticket extends Component {
           </View>
         </View>
 
-        {this.qrContainer}
+        <View style={ticketWalletStyles.qrCodeContainer}>
+          {this.qrContainer}
+        </View>
 
-        <TicketBottomRow>{this.bottomText}</TicketBottomRow>
+        <TicketBottomRow>{this.bottomRow}</TicketBottomRow>
       </View>
     )
   }
