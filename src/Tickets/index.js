@@ -143,10 +143,14 @@ export default class MyTickets extends Component {
     super(props)
     this.props.screenProps.auth.identify()
     this.springValue = new Animated.Value(0.3)
+  }
 
-    this.state = {
-      activeTab: 'upcoming',
-    }
+  get activeTab() {
+    return this.props.navigation.getParam('activeTab', 'upcoming')
+  }
+
+  set activeTab(activeTab) {
+    this.props.navigation.setParams({activeTab})
   }
 
   spring() {
@@ -162,19 +166,19 @@ export default class MyTickets extends Component {
   }
 
   tabStyle(viewType) {
-    return viewType === this.state.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
+    return viewType === this.activeTab ? styles.subnavHeaderActive : styles.subnavHeader
   }
 
   tabWrapperStyle(viewType) {
-    return viewType === this.state.activeTab ? styles.activeWrapper : null
+    return viewType === this.activeTab ? styles.activeWrapper : null
   }
 
   get ticketsForActiveView() {
-    return this.props.screenProps.store.state.tickets[this.state.activeTab] || []
+    return this.props.screenProps.store.state.tickets[this.activeTab] || []
   }
 
   get emptyText() {
-    return EMPTY_TEXT_FOR_ACTIVE_TAB[this.state.activeTab]
+    return EMPTY_TEXT_FOR_ACTIVE_TAB[this.activeTab]
   }
 
   refreshTickets = async () => {
@@ -184,7 +188,7 @@ export default class MyTickets extends Component {
 
   changeTab = (tab) => {
     this.props.screenProps.store.setPurchasedTicket(null)
-    this.setState({activeTab: tab})
+    this.activeTab = tab
   }
 
   render() {
@@ -225,7 +229,7 @@ export default class MyTickets extends Component {
               tickets={this.ticketsForActiveView}
               springValue={this.springValue}
               purchasedTicket={purchasedTicket}
-              activeTab={this.state.activeTab}
+              activeTab={this.activeTab}
               setPurchasedTicket={setPurchasedTicket}
             />
           </View>
