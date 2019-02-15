@@ -137,9 +137,9 @@ function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
     )
   }
 
-  const redeemedContent = redeemedText && (
+  const redeemedContent = redeemedText ? (
     <Text style={eventScannerStyles.pillTextSubheader}>{redeemedText}</Text>
-  )
+  ) : null
 
   return (
     <TouchableHighlight style={eventScannerStyles.headerActionsWrapper} onPress={onPress}>
