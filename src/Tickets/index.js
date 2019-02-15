@@ -108,7 +108,7 @@ const TicketsView = ({activeTab, emptyText, tickets, navigate, springValue, purc
   return tickets.map((ticket) => (
     some(ticket.tickets, ({order_id}) => order_id === purchasedTicket) ?
       <AnimatedTicket
-        key={ticket.event.name}
+        key={ticket.event.id}
         navigate={navigate}
         ticket={ticket}
         activeTab={activeTab}
@@ -118,7 +118,7 @@ const TicketsView = ({activeTab, emptyText, tickets, navigate, springValue, purc
       <Ticket
         navigate={navigate}
         activeTab={activeTab}
-        key={ticket.event.name}
+        key={ticket.event.id}
         ticket={ticket}
         setPurchasedTicket={setPurchasedTicket}
       />
