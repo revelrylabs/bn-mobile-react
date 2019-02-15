@@ -192,7 +192,6 @@ export default class MyTickets extends Component {
   }
 
   render() {
-    console.log(this.activeTab, new Date())
     const {
       navigation: {navigate},
       screenProps: {

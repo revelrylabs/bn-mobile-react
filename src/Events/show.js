@@ -392,7 +392,7 @@ export default class EventShow extends Component {
         this.props.navigation.dispatch(resetAction)
 
         // Navigate to the tickets tab to see the new ticket
-        navigate('MyTickets', {activeTab: 'upcoming'})
+        navigate('MyTicketList', {activeTab: 'upcoming'})
       }, 3000)
     } finally {
       this.setState({showLoadingModal: false})
