@@ -157,11 +157,11 @@ export default class Ticket extends Component {
         )
       } else {
         return (
-          <View>
-            <Text>
+          <View style={ticketWalletStyles.placeholderCard}>
+            <Text style={[ticketWalletStyles.placeholderText, styles.paddingBottom]}>
               To protect you and your purchase against fraudulent activity the QR code used to grant access to the event will be hidden until closer to the event door time.
             </Text>
-            <Text>
+            <Text style={ticketWalletStyles.placeholderText}>
               Screenshots of this ticket may not be honored by the venue.
             </Text>
           </View>

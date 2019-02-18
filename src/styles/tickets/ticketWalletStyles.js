@@ -136,6 +136,18 @@ const TicketWalletStyles = {
     width: 200,
   },
 
+  // PLACEHOLDER STYLES
+  placeholderCard: {
+    backgroundColor: white,
+    borderRadius: 6,
+    padding: globalPadding,
+    width: 280,
+  },
+  placeholderText: {
+    fontFamily: globalFontMedium,
+    fontSize: bodyFontSize,
+  },
+
   // BOTTOM NAV STYLES
   bottomNav: {
     backgroundColor: white,
