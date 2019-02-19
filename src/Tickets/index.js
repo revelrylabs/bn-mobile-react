@@ -189,9 +189,7 @@ class TicketsView extends React.Component {
         ref={ref => {
           this.maybeScrollToTicket(ref)
         }}
-        keyExtractor={(item, _) => {
-          item.event.id
-        }}
+        keyExtractor={(item, _) => item.event.id}
         getItemLayout={(_data, index) => ({
           length: TICKET_HEIGHT,
           offset: TICKET_HEIGHT * index,
@@ -204,7 +202,6 @@ class TicketsView extends React.Component {
             ({order_id}) => order_id === purchasedTicket
           ) ? (
             <AnimatedTicket
-              key={item.event.id}
               navigate={navigate}
               ticket={item}
               activeTab={activeTab}
@@ -217,8 +214,8 @@ class TicketsView extends React.Component {
             <Ticket
               navigate={navigate}
               activeTab={activeTab}
-              key={item.event.id}
               ticket={item}
+              setPurchasedTicket={setPurchasedTicket}
             />
           )
         }}
