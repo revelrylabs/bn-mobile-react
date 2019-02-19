@@ -22,6 +22,9 @@ const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
+// The height of one ticket. Used for determining scroll position
+const TICKET_HEIGHT = 265
+
 function EmptyTickets({text}) {
   return (
     <View style={ticketStyles.emptyStateContainer}>
@@ -32,10 +35,6 @@ function EmptyTickets({text}) {
 }
 
 class AnimatedTicket extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.props.requestScrollToTicket(this.props.index)
   }
@@ -143,19 +142,30 @@ Ticket.propTypes = {
 }
 
 class TicketsView extends React.Component {
-  constructor(props) {
-    super(props)
-    this.requestScrollToTicket = this.requestScrollToTicket.bind(this)
-
+  componentDidMount() {
     //Capturing if we scrolled to a ticket
-    this.state = {animatedTicketIndex: null, scrolled: false}
-
-    // The height of one ticket. Used for determining scroll position
-    this.TICKET_HEIGHT = 265
+    this.animatedTicketIndex = null
+    this.scrolled = false
   }
 
-  requestScrollToTicket(index) {
-    this.setState({animatedTicketIndex: index, scrolled: false})
+  requestScrollToTicket = index => {
+    this.animatedTicketIndex = index
+    this.scrolled = false
+  }
+
+  maybeScrollToTicket(ref) {
+    if (
+      ref != null &&
+      this.scrolled === false &&
+      this.animatedTicketIndex !== null
+    ) {
+      ref.scrollToIndex({
+        animated: true,
+        index: this.animatedTicketIndex,
+      })
+
+      this.scrolled = true
+    }
   }
 
   render() {
@@ -173,33 +183,21 @@ class TicketsView extends React.Component {
       return <EmptyTickets text={emptyText} />
     }
 
-    // Flatlist requires the items to have a key property
-    const keyedTickets = tickets.map(ticket =>
-      Object.assign({}, ticket, {key: ticket.event.id})
-    )
-
     return (
       <FlatList
         {...this.props}
         ref={ref => {
-          if (
-            ref != null &&
-            this.state.scrolled === false &&
-            this.state.animatedTicketIndex !== null
-          ) {
-            ref.scrollToIndex({
-              animated: true,
-              index: this.state.animatedTicketIndex,
-            })
-            this.setState({scrolled: true})
-          }
+          this.maybeScrollToTicket(ref)
+        }}
+        keyExtractor={(item, _) => {
+          item.event.id
         }}
         getItemLayout={(_data, index) => ({
-          length: this.TICKET_HEIGHT,
-          offset: this.TICKET_HEIGHT * index,
+          length: TICKET_HEIGHT,
+          offset: TICKET_HEIGHT * index,
           index,
         })}
-        data={keyedTickets}
+        data={tickets}
         renderItem={({item, index}) => {
           return some(
             item.tickets,
