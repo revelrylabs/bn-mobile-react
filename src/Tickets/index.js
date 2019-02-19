@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
 import {
-  ScrollView,
   Text,
   View,
   Image,
@@ -38,7 +37,7 @@ class AnimatedTicket extends React.Component {
   }
 
   componentDidMount() {
-    this.props.scrollToTicket(this.props.index)
+    this.props.requestScrollToTicket(this.props.index)
   }
 
   render() {
@@ -59,7 +58,7 @@ AnimatedTicket.propTypes = {
   navigate: PropTypes.func.isRequired,
   ticket: PropTypes.object.isRequired,
   springValue: PropTypes.object.isRequired,
-  scrollToTicket: PropTypes.func.isRequired,
+  requestScrollToTicket: PropTypes.func.isRequired,
 }
 
 const Ticket = ({navigate, ticket, activeTab, setPurchasedTicket}) => {
@@ -146,17 +145,17 @@ Ticket.propTypes = {
 class TicketsView extends React.Component {
   constructor(props) {
     super(props)
-    this.scrollToTicket = this.scrollToTicket.bind(this)
+    this.requestScrollToTicket = this.requestScrollToTicket.bind(this)
+
+    //Capturing if we scrolled to a ticket
+    this.state = {animatedTicketIndex: null, scrolled: false}
+
+    // The height of one ticket. Used for determining scroll position
+    this.TICKET_HEIGHT = 265
   }
 
-  componentDidMount() {
-    console.log(this.flatListRef)
-    this.flatListRef.scrollToEnd()
-  }
-
-  scrollToTicket(index) {
-    console.log(this.flatListRef)
-    this.flatListRef.scrollToEnd()
+  requestScrollToTicket(index) {
+    this.setState({animatedTicketIndex: index, scrolled: false})
   }
 
   render() {
@@ -174,6 +173,7 @@ class TicketsView extends React.Component {
       return <EmptyTickets text={emptyText} />
     }
 
+    // Flatlist requires the items to have a key property
     const keyedTickets = tickets.map(ticket =>
       Object.assign({}, ticket, {key: ticket.event.id})
     )
@@ -182,8 +182,23 @@ class TicketsView extends React.Component {
       <FlatList
         {...this.props}
         ref={ref => {
-          this.flatListRef = ref
+          if (
+            ref != null &&
+            this.state.scrolled === false &&
+            this.state.animatedTicketIndex !== null
+          ) {
+            ref.scrollToIndex({
+              animated: true,
+              index: this.state.animatedTicketIndex,
+            })
+            this.setState({scrolled: true})
+          }
         }}
+        getItemLayout={(_data, index) => ({
+          length: this.TICKET_HEIGHT,
+          offset: this.TICKET_HEIGHT * index,
+          index,
+        })}
         data={keyedTickets}
         renderItem={({item, index}) => {
           return some(
@@ -197,7 +212,7 @@ class TicketsView extends React.Component {
               activeTab={activeTab}
               springValue={springValue}
               setPurchasedTicket={setPurchasedTicket}
-              scrollToTicket={this.scrollToTicket}
+              requestScrollToTicket={this.requestScrollToTicket}
               index={index}
             />
           ) : (
