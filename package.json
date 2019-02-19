@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "big.js": "^5.2.2",
-    "bn-api-node": "^1.0.3",
+    "bn-api-node": "^1.0.9",
     "expo": "^31.0.6",
     "get-own-property-symbols": "^0.9.2",
     "lodash": "^4.17.11",
