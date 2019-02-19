@@ -166,6 +166,7 @@ export default class ManualCheckin extends Component {
     } catch (error) {
       apiErrorAlert(error)
     } finally {
+      this.searchGuestList(this.props.guestListQuery) // refresh list w/ new data
       this.unselectGuest()
     }
   }
