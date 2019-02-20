@@ -101,19 +101,54 @@ function EmptyState() {
   )
 }
 
+function GuestTicketCardUnderlay({guest}) {
+  if (canCheckOut(guest)) {
+    return (
+      <View
+        style={[
+          eventDetailsStyles.checkInSwipeContainer,
+          styles.marginLeftTiny,
+        ]}
+      >
+        <Text style={eventDetailsStyles.checkInSwipeText}>
+          Complete Check-In
+        </Text>
+      </View>
+    )
+  }
+
+  return (
+    <View
+      style={[
+        eventDetailsStyles.disabledCheckInSwipeContainer,
+        styles.marginLeftTiny,
+      ]}
+    >
+      <Text style={eventDetailsStyles.disabledCheckInSwipeText}>
+        Check-in disabled
+      </Text>
+    </View>
+  )
+}
+
+function canCheckOut(guest) {
+  return guest.status === 'Purchased'
+}
+
 class GuestList extends Component {
   onRowOpen = async (rowKey, rowMap, toValue) => {
-    if (toValue === SCREEN_WIDTH) {
+    const guest = this.props.guests.find(item => item.id === rowKey)
+
+    if (canCheckOut(guest) && toValue === SCREEN_WIDTH) {
       try {
-        const guest = this.props.guests.find(item => item.id === rowKey)
         await this.props.onCheckIn(guest)
       } catch (error) {
         apiErrorAlert(error)
-      } finally {
-        const row = rowMap[rowKey]
-        row.closeRow()
       }
     }
+
+    const row = rowMap[rowKey]
+    row.closeRow()
   }
 
   render() {
@@ -131,21 +166,8 @@ class GuestList extends Component {
         keyExtractor={({id}) => id}
         onRowOpen={this.onRowOpen}
         renderItem={({item}) => (
-          <SwipeRow
-            disableRightSwipe={item.status !== 'Purchased'}
-            disableLeftSwipe
-            leftOpenValue={SCREEN_WIDTH}
-          >
-            <View
-              style={[
-                eventDetailsStyles.checkInSwipeContainer,
-                styles.marginLeftTiny,
-              ]}
-            >
-              <Text style={eventDetailsStyles.checkInSwipeText}>
-                Complete Check-In
-              </Text>
-            </View>
+          <SwipeRow disableLeftSwipe leftOpenValue={SCREEN_WIDTH}>
+            <GuestTicketCardUnderlay guest={item} />
             <GuestTicketCard guest={item} onSelect={onSelect} />
           </SwipeRow>
         )}

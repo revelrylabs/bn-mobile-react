@@ -17,6 +17,7 @@ import {
   globalPaddingSmall,
   globalPaddingTiny,
   globalMargin,
+  disabledColor,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -181,6 +182,21 @@ const EventDetailsStyles = {
   checkInSwipeContainer: {
     alignItems: 'center',
     backgroundColor: primaryColor,
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'flex-start',
+    paddingLeft: globalPadding,
+  },
+  disabledCheckInSwipeText: {
+    color: disabledHeaderColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    textAlign: 'left',
+  },
+  disabledCheckInSwipeContainer: {
+    alignItems: 'center',
+    backgroundColor: disabledColor,
     flex: 1,
     flexDirection: 'row',
     height: 40,
