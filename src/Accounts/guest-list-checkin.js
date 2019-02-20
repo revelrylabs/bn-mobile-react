@@ -9,6 +9,7 @@ import {
   FlatList,
   StyleSheet,
   Dimensions,
+  Animated,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {price, username, usernameLastFirst} from '../string'
@@ -19,13 +20,14 @@ import TicketStyles from '../styles/tickets/ticketStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
-import {SwipeListView} from 'react-native-swipe-list-view'
+import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const SCREEN_WIDTH = Dimensions.get('window').width
 
 function shouldAllowCheckIn({status, redeem_key}) {
   return status === 'Purchased' && redeem_key
@@ -99,51 +101,53 @@ function EmptyState() {
   )
 }
 
-function GuestList({guests, onSelect, onCheckIn, ...rest}) {
-  if (guests.length === 0) {
-    return <EmptyState />
-  }
-
-  const SCREEN_WIDTH = Dimensions.get('window').width
-
-  onSwipeValueChange = async swipeData => {
-    const {key, value} = swipeData
-    if (value === SCREEN_WIDTH) {
-      const guest = guests.find(element => {
-        return element.id === key
-      })
-
-      if (guest) {
-        await onCheckIn(guest)
+class GuestList extends Component {
+  onRowOpen = async (rowKey, rowMap, toValue) => {
+    if (toValue === SCREEN_WIDTH) {
+      try {
+        const guest = this.props.guests.find(item => item.id === rowKey)
+        await this.props.onCheckIn(guest)
+      } catch (error) {
+        alert(error.message)
+      } finally {
+        const row = rowMap[rowKey]
+        row.closeRow()
       }
     }
   }
 
-  return (
-    <SwipeListView
-      {...rest}
-      useFlatList
-      data={guests}
-      keyExtractor={({id}) => id}
-      renderItem={({item}) => (
-        <GuestTicketCard guest={item} onSelect={onSelect} />
-      )}
-      renderHiddenItem={() => (
-        <View
-          style={[
-            eventDetailsStyles.checkInSwipeContainer,
-            styles.marginLeftTiny,
-          ]}
-        >
-          <Text style={eventDetailsStyles.checkInSwipeText}>
-            Complete Check-In
-          </Text>
-        </View>
-      )}
-      leftOpenValue={SCREEN_WIDTH}
-      onSwipeValueChange={this.onSwipeValueChange}
-    />
-  )
+  render() {
+    const {guests, onSelect, onCheckIn, ...rest} = this.props
+
+    if (guests.length === 0) {
+      return <EmptyState />
+    }
+
+    return (
+      <SwipeListView
+        {...rest}
+        useFlatList
+        data={guests}
+        keyExtractor={({id}) => id}
+        onRowOpen={this.onRowOpen}
+        renderItem={({item}) => (
+          <SwipeRow disableLeftSwipe leftOpenValue={SCREEN_WIDTH}>
+            <View
+              style={[
+                eventDetailsStyles.checkInSwipeContainer,
+                styles.marginLeftTiny,
+              ]}
+            >
+              <Text style={eventDetailsStyles.checkInSwipeText}>
+                Complete Check-In
+              </Text>
+            </View>
+            <GuestTicketCard guest={item} onSelect={onSelect} />
+          </SwipeRow>
+        )}
+      />
+    )
+  }
 }
 
 function GuestToCheckIn({guest, onCancel, onCheckIn}) {
