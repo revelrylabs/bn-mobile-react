@@ -108,7 +108,7 @@ class GuestList extends Component {
         const guest = this.props.guests.find(item => item.id === rowKey)
         await this.props.onCheckIn(guest)
       } catch (error) {
-        alert(error.message)
+        apiErrorAlert(error)
       } finally {
         const row = rowMap[rowKey]
         row.closeRow()
@@ -131,7 +131,11 @@ class GuestList extends Component {
         keyExtractor={({id}) => id}
         onRowOpen={this.onRowOpen}
         renderItem={({item}) => (
-          <SwipeRow disableLeftSwipe leftOpenValue={SCREEN_WIDTH}>
+          <SwipeRow
+            disableRightSwipe={item.status !== 'Purchased'}
+            disableLeftSwipe
+            leftOpenValue={SCREEN_WIDTH}
+          >
             <View
               style={[
                 eventDetailsStyles.checkInSwipeContainer,
