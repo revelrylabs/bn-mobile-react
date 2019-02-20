@@ -17,6 +17,7 @@ import DoormanStyles from '../styles/account/doormanStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
+import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
 import {SwipeListView} from 'react-native-swipe-list-view'
 
@@ -90,7 +91,12 @@ function GuestTicketCard({guest, onSelect}) {
 }
 
 function EmptyState() {
-  return <Text>No guests found.</Text>
+  return (
+    <View style={ticketStyles.emptyStateContainer}>
+      <Image style={ticketStyles.emptyStateIcon} source={emptyState} />
+      <Text style={ticketStyles.emptyStateText}>No guests found.</Text>
+    </View>
+  )
 }
 
 function GuestList({guests, onSelect, onCheckIn, ...rest}) {
