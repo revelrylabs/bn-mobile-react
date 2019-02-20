@@ -17,6 +17,7 @@ import {
   globalPaddingSmall,
   globalPaddingTiny,
   globalMargin,
+  disabledColor,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -36,7 +37,7 @@ export const backArrowFontSize = 25
 const EventDetailsStyles = {
   // VIDEO BKGD STYLES
   videoBkgd: {
-    height: fullWidth/2,
+    height: fullWidth / 2,
     position: 'absolute',
     top: 0,
     width: fullWidth,
@@ -57,7 +58,7 @@ const EventDetailsStyles = {
   },
   backArrowCircleContainer: {
     backgroundColor: disabledHeaderColor,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     height: 45,
     padding: globalPaddingSmall,
     width: 45,
@@ -72,12 +73,12 @@ const EventDetailsStyles = {
     backgroundColor: 'transparent',
     paddingBottom: globalPaddingLarge,
     paddingHorizontal: 0,
-    marginTop: fullWidth/2 - 50,
+    marginTop: fullWidth / 2 - 50,
   },
   mainBodyContent: {
     backgroundColor: 'white',
-    borderTopRightRadius: 30/2,
-    borderTopLeftRadius: 30/2,
+    borderTopRightRadius: 30 / 2,
+    borderTopLeftRadius: 30 / 2,
     paddingHorizontal: globalPadding,
     paddingTop: globalPaddingMedium,
     position: 'relative',
@@ -172,6 +173,36 @@ const EventDetailsStyles = {
     fontSize: sectionHeaderFontSize,
     textAlign: 'center',
   },
+  checkInSwipeText: {
+    color: white,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    textAlign: 'left',
+  },
+  checkInSwipeContainer: {
+    alignItems: 'center',
+    backgroundColor: primaryColor,
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'flex-start',
+    paddingLeft: globalPadding,
+  },
+  disabledCheckInSwipeText: {
+    color: disabledHeaderColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: bodyFontSize,
+    textAlign: 'left',
+  },
+  disabledCheckInSwipeContainer: {
+    alignItems: 'center',
+    backgroundColor: disabledColor,
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'flex-start',
+    paddingLeft: globalPadding,
+  },
 
   // EVENT DETAILS/DESCRIPTION STYLES
   eventDetailsContainer: {
@@ -200,7 +231,7 @@ const EventDetailsStyles = {
   },
   avatar: {
     borderColor: white,
-    borderRadius: 45/2,
+    borderRadius: 45 / 2,
     borderWidth: 1,
     height: 45,
     marginHorizontal: globalPaddingTiny,
@@ -208,7 +239,7 @@ const EventDetailsStyles = {
   },
   attendeeContainer: {
     borderColor: borderColor,
-    borderRadius: 45/2,
+    borderRadius: 45 / 2,
     borderWidth: 1,
     height: 45,
     marginHorizontal: globalPaddingTiny,
@@ -299,7 +330,7 @@ const EventDetailsStyles = {
   buttonRoundedSecondary: {
     backgroundColor: primaryColor,
     borderColor: borderColor,
-    borderRadius: 55/2,
+    borderRadius: 55 / 2,
     borderWidth: 1,
     flex: 1,
     height: 55,
@@ -307,7 +338,6 @@ const EventDetailsStyles = {
     marginHorizontal: globalMargin,
     marginBottom: globalPaddingLarge,
   },
-
 
   // CALENDAR STYLES
   calendarWrapper: {
