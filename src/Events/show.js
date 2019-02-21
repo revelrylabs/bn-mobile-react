@@ -123,7 +123,7 @@ export default class EventShow extends Component {
       currentScreen: 'details',
       showLoadingModal: false,
       showSuccessModal: false,
-      success: true,
+      success: null,
     }
     this.loadEvent()
   }
