@@ -205,7 +205,7 @@ class CartContainer extends Container {
     return !this.isChangingQuantity && !this.totalCents || this.payment
   }
 
-  async placeOrder() {
+  async placeOrder(onSuccess, onError) {
     const {totalCents: amount} = this
     const method = amount ? {
       type: 'Card',
@@ -219,8 +219,12 @@ class CartContainer extends Container {
 
     try {
       await server.cart.checkout({amount, method})
+      onSuccess()
     } catch(error) {
-      apiErrorAlert(error)
+      onError()
+      setTimeout(() => {
+        apiErrorAlert(error)
+      }, 600);
     }
   }
 }
