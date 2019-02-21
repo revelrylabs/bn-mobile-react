@@ -39,54 +39,26 @@ function priceRangeString(ticket_types) {
 }
 
 
-const LoadingScreen = ({toggleModal, modalVisible}) => (
+const TicketModal = ({modal}) => (
   <Modal
-    onRequestClose={() => {
-      toggleModal(!modalVisible)
-    }}
-    visible={modalVisible}
+    visible={modal === 'loading' || modal === 'success'}
     transparent
   >
     <View style={modalStyles.modalContainer}>
       <View style={styles.flexRowCenter}>
         <View style={modalStyles.activityIndicator}>
-          <ActivityIndicator size="large" color="#FF20B1" />
+          {modal === 'loading' && <ActivityIndicator size="large" color="#FF20B1" />}
+          {modal === 'success' && (
+            <Image
+              style={modalStyles.emojiActivityIndicator}
+              source={require('../../assets/emoji-loader.png')}
+            />
+          )}
         </View>
       </View>
     </View>
   </Modal>
 )
-
-LoadingScreen.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  modalVisible: PropTypes.bool.isRequired,
-}
-
-const SuccessScreen = ({toggleModal, modalVisible}) => (
-  <Modal
-    onRequestClose={() => {
-      toggleModal(!modalVisible)
-    }}
-    visible={modalVisible}
-    transparent
-  >
-    <View style={modalStyles.modalContainer}>
-      <View style={styles.flexRowCenter}>
-        <View style={modalStyles.activityIndicator}>
-          <Image
-            style={modalStyles.emojiActivityIndicator}
-            source={require('../../assets/emoji-loader.png')}
-          />
-        </View>
-      </View>
-    </View>
-  </Modal>
-)
-
-SuccessScreen.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  modalVisible: PropTypes.bool.isRequired,
-}
 
 function CheckoutButton({onCheckout, disabled, busy}) {
   return (
@@ -121,8 +93,8 @@ export default class EventShow extends Component {
       eventId: props.navigation.getParam('eventId', false),
       favorite: false,
       currentScreen: 'details',
-      showLoadingModal: false,
-      showSuccessModal: false,
+      showModal: null,
+      succeeded: true,
     }
     this.loadEvent()
   }
@@ -169,7 +141,6 @@ export default class EventShow extends Component {
   }
 
   toggleFavorite = (favorite) => {
-
     this.setState({favorite})
   }
 
@@ -362,6 +333,10 @@ export default class EventShow extends Component {
     )
   }
 
+  onFail = () => {
+    this.setState({showModal: null, succeeded: false})
+  }
+
   purchaseTicket = async () => {
     const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
 
@@ -370,33 +345,34 @@ export default class EventShow extends Component {
       return false
     }
 
-    this.setState({showLoadingModal: true})
-    try {
-      await cart.placeOrder()
+    this.setState({showModal: 'loading'})
+
+    await cart.placeOrder(() => {this.onFail()})
+
+    if (!this.state.succeeded) {
+      return false
+    } else {
       setPurchasedTicket(cart.id)
-
-      await this.setState({
-        showLoadingModal: false,
-        showSuccessModal: true,
-      })
-
-      const resetAction = StackActions.reset({
-        index: 0,
-        key: 'Explore',
-        actions: [
-          NavigationActions.navigate({routeName: 'Home'}),
-        ],
-      })
-
-      setTimeout(() => {
-        this.props.navigation.dispatch(resetAction)
-
-        // Navigate to the tickets tab to see the new ticket
-        navigate('MyTicketList', {activeTab: 'upcoming'})
-      }, 3000)
-    } finally {
-      this.setState({showLoadingModal: false})
     }
+
+    this.setState({showModal: 'success'})
+
+    const resetAction = StackActions.reset({
+      index: 0,
+      key: 'Explore',
+      actions: [
+        NavigationActions.navigate({routeName: 'Home'}),
+      ],
+    })
+
+    setTimeout(() => {
+      this.props.navigation.dispatch(resetAction)
+
+      // Navigate to the tickets tab to see the new ticket
+      navigate('MyTicketList', {activeTab: 'upcoming'})
+    }, 3000)
+    
+    this.setState({showModal: null})
   }
 
 
@@ -436,7 +412,7 @@ export default class EventShow extends Component {
   }
 
   render() {
-    const {event, showLoadingModal, showSuccessModal} = this.state
+    const {event} = this.state
 
     if (!event) {
       return null
@@ -448,8 +424,7 @@ export default class EventShow extends Component {
           onWillFocus={() => this.loadEvent()}
           onDidBlur={() => this.clearEvent()}
         />
-        <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={showLoadingModal} />
-        <SuccessScreen toggleModal={this.toggleSuccessModal} modalVisible={showSuccessModal} />
+        <TicketModal modal={this.state.showModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
           source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
