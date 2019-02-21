@@ -123,6 +123,7 @@ export default class EventShow extends Component {
       currentScreen: 'details',
       showLoadingModal: false,
       showSuccessModal: false,
+      success: true,
     }
     this.loadEvent()
   }
@@ -364,6 +365,8 @@ export default class EventShow extends Component {
 
   purchaseTicket = async () => {
     const {screenProps: {cart, setPurchasedTicket}, navigation: {navigate}} = this.props
+    const onSuccess = () => this.setState({success: true})
+    const onError = () => this.setState({showLoadingModal: false, success: false})
 
     if (cart.totalCents && !cart.payment) {
       alert('Please enter your payment details');
@@ -372,8 +375,14 @@ export default class EventShow extends Component {
 
     this.setState({showLoadingModal: true})
     try {
-      await cart.placeOrder()
-      setPurchasedTicket(cart.id)
+      await cart.placeOrder(onSuccess, onError)
+
+      if (!this.state.success) {
+        return false
+      } else {
+        setPurchasedTicket(cart.id)
+      }
+
 
       await this.setState({
         showLoadingModal: false,
