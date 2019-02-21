@@ -125,14 +125,22 @@ function GuestTicketCardUnderlay({guest}) {
       ]}
     >
       <Text style={eventDetailsStyles.disabledCheckInSwipeText}>
-        Check-in disabled
+        {checkInErrorText(guest)}
       </Text>
     </View>
   )
 }
 
 function canCheckOut(guest) {
-  return guest.status === 'Purchased'
+  return guest.redeem_key && guest.status === 'Purchased'
+}
+
+function checkInErrorText(guest) {
+  if (!guest.redeem_key) {
+    return 'Check-in Disabled'
+  }
+
+  return 'Already checked-in'
 }
 
 class GuestList extends Component {
