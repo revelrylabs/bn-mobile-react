@@ -92,11 +92,13 @@ function BottomTab({children}) {
 // The default bottom tab that lets you bounce over to the guest list
 function GuestListTab({navigate}) {
   return (
-    <TouchableHighlight style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]} onPress={() => navigate('GuestList')}>
-      <View style={styles.flexRowSpaceBetween}>
-        <Text numberOfLines={2} style={eventScannerStyles.descriptionHeader}>All Guests</Text>
+    <View style={eventDetailsStyles.fixedFooter}>
+      <View style={styles.buttonContainer}>
+        <TouchableHighlight style={styles.button} onPress={() => navigate('GuestList')}>
+          <Text style={styles.buttonText}>Guest List</Text>
+        </TouchableHighlight>
       </View>
-    </TouchableHighlight>
+    </View>
   )
 }
 
@@ -128,7 +130,7 @@ function TicketDetailsTab({isBusy, cancel, checkIn}) {
 
 function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
   let redeemedText = ''
-  
+
   if (ticket.status === 'Redeemed') {
     redeemedText = redeemedAt ? (
       `You checked them in ${DateTime.fromJSDate(redeemedAt).toRelative()}`
