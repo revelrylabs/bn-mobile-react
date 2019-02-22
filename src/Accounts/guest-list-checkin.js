@@ -270,7 +270,7 @@ export default class ManualCheckin extends Component {
 
     if (selectedGuest !== null) {
       return (
-        <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
+        <View style={doormanStyles.mainBody}>
           <View style={doormanStyles.mainBodyContent}>
             <GuestToCheckIn
               guest={selectedGuest}
