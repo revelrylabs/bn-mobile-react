@@ -15,7 +15,7 @@ function buildErrorMessage({error, fields}) {
   if (typeof fields === 'object') {
     const fieldsString = Object
       .keys(fields)
-      .map(name => fields[name].map(x => x.code).join('\n'))
+      .map(name => fields[name].map(x => (x.message || x.code)).join('\n'))
       .join('\n')
 
     msg = [
