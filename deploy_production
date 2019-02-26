@@ -5,22 +5,22 @@ set -e # exit entire script when command exits with non-zero status
 npm install
 
 # Publish `production` release
-npm run expo -- publish --release-channel production --non-interactive
+npx expo publish --release-channel production --non-interactive
 
 # Start building standalone android build using `production` release channel
-npm run expo -- build:android --release-channel production --non-interactive --no-publish
+npx expo build:android --release-channel production --non-interactive --no-publish
 
 # Download the built android binary
-curl -o app.apk "$(npm run expo -- url:apk --non-interactive)"
+curl -o app.apk "$(npx expo url:apk --non-interactive)"
 
 # Ask Keith for the JSON key. Store this one directory below the app, and DO NOT ADD TO GIT
 fastlane supply --track 'beta' --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
 
 # Start building standalone android build using `production` release channel
-npm run expo -- build:ios --release-channel production --non-interactive --no-publish
+npx expo build:ios --release-channel production --non-interactive --no-publish
 
 # Download the artifact to current directory as `app.ipa`
-curl -o app.ipa "$(npm run expo -- url:ipa --non-interactive)"
+curl -o app.ipa "$(npx expo url:ipa --non-interactive)"
 
 # In your bash profile, you'll need to set:
 # export DELIVER_USERNAME=apple developer username
