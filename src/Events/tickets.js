@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, TouchableHighlight, Image, TextInput} from 'react-native'
-import {Ticket} from './event_ticket';
+import {Ticket} from './event_ticket'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import FormStyles from '../styles/shared/formStyles'
@@ -19,10 +19,7 @@ const ticketStyles = TicketStyles.createStyles()
 function NoAvailableTickets() {
   return (
     <View style={ticketStyles.emptyStateContainer}>
-      <Image
-        style={ticketStyles.emptyStateIcon}
-        source={emptyState}
-      />
+      <Image style={ticketStyles.emptyStateIcon} source={emptyState} />
       <Text style={ticketStyles.emptyStateText}>
         Looks like there are no tickets available at this time.
       </Text>
@@ -34,6 +31,7 @@ export default class GetTickets extends Component {
   static propTypes = {
     onTicketSelection: PropTypes.func,
     onPromoApply: PropTypes.func,
+    onPromoRemove: PropTypes.func,
     event: PropTypes.object,
     ticketsToDisplay: PropTypes.array,
   }
@@ -46,17 +44,35 @@ export default class GetTickets extends Component {
     this.props.onPromoApply(this.state.promoCode)
   }
 
+  handleRemovePromoSubmit = () => {
+    this.props.onPromoRemove(this.props.event.id)
+  }
+
   get hasTickets() {
     return this.props.ticketsToDisplay.length > 0
   }
 
   get ticketList() {
-    return this.props.ticketsToDisplay.map((ticket) => (
-      <Ticket key={ticket.id} ticket={ticket} onTicketSelection={this.props.onTicketSelection} />
+    return this.props.ticketsToDisplay.map(ticket => (
+      <Ticket
+        key={ticket.id}
+        ticket={ticket}
+        onTicketSelection={this.props.onTicketSelection}
+      />
     ))
   }
 
+  promoCodeApplied() {
+    return (
+      this.props.ticketsToDisplay.findIndex(
+        ticket => ticket.redemption_code !== null
+      ) >= 0
+    )
+  }
+
   get hasTicketDisplay() {
+    const isPromoCodeApplied = this.promoCodeApplied()
+
     return (
       <View>
         <View style={checkoutStyles.headerWrapper}>
@@ -64,21 +80,30 @@ export default class GetTickets extends Component {
         </View>
         {this.ticketList}
         <View style={styles.container}>
-          <Text style={[checkoutStyles.ticketHeader, styles.paddingBottom]}>Promo Code</Text>
+          <Text style={[checkoutStyles.ticketHeader, styles.paddingBottom]}>
+            Promo Code
+          </Text>
           <TextInput
-            keyboardShouldPersistTaps='always'
+            editable={!isPromoCodeApplied}
+            keyboardShouldPersistTaps="always"
             style={formStyles.input}
             placeholder="Enter a Promo Code"
-            onChangeText={autotrim((promoCode) => this.setState({promoCode}))}
+            onChangeText={autotrim(promoCode => this.setState({promoCode}))}
           />
           <View style={styles.buttonContainer}>
             <TouchableHighlight
               underlayColor="rgba(255, 34, 178, 0.2)"
-              keyboardShouldPersistTaps='always'
-              onPress={this.handlePromoSubmit}
+              keyboardShouldPersistTaps="always"
+              onPress={
+                isPromoCodeApplied
+                  ? this.handleRemovePromoSubmit
+                  : this.handlePromoSubmit
+              }
               style={checkoutStyles.buttonSecondary}
             >
-              <Text style={styles.buttonSecondaryText}>Apply Promo Code</Text>
+              <Text style={styles.buttonSecondaryText}>
+                {isPromoCodeApplied ? 'Remove Promo Code' : 'Apply Promo Code'}
+              </Text>
             </TouchableHighlight>
           </View>
         </View>
