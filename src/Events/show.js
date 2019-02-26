@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, Modal, ActivityIndicator, TouchableHighlight, KeyboardAvoidingView} from 'react-native'
+import {ScrollView, Text, View, Image, TouchableHighlight, KeyboardAvoidingView} from 'react-native'
 import {WebBrowser} from 'expo';
 import {NavigationActions, StackActions, NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -10,15 +10,15 @@ import Details from './details'
 import GetTickets from './tickets'
 import PaymentTypes from './payments'
 import Checkout from './checkout'
-import ModalStyles from '../styles/shared/modalStyles'
 import {toDollars} from '../constants/money'
+import {LoadingScreen, SuccessScreen} from '../constants/modals'
 import {server, apiErrorAlert} from '../constants/Server'
 import {min, max, isEmpty, uniq} from 'lodash'
 import {optimizeCloudinaryImage} from '../cloudinary'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
-const modalStyles = ModalStyles.createStyles()
+
 
 /* eslint-disable camelcase, space-before-function-paren */
 function priceRangeString(ticket_types) {
@@ -36,56 +36,6 @@ function priceRangeString(ticket_types) {
   }
 
   return uniq([min(prices), max(prices)]).map((cents) => `$${toDollars(cents, 0)}`).join(' - ')
-}
-
-
-const LoadingScreen = ({toggleModal, modalVisible}) => (
-  <Modal
-    onRequestClose={() => {
-      toggleModal(!modalVisible)
-    }}
-    visible={modalVisible}
-    transparent
-  >
-    <View style={modalStyles.modalContainer}>
-      <View style={styles.flexRowCenter}>
-        <View style={modalStyles.activityIndicator}>
-          <ActivityIndicator size="large" color="#FF20B1" />
-        </View>
-      </View>
-    </View>
-  </Modal>
-)
-
-LoadingScreen.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  modalVisible: PropTypes.bool.isRequired,
-}
-
-const SuccessScreen = ({toggleModal, modalVisible}) => (
-  <Modal
-    onRequestClose={() => {
-      toggleModal(!modalVisible)
-    }}
-    visible={modalVisible}
-    transparent
-  >
-    <View style={modalStyles.modalContainer}>
-      <View style={styles.flexRowCenter}>
-        <View style={modalStyles.activityIndicator}>
-          <Image
-            style={modalStyles.emojiActivityIndicator}
-            source={require('../../assets/emoji-loader.png')}
-          />
-        </View>
-      </View>
-    </View>
-  </Modal>
-)
-
-SuccessScreen.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  modalVisible: PropTypes.bool.isRequired,
 }
 
 function CheckoutButton({onCheckout, disabled, busy}) {
@@ -218,7 +168,7 @@ export default class EventShow extends Component {
       const {data: {ticket_type}} = response
 
       if (!this.store.ticketTypeIds.includes(ticket_type.id)) {
-        alert ('This Promo Code is not valid for this event')
+        alert('This Promo Code is not valid for this event')
         return
       }
 
@@ -464,7 +414,7 @@ export default class EventShow extends Component {
           source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
         />
         <KeyboardAvoidingView behavior="padding" enabled>
-          <ScrollView ref={c => (this.scrollView = c)} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+          <ScrollView ref={ref => (this.scrollView = ref)} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
             {this.showScreen}
           </ScrollView>
         </KeyboardAvoidingView>
