@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, TouchableHighlight, Image, TextInput} from 'react-native'
+import {MaterialIcons} from '@expo/vector-icons'
 import {Ticket} from './event_ticket'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
@@ -80,16 +81,26 @@ export default class GetTickets extends Component {
         </View>
         {this.ticketList}
         <View style={styles.container}>
-          <Text style={[checkoutStyles.ticketHeader, styles.paddingBottom]}>
+          <Text style={checkoutStyles.ticketHeader}>
             Promo Code
           </Text>
           <TextInput
             editable={!isPromoCodeApplied}
             keyboardShouldPersistTaps="always"
-            style={formStyles.input}
+            style={[formStyles.input, styles.marginTop]}
             placeholder="Enter a Promo Code"
             onChangeText={autotrim(promoCode => this.setState({promoCode}))}
           />
+
+          <View style={[checkoutStyles.rowContainer, styles.marginBottom]}>
+            <View style={[styles.flexRowSpaceBetween, styles.flex1]}>
+              <Text style={checkoutStyles.ticketSubHeaderPink}>
+                ABCDEF
+              </Text>
+              <MaterialIcons style={checkoutStyles.iconCheck} name="check-circle" />
+            </View>
+          </View>
+
           <View style={styles.buttonContainer}>
             <TouchableHighlight
               underlayColor="rgba(255, 34, 178, 0.2)"
