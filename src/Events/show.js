@@ -168,7 +168,7 @@ export default class EventShow extends Component {
       const {data: {ticket_type}} = response
       const {event} = this.state
 
-      if (!this.store.ticketTypeIds.includes(ticket_type.id)) {
+      if (!this.store.ticketTypeIds.includes(ticket_type.id) && ticket_type.event_id !== event.id) {
         alert('This Promo Code is not valid for this event')
         return
       }
