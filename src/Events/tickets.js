@@ -28,6 +28,8 @@ function NoAvailableTickets() {
   )
 }
 
+function PromoCodeInput({isPromoCodeApplied}) {}
+
 export default class GetTickets extends Component {
   static propTypes = {
     onTicketSelection: PropTypes.func,
@@ -54,7 +56,7 @@ export default class GetTickets extends Component {
   }
 
   get ticketList() {
-    return this.props.ticketsToDisplay.map(ticket => (
+    return this.props.ticketsToDisplay.map((ticket) => (
       <Ticket
         key={ticket.id}
         ticket={ticket}
@@ -66,58 +68,67 @@ export default class GetTickets extends Component {
   promoCodeApplied() {
     return (
       this.props.ticketsToDisplay.findIndex(
-        ticket => ticket.redemption_code !== null
+        (ticket) => ticket.redemption_code !== null
       ) >= 0
     )
   }
 
-  get hasTicketDisplay() {
+  get promoCode() {
     const isPromoCodeApplied = this.promoCodeApplied()
 
+    return (
+      <View style={styles.container}>
+        <Text style={checkoutStyles.ticketHeader}>Promo Code</Text>
+        {isPromoCodeApplied ? (
+          <View style={[checkoutStyles.rowContainer, styles.marginBottom]}>
+            <View style={[styles.flexRowSpaceBetween, styles.flex1]}>
+              <Text style={checkoutStyles.ticketSubHeaderPink}>
+                {this.state.promoCode}
+              </Text>
+              <MaterialIcons
+                style={checkoutStyles.iconCheck}
+                name="check-circle"
+              />
+            </View>
+          </View>
+        ) : (
+          <TextInput
+            editable={!isPromoCodeApplied}
+            keyboardShouldPersistTaps="always"
+            style={[formStyles.input, styles.marginTop]}
+            placeholder="Enter a Promo Code"
+            onChangeText={autotrim((promoCode) => this.setState({promoCode}))}
+          />
+        )}
+
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight
+            underlayColor="rgba(255, 34, 178, 0.2)"
+            keyboardShouldPersistTaps="always"
+            onPress={
+              isPromoCodeApplied ?
+                this.handleRemovePromoSubmit :
+                this.handlePromoSubmit
+            }
+            style={checkoutStyles.buttonSecondary}
+          >
+            <Text style={styles.buttonSecondaryText}>
+              {isPromoCodeApplied ? 'Remove Promo Code' : 'Apply Promo Code'}
+            </Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    )
+  }
+
+  get hasTicketDisplay() {
     return (
       <View>
         <View style={checkoutStyles.headerWrapper}>
           <Text style={checkoutStyles.header}>Ticket Type</Text>
         </View>
         {this.ticketList}
-        <View style={styles.container}>
-          <Text style={checkoutStyles.ticketHeader}>
-            Promo Code
-          </Text>
-          <TextInput
-            editable={!isPromoCodeApplied}
-            keyboardShouldPersistTaps="always"
-            style={[formStyles.input, styles.marginTop]}
-            placeholder="Enter a Promo Code"
-            onChangeText={autotrim(promoCode => this.setState({promoCode}))}
-          />
-
-          <View style={[checkoutStyles.rowContainer, styles.marginBottom]}>
-            <View style={[styles.flexRowSpaceBetween, styles.flex1]}>
-              <Text style={checkoutStyles.ticketSubHeaderPink}>
-                ABCDEF
-              </Text>
-              <MaterialIcons style={checkoutStyles.iconCheck} name="check-circle" />
-            </View>
-          </View>
-
-          <View style={styles.buttonContainer}>
-            <TouchableHighlight
-              underlayColor="rgba(255, 34, 178, 0.2)"
-              keyboardShouldPersistTaps="always"
-              onPress={
-                isPromoCodeApplied
-                  ? this.handleRemovePromoSubmit
-                  : this.handlePromoSubmit
-              }
-              style={checkoutStyles.buttonSecondary}
-            >
-              <Text style={styles.buttonSecondaryText}>
-                {isPromoCodeApplied ? 'Remove Promo Code' : 'Apply Promo Code'}
-              </Text>
-            </TouchableHighlight>
-          </View>
-        </View>
+        {this.promoCode}
       </View>
     )
   }

@@ -7,11 +7,20 @@
     "slug": "big-neon-mobile",
     "orientation": "portrait",
     "ios": {
-      "bundleIdentifier": "com.bigneon.mobile"
+      "bundleIdentifier": "com.bigneon.mobile",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.bigneon.mobile",
-      "versionCode": 27
+      "versionCode": 27,
+      "permissions": [
+        "CAMERA",
+        "CAMERA_ROLL",
+        "NOTIFICATIONS",
+        "LOCATION"
+      ]
     }
   }
 }

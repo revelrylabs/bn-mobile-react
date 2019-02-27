@@ -56,7 +56,7 @@ export default class SignUp extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={loginStyles.container} behavior="padding" enabled>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'handled'}>
           <View>
             <Text style={loginStyles.smallText}>
               Secure your experiences
