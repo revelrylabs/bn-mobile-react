@@ -4,6 +4,7 @@ import {View, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableHighli
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {Feather} from '@expo/vector-icons'
 import {LinearGradient} from 'expo'
+import {LoadingScreen} from '../constants/modals'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
@@ -44,6 +45,7 @@ export default class SignUpNext extends Component {
       profile_pic_url: null,
       first_name: null,
       last_name: null,
+      showModal: false,
     }
   }
 
@@ -57,6 +59,10 @@ export default class SignUpNext extends Component {
 
   get profilePicUrl() {
     return this.state.profile_pic_url || this.currentUser.profile_pic_url
+  }
+
+  toggleLoadingModal = ({showModal}) => {
+    this.setState({showModal})
   }
 
   async _buildProfileChanges() {
@@ -83,9 +89,16 @@ export default class SignUpNext extends Component {
 
   updateProfile = async () => {
     const {screenProps: {auth}, navigation: {navigate}} = this.props
-    const profileChanges = await this._buildProfileChanges()
 
-    await auth.updateCurrentUser(profileChanges)
+    this.setState({showModal: true})
+    const profileChanges = await this._buildProfileChanges()
+    const results = await auth.updateCurrentUser(profileChanges, () => this.setState({showModal: false}))
+
+    // Don't double-fire the setState
+    if (results) {
+      this.setState({showModal: false})
+    }
+
     navigate('AuthLoading')
   }
 
@@ -98,7 +111,8 @@ export default class SignUpNext extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={loginStyles.container} behavior="padding" enabled>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <LoadingScreen toggleModal={this.toggleLoadingModal} modalVisible={this.state.showModal} />
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'handled'}>
           <View>
             <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
               Make your tickets... yours.

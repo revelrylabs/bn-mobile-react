@@ -1,5 +1,16 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TouchableHighlight, TextInput, Image, FlatList, StyleSheet} from 'react-native'
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableHighlight,
+  TextInput,
+  Image,
+  FlatList,
+  StyleSheet,
+  Dimensions,
+  Animated,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {price, username, usernameLastFirst} from '../string'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -7,13 +18,16 @@ import DoormanStyles from '../styles/account/doormanStyles'
 import AccountStyles from '../styles/account/accountStyles'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
+import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
+import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
+const SCREEN_WIDTH = Dimensions.get('window').width
 
 function shouldAllowCheckIn({status, redeem_key}) {
   return status === 'Purchased' && redeem_key
@@ -29,70 +43,145 @@ function BusyState() {
 
 function guestStatusBadgeStyle(status) {
   switch (status) {
-  case 'Purchased':
-    return doormanStyles.ticketPurchasedBadgeWrapper
-  default:
-    null
+    case 'Purchased':
+      return doormanStyles.ticketPurchasedBadgeWrapper
+    default:
+      null
   }
 }
 
 function TicketStatusBadge({status, style}) {
-  return (
-    <Text style={doormanStyles.ticketStatusBadge}>{status}</Text>
-  )
+  return <Text style={doormanStyles.ticketStatusBadge}>{status}</Text>
 }
 
 function GuestRowContent({guest}) {
   return (
     <View>
       <View style={styles.flexRowSpaceBetween}>
-        <Text numberOfLines={1} style={styles.headerSecondary}>{usernameLastFirst(guest)}</Text>
-        <View style={[doormanStyles.ticketStatusBadgeWrapper, guestStatusBadgeStyle(guest.status)]}>
+        <Text numberOfLines={1} style={styles.headerSecondary}>
+          {usernameLastFirst(guest)}
+        </Text>
+        <View
+          style={[
+            doormanStyles.ticketStatusBadgeWrapper,
+            guestStatusBadgeStyle(guest.status),
+          ]}
+        >
           <TicketStatusBadge status={guest.status} />
         </View>
       </View>
-      <Text style={doormanStyles.bodyText}>{price(guest.price_in_cents)} | {guest.ticket_type}</Text>
+      <Text style={doormanStyles.bodyText}>
+        {price(guest.price_in_cents)} | {guest.ticket_type}
+      </Text>
     </View>
   )
 }
 
 function GuestTicketCard({guest, onSelect}) {
   return (
-    <View style={doormanStyles.rowContainer}>
-      <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => onSelect(guest)}>
-        <View style={doormanStyles.row}>
-          <GuestRowContent guest={guest} />
-          <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
-        </View>
-      </TouchableHighlight>
-    </View>
+    <TouchableHighlight
+      style={doormanStyles.rowContainer}
+      underlayColor="rgba(0, 0, 0, 0)"
+      onPress={() => onSelect(guest)}
+    >
+      <View style={doormanStyles.row}>
+        <GuestRowContent guest={guest} />
+        <Icon style={accountStyles.accountArrow} name="keyboard-arrow-right" />
+      </View>
+    </TouchableHighlight>
   )
 }
 
 function EmptyState() {
   return (
-    <Text>No guests found.</Text>
+    <View style={ticketStyles.emptyStateContainer}>
+      <Image style={ticketStyles.emptyStateIcon} source={emptyState} />
+      <Text style={ticketStyles.emptyStateText}>No guests found.</Text>
+    </View>
   )
 }
 
-function GuestList({guests, onSelect, ...rest}) {
-  if (guests.length === 0) {
-    return <EmptyState />
+function GuestTicketCardUnderlay({guest}) {
+  if (canCheckOut(guest)) {
+    return (
+      <View
+        style={[
+          eventDetailsStyles.checkInSwipeContainer,
+          styles.marginLeftTiny,
+        ]}
+      >
+        <Text style={eventDetailsStyles.checkInSwipeText}>
+          Complete Check-In
+        </Text>
+      </View>
+    )
   }
 
   return (
-    <FlatList
-      {...rest}
-      data={guests}
-      keyExtractor={({id}) => id}
-      renderItem={({item}) => (
-        <GuestTicketCard
-          guest={item}
-          onSelect={onSelect}
-        />
-      )}
-    />
+    <View
+      style={[
+        eventDetailsStyles.disabledCheckInSwipeContainer,
+        styles.marginLeftTiny,
+      ]}
+    >
+      <Text style={eventDetailsStyles.disabledCheckInSwipeText}>
+        {checkInErrorText(guest)}
+      </Text>
+    </View>
   )
+}
+
+function canCheckOut(guest) {
+  return guest.redeem_key && guest.status === 'Purchased'
+}
+
+function checkInErrorText(guest) {
+  if (!guest.redeem_key) {
+    return 'Check-in Disabled'
+  }
+
+  return 'Already checked-in'
+}
+
+class GuestList extends Component {
+  onRowOpen = async (rowKey, rowMap, toValue) => {
+    const guest = this.props.guests.find(item => item.id === rowKey)
+
+    if (canCheckOut(guest) && toValue === SCREEN_WIDTH) {
+      try {
+        await this.props.onCheckIn(guest)
+      } catch (error) {
+        apiErrorAlert(error)
+      }
+    }
+
+    const row = rowMap[rowKey]
+    row.closeRow()
+  }
+
+  render() {
+    const {guests, onSelect, onCheckIn, ...rest} = this.props
+
+    if (guests.length === 0) {
+      return <EmptyState />
+    }
+
+    return (
+      <SwipeListView
+        {...rest}
+        useFlatList
+        data={guests}
+        keyExtractor={({id}) => id}
+        onRowOpen={this.onRowOpen}
+        renderItem={({item}) => (
+          <SwipeRow disableLeftSwipe leftOpenValue={SCREEN_WIDTH}>
+            <GuestTicketCardUnderlay guest={item} />
+            <GuestTicketCard guest={item} onSelect={onSelect} />
+          </SwipeRow>
+        )}
+      />
+    )
+  }
 }
 
 function GuestToCheckIn({guest, onCancel, onCheckIn}) {
@@ -108,14 +197,21 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
             style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
             onPress={() => onCancel(guest)}
           >
-            <Text style={eventDetailsStyles.buttonRoundedText}>Back to List</Text>
+            <Text style={eventDetailsStyles.buttonRoundedText}>
+              Back to List
+            </Text>
           </TouchableHighlight>
           {shouldAllowCheckIn(guest) ? (
             <TouchableHighlight
-              style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
+              style={[
+                eventDetailsStyles.buttonRoundedActive,
+                styles.marginLeftTiny,
+              ]}
               onPress={() => onCheckIn(guest)}
             >
-              <Text style={eventDetailsStyles.buttonRoundedActiveText}>Complete Check-In</Text>
+              <Text style={eventDetailsStyles.buttonRoundedActiveText}>
+                Complete Check-In
+              </Text>
             </TouchableHighlight>
           ) : null}
         </View>
@@ -125,15 +221,12 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
           )}
         </View>
       </View>
-
     </View>
   )
 }
 
 function SearchBox({textInput}) {
-  return (
-    <TextInput {...textInput} />
-  )
+  return <TextInput {...textInput} />
 }
 
 export default class ManualCheckin extends Component {
@@ -145,11 +238,11 @@ export default class ManualCheckin extends Component {
     this.searchGuestList()
   }
 
-  searchGuestList = (query) => {
+  searchGuestList = query => {
     this.props.searchGuestList(query)
   }
 
-  selectGuest = (selectedGuest) => {
+  selectGuest = selectedGuest => {
     this.setState({selectedGuest})
   }
 
@@ -157,7 +250,7 @@ export default class ManualCheckin extends Component {
     this.selectGuest(null)
   }
 
-  checkInGuest = async (guest) => {
+  checkInGuest = async guest => {
     const {event_id, id: ticket_id, redeem_key} = guest
 
     try {
@@ -166,7 +259,7 @@ export default class ManualCheckin extends Component {
     } catch (error) {
       apiErrorAlert(error)
     } finally {
-      this.searchGuestList()
+      this.searchGuestList(this.props.guestListQuery) // refresh list w/ new data
       this.unselectGuest()
     }
   }
@@ -177,7 +270,7 @@ export default class ManualCheckin extends Component {
 
     if (selectedGuest !== null) {
       return (
-        <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
+        <View style={doormanStyles.mainBody}>
           <View style={doormanStyles.mainBodyContent}>
             <GuestToCheckIn
               guest={selectedGuest}
@@ -192,32 +285,29 @@ export default class ManualCheckin extends Component {
     return (
       <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
         <View style={[doormanStyles.mainBodyContent]}>
-
           <View style={styles.container}>
-            <Text style={doormanStyles.sectionHeader}>All Guests</Text>
+            <Text style={doormanStyles.sectionHeader}>Guest List</Text>
             <View style={doormanStyles.searchContainer}>
               <SearchBox
                 textInput={{
                   defaultValue: guestListQuery,
                   onChangeText: this.searchGuestList,
-                  placeholder: "Search for guests",
+                  placeholder: 'Search for guests',
                 }}
                 style={doormanStyles.searchInput}
               />
             </View>
           </View>
 
-          {isFetchingGuests && (
-            <BusyState />
-          )}
+          {isFetchingGuests && <BusyState />}
 
           <GuestList
             style={{flex: 1}}
             guests={guests}
             onSelect={this.selectGuest}
+            onCheckIn={this.checkInGuest}
           />
           <View style={doormanStyles.spacer} />
-
         </View>
       </View>
     )

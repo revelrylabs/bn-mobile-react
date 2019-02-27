@@ -32,26 +32,18 @@ export const bodyFontSizeSmall = 15
 const DoormanStyles = {
   // MAIN BODY STYLES
   mainBody: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     paddingLeft: 0,
     paddingRight: 0,
     paddingHorizontal: 0,
-    minHeight: '100%',
-    marginTop: 240,
-  },
-  checkoutMainBody: {
-    marginTop: 100,
   },
   mainBodyContent: {
     backgroundColor: 'white',
-    borderTopRightRadius: 30/2,
-    borderTopLeftRadius: 30/2,
-    height: fullHeight,
-    paddingTop: globalPaddingSmall,
     minHeight: '100%',
+    paddingTop: globalPaddingSmall,
   },
   spacer: {
-    height: 200,
+    height: 20,
   },
 
   // SEARCH STYLES

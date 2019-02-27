@@ -51,6 +51,14 @@ We're using [Expo Build releasing through Fastlane](https://blog.expo.io/automat
 
 #### Set up your environment for deployment
 
+The `expo` CLI should be installed if you've run `npm install`. Login to epo using the BigNeon credentials: 
+
+```
+$ expo login
+username/email: bigneon
+password: <message brad or zach>
+```
+
 In your `.bash_profile` (or whichever file hosts your bash/zsh/etc config),
 2
 ```

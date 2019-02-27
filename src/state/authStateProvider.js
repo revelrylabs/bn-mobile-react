@@ -68,7 +68,7 @@ class AuthContainer extends Container {
     }
   }
 
-  updateCurrentUser = async (params) => {
+  updateCurrentUser = async (params, onError = () => {}) => {
     try {
 
       const {data} = await server.users.update(params)
@@ -76,7 +76,11 @@ class AuthContainer extends Container {
       await this.setState({currentUser: data})
       return data
     } catch (error) {
-      apiErrorAlert(error, 'There was an error updating your profile.')
+      onError()
+      setTimeout(() => {
+        apiErrorAlert(error, 'There was an error updating your profile.')
+      }, 600)
+      return false
     }
   }
 
