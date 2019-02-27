@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
-import {NavigationEvents} from 'react-navigation';
+import React, {Component} from 'react'
+import {Text, View, Image, ScrollView, TouchableHighlight} from 'react-native'
+import {NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -20,22 +20,31 @@ export default class EventManager extends Component {
   // that ticket presented is for this event
   // only ticket redeem datapoints atm are ticket_id and redeem_key, user could
   // presumably use stale tickets that they never redeemed to enter new events
-  scanForEvent = async (event) => {
-    const {navigation: {navigate}, screenProps: {eventManager}} = this.props;
+  scanForEvent = async(event) => {
+    const {
+      navigation: {navigate},
+      screenProps: {eventManager},
+    } = this.props
 
-    await eventManager.scanForEvent(event);
-    navigate('EventScanner');
+    await eventManager.scanForEvent(event)
+    navigate('EventScanner')
   }
 
   loadEvents = () => {
-    const {screenProps: {eventManager}} = this.props;
+    const {
+      screenProps: {eventManager},
+    } = this.props
 
-    eventManager.getEvents();
+    eventManager.getEvents()
   }
 
   eventCard = (event) => {
     return (
-      <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.scanForEvent(event)} key={event.id}>
+      <TouchableHighlight
+        underlayColor="rgba(0, 0, 0, 0)"
+        onPress={() => this.scanForEvent(event)}
+        key={event.id}
+      >
         <View style={eventManagerStyles.cardContainer}>
           <View style={eventManagerStyles.cardImageWrapper}>
             <Image
@@ -44,24 +53,32 @@ export default class EventManager extends Component {
             />
           </View>
           <View style={eventManagerStyles.textWrapper}>
-            <Text numberOfLines={1} style={styles.headerSecondary}>{event.name}</Text>
+            <Text numberOfLines={1} style={styles.headerSecondary}>
+              {event.name}
+            </Text>
             {/* TODO: API endpoint does not contain venue info or localized times */}
             {/* <Text numberOfLines={1} style={eventManagerStyles.cardSubHeader}>{event.venue.name} &bull; {event.scheduleText}</Text> */}
           </View>
-          <Icon style={[accountStyles.accountArrow, styles.paddingTop]} name="keyboard-arrow-right" />
+          <Icon
+            style={[accountStyles.accountArrow, styles.paddingTop]}
+            name="keyboard-arrow-right"
+          />
         </View>
       </TouchableHighlight>
     )
   }
 
   render() {
-    const {screenProps: {eventManager}} = this.props;
+    const {
+      screenProps: {eventManager},
+    } = this.props
 
     return (
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.containerDark}>
-        <NavigationEvents
-          onWillFocus={this.loadEvents}
-        />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.containerDark}
+      >
+        <NavigationEvents onWillFocus={this.loadEvents} />
         <View style={[styles.paddingVerticalMedium, styles.paddingHorizontal]}>
           {eventManager.events.map(this.eventCard)}
           {/* TODO: figure out how to differentiate live vs upcoming and perhaps scope events relevant to the doorman? */}
@@ -69,6 +86,6 @@ export default class EventManager extends Component {
           {/* <Text style={[eventManagerStyles.sectionHeader, styles.paddingTopSmall]}>Upcoming</Text> */}
         </View>
       </ScrollView>
-    );
+    )
   }
 }
