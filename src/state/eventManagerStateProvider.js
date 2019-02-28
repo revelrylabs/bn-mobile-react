@@ -4,7 +4,7 @@ import {server, apiErrorAlert, defaultEventSort} from '../constants/Server'
 /* eslint-disable camelcase,space-before-function-paren */
 export class EventManagerContainer extends Container {
   constructor(props = {}) {
-    super(props);
+    super(props)
 
     this.state = {
       events: [],
@@ -22,7 +22,6 @@ export class EventManagerContainer extends Container {
   // TODO: filter by live vs upcoming?
   getEvents = async () => {
     try {
-
       const {data} = await server.events.checkins(defaultEventSort)
 
       this.setState({
@@ -36,17 +35,26 @@ export class EventManagerContainer extends Container {
   }
 
   scanForEvent = async (event) => {
-    this.setState({eventToScan: event, guests: []});
+    this.setState({eventToScan: event, guests: []})
   }
 
   searchGuestList = async (guestListQuery = '') => {
     await this.setState({isFetchingGuests: true, guestListQuery})
 
     const {id} = this.state.eventToScan
-    const {data: {data: guests, paging: _paging}} = await server.events.guests.index({event_id: id, query: guestListQuery})
+    const {
+      data: {data: guests, paging: _paging},
+    } = await server.events.guests.index({event_id: id, query: guestListQuery})
+
+    console.log(await server.events.users.index({event_id: id}))
+
+    console.log(guests)
 
     // Still fetching the same thing? (or subsequently fetched something else?)
-    if (this.state.eventToScan.id === id && this.state.guestListQuery === guestListQuery) {
+    if (
+      this.state.eventToScan.id === id &&
+      this.state.guestListQuery === guestListQuery
+    ) {
       await this.setState({guests, isFetchingGuests: false})
     }
   }
