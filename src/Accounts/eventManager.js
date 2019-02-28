@@ -27,7 +27,7 @@ export default class EventManager extends Component {
     } = this.props
 
     await eventManager.scanForEvent(event)
-    navigate('EventScanner')
+    navigate('EventView')
   }
 
   loadEvents = () => {

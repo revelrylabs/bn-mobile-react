@@ -8,6 +8,7 @@ import OrderHistory from './orderHistory'
 import SignedOut from './signedOut'
 import EventManager from './eventManager'
 import EventScanner from './eventScanner'
+import EventView from './eventView'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import GuestList from './guest-list-screen'
@@ -93,9 +94,11 @@ const ROUTES = {
       defaultNavOptions('Manage Events', navigation),
   },
   EventView: {
-    screen: EventManager,
-    navigationOptions: ({navigation}) =>
-      defaultNavOptions('View Event', navigation),
+    screen: EventView,
+    navigationOptions: navOptions({
+      title: 'View Event',
+      back: {route: 'ManageEvents', text: 'Manage Events'},
+    }),
   },
   EventScanner: {
     screen: EventScanner,
