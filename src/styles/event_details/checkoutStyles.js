@@ -69,7 +69,6 @@ const CheckoutStyles = {
     justifyContent: 'space-between',
     paddingHorizontal: globalPadding,
     paddingVertical: globalPadding,
-    width: fullWidth,
   },
   rowContainerActive: {
     alignItems: 'center',

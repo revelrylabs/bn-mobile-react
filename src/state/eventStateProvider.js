@@ -16,12 +16,12 @@ const _SAMPLE_AVATARS = [
 
 function ticketFilter({status, ticket_pricing}) {
   switch (status) {
-  case 'SoldOut':
-    return true
-  case 'Published':
-    return !!ticket_pricing
-  default:
-    return false
+    case 'SoldOut':
+      return true
+    case 'Published':
+      return !!ticket_pricing
+    default:
+      return false
   }
 }
 
@@ -38,9 +38,8 @@ function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
   return b - a
 }
 class EventsContainer extends Container {
-
   constructor(props = {}) {
-    super(props);
+    super(props)
 
     this.state = {
       events: [],
@@ -51,7 +50,7 @@ class EventsContainer extends Container {
       locations: [],
       selectedLocationId: null,
       selectedEvent: {},
-    };
+    }
   }
 
   get eventsById() {
@@ -79,8 +78,9 @@ class EventsContainer extends Container {
 
     ticketTypes = map(ticketTypesById, (ticket, _id) => ticket)
 
-
-    return ticketTypes ? ticketTypes.filter(ticketFilter).sort(ticketComparator) : []
+    return ticketTypes
+      ? ticketTypes.filter(ticketFilter).sort(ticketComparator)
+      : []
   }
 
   locationsPromise = null
@@ -92,7 +92,11 @@ class EventsContainer extends Container {
       return await this.locationsPromise
     }
     // Don't fetch more often than is sane.
-    if (this.locationsLastFetched && this.locationsLastFetched.plus({minutes: LOCATIONS_FETCH_MIN_MINUTES}) < DateTime.local()) {
+    if (
+      this.locationsLastFetched &&
+      this.locationsLastFetched.plus({minutes: LOCATIONS_FETCH_MIN_MINUTES}) <
+        DateTime.local()
+    ) {
       return
     }
     try {
@@ -107,8 +111,9 @@ class EventsContainer extends Container {
 
   _fetchLocations = async () => {
     try {
-
-      const {data: {data: locations}} = await server.regions.index()
+      const {
+        data: {data: locations},
+      } = await server.regions.index()
 
       await this.setState({locations})
     } catch (error) {
@@ -124,7 +129,7 @@ class EventsContainer extends Container {
       ])
       const eventsById = {}
 
-      data.data.forEach((event) => {
+      data.data.forEach(event => {
         if (!event.promo_image_url) {
           event.promo_image_url = `${baseURL}/images/event-placeholder.png`
         }
@@ -146,7 +151,7 @@ class EventsContainer extends Container {
     this.setState({selectedEvent: {}})
   }
 
-  getEvent = async (id) => {
+  getEvent = async id => {
     try {
       const {data} = await server.events.read({id})
       const ticketTypesById = {}
@@ -155,7 +160,7 @@ class EventsContainer extends Container {
         data.promo_image_url = `${baseURL}/images/event-placeholder.png`
       }
 
-      data.ticket_types.forEach((ttype) => {
+      data.ticket_types.forEach(ttype => {
         ticketTypesById[ttype.id] = ttype
       })
 
@@ -197,9 +202,6 @@ class EventsContainer extends Container {
     ticketTypesById[ticket_type.id] = ticket_type
     await this.setState({ticketTypesById})
   }
-
 }
 
-export {
-  EventsContainer,
-}
+export {EventsContainer}
