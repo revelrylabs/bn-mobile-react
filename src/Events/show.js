@@ -194,7 +194,7 @@ export default class EventShow extends Component {
     const {event, currentScreen} = this.state
     const {
       screenProps: {
-        store: {toggleInterest, ticketsToDisplay},
+        store: {toggleInterest, ticketsToDisplay, eventTickets},
         cart: {payment},
         user: {access_token, refresh_token},
       },
@@ -224,6 +224,7 @@ export default class EventShow extends Component {
         <Checkout
           cart={this.props.screenProps.cart}
           event={event}
+          eventTickets={eventTickets}
           changeScreen={this.changeScreen}
         />
       )
