@@ -65,6 +65,10 @@ class EventsContainer extends Container {
     return map(this.ticketTypesById, (_ticket, id) => id)
   }
 
+  get eventTickets() {
+    return map(this.ticketTypesById, (ticket, _id) => ticket)
+  }
+
   get selectedEvent() {
     return this.state.selectedEvent
   }

@@ -27,6 +27,7 @@ export default class Checkout extends Component {
     changeScreen: PropTypes.func,
     event: PropTypes.object,
     cart: PropTypes.object,
+    eventTickets: PropTypes.array,
   }
 
   createQuantityButton(diff, icon) {
@@ -50,7 +51,7 @@ export default class Checkout extends Component {
   }
 
   get ticketType() {
-    return this.props.event.ticket_types.find(({id}) => id === this.props.cart.selectedTicket.ticket_type_id)
+    return this.props.eventTickets.find(({id}) => id === this.props.cart.selectedTicket.ticket_type_id)
   }
 
   get paymentSelected() {

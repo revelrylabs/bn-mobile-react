@@ -190,8 +190,9 @@ export default class EventShow extends Component {
       const {
         data: {ticket_type},
       } = response
+      const {event} = this.state
 
-      if (!this.store.ticketTypeIds.includes(ticket_type.id)) {
+      if (!this.store.ticketTypeIds.includes(ticket_type.id) && ticket_type.event_id !== event.id) {
         alert('This Promo Code is not valid for this event')
         return
       }
@@ -233,7 +234,7 @@ export default class EventShow extends Component {
     const {event, currentScreen} = this.state
     const {
       screenProps: {
-        store: {toggleInterest, ticketsToDisplay},
+        store: {toggleInterest, ticketsToDisplay, eventTickets},
         cart: {payment},
         user: {access_token, refresh_token},
       },
@@ -264,6 +265,7 @@ export default class EventShow extends Component {
           <Checkout
             cart={this.props.screenProps.cart}
             event={event}
+            eventTickets={eventTickets}
             changeScreen={this.changeScreen}
           />
         )
