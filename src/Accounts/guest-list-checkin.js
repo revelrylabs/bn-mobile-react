@@ -174,7 +174,7 @@ class GuestList extends Component {
         keyExtractor={({id}) => id}
         onRowOpen={this.onRowOpen}
         renderItem={({item}) => (
-          <SwipeRow disableLeftSwipe leftOpenValue={SCREEN_WIDTH}>
+          <SwipeRow disableLeftSwipe swipeToOpenPercent={40} leftOpenValue={SCREEN_WIDTH}>
             <GuestTicketCardUnderlay guest={item} />
             <GuestTicketCard guest={item} onSelect={onSelect} />
           </SwipeRow>
