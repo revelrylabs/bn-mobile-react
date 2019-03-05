@@ -5,7 +5,7 @@ import {AsyncStorage} from 'react-native'
 // import mocker from './mocker'
 import {apiURL, timeout} from './config'
 import Base64 from './base64'
-
+import { Constants } from 'expo';
 
 const DEFAULT_ERROR_MSG =  'There was a problem.'
 
@@ -48,7 +48,17 @@ export async function retrieveTokens() {
   return {userToken: user, refreshToken: refresh}
 }
 
-export const bigneonServer = new Bigneon.Server({prefix: apiURL, timeout: timeout})// , {}, mocker)
+function getDeviceHeaders(){
+  const headers = {
+    'x-bn-platform-name': (Constants.platform.ios) ? 'ios': (Constants.platform.android) ? 'android' : 'unknown',
+    'x-bn-device-model-year': (Constants.platform.ios) ? Constants.platform.ios.model : Constants.deviceYearClass,
+    'x-bn-app-build': (Constants.platform.ios) ? Constants.platform.ios.buildNumber : (Constants.platform.android) ? Constants.platform.android.versionCode : "unknown",
+    'x-bn-install-id': Constants.installationId
+  }
+  return headers;
+}
+
+export const bigneonServer = new Bigneon.Server({prefix: apiURL, timeout: timeout}, { headers: getDeviceHeaders()})// , {}, mocker)
 
 function parseJwt(token) {
   const base64Url = token.split('.')[1];
