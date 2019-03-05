@@ -11,6 +11,7 @@ import {TicketsContainer} from './src/state/ticketStateProvider'
 import {CartContainer} from './src/state/cartStateProvider'
 import {AuthContainer} from './src/state/authStateProvider'
 import {analyticsInit} from './src/constants/analytics';
+import LottieView from 'lottie-react-native';
 
 const CONTAINERS = {}
 
@@ -27,11 +28,6 @@ addContainer('auth', AuthContainer)
 const CONTAINERS_TO_INJECT = Object.keys(CONTAINERS).map((key) => CONTAINERS[key])
 
 const styles = SharedStyles.createStyles()
-const cacheSplashResourcesAsync = async () => { // eslint-disable-line space-before-function-paren
-  const video = require('./splash.mp4')
-
-  return Asset.fromModule(video).downloadAsync()
-}
 
 export default class App extends Component {
   constructor() {
@@ -67,7 +63,7 @@ export default class App extends Component {
     if (!this.state.isSplashReady) {
       return (
         <AppLoading
-          startAsync={cacheSplashResourcesAsync}
+          startAsync={this._cacheResourcesAsync}
           onFinish={() => this.setState({isSplashReady: true})}
           onError={console.warn} // eslint-disable-line no-console
           autoHideSplash={false}
@@ -78,12 +74,10 @@ export default class App extends Component {
     if (!this.state.isAppReady || !this.state.isSplashDone) {
       return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Video
-            style={styles.splashVideo}
-            source={require('./splash.mp4')}
-            onLoad={this._cacheResourcesAsync}
-            resizeMode="cover"
-            shouldPlay
+           <LottieView
+            source={require('./assets/heart-animation.json')}
+            autoPlay
+            loop={false}
           />
         </View>
       );
