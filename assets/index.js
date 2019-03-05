@@ -8,7 +8,6 @@ const IMAGES = [
   require('./heart-large.png'),
   require('./heart-small.png'),
   require('./heart-white.png'),
-  require('./Icon-1024.png'),
   require('./icon-account-active.png'),
   require('./icon-account.png'),
   require('./icon-empty-state.png'),

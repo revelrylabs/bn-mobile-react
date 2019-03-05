@@ -203,7 +203,7 @@ export default class TransferTickets extends Component {
         <QRCodeScanner handleBarCodeScanned={this.handleBarCodeScanned} toggleModal={this.toggleQRModal} modalVisible={showQRModal} />
           <Image
             style={ticketWalletStyles.modalBkgdImage}
-            source={require('../../assets/modal-bkgd.jpg')}
+            source={require('../../assets/account-placeholder-bkgd.png')}
           />
           <View style={ticketWalletStyles.closeModalContainer}>
             <Icon
