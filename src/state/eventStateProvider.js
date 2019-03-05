@@ -3,7 +3,8 @@ import {server, apiErrorAlert, defaultEventSort} from '../constants/Server'
 import {baseURL} from '../constants/config'
 import {DateTime} from 'luxon'
 import {map} from 'lodash'
-
+import {Image} from 'react-native'
+import {optimizeCloudinaryImage} from '../cloudinary'
 const LOCATIONS_FETCH_MIN_MINUTES = 15
 
 /* eslint-disable complexity,space-before-function-paren,camelcase */
@@ -110,9 +111,13 @@ class EventsContainer extends Container {
       } = await server.regions.index()
 
       await this.setState({locations})
-    } catch (error) {
+    } catch (error) { 
       apiErrorAlert(error)
     }
+  }
+
+  _cacheResourcesAsync = async (eventImagePrefetch) => { 
+    Promise.all(eventImagePrefetch)
   }
 
   getEvents = async (_location = null) => {
@@ -122,13 +127,18 @@ class EventsContainer extends Container {
         this.fetchLocations(),
       ])
       const eventsById = {}
+      var imagePrefetch = [];
 
       data.data.forEach(event => {
         if (!event.promo_image_url) {
           event.promo_image_url = `${baseURL}/images/event-placeholder.png`
         }
+        //Add images to the cache
+        imagePrefetch.push(Image.prefetch(optimizeCloudinaryImage(event.promo_image_url)));
+
         eventsById[event.id] = event
       })
+      this._cacheResourcesAsync(imagePrefetch)
 
       this.setState({
         lastUpdate: DateTime.local(),
