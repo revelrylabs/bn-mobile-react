@@ -121,7 +121,7 @@ export default class EventsTicket extends Component {
       <View style={ticketWalletStyles.modalContainer}>
         <Image
           style={ticketWalletStyles.modalBkgdImage}
-          source={require('../../assets/modal-bkgd.jpg')}
+          source={require('../../assets/account-placeholder-bkgd.png')}
         />
         <View>
           <View style={[ticketWalletStyles.closeModalContainer, styles.paddingTop]}>
