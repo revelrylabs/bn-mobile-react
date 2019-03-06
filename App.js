@@ -10,7 +10,11 @@ import {EventsContainer} from './src/state/eventStateProvider'
 import {TicketsContainer} from './src/state/ticketStateProvider'
 import {CartContainer} from './src/state/cartStateProvider'
 import {AuthContainer} from './src/state/authStateProvider'
-import {analyticsInit} from './src/constants/analytics';
+import {analyticsInit} from './src/constants/analytics'
+import Sentry from 'sentry-expo'
+
+//Sentry.enableInExpoDevelopment = true // Remove this once Sentry is correctly setup.
+Sentry.config('https://c59ea227ebbb4306b332c35af91e292f@sentry.io/1407235').install()
 
 const CONTAINERS = {}
 

@@ -19,6 +19,18 @@
       "package": "com.bigneon.mobile",
       "versionCode": 30,
       "permissions": ["CAMERA", "CAMERA_ROLL", "NOTIFICATIONS", "LOCATION"]
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "big-neon-5x",
+            "project": "react-native-mobile-apps",
+            "authToken": "__SECRET_SENTRY_AUTH_TOKEN__"
+          }
+        }
+      ]
     }
   }
 }
