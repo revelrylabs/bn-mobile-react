@@ -7,6 +7,9 @@
     "slug": "big-neon-mobile",
     "orientation": "portrait",
     "ios": {
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Big Neon allows you to select a photo from your library to use for your profile picture"
+      },
       "bundleIdentifier": "com.bigneon.mobile",
       "config": {
         "usesNonExemptEncryption": false
