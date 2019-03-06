@@ -64,7 +64,7 @@ function getStatusMessageConfig(error) {
   if (message === 'missing_redeem_key') {
     return {
       ...SCAN_ALERT_CONFIG.error,
-      text: 'The guest may have pulled their tickets up before the doors were supposed to open. If the doors are open now, have them close and re-open their tickets list.',
+      text: 'Cannot  check-in via scan. Ticket may be a screenshot or need to be reloaded. Or use the Guest List.',
     }
   }
 
