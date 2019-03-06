@@ -17,4 +17,4 @@
     - npm i -g npm@latest
   script:
     - npm ci
-    - npm test -- --ci
+    - npx jest --ci
