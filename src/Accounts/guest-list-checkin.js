@@ -21,6 +21,7 @@ import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
 import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view'
+import {KeyboardDismisser} from '../ui'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
@@ -283,33 +284,35 @@ export default class ManualCheckin extends Component {
     }
 
     return (
-      <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
-        <View style={[doormanStyles.mainBodyContent]}>
-          <View style={styles.container}>
-            <Text style={doormanStyles.sectionHeader}>Guest List</Text>
-            <View style={doormanStyles.searchContainer}>
-              <SearchBox
-                textInput={{
-                  defaultValue: guestListQuery,
-                  onChangeText: this.searchGuestList,
-                  placeholder: 'Search for guests',
-                }}
-                style={doormanStyles.searchInput}
-              />
+      <KeyboardDismisser>
+        <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
+          <View style={[doormanStyles.mainBodyContent]}>
+            <View style={styles.container}>
+              <Text style={doormanStyles.sectionHeader}>Guest List</Text>
+              <View style={doormanStyles.searchContainer}>
+                <SearchBox
+                  textInput={{
+                    defaultValue: guestListQuery,
+                    onChangeText: this.searchGuestList,
+                    placeholder: 'Search for guests',
+                  }}
+                  style={doormanStyles.searchInput}
+                />
+              </View>
             </View>
+
+            {isFetchingGuests && <BusyState />}
+            
+            <GuestList
+              style={{flex: 1}}
+              guests={guests}
+              onSelect={this.selectGuest}
+              onCheckIn={this.checkInGuest}
+            />
+            <View style={doormanStyles.spacer} />
           </View>
-
-          {isFetchingGuests && <BusyState />}
-
-          <GuestList
-            style={{flex: 1}}
-            guests={guests}
-            onSelect={this.selectGuest}
-            onCheckIn={this.checkInGuest}
-          />
-          <View style={doormanStyles.spacer} />
         </View>
-      </View>
+      </KeyboardDismisser>
     )
   }
 }
