@@ -54,15 +54,6 @@ export const globalFontSizeLarger = moderateScale(26)
 export const globalFontSizeLargest = moderateScale(28)
 export const globalFontSizeJumbo = moderateScale(36)
 
-export const headerFontSize = globalFontSizeJumbo
-export const headerSecondaryFontSize = globalFontSizeLarge
-export const sectionHeaderFontSize = globalFontSizeMedium
-export const buttonFontSize = globalFontSize
-export const bodyFontSize = globalFontSizeSmall
-export const subnavFontSize = globalFontSizeSmaller
-export const iconFontSize = globalFontSize
-export const iconCircleFontSize = globalFontSizeLarger
-
 const SharedStyles = {
   // CONTAINERS
   container: {
@@ -173,13 +164,13 @@ const SharedStyles = {
   buttonText: {
     color: white,
     fontFamily: globalFontSemiBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSizeMedium,
     textAlign: 'center',
   },
   buttonSecondaryText: {
     color: primaryColor,
     fontFamily: globalFontRegular,
-    fontSize: iconFontSize,
+    fontSize: globalFontSize,
     textAlign: 'center',
   },
 
@@ -187,27 +178,27 @@ const SharedStyles = {
   header: {
     backgroundColor: 'transparent',
     fontFamily: globalFontBold,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeJumbo,
     color: textColor,
   },
   headerLight: {
     backgroundColor: 'transparent',
     color: white,
     fontFamily: globalFontBold,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeJumbo,
     paddingBottom: globalPadding,
   },
   headerSecondary: {
     backgroundColor: 'transparent',
     fontFamily: globalFontBold,
-    fontSize: headerSecondaryFontSize,
+    fontSize: globalFontSizeLarge,
     color: textColor,
   },
   sectionHeader: {
     backgroundColor: 'transparent',
     color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSizeMedium,
     paddingVertical: globalPadding - globalPaddingTiny,
   },
 
@@ -216,21 +207,21 @@ const SharedStyles = {
     backgroundColor: 'transparent',
     color: textColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingBottom: globalPaddingSmall,
   },
   bodyTextLight: {
     backgroundColor: 'transparent',
     color: white,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingBottom: globalPaddingSmall,
   },
   errorText: {
     backgroundColor: 'transparent',
     color: errorTextColor,
     fontFamily: globalFontItalic,
-    fontSize: bodyFontSize - 2,
+    fontSize: globalFontSizeSmaller,
     marginTop: -5,
     paddingBottom: globalPadding,
   },
@@ -238,7 +229,7 @@ const SharedStyles = {
     backgroundColor: 'transparent',
     color: helpTextColor,
     fontFamily: globalFontItalic,
-    fontSize: bodyFontSize - 2,
+    fontSize: globalFontSizeSmaller,
     marginTop: -5,
     paddingBottom: globalPaddingTiny,
   },
@@ -246,13 +237,13 @@ const SharedStyles = {
     backgroundColor: 'transparent',
     color: primaryColor,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
   },
   linkTextDark: {
     backgroundColor: 'transparent',
     color: textColor,
     fontFamily: globalFontMedium,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
   },
 
   // ICONS
@@ -268,13 +259,13 @@ const SharedStyles = {
   iconLink: {
     backgroundColor: 'transparent',
     color: primaryColor,
-    fontSize: iconFontSize,
+    fontSize: globalFontSize,
     paddingRight: globalPaddingTiny,
   },
   iconLinkText: {
     color: primaryColor,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
   },
   iconLinkCircleContainer: {
     backgroundColor: whiteTransparent,
@@ -285,7 +276,7 @@ const SharedStyles = {
   },
   iconLinkCircle: {
     color: white,
-    fontSize: iconCircleFontSize,
+    fontSize: globalFontSizeLarger,
   },
   iconLinkCircleContainerActive: {
     backgroundColor: white,
@@ -296,7 +287,7 @@ const SharedStyles = {
   },
   iconLinkCircleActive: {
     color: primaryColor,
-    fontSize: iconCircleFontSize,
+    fontSize: globalFontSizeLarger,
   },
   iconImage: {
     width: 30,
@@ -322,7 +313,7 @@ const SharedStyles = {
   subnavHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: subnavFontSize,
+    fontSize: globalFontSizeSmaller,
     paddingVertical: globalPadding - globalPaddingTiny,
     textAlign: 'center',
     width: 150,
@@ -330,7 +321,7 @@ const SharedStyles = {
   subnavHeaderActive: {
     color: primaryColor,
     fontFamily: globalFontRegular,
-    fontSize: subnavFontSize,
+    fontSize: globalFontSizeSmaller,
     paddingVertical: globalPadding - globalPaddingTiny,
     textAlign: 'center',
     width: 150,
@@ -352,7 +343,7 @@ const SharedStyles = {
   priceTag: {
     color: primaryColor,
     fontFamily: globalFontMedium,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     letterSpacing: 1,
     textAlign: 'center',
   },
