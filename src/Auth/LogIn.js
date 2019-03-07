@@ -7,6 +7,7 @@ import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 import {autotrim} from '../string'
+import BusyButton from '../BusyButton'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -55,6 +56,10 @@ export default class LogIn extends Component {
   }
 
   render() {
+    const {
+      screenProps: {auth},
+    } = this.props
+
     return (
       <View style={loginStyles.container}>
         <View>
@@ -82,9 +87,20 @@ export default class LogIn extends Component {
             secureTextEntry
             onChangeText={(password) => this.setState({password})}
           />
-          <TouchableHighlight
+          <BusyButton
             style={loginStyles.buttonContainer}
             onPress={this.logIn}
+            isBusy={auth.isFetching()}
+            busyContent={
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#5491CC', '#9A68B2', '#E53D96']}
+                style={loginStyles.button}
+              >
+                <Text style={loginStyles.buttonText}>Logging in</Text>
+              </LinearGradient>
+            }
           >
             <LinearGradient
               start={{x: 0, y: 0}}
@@ -94,7 +110,7 @@ export default class LogIn extends Component {
             >
               <Text style={loginStyles.buttonText}>Login to your account</Text>
             </LinearGradient>
-          </TouchableHighlight>
+          </BusyButton>
           <TouchableHighlight
             onPress={() =>
               this.props.navigation.navigate('PasswordReset', {

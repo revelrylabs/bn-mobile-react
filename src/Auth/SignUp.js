@@ -18,6 +18,7 @@ import {Constants, WebBrowser} from 'expo'
 import {autotrim} from '../string'
 import {accessCameraRoll, selectCameraRollImage} from '../image'
 import {uploadImageToCloudinary} from '../cloudinary'
+import BusyButton from '../BusyButton'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -37,6 +38,7 @@ const returnToButton = (navigation) => (
 export default class SignUp extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
   static navigationOptions = ({navigation}) => {
@@ -69,6 +71,10 @@ export default class SignUp extends Component {
   }
 
   render() {
+    const {
+      screenProps: {auth},
+    } = this.props
+
     return (
       <KeyboardAvoidingView
         style={loginStyles.container}
@@ -106,9 +112,20 @@ export default class SignUp extends Component {
               onChangeText={(password) => this.setState({password})}
             />
 
-            <TouchableHighlight
+            <BusyButton
               style={loginStyles.buttonContainer}
               onPress={this.signUp}
+              isBusy={auth.isFetching()}
+              busyContent={
+                <LinearGradient
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  colors={['#5491CC', '#9A68B2', '#E53D96']}
+                  style={loginStyles.button}
+                >
+                  <Text style={loginStyles.buttonText}>Signing up</Text>
+                </LinearGradient>
+              }
             >
               <LinearGradient
                 start={{x: 0, y: 0}}
@@ -118,7 +135,7 @@ export default class SignUp extends Component {
               >
                 <Text style={loginStyles.buttonText}>{"Let's Do This"}</Text>
               </LinearGradient>
-            </TouchableHighlight>
+            </BusyButton>
           </View>
 
           <View style={loginStyles.disclaimerWrapper}>
