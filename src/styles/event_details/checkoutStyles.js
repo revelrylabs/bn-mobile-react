@@ -5,11 +5,12 @@ import {
   containerDarkColor,
   borderColor,
   textColor,
-  bodyFontSize,
-  sectionHeaderFontSize,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
+  globalFontSizeSmall,
+  globalFontSizeLarger,
+  globalFontSizeLargest,
   globalPaddingLarge,
   globalPaddingSmall,
   globalPaddingTiny,
@@ -22,10 +23,7 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
-
-export const headerFontSize = 30
-export const ticketPriceFontSize = 32
-export const quantityIconFontSize = 26
+export const ticketPriceFontSize = globalFontSizeSmall * 2
 
 
 const CheckoutStyles = {
@@ -93,7 +91,7 @@ const CheckoutStyles = {
   header: {
     backgroundColor: 'transparent',
     fontFamily: globalFontSemiBold,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeLargest,
     color: textColor,
   },
   quantityPrice: {
@@ -113,18 +111,18 @@ const CheckoutStyles = {
   ticketHeader: {
     color: textColor,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingTop: globalPaddingTiny,
   },
   ticketSubHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
   },
   ticketSubHeaderPink: {
     color: primaryColor,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
   },
 
   // ICON STYLES
@@ -146,23 +144,23 @@ const CheckoutStyles = {
   },
   iconCheck: {
     color: primaryColor,
-    fontSize: quantityIconFontSize,
+    fontSize: globalFontSizeLarger,
   },
   removeIconDisabled: {
     color: borderColor,
-    fontSize: quantityIconFontSize,
+    fontSize: globalFontSizeLarger,
   },
   removeIcon: {
     color: primaryColor,
-    fontSize: quantityIconFontSize,
+    fontSize: globalFontSizeLarger,
   },
   addIconDisabled: {
     color: borderColor,
-    fontSize: quantityIconFontSize,
+    fontSize: globalFontSizeLarger,
   },
   addIcon: {
     color: primaryColor,
-    fontSize: quantityIconFontSize,
+    fontSize: globalFontSizeLarger,
   },
 
   // BUTTON STYLES
