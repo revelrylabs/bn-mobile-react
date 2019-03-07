@@ -137,8 +137,10 @@ class AuthContainer extends Container {
 
       await this.setLoginData(response, navigate, true)
       this.identify('Signed Up')
+      return true
     } catch (error) {
       apiErrorAlert(error, 'There was an error creating your account.')
+      return false
     } finally {
       await this.setState({isFetching: false})
     }
@@ -152,10 +154,12 @@ class AuthContainer extends Container {
 
       await this.setLoginData(resp, navigate)
       this.identify('Signed In')
+      return true
     } catch (error) {
       apiErrorAlert(error, 'There was a problem logging in.')
 
       navigate('LogIn')
+      return false
     } finally {
       await this.setState({isFetching: false})
     }

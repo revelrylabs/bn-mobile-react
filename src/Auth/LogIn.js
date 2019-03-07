@@ -25,6 +25,7 @@ const returnToButton = (navigation) => (
 export default class LogIn extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
   static navigationOptions = ({navigation}) => {
@@ -40,6 +41,7 @@ export default class LogIn extends Component {
     this.state = {
       email: '',
       password: '',
+      isBusy: false,
     }
   }
 
@@ -51,15 +53,20 @@ export default class LogIn extends Component {
     const {email, password} = this.state
 
     if (!auth.isFetching()) {
-      await auth.logIn({email, password}, navigate)
+      this.setState({isBusy: true})
+
+      const isLoggedIn = await auth.logIn({email, password}, navigate)
+
+      // If there was an error, reactivate button
+      // The conditional is to prevent a warning about changing state
+      // after component is goes away
+      if (!isLoggedIn) {
+        this.setState({isBusy: isLoggedIn})
+      }
     }
   }
 
   render() {
-    const {
-      screenProps: {auth},
-    } = this.props
-
     return (
       <View style={loginStyles.container}>
         <View>
@@ -90,7 +97,7 @@ export default class LogIn extends Component {
           <BusyButton
             style={loginStyles.buttonContainer}
             onPress={this.logIn}
-            isBusy={auth.isFetching()}
+            isBusy={this.state.isBusy}
             busyContent={
               <LinearGradient
                 start={{x: 0, y: 0}}

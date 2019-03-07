@@ -9,16 +9,14 @@ import {
   TouchableHighlight,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import {Feather} from '@expo/vector-icons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
-import {Constants, WebBrowser} from 'expo'
+import {WebBrowser} from 'expo'
 import {autotrim} from '../string'
-import {accessCameraRoll, selectCameraRollImage} from '../image'
-import {uploadImageToCloudinary} from '../cloudinary'
 import BusyButton from '../BusyButton'
+import {NavigationEvents} from 'react-navigation'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -54,6 +52,7 @@ export default class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
+      isBusy: false,
     }
   }
 
@@ -65,16 +64,18 @@ export default class SignUp extends Component {
     const {email, password} = this.state
 
     if (!auth.isFetching()) {
+      this.setState({isBusy: true})
       // Should register & login on success
-      await auth.signUp({email, password}, navigate)
+      const isSignedUp = await auth.signUp({email, password}, navigate)
+
+      // If there was an error, reactivate button
+      if (!isSignedUp) {
+        this.setState({isBusy: isSignedUp})
+      }
     }
   }
 
   render() {
-    const {
-      screenProps: {auth},
-    } = this.props
-
     return (
       <KeyboardAvoidingView
         style={loginStyles.container}
@@ -85,6 +86,9 @@ export default class SignUp extends Component {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps={'handled'}
         >
+          <NavigationEvents
+            onWillFocus={() => this.setState({isBusy: false})}
+          />
           <View>
             <Text style={loginStyles.smallText}>Secure your experiences</Text>
             <Text
@@ -115,7 +119,7 @@ export default class SignUp extends Component {
             <BusyButton
               style={loginStyles.buttonContainer}
               onPress={this.signUp}
-              isBusy={auth.isFetching()}
+              isBusy={this.state.isBusy}
               busyContent={
                 <LinearGradient
                   start={{x: 0, y: 0}}
