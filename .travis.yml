@@ -2,9 +2,7 @@
   os: osx
   language: node_js
   osx_image: xcode10.1
-  node_js:
-    - node
-    - lts/*
+  node_js: "10.7.0"
   cache:
     directories:
       - "~/.npm"
