@@ -52,6 +52,9 @@ class TicketsContainer extends Container {
         })
       })
 
+      // sort past events in reverse order
+      tabData.past = tabData.past.reverse()
+
       this.setState({tickets: tabData})
     } catch (error) {
       apiErrorAlert(error, 'Loading tickets failed.')
