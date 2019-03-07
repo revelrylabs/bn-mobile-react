@@ -7,8 +7,9 @@ import {
   globalFontRegular,
   globalFontSemiBold,
   containerDarkColor,
-  sectionHeaderFontSize,
-  iconFontSize,
+  globalFontSizeSmall,
+  globalFontSize,
+  globalFontSizeMedium,
   globalPaddingTiny,
   globalPaddingSmall,
   globalPadding,
@@ -25,7 +26,7 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.10)'
 export const modalBkgdColor = 'rgba(0, 0, 0, 0.5)'
 
-export const headerFontSize = 32
+export const headerFontSize = globalFontSizeSmall * 2
 
 const ModalStyles = {
   // CONTAINER STYLES
@@ -105,7 +106,7 @@ const ModalStyles = {
   headerSecondary: {
     color: textColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSizeMedium,
     paddingVertical: globalPadding,
     textAlign: 'center',
   },
@@ -117,7 +118,7 @@ const ModalStyles = {
   sectionHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: iconFontSize,
+    fontSize: globalFontSize,
   },
 
   // BUTTON STYLES
