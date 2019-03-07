@@ -2,8 +2,10 @@ import {
   white,
   sectionHeaderColor,
   globalFontRegular,
-  bodyFontSize,
-  iconFontSize,
+  globalFontSizeTiny,
+  globalFontSizeSmall,
+  globalFontSize,
+  globalFontSizeLargest,
   globalPaddingLarge,
   globalPadding,
   globalPaddingSmall,
@@ -16,9 +18,6 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
-
-export const headerFontSize = moderateScale(28)
-export const bodyFontSizeSmall = moderateScale(13)
 
 const TicketStyles = {
   // CONTAINER STYLES
@@ -66,38 +65,38 @@ const TicketStyles = {
   header: {
     color: white,
     fontFamily: globalFontRegular,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeLargest,
     marginBottom: globalPaddingTiny,
     paddingRight: globalPaddingSmall,
   },
   detailsBottomHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSizeSmall,
+    fontSize: globalFontSizeTiny,
     letterSpacing: 0.5,
   },
   detailsBottomText: {
-    fontSize: bodyFontSizeSmall,
+    fontSize: globalFontSizeTiny,
     paddingTop: globalPaddingTiny,
   },
   detailsLast: {
     textAlign: 'right',
   },
   ticketHolderHeader: {
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingBottom: 2,
   },
   ticketHolderSubheader: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSizeSmall,
+    fontSize: globalFontSizeTiny,
     letterSpacing: 0.5,
   },
 
   // ICON STYLES
   iconTicket: {
     color: white,
-    fontSize: iconFontSize,
+    fontSize: globalFontSize,
     marginRight: globalPaddingTiny,
   },
   iconTicketText: {
@@ -119,7 +118,7 @@ const TicketStyles = {
   emptyStateText: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: iconFontSize,
+    fontSize: globalFontSize,
     paddingHorizontal: globalPaddingLarge,
     textAlign: 'center',
   },
