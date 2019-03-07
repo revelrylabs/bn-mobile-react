@@ -70,7 +70,7 @@ export default class SignUp extends Component {
 
       // If there was an error, reactivate button
       if (!isSignedUp) {
-        this.setState({isBusy: isSignedUp})
+        this.setState({isBusy: false})
       }
     }
   }

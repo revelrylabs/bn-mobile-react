@@ -61,7 +61,7 @@ export default class LogIn extends Component {
       // The conditional is to prevent a warning about changing state
       // after component is goes away
       if (!isLoggedIn) {
-        this.setState({isBusy: isLoggedIn})
+        this.setState({isBusy: false})
       }
     }
   }
