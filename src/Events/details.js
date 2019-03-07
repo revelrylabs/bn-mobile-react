@@ -252,7 +252,7 @@ export default class Details extends Component {
         <View style={eventDetailsStyles.mainBodyContent}>
           {this.topLineInfo}
           <View style={styles.flexRowSpaceBetween}>
-            <View>
+            <View style={styles.flex2}>
               <Text
                 numberOfLines={2}
                 style={eventDetailsStyles.descriptionHeader}

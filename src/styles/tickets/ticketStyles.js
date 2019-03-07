@@ -11,13 +11,14 @@ import {
   globalMargin,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
-export const headerFontSize = 28
-export const bodyFontSizeSmall = 13
+export const headerFontSize = moderateScale(28)
+export const bodyFontSizeSmall = moderateScale(13)
 
 const TicketStyles = {
   // CONTAINER STYLES
@@ -76,7 +77,7 @@ const TicketStyles = {
     letterSpacing: 0.5,
   },
   detailsBottomText: {
-    fontSize: bodyFontSize,
+    fontSize: bodyFontSizeSmall,
     paddingTop: globalPaddingTiny,
   },
   detailsLast: {

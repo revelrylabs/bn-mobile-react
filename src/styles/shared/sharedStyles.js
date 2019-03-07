@@ -1,6 +1,8 @@
 import {StyleSheet, Dimensions} from 'react-native'
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
+
 
 export const primaryColor = '#FF20B1'
 export const secondaryColor = '#707CED'
@@ -42,13 +44,14 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = 36
-export const headerSecondaryFontSize = 24
-export const sectionHeaderFontSize = 21
-export const bodyFontSize = 16
-export const subnavFontSize = 14
-export const iconFontSize = 18
-export const iconCircleFontSize = 25
+export const headerFontSize = moderateScale(36)
+export const headerSecondaryFontSize = moderateScale(24)
+export const sectionHeaderFontSize = moderateScale(21)
+export const buttonFontSize = moderateScale(18)
+export const bodyFontSize = moderateScale(16)
+export const subnavFontSize = moderateScale(14)
+export const iconFontSize = moderateScale(18)
+export const iconCircleFontSize = moderateScale(25)
 
 const SharedStyles = {
   // CONTAINERS

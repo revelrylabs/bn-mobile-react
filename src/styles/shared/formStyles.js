@@ -17,10 +17,11 @@ import {
   globalMarginSmall,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-export const bodyFontSize = 18
+export const bodyFontSize = moderateScale(18)
 export const searchIconFontSize = 21
 
 const FormStyles = {

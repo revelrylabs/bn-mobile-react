@@ -25,7 +25,7 @@ const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
-export const headerFontSize = 26
+export const headerFontSize = 24
 export const sectionHeaderFontSize = 18
 export const calendarDateFontSize = 24
 export const calendarMonthFontSize = 14
@@ -126,7 +126,6 @@ const EventDetailsStyles = {
     color: textColor,
     fontFamily: globalFontSemiBold,
     fontSize: headerFontSize,
-    width: 275,
   },
   descriptionSubHeader: {
     color: sectionHeaderColor,
