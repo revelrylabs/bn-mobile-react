@@ -12,7 +12,6 @@ import {CartContainer} from './src/state/cartStateProvider'
 import {AuthContainer} from './src/state/authStateProvider'
 import {analyticsInit} from './src/constants/analytics'
 import Sentry from 'sentry-expo'
-import {analyticsInit} from './src/constants/analytics';
 import LottieView from 'lottie-react-native';
 
 //Sentry.enableInExpoDevelopment = true // Remove this once Sentry is correctly setup.
