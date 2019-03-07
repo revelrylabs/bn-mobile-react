@@ -39,6 +39,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz",
     "react-native-circle-checkbox": "^0.1.6",
     "react-native-loading-spinner-overlay": "^1.0.1",
+    "lottie-react-native": "^2.5.11",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-qrcode": "^0.2.7",
     "react-native-snap-carousel": "^3.7.2",
