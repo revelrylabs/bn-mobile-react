@@ -27,7 +27,12 @@ function buildErrorMessage({error, fields}) {
   return msg
 }
 
+/* eslint-disable-next-line complexity */
 export function apiErrorAlert(error, msg = DEFAULT_ERROR_MSG) {
+  if (error.message === 'Network Error') {
+    return alert('Network Error: Your device may have lost connectivity.')
+  }
+
   const {response} = error
 
   if (!response) {
@@ -36,7 +41,7 @@ export function apiErrorAlert(error, msg = DEFAULT_ERROR_MSG) {
 
   const {data} = response
 
- return alert(data && data.error && buildErrorMessage(data) || msg)
+  return alert(data && data.error && buildErrorMessage(data) || msg)
 }
 
 export async function retrieveTokens() {
