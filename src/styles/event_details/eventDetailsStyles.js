@@ -11,10 +11,10 @@ import {
   globalFontBold,
   globalFontSizeTiny,
   globalFontSizeSmaller,
+  globalFontSizeSmall,
   globalFontSize,
   globalFontSizeLarge,
   globalFontSizeLargest,
-  bodyFontSize,
   globalPaddingLarger,
   globalPaddingLarge,
   globalPaddingMedium,
@@ -29,7 +29,6 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
-
 export const iconLargeFontSize = globalFontSizeLargest * 2
 
 const EventDetailsStyles = {
@@ -148,7 +147,7 @@ const EventDetailsStyles = {
     backgroundColor: 'transparent',
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingBottom: globalPaddingSmall,
     paddingLeft: globalPadding + globalPaddingTiny,
   },
@@ -156,7 +155,7 @@ const EventDetailsStyles = {
     backgroundColor: 'transparent',
     color: primaryColor,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingLeft: globalPadding + globalPaddingTiny,
   },
   iconSectionHeader: {
@@ -173,7 +172,7 @@ const EventDetailsStyles = {
   checkInSwipeText: {
     color: white,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     textAlign: 'left',
   },
   checkInSwipeContainer: {
@@ -188,7 +187,7 @@ const EventDetailsStyles = {
   disabledCheckInSwipeText: {
     color: disabledHeaderColor,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     textAlign: 'left',
   },
   disabledCheckInSwipeContainer: {
@@ -275,7 +274,7 @@ const EventDetailsStyles = {
   },
   iconEventDescription: {
     color: sectionHeaderColor,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingRight: globalPaddingSmall,
   },
 
@@ -305,23 +304,23 @@ const EventDetailsStyles = {
   buttonRoundedText: {
     color: sectionHeaderColor,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     textAlign: 'center',
   },
   buttonRoundedActiveText: {
     color: white,
     fontFamily: globalFontSemiBold,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     textAlign: 'center',
   },
   buttonRoundedIcon: {
     color: sectionHeaderColor,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingRight: globalPaddingTiny,
   },
   buttonRoundedActiveIcon: {
     color: white,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingRight: globalPaddingTiny,
   },
   buttonRoundedSecondary: {
