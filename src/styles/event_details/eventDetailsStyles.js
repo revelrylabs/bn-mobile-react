@@ -9,6 +9,11 @@ import {
   globalFontMedium,
   globalFontSemiBold,
   globalFontBold,
+  globalFontSizeTiny,
+  globalFontSizeSmaller,
+  globalFontSize,
+  globalFontSizeLarge,
+  globalFontSizeLargest,
   bodyFontSize,
   globalPaddingLarger,
   globalPaddingLarge,
@@ -25,14 +30,7 @@ const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
-export const headerFontSize = 24
-export const sectionHeaderFontSize = 18
-export const calendarDateFontSize = 24
-export const calendarMonthFontSize = 14
-export const iconLargeFontSize = 56
-export const slideShowArrowFontSize = 28
-export const attendeeFontSize = 12
-export const backArrowFontSize = 25
+export const iconLargeFontSize = globalFontSizeLargest * 2
 
 const EventDetailsStyles = {
   // VIDEO BKGD STYLES
@@ -65,7 +63,7 @@ const EventDetailsStyles = {
   },
   backArrow: {
     color: white,
-    fontSize: backArrowFontSize,
+    fontSize: globalFontSizeLarge,
   },
 
   // MAIN BODY STYLES
@@ -125,25 +123,25 @@ const EventDetailsStyles = {
   descriptionHeader: {
     color: textColor,
     fontFamily: globalFontSemiBold,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeLarge,
   },
   descriptionSubHeader: {
     color: sectionHeaderColor,
     fontFamily: globalFontMedium,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSize,
     paddingBottom: globalPaddingTiny,
     paddingTop: globalPaddingTiny,
   },
   header: {
     fontFamily: globalFontSemiBold,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeLarge,
     color: white,
     marginTop: globalPaddingTiny,
   },
   sectionHeader: {
     color: textColor,
     fontFamily: globalFontBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSize,
     marginVertical: globalMargin,
   },
   bodyText: {
@@ -164,12 +162,12 @@ const EventDetailsStyles = {
   iconSectionHeader: {
     color: textColor,
     fontFamily: globalFontBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSize,
   },
   priceHeader: {
     color: textColor,
     fontFamily: globalFontBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSize,
     textAlign: 'center',
   },
   checkInSwipeText: {
@@ -248,7 +246,7 @@ const EventDetailsStyles = {
   attendeeNumber: {
     color: primaryColor,
     fontFamily: globalFontBold,
-    fontSize: attendeeFontSize,
+    fontSize: globalFontSizeTiny,
     letterSpacing: 1,
     paddingTop: globalPaddingSmall,
     textAlign: 'center',
@@ -349,13 +347,13 @@ const EventDetailsStyles = {
   calendarMonth: {
     color: white,
     fontFamily: globalFontMedium,
-    fontSize: calendarMonthFontSize,
+    fontSize: globalFontSizeSmaller,
     textAlign: 'center',
   },
   calendarDate: {
     color: white,
     fontFamily: globalFontMedium,
-    fontSize: calendarDateFontSize,
+    fontSize: globalFontSizeLarge,
     textAlign: 'center',
   },
 
@@ -379,12 +377,12 @@ const EventDetailsStyles = {
   },
   slideShowIconLinkLeft: {
     color: textColor,
-    fontSize: slideShowArrowFontSize,
+    fontSize: globalFontSizeLargest,
     marginLeft: -23,
   },
   slideShowIconLinkRight: {
     color: textColor,
-    fontSize: slideShowArrowFontSize,
+    fontSize: globalFontSizeLargest,
     marginRight: -23,
   },
 }

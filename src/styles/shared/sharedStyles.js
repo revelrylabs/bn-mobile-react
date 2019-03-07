@@ -44,14 +44,24 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
-export const headerFontSize = moderateScale(36)
-export const headerSecondaryFontSize = moderateScale(24)
-export const sectionHeaderFontSize = moderateScale(21)
-export const buttonFontSize = moderateScale(18)
-export const bodyFontSize = moderateScale(16)
-export const subnavFontSize = moderateScale(14)
-export const iconFontSize = moderateScale(18)
-export const iconCircleFontSize = moderateScale(25)
+export const globalFontSizeTiny = moderateScale(13)
+export const globalFontSizeSmaller = moderateScale(14)
+export const globalFontSizeSmall = moderateScale(16)
+export const globalFontSize = moderateScale(18)
+export const globalFontSizeMedium = moderateScale(21)
+export const globalFontSizeLarge = moderateScale(24)
+export const globalFontSizeLarger = moderateScale(26)
+export const globalFontSizeLargest = moderateScale(28)
+export const globalFontSizeJumbo = moderateScale(36)
+
+export const headerFontSize = globalFontSizeJumbo
+export const headerSecondaryFontSize = globalFontSizeLarge
+export const sectionHeaderFontSize = globalFontSizeMedium
+export const buttonFontSize = globalFontSize
+export const bodyFontSize = globalFontSizeSmall
+export const subnavFontSize = globalFontSizeSmaller
+export const iconFontSize = globalFontSize
+export const iconCircleFontSize = globalFontSizeLarger
 
 const SharedStyles = {
   // CONTAINERS
