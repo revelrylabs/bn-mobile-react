@@ -6,14 +6,17 @@ import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
-import { autotrim } from '../string'
+import {autotrim} from '../string'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
 
 const returnToButton = (navigation) => (
-  <TouchableHighlight onPress={() => navigation.goBack()} underlayColor="rgba(0, 0, 0, 0)">
+  <TouchableHighlight
+    onPress={() => navigation.goBack()}
+    underlayColor="rgba(0, 0, 0, 0)"
+  >
     <Icon style={loginStyles.backButton} name="arrow-back" />
   </TouchableHighlight>
 )
@@ -39,19 +42,29 @@ export default class LogIn extends Component {
     }
   }
 
-  logIn = async () => {
-    const {screenProps: {auth}, navigation: {navigate}} = this.props
+  logIn = async() => {
+    const {
+      screenProps: {auth},
+      navigation: {navigate},
+    } = this.props
     const {email, password} = this.state
 
-    await auth.logIn({email, password}, navigate)
+    if (!auth.isFetching()) {
+      await auth.logIn({email, password}, navigate)
+    }
   }
 
   render() {
     return (
       <View style={loginStyles.container}>
-
         <View>
-          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
+          <Text
+            style={[
+              styles.headerSecondary,
+              styles.textCenter,
+              styles.paddingBottomJumbo,
+            ]}
+          >
             Welcome back!
           </Text>
           <TextInput
@@ -69,7 +82,10 @@ export default class LogIn extends Component {
             secureTextEntry
             onChangeText={(password) => this.setState({password})}
           />
-          <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.logIn}>
+          <TouchableHighlight
+            style={loginStyles.buttonContainer}
+            onPress={this.logIn}
+          >
             <LinearGradient
               start={{x: 0, y: 0}}
               end={{x: 1, y: 0}}
@@ -79,7 +95,13 @@ export default class LogIn extends Component {
               <Text style={loginStyles.buttonText}>Login to your account</Text>
             </LinearGradient>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.props.navigation.navigate('PasswordReset', {defaultEmail: this.state.email})}>
+          <TouchableHighlight
+            onPress={() =>
+              this.props.navigation.navigate('PasswordReset', {
+                defaultEmail: this.state.email,
+              })
+            }
+          >
             <View style={styles.flexRowCenter}>
               <Text style={styles.linkTextDark}>Reset your password</Text>
               <Icon name="keyboard-arrow-right" />
@@ -87,29 +109,33 @@ export default class LogIn extends Component {
           </TouchableHighlight>
         </View>
 
-        {false && // TODO: Re-enable when functionality is implemented.
-        <View>
-          <TouchableHighlight>
-            <View style={styles.flexRowCenter}>
-              <Image
-                style={loginStyles.facebookIcon}
-                source={require('../../assets/icon-facebook.png')}
-              />
-              <Text style={loginStyles.linkTextBlue}>Login with Facebook</Text>
-              <Icon style={loginStyles.arrowIconBlue} name="keyboard-arrow-right" />
-            </View>
-          </TouchableHighlight>
+        {false && ( // TODO: Re-enable when functionality is implemented.
+          <View>
+            <TouchableHighlight>
+              <View style={styles.flexRowCenter}>
+                <Image
+                  style={loginStyles.facebookIcon}
+                  source={require('../../assets/icon-facebook.png')}
+                />
+                <Text style={loginStyles.linkTextBlue}>
+                  Login with Facebook
+                </Text>
+                <Icon
+                  style={loginStyles.arrowIconBlue}
+                  name="keyboard-arrow-right"
+                />
+              </View>
+            </TouchableHighlight>
 
-          <TouchableHighlight style={styles.paddingTopSmall}>
-            <View style={styles.flexRowCenter}>
-              <Icon style={loginStyles.phoneIcon} name="phone-iphone" />
-              <Text style={styles.linkTextDark}>Login with SMS</Text>
-              <Icon name="keyboard-arrow-right" />
-            </View>
-          </TouchableHighlight>
-        </View>
-        }
-
+            <TouchableHighlight style={styles.paddingTopSmall}>
+              <View style={styles.flexRowCenter}>
+                <Icon style={loginStyles.phoneIcon} name="phone-iphone" />
+                <Text style={styles.linkTextDark}>Login with SMS</Text>
+                <Icon name="keyboard-arrow-right" />
+              </View>
+            </TouchableHighlight>
+          </View>
+        )}
       </View>
     )
   }
