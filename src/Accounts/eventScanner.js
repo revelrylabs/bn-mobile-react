@@ -40,6 +40,7 @@ const SCAN_ALERT_CONFIG = {
 }
 
 // props for the StatusMessage component, based on the presence and type of error
+/* eslint-disable-next-line complexity */
 function getStatusMessageConfig(error) {
   if (!error) {
     return SCAN_ALERT_CONFIG.success

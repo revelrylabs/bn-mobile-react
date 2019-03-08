@@ -6,8 +6,10 @@ import {
   sectionHeaderColor,
   globalFontSemiBold,
   globalFontRegular,
-  sectionHeaderFontSize,
-  bodyFontSizeSmall,
+  globalFontSizeTiny,
+  globalFontSizeSmall,
+  globalFontSizeMedium,
+  globalFontSizeJumbo,
   globalMargin,
   globalPaddingTiny,
   globalPaddingSmall,
@@ -16,10 +18,6 @@ import {
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
-
-export const bodyFontSize = 18
-export const headerFontSize = 16
-export const iconLargeFontSize = 38
 
 const NavigationStyles = {
   tabBarIconAccount: {
@@ -40,7 +38,7 @@ const NavigationStyles = {
   },
   headerTitle: {
     fontFamily: globalFontSemiBold,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeSmall,
     ...Platform.select({
       android: {
         paddingLeft: globalPaddingLarge,
@@ -55,11 +53,11 @@ const NavigationStyles = {
   headerLeftTitle: {
     color: primaryColor,
     fontFamily: globalFontRegular,
-    fontSize: headerFontSize,
+    fontSize: globalFontSizeSmall,
   },
   backButton: {
     color: primaryColor,
-    fontSize: iconLargeFontSize,
+    fontSize: globalFontSizeJumbo,
   },
 
   // SCROLLING HEADER
@@ -81,12 +79,12 @@ const NavigationStyles = {
   scrollTitle: {
     color: textColor,
     fontFamily: globalFontSemiBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSizeMedium,
   },
   scrollSubTitle: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSizeSmall,
+    fontSize: globalFontSizeTiny,
   },
 }
 

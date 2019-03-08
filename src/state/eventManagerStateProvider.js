@@ -39,16 +39,24 @@ export class EventManagerContainer extends Container {
     this.setState({eventToScan: event, guests: []});
   }
 
+  /* eslint-disable-next-line complexity */
   searchGuestList = async (guestListQuery = '') => {
     await this.setState({isFetchingGuests: true, guestListQuery})
 
     const {id} = this.state.eventToScan
-    const {data: {data: guests, paging: _paging}} = await server.events.guests.index({event_id: id, query: guestListQuery})
+    let guests = null
 
-    // Still fetching the same thing? (or subsequently fetched something else?)
-    if (this.state.eventToScan.id === id && this.state.guestListQuery === guestListQuery) {
-      await this.setState({guests, isFetchingGuests: false})
+    try {
+      guests = (await server.events.guests.index({event_id: id, query: guestListQuery})).data.data
+    } catch (error) {
+      apiErrorAlert(error)
     }
+
+    if (guests) {
+      await this.setState({guests})
+    }
+    
+    await this.setState({isFetchingGuests: false})
   }
 
   // this just unpacks the barcode scanner result, nothing else

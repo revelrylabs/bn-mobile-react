@@ -145,8 +145,10 @@ function checkInErrorText(guest) {
 }
 
 class GuestList extends Component {
+  // Calm down, eslint. Quit punishing us for handling errors. Geez.
+  /* eslint-disable-next-line complexity */
   onRowOpen = async (rowKey, rowMap, toValue) => {
-    const guest = this.props.guests.find(item => item.id === rowKey)
+    const guest = this.props.guests.find((item) => item.id === rowKey)
 
     if (canCheckOut(guest) && toValue === SCREEN_WIDTH) {
       try {
@@ -156,8 +158,7 @@ class GuestList extends Component {
       }
     }
 
-    const row = rowMap[rowKey]
-    row.closeRow()
+    rowMap[rowKey].closeRow()
   }
 
   render() {
@@ -239,11 +240,11 @@ export default class ManualCheckin extends Component {
     this.searchGuestList()
   }
 
-  searchGuestList = query => {
+  searchGuestList = (query) => {
     this.props.searchGuestList(query)
   }
 
-  selectGuest = selectedGuest => {
+  selectGuest = (selectedGuest) => {
     this.setState({selectedGuest})
   }
 
@@ -251,7 +252,7 @@ export default class ManualCheckin extends Component {
     this.selectGuest(null)
   }
 
-  checkInGuest = async guest => {
+  checkInGuest = async (guest) => {
     const {event_id, id: ticket_id, redeem_key} = guest
 
     try {
