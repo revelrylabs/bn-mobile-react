@@ -97,16 +97,11 @@ function BottomTab({children}) {
 }
 
 // The default bottom tab that lets you bounce over to the guest list
-function GuestListTab({navigate}) {
+function GuestListTab({onPress}) {
   return (
     <View style={eventDetailsStyles.fixedFooter}>
       <View style={styles.buttonContainer}>
-        <TouchableHighlight
-          style={styles.button}
-          onPress={() => {
-            navigate('GuestList')
-          }}
-        >
+        <TouchableHighlight style={styles.button} onPress={onPress}>
           <Text style={styles.buttonText}>Guest List</Text>
         </TouchableHighlight>
       </View>
@@ -365,6 +360,15 @@ export default class EventScanner extends Component {
     )
   }
 
+  onGuestListTabPressed = () => {
+    if (this.resetTimer) {
+      clearTimeout(this.resetTimer)
+    }
+
+    this._reset()
+    this.props.navigation.navigate('GuestList')
+  }
+
   // if we have the details of ticket to show, we do that; otherwise we link to the guest list
   get bottomTabContent() {
     const {
@@ -379,7 +383,7 @@ export default class EventScanner extends Component {
         checkIn={this.commitManual}
       />
     ) : (
-      <GuestListTab navigate={this.props.navigation.navigate} />
+      <GuestListTab onPress={this.onGuestListTabPressed} />
     )
   }
 
