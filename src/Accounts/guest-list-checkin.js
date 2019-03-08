@@ -21,6 +21,7 @@ import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
 import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view'
+import {KeyboardDismisser} from '../ui'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
@@ -144,8 +145,10 @@ function checkInErrorText(guest) {
 }
 
 class GuestList extends Component {
+  // Calm down, eslint. Quit punishing us for handling errors. Geez.
+  /* eslint-disable-next-line complexity */
   onRowOpen = async (rowKey, rowMap, toValue) => {
-    const guest = this.props.guests.find(item => item.id === rowKey)
+    const guest = this.props.guests.find((item) => item.id === rowKey)
 
     if (canCheckOut(guest) && toValue === SCREEN_WIDTH) {
       try {
@@ -155,8 +158,7 @@ class GuestList extends Component {
       }
     }
 
-    const row = rowMap[rowKey]
-    row.closeRow()
+    rowMap[rowKey].closeRow()
   }
 
   render() {
@@ -238,11 +240,11 @@ export default class ManualCheckin extends Component {
     this.searchGuestList()
   }
 
-  searchGuestList = query => {
+  searchGuestList = (query) => {
     this.props.searchGuestList(query)
   }
 
-  selectGuest = selectedGuest => {
+  selectGuest = (selectedGuest) => {
     this.setState({selectedGuest})
   }
 
@@ -250,7 +252,7 @@ export default class ManualCheckin extends Component {
     this.selectGuest(null)
   }
 
-  checkInGuest = async guest => {
+  checkInGuest = async (guest) => {
     const {event_id, id: ticket_id, redeem_key} = guest
 
     try {
@@ -283,33 +285,35 @@ export default class ManualCheckin extends Component {
     }
 
     return (
-      <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
-        <View style={[doormanStyles.mainBodyContent]}>
-          <View style={styles.container}>
-            <Text style={doormanStyles.sectionHeader}>Guest List</Text>
-            <View style={doormanStyles.searchContainer}>
-              <SearchBox
-                textInput={{
-                  defaultValue: guestListQuery,
-                  onChangeText: this.searchGuestList,
-                  placeholder: 'Search for guests',
-                }}
-                style={doormanStyles.searchInput}
-              />
+      <KeyboardDismisser>
+        <View style={[doormanStyles.mainBody, doormanStyles.checkoutMainBody]}>
+          <View style={[doormanStyles.mainBodyContent]}>
+            <View style={styles.container}>
+              <Text style={doormanStyles.sectionHeader}>Guest List</Text>
+              <View style={doormanStyles.searchContainer}>
+                <SearchBox
+                  textInput={{
+                    defaultValue: guestListQuery,
+                    onChangeText: this.searchGuestList,
+                    placeholder: 'Search for guests',
+                  }}
+                  style={doormanStyles.searchInput}
+                />
+              </View>
             </View>
+
+            {isFetchingGuests && <BusyState />}
+            
+            <GuestList
+              style={{flex: 1}}
+              guests={guests}
+              onSelect={this.selectGuest}
+              onCheckIn={this.checkInGuest}
+            />
+            <View style={doormanStyles.spacer} />
           </View>
-
-          {isFetchingGuests && <BusyState />}
-
-          <GuestList
-            style={{flex: 1}}
-            guests={guests}
-            onSelect={this.selectGuest}
-            onCheckIn={this.checkInGuest}
-          />
-          <View style={doormanStyles.spacer} />
         </View>
-      </View>
+      </KeyboardDismisser>
     )
   }
 }
