@@ -7,17 +7,17 @@ import {
   Text,
   TextInput,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import {Feather} from '@expo/vector-icons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
-import {Constants, WebBrowser} from 'expo'
+import {WebBrowser} from 'expo'
 import {autotrim} from '../string'
-import {accessCameraRoll, selectCameraRollImage} from '../image'
-import {uploadImageToCloudinary} from '../cloudinary'
+import BusyButton from '../BusyButton'
+import {NavigationEvents} from 'react-navigation'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -37,6 +37,7 @@ const returnToButton = (navigation) => (
 export default class SignUp extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
   static navigationOptions = ({navigation}) => {
@@ -52,6 +53,7 @@ export default class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
+      isBusy: false,
     }
   }
 
@@ -63,8 +65,14 @@ export default class SignUp extends Component {
     const {email, password} = this.state
 
     if (!auth.isFetching()) {
+      this.setState({isBusy: true})
       // Should register & login on success
-      await auth.signUp({email, password}, navigate)
+      const isSignedUp = await auth.signUp({email, password}, navigate)
+
+      // If there was an error, reactivate button
+      if (!isSignedUp) {
+        this.setState({isBusy: false})
+      }
     }
   }
 
@@ -79,6 +87,9 @@ export default class SignUp extends Component {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps={'handled'}
         >
+          <NavigationEvents
+            onWillFocus={() => this.setState({isBusy: false})}
+          />
           <View>
             <Text style={loginStyles.smallText}>Secure your experiences</Text>
             <Text
@@ -106,9 +117,20 @@ export default class SignUp extends Component {
               onChangeText={(password) => this.setState({password})}
             />
 
-            <TouchableHighlight
+            <BusyButton
               style={loginStyles.buttonContainer}
               onPress={this.signUp}
+              isBusy={this.state.isBusy}
+              busyContent={
+                <LinearGradient
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  colors={['#5491CC', '#9A68B2', '#E53D96']}
+                  style={loginStyles.button}
+                >
+                  <ActivityIndicator color="#FFF" />
+                </LinearGradient>
+              }
             >
               <LinearGradient
                 start={{x: 0, y: 0}}
@@ -118,7 +140,7 @@ export default class SignUp extends Component {
               >
                 <Text style={loginStyles.buttonText}>{"Let's Do This"}</Text>
               </LinearGradient>
-            </TouchableHighlight>
+            </BusyButton>
           </View>
 
           <View style={loginStyles.disclaimerWrapper}>

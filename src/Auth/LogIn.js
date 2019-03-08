@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, Image, TextInput, TouchableHighlight} from 'react-native'
+import {View, Text, Image, TextInput, TouchableHighlight, ActivityIndicator} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 import {autotrim} from '../string'
+import BusyButton from '../BusyButton'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -24,6 +25,7 @@ const returnToButton = (navigation) => (
 export default class LogIn extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    screenProps: PropTypes.object.isRequired,
   }
 
   static navigationOptions = ({navigation}) => {
@@ -39,6 +41,7 @@ export default class LogIn extends Component {
     this.state = {
       email: '',
       password: '',
+      isBusy: false,
     }
   }
 
@@ -50,7 +53,16 @@ export default class LogIn extends Component {
     const {email, password} = this.state
 
     if (!auth.isFetching()) {
-      await auth.logIn({email, password}, navigate)
+      this.setState({isBusy: true})
+
+      const isLoggedIn = await auth.logIn({email, password}, navigate)
+
+      // If there was an error, reactivate button
+      // The conditional is to prevent a warning about changing state
+      // after component is goes away
+      if (!isLoggedIn) {
+        this.setState({isBusy: false})
+      }
     }
   }
 
@@ -82,9 +94,20 @@ export default class LogIn extends Component {
             secureTextEntry
             onChangeText={(password) => this.setState({password})}
           />
-          <TouchableHighlight
+          <BusyButton
             style={loginStyles.buttonContainer}
             onPress={this.logIn}
+            isBusy={this.state.isBusy}
+            busyContent={
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#5491CC', '#9A68B2', '#E53D96']}
+                style={loginStyles.button}
+              >
+                <ActivityIndicator color="#FFF" />
+              </LinearGradient>
+            }
           >
             <LinearGradient
               start={{x: 0, y: 0}}
@@ -94,7 +117,7 @@ export default class LogIn extends Component {
             >
               <Text style={loginStyles.buttonText}>Login to your account</Text>
             </LinearGradient>
-          </TouchableHighlight>
+          </BusyButton>
           <TouchableHighlight
             onPress={() =>
               this.props.navigation.navigate('PasswordReset', {
