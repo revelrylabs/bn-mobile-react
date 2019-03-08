@@ -6,12 +6,14 @@ import {
   borderColor,
   containerDarkColor,
   disabledHeaderColor,
-  bodyFontSize,
-  iconFontSize,
-  sectionHeaderFontSize,
   globalFontRegular,
   globalFontMedium,
   globalFontSemiBold,
+  globalFontSizeSmaller,
+  globalFontSizeSmall,
+  globalFontSize,
+  globalFontSizeMedium,
+  globalFontSizeLarger,
   globalPaddingJumbo,
   globalPaddingLarge,
   globalPaddingMedium,
@@ -27,8 +29,6 @@ const fullWidth = Dimensions.get('window').width
 
 export const whiteTransparent = 'rgba(255, 255, 255, 0.5)'
 export const facebookColor = '#4267B2'
-
-export const backButtonFontSize = 28
 
 const LoginStyles = {
   // BACKGROUND IMAGE STYLES
@@ -91,7 +91,7 @@ const LoginStyles = {
   buttonText: {
     color: white,
     fontFamily: globalFontSemiBold,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSize,
     textAlign: 'center',
   },
   buttonSecondary: {
@@ -106,7 +106,7 @@ const LoginStyles = {
   buttonSecondaryText: {
     color: whiteTransparent,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSize,
     textAlign: 'center',
   },
   buttonTertiary: {
@@ -119,13 +119,13 @@ const LoginStyles = {
     justifyContent: 'center',
   },
   buttonTertiaryIcon: {
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSizeMedium,
     paddingRight: globalPaddingSmall,
   },
   buttonTertiaryText: {
     color: textColor,
     fontFamily: globalFontRegular,
-    fontSize: sectionHeaderFontSize,
+    fontSize: globalFontSize,
     textAlign: 'center',
   },
 
@@ -134,24 +134,24 @@ const LoginStyles = {
     backgroundColor: 'transparent',
     color: facebookColor,
     fontFamily: globalFontMedium,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
   },
   mutedText: {
     color: sectionHeaderColor,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize - 2,
+    fontSize: globalFontSizeSmaller,
   },
   smallText: {
     backgroundColor: 'transparent',
     fontFamily: globalFontMedium,
-    fontSize: bodyFontSize - 2,
+    fontSize: globalFontSizeSmaller,
     paddingBottom: globalPaddingTiny,
     textAlign: 'center',
   },
 
   // ICON STYLES
   backButton: {
-    fontSize: backButtonFontSize,
+    fontSize: globalFontSizeLarger,
     marginLeft: globalMargin,
   },
   arrowIconBlue: {
@@ -163,7 +163,7 @@ const LoginStyles = {
     width: 15,
   },
   phoneIcon: {
-    fontSize: iconFontSize,
+    fontSize: globalFontSize,
     marginRight: globalMarginSmall,
   },
 

@@ -3,8 +3,10 @@ import {
   white,
   containerDarkColor,
   sectionHeaderColor,
-  bodyFontSize,
-  iconFontSize,
+  globalFontSizeSmaller,
+  globalFontSizeSmall,
+  globalFontSize,
+  globalFontSizeMedium,
   globalFontMedium,
   globalFontRegular,
   globalPaddingLarge,
@@ -21,16 +23,10 @@ function wp (percentage) {
 
   return Math.round(value);
 }
-
 const slideWidth = wp(100);
 const itemHorizontalMargin = wp(2);
-
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
-
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
-
-export const bodyFontSizeSmall = 14
-export const closeModalHeaderSize = 21
 
 const TicketWalletStyles = {
   // CONTAINER STYLES
@@ -85,11 +81,11 @@ const TicketWalletStyles = {
   closeModalHeader: {
     color: white,
     fontFamily: globalFontMedium,
-    fontSize: closeModalHeaderSize,
+    fontSize: globalFontSizeMedium,
   },
   details: {
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     color: white,
     paddingRight: globalPaddingSmall,
     paddingVertical: globalPaddingTiny,
@@ -113,13 +109,13 @@ const TicketWalletStyles = {
   iconLink: {
     backgroundColor: 'transparent',
     color: whiteTransparent,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
     paddingRight: globalPaddingTiny,
   },
   iconLinkText: {
     color: whiteTransparent,
     fontFamily: globalFontRegular,
-    fontSize: bodyFontSizeSmall,
+    fontSize: globalFontSizeSmaller,
     paddingRight: globalPaddingTiny,
   },
 
@@ -145,7 +141,7 @@ const TicketWalletStyles = {
   },
   placeholderText: {
     fontFamily: globalFontMedium,
-    fontSize: bodyFontSize,
+    fontSize: globalFontSizeSmall,
   },
 
   // BOTTOM NAV STYLES
@@ -166,7 +162,7 @@ const TicketWalletStyles = {
   },
   bottomNavIcon: {
     color: primaryColor,
-    fontSize: iconFontSize,
+    fontSize: globalFontSize,
     paddingHorizontal: globalPaddingTiny,
   },
   bottomNavLinkText: {
