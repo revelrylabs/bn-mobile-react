@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
@@ -127,7 +128,7 @@ export default class SignUp extends Component {
                   colors={['#5491CC', '#9A68B2', '#E53D96']}
                   style={loginStyles.button}
                 >
-                  <Text style={loginStyles.buttonText}>Signing up</Text>
+                  <ActivityIndicator color="#FFF" />
                 </LinearGradient>
               }
             >

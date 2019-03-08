@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, Image, TextInput, TouchableHighlight} from 'react-native'
+import {View, Text, Image, TextInput, TouchableHighlight, ActivityIndicator} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -105,7 +105,7 @@ export default class LogIn extends Component {
                 colors={['#5491CC', '#9A68B2', '#E53D96']}
                 style={loginStyles.button}
               >
-                <Text style={loginStyles.buttonText}>Logging in</Text>
+                <ActivityIndicator color="#FFF" />
               </LinearGradient>
             }
           >
