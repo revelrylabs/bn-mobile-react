@@ -14,6 +14,7 @@ import {
   globalPaddingTiny,
   globalPaddingSmall,
   globalPaddingLarge,
+  globalPaddingLarger,
 } from './sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -41,7 +42,7 @@ const NavigationStyles = {
     fontSize: globalFontSizeSmall,
     ...Platform.select({
       android: {
-        paddingLeft: globalPaddingLarge,
+        paddingLeft: globalPaddingLarger,
       },
     })
   },
