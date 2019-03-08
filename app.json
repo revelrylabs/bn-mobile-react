@@ -18,7 +18,13 @@
     "android": {
       "package": "com.bigneon.mobile",
       "versionCode": 32,
-      "permissions": ["CAMERA", "CAMERA_ROLL", "NOTIFICATIONS", "LOCATION"]
+      "permissions": [
+        "CAMERA",
+        "CAMERA_ROLL",
+        "NOTIFICATIONS",
+        "LOCATION",
+        "ACCESS_NETWORK_STATE"
+      ]
     },
     "hooks": {
       "postPublish": [
