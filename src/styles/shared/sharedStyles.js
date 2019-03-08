@@ -3,7 +3,6 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters'
 const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
-
 export const primaryColor = '#FF20B1'
 export const secondaryColor = '#707CED'
 export const tertiaryColor = '#4EB0E5'
@@ -44,6 +43,7 @@ export const globalFontSemiBold = 'tt_commons_demibold'
 export const globalFontBold = 'tt_commons_bold'
 export const globalFontItalic = 'tt_commons_italic'
 
+// Font Sizes use react-native-size-matters viewport functions
 export const globalFontSizeTiny = moderateScale(13)
 export const globalFontSizeSmaller = moderateScale(14)
 export const globalFontSizeSmall = moderateScale(16)
