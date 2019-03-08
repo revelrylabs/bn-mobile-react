@@ -2,10 +2,7 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Text, View, TouchableHighlight, Image, StyleSheet} from 'react-native'
 import {BarCodeScanner, Permissions, BlurView} from 'expo'
-import {
-  MaterialIcons,
-  EvilIcons,
-} from '@expo/vector-icons'
+import {MaterialIcons, EvilIcons} from '@expo/vector-icons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventDetailsStyles from '../styles/event_details/eventDetailsStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
@@ -15,6 +12,7 @@ import {username} from '../string'
 import {imageSourceUrl} from '../image'
 import ticketScanLog from '../ticket-scan-log'
 import {DateTime} from 'luxon'
+import {NavigationEvents} from 'react-navigation'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
@@ -36,7 +34,7 @@ const SCAN_ALERT_CONFIG = {
   error: {
     icon: 'exclamation',
     style: eventScannerStyles.messageIconError,
-  }
+  },
 }
 
 // props for the StatusMessage component, based on the presence and type of error
@@ -65,7 +63,8 @@ function getStatusMessageConfig(error) {
   if (message === 'missing_redeem_key') {
     return {
       ...SCAN_ALERT_CONFIG.error,
-      text: 'Cannot  check-in via scan. Ticket may be a screenshot or need to be reloaded. Or use the Guest List.',
+      text:
+        'Cannot  check-in via scan. Ticket may be a screenshot or need to be reloaded. Or use the Guest List.',
     }
   }
 
@@ -75,19 +74,26 @@ function getStatusMessageConfig(error) {
 // The little UI bit that toggles between scan modes
 function ModeControl({mode, toggle}) {
   return (
-    <TouchableHighlight style={eventScannerStyles.pillContainer} onPress={toggle}>
+    <TouchableHighlight
+      style={eventScannerStyles.pillContainer}
+      onPress={toggle}
+    >
       <View style={styles.flexRowCenter}>
-        <Text style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}>Check-in Mode:</Text>
-        <Text style={eventScannerStyles.pillTextPrimary}>{mode.toUpperCase()}</Text>
+        <Text
+          style={[eventScannerStyles.pillTextWhite, styles.marginRightTiny]}
+        >
+          Check-in Mode:
+        </Text>
+        <Text style={eventScannerStyles.pillTextPrimary}>
+          {mode.toUpperCase()}
+        </Text>
       </View>
     </TouchableHighlight>
   )
 }
 
 function BottomTab({children}) {
-  return (
-    <View style={eventScannerStyles.mainBody}>{children}</View>
-  )
+  return <View style={eventScannerStyles.mainBody}>{children}</View>
 }
 
 // The default bottom tab that lets you bounce over to the guest list
@@ -95,7 +101,12 @@ function GuestListTab({navigate}) {
   return (
     <View style={eventDetailsStyles.fixedFooter}>
       <View style={styles.buttonContainer}>
-        <TouchableHighlight style={styles.button} onPress={() => navigate('GuestList')}>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => {
+            navigate('GuestList')
+          }}
+        >
           <Text style={styles.buttonText}>Guest List</Text>
         </TouchableHighlight>
       </View>
@@ -106,7 +117,9 @@ function GuestListTab({navigate}) {
 // The alternative bottom tab that displays your scanned ticket details when you've done a manual mode scan
 function TicketDetailsTab({isBusy, cancel, checkIn}) {
   return (
-    <View style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}>
+    <View
+      style={[eventDetailsStyles.mainBodyContent, styles.paddingBottomLarge]}
+    >
       <View style={styles.flexRowSpaceBetween}>
         {isBusy ? (
           <Text>Checking in...</Text>
@@ -115,12 +128,25 @@ function TicketDetailsTab({isBusy, cancel, checkIn}) {
             <TouchableHighlight
               style={[eventDetailsStyles.buttonRounded, styles.marginRightTiny]}
             >
-              <Text style={eventDetailsStyles.buttonRoundedText} onPress={cancel}>Cancel</Text>
+              <Text
+                style={eventDetailsStyles.buttonRoundedText}
+                onPress={cancel}
+              >
+                Cancel
+              </Text>
             </TouchableHighlight>
             <TouchableHighlight
-              style={[eventDetailsStyles.buttonRoundedActive, styles.marginLeftTiny]}
+              style={[
+                eventDetailsStyles.buttonRoundedActive,
+                styles.marginLeftTiny,
+              ]}
             >
-              <Text style={eventDetailsStyles.buttonRoundedActiveText} onPress={checkIn}>Check In</Text>
+              <Text
+                style={eventDetailsStyles.buttonRoundedActiveText}
+                onPress={checkIn}
+              >
+                Check In
+              </Text>
             </TouchableHighlight>
           </Fragment>
         )}
@@ -133,11 +159,9 @@ function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
   let redeemedText = ''
 
   if (ticket.status === 'Redeemed') {
-    redeemedText = redeemedAt ? (
-      `You checked them in ${DateTime.fromJSDate(redeemedAt).toRelative()}`
-    ) : (
+    redeemedText = redeemedAt ?
+      `You checked them in ${DateTime.fromJSDate(redeemedAt).toRelative()}` :
       'Redeemed'
-    )
   }
 
   const redeemedContent = redeemedText ? (
@@ -145,7 +169,10 @@ function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
   ) : null
 
   return (
-    <TouchableHighlight style={eventScannerStyles.headerActionsWrapper} onPress={onPress}>
+    <TouchableHighlight
+      style={eventScannerStyles.headerActionsWrapper}
+      onPress={onPress}
+    >
       <View style={[eventScannerStyles.pillContainer, styles.marginBottom]}>
         <View style={styles.flexRowFlexStartCenter}>
           <View style={ticketWalletStyles.avatarContainer}>
@@ -156,8 +183,12 @@ function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
             />
           </View>
           <View>
-            <Text style={eventScannerStyles.pillTextWhite}>{username(user)}</Text>
-            <Text style={eventScannerStyles.pillTextSubheader}>{ticket.ticket_type_name}</Text>
+            <Text style={eventScannerStyles.pillTextWhite}>
+              {username(user)}
+            </Text>
+            <Text style={eventScannerStyles.pillTextSubheader}>
+              {ticket.ticket_type_name}
+            </Text>
             {redeemedContent}
           </View>
           {/* <MaterialIcons style={eventScannerStyles.checkIcon} name="check-circle" /> */}
@@ -180,9 +211,7 @@ function StatusMessage({text, icon, style}) {
 // Throw this after another absolute fill view to darken/blur it
 // Might only darken and not blur on Android?
 function BlurOverlay() {
-  return (
-    <BlurView tint="dark" intensity={90} style={StyleSheet.absoluteFill} />
-  )
+  return <BlurView tint="dark" intensity={90} style={StyleSheet.absoluteFill} />
 }
 
 const RESET_STATE = {
@@ -214,7 +243,7 @@ export default class EventScanner extends Component {
     this.setState({hasCameraPermission: status === 'granted'})
   }
 
-  onBarCodeRead = async (scanResult) => {
+  onBarCodeRead = async(scanResult) => {
     // don't scan while we're mid-checkin
     if (this.isScanningDisabled) {
       return
@@ -240,6 +269,7 @@ export default class EventScanner extends Component {
   _reset() {
     // unlock so we can scan again
     this.isScanningDisabled = false
+    this.resetTimer = null
     this.setState(RESET_STATE)
   }
 
@@ -257,7 +287,7 @@ export default class EventScanner extends Component {
     }
 
     this.setState({showStatusMessage: true})
-    setTimeout(() => this._reset(), delay)
+    this.resetTimer = setTimeout(() => this._reset(), delay)
   }
 
   // actually redeem the ticket
@@ -269,7 +299,9 @@ export default class EventScanner extends Component {
 
   // fetch ticket details and save in state
   async _getTicketDetails(scannedCode) {
-    const ticketDetails = await this.props.screenProps.eventManager.getTicketDetails(scannedCode)
+    const ticketDetails = await this.props.screenProps.eventManager.getTicketDetails(
+      scannedCode
+    )
 
     // decorate with info from our scan log
     ticketDetails.redeemedAt = ticketScanLog.getRedeemedAt(ticketDetails.ticket)
@@ -300,7 +332,7 @@ export default class EventScanner extends Component {
   }
 
   // take the current manual-mode-scanned ticket and redeem it
-  commitManual = async () => {
+  commitManual = async() => {
     try {
       this.setState({isCommittingManualCheckIn: true})
       await this._redeem(this.state.scannedCode)
@@ -328,7 +360,9 @@ export default class EventScanner extends Component {
 
   toggleCheckInMode = () => {
     this._reset()
-    this.setCheckInMode(this.state.checkInMode === 'automatic' ? 'manual' : 'automatic')
+    this.setCheckInMode(
+      this.state.checkInMode === 'automatic' ? 'manual' : 'automatic'
+    )
   }
 
   // if we have the details of ticket to show, we do that; otherwise we link to the guest list
@@ -349,17 +383,27 @@ export default class EventScanner extends Component {
     )
   }
 
+  onDidFocus = () => {
+    this.setState({isFocused: true})
+  }
+
+  onDidBlur = () => {
+    this.setState({isFocused: false})
+  }
+
   get ticketDetailsPill() {
     const {ticketDetails} = this.state
 
-    return ticketDetails ? (
-      <TicketDetailsPill {...ticketDetails} />
-    ) : null
+    return ticketDetails ? <TicketDetailsPill {...ticketDetails} /> : null
   }
 
   render() {
     const {statusMessage} = this
-    const {hasCameraPermission, checkInMode, isCommittingManualCheckIn} = this.state
+    const {
+      hasCameraPermission,
+      checkInMode,
+      isCommittingManualCheckIn,
+    } = this.state
 
     if (hasCameraPermission === null) {
       return <Text>Requesting for camera permission</Text>
@@ -370,17 +414,28 @@ export default class EventScanner extends Component {
 
     return (
       <View>
-        <BarCodeScanner
-          onBarCodeRead={this.onBarCodeRead}
-          style={StyleSheet.absoluteFill}
+        <NavigationEvents
+          onDidFocus={this.onDidFocus}
+          onDidBlur={this.onDidBlur}
         />
+
+        {this.state.isFocused && (
+          <BarCodeScanner
+            onBarCodeRead={this.onBarCodeRead}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
 
         {/* When there's a status message, throw an overlay on the camera to make things readable */}
         {statusMessage && <BlurOverlay />}
 
         <View style={eventScannerStyles.eventScannerContainer}>
-
-          <View style={[eventScannerStyles.headerActionsWrapper, styles.flexRowSpaceBetween]}>
+          <View
+            style={[
+              eventScannerStyles.headerActionsWrapper,
+              styles.flexRowSpaceBetween,
+            ]}
+          >
             <View style={eventDetailsStyles.backArrowCircleContainer}>
               <MaterialIcons
                 style={eventDetailsStyles.backArrow}
@@ -410,9 +465,7 @@ export default class EventScanner extends Component {
 
             {this.bottomTabContent}
           </BottomTab>
-
         </View>
-
       </View>
     )
   }
