@@ -15,6 +15,10 @@
         "usesNonExemptEncryption": false
       }
     },
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover"
+    },
     "android": {
       "package": "com.bigneon.mobile",
       "versionCode": 33,
