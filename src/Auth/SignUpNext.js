@@ -13,7 +13,6 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {Feather} from '@expo/vector-icons'
 import {LinearGradient} from 'expo'
-import {LoadingScreen} from '../constants/modals'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
