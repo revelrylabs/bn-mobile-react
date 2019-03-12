@@ -9,6 +9,10 @@ import EventManagerStyles from '../styles/account/eventManagerStyles'
 const styles = SharedStyles.createStyles()
 const eventManagerStyles = EventManagerStyles.createStyles()
 
+function HeaderText({children}) {
+  return <Text style={[styles.headerSecondary, styles.textCenter]}>{children}</Text>
+}
+
 function ScanButton({onPress}) {
   return (
     <View style={[styles.buttonContainer, styles.marginVertical]}>
@@ -24,11 +28,26 @@ function ScanButton({onPress}) {
   )
 }
 
-function DoorEventSummary({event: {name}, onPressScan}) {
+function DoorEventDashboard({
+  event: {
+    tickets_redeemed: redeemed,
+    sold_held: sold1,
+    sold_unreserved: sold2,
+  },
+}) {
   return (
     <View>
-      <Text style={[styles.headerSecondary, styles.textCenter]}>{name}</Text>
+      <HeaderText>{redeemed} of {sold1 + sold2} redeemed</HeaderText>
+    </View>
+  )
+}
+
+function DoorEventSummary({event: {name}, dashboard, onPressScan}) {
+  return (
+    <View>
+      <HeaderText>{name}</HeaderText>
       <ScanButton onPress={onPressScan} />
+      {dashboard && <DoorEventDashboard {...dashboard} />}
     </View>
   )
 }
