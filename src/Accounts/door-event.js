@@ -1,18 +1,27 @@
 import React, {Component} from 'react'
 import {View, TouchableHighlight, Text} from 'react-native'
+import SharedStyles from '../styles/shared/sharedStyles'
+import AccountStyles from '../styles/account/accountStyles'
+import EventManagerStyles from '../styles/account/eventManagerStyles'
+
+const styles = SharedStyles.createStyles()
+const accountStyles = AccountStyles.createStyles()
+const eventManagerStyles = EventManagerStyles.createStyles()
 
 function ScanButton({onPress}) {
   return (
-    <TouchableHighlight onPress={onPress}>
-      <Text>Scan Tickets</Text>
-    </TouchableHighlight>
+    <View style={styles.buttonContainer}>
+      <TouchableHighlight style={styles.buttonSecondary} onPress={onPress}>
+        <Text style={styles.buttonSecondaryText}>Scan Tickets</Text>
+      </TouchableHighlight>
+    </View>
   )
 }
 
 function DoorEventSummary({event: {name}, onPressScan}) {
   return (
-    <View>
-      <Text>{name}</Text>
+    <View style={styles.container}>
+      <Text style={[styles.headerSecondary, styles.textCenter]}>{name}</Text>
       <ScanButton onPress={onPressScan} />
     </View>
   )
