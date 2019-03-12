@@ -69,7 +69,7 @@ const EventManagerStyles = {
   },
 
   // BUTTONS
-  buttonScanTickets: {
+  buttonScanTicket: {
     alignItems: 'center',
     backgroundColor: white,
     borderColor: borderColor,
@@ -80,11 +80,15 @@ const EventManagerStyles = {
     height: 60,
     justifyContent: 'center',
   },
-  buttonScanTicketsText: {
+  buttonScanTicketText: {
     color: primaryColor,
     fontFamily: globalFontSemiBold,
     fontSize: globalFontSize,
-    textAlign: 'center',
+  },
+  buttonScanIcon: {
+    color: primaryColor,
+    fontSize: globalFontSize,
+    marginRight: globalMarginSmall,
   },
 }
 
