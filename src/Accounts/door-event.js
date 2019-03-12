@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {View, TouchableHighlight, Text} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import {NavigationEvents} from 'react-navigation'
+import {server, apiErrorAlert} from '../constants/Server'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventManagerStyles from '../styles/account/eventManagerStyles'
 
@@ -24,7 +26,7 @@ function ScanButton({onPress}) {
 
 function DoorEventSummary({event: {name}, onPressScan}) {
   return (
-    <View style={styles.containerFullHeight}>
+    <View>
       <Text style={[styles.headerSecondary, styles.textCenter]}>{name}</Text>
       <ScanButton onPress={onPressScan} />
     </View>
@@ -32,18 +34,50 @@ function DoorEventSummary({event: {name}, onPressScan}) {
 }
 
 export default class DoorEvent extends Component {
+  state = {
+    dashboardResponse: null,
+  }
+
   get event() {
     return this.props.navigation.getParam('event')
   }
 
-  chooseEvent = async () => {
+  get dashboardResponse() {
+    return this.state.dashboardResponse
+  }
+
+  get dashboardData() {
+    return this.dashboardResponse && this.dashboardResponse.data
+  }
+
+  reload = async() => {
+    const {id} = this.event
+
+    this.setState({dashboardResponse: null})
+    try {
+      const dashboardResponse = await server.events.dashboard({id})
+
+      this.setState({dashboardResponse})
+    } catch (error) {
+      apiErrorAlert(error)
+    }
+  }
+
+  chooseEvent = async() => {
     await this.props.screenProps.eventManager.scanForEvent(this.event)
     this.props.navigation.navigate('EventScanner')
   }
 
   render() {
     return (
-      <DoorEventSummary event={this.event} onPressScan={this.chooseEvent} />
+      <View style={styles.containerFullHeight}>
+        <NavigationEvents onDidFocus={this.reload} />
+        <DoorEventSummary
+          event={this.event}
+          dashboard={this.dashboardData}
+          onPressScan={this.chooseEvent}
+        />
+      </View>
     )
   }
 }
