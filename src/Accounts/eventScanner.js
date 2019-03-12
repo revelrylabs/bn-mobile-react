@@ -402,7 +402,7 @@ export default class EventScanner extends Component {
   }
 
   render() {
-    const {statusMessage} = this
+    const {statusMessage, event} = this
     const {
       hasCameraPermission,
       checkInMode,
@@ -445,7 +445,7 @@ export default class EventScanner extends Component {
                 style={eventDetailsStyles.backArrow}
                 name="close"
                 onPress={() => {
-                  this.props.navigation.navigate('ManageEvents')
+                  this.props.navigation.navigate('DoorEvent', {event})
                 }}
               />
             </View>
