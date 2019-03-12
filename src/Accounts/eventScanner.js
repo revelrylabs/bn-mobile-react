@@ -99,12 +99,10 @@ function BottomTab({children}) {
 // The default bottom tab that lets you bounce over to the guest list
 function GuestListTab({onPress}) {
   return (
-    <View style={eventDetailsStyles.fixedFooter}>
-      <View style={styles.buttonContainer}>
-        <TouchableHighlight style={styles.button} onPress={onPress}>
-          <Text style={styles.buttonText}>Guest List</Text>
-        </TouchableHighlight>
-      </View>
+    <View style={styles.buttonContainer}>
+      <TouchableHighlight style={styles.button} onPress={onPress}>
+        <Text style={styles.buttonText}>Guest List</Text>
+      </TouchableHighlight>
     </View>
   )
 }
