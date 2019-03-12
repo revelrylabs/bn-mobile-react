@@ -474,6 +474,9 @@ const SharedStyles = {
   marginHorizontal: {
     marginHorizontal: globalMargin,
   },
+  marginVertical: {
+    marginVertical: globalMargin,
+  },
   lineHeight: {
     paddingBottom: globalPaddingTiny / 2,
   },
