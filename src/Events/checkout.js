@@ -114,7 +114,7 @@ export default class Checkout extends Component {
           {this.promoDetails}
 
           <View style={checkoutStyles.rowContainer}>
-            <View style={checkoutStyles.row}>
+            <View style={[checkoutStyles.row, {flex: 1.0}]}>
               <View>
                 <Text style={[checkoutStyles.ticketHeader, styles.marginBottomTiny]}>Quantity</Text>
                 <Text style={checkoutStyles.ticketSubHeader}>{this.ticketType.name}</Text>
