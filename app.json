@@ -3,7 +3,7 @@
     "sdkVersion": "31.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
-    "version": "1.0.33",
+    "version": "1.0.34",
     "slug": "big-neon-mobile",
     "orientation": "portrait",
     "ios": {
@@ -21,7 +21,7 @@
     },
     "android": {
       "package": "com.bigneon.mobile",
-      "versionCode": 33,
+      "versionCode": 34,
       "permissions": [
         "CAMERA",
         "CAMERA_ROLL",
