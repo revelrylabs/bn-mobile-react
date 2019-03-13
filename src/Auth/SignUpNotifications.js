@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Text,
+  Image,
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native'
@@ -85,6 +86,13 @@ export default class SignUpNotifications extends Component {
           keyboardShouldPersistTaps={'handled'}
         >
           <View>
+            <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomLarge]}>Don't Miss Out!</Text>
+            <Image
+              source={require('../../assets/ios-notification.png')}
+            />
+            <Text style={[styles.bodyText, styles.textCenter, styles.paddingVertical]}>
+              Turn on notifications to find out when a friend sends you tickets, or your upcoming events change.
+            </Text>
             <BusyButton
               style={loginStyles.buttonContainer}
               onPress={this.setupNotifications}
@@ -104,7 +112,7 @@ export default class SignUpNotifications extends Component {
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 0}}
                 colors={['#5491CC', '#9A68B2', '#E53D96']}
-                style={loginStyles.button}
+                style={[loginStyles.button, styles.marginVertical]}
               >
                 <Text style={loginStyles.buttonText}>
                   {'Turn notifications ON'}
@@ -116,7 +124,10 @@ export default class SignUpNotifications extends Component {
               onPress={this.skipNotificationsSetup}
               underlayColor="rgba(0, 0, 0, 0)"
             >
-              <Text>{"Nah, hopefully I'll figure it out"}</Text>
+              <View style={styles.flexRowCenter}>
+                <Text style={loginStyles.mutedText}>{"Nah, hopefully I'll figure it out"}</Text>
+                <Icon style={loginStyles.mutedText} name="keyboard-arrow-right" />
+              </View>
             </TouchableHighlight>
           </View>
         </ScrollView>
