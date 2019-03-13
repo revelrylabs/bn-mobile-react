@@ -15,6 +15,7 @@ import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
 import EventScannerStyles from '../styles/account/eventScannerStyles'
 import BusyButton from '../BusyButton'
+import {registerPushTokenIfPermitted} from '../notifications'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -57,6 +58,18 @@ export default class SignUpNotifications extends Component {
       navigation: {navigate},
     } = this.props
 
+    this.setState({isBusy: true})
+    await registerPushTokenIfPermitted()
+
+    navigate('AuthLoading')
+  }
+
+  skipNotificationsSetup = async () => {
+    const {
+      navigation: {navigate},
+    } = this.props
+
+    this.setState({isBusy: true})
     navigate('AuthLoading')
   }
 
@@ -98,6 +111,13 @@ export default class SignUpNotifications extends Component {
                 </Text>
               </LinearGradient>
             </BusyButton>
+
+            <TouchableHighlight
+              onPress={this.skipNotificationsSetup}
+              underlayColor="rgba(0, 0, 0, 0)"
+            >
+              <Text>{"Nah, hopefully I'll figure it out"}</Text>
+            </TouchableHighlight>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
