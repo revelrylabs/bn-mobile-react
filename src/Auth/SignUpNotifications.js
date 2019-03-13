@@ -12,27 +12,25 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
-import FormStyles from '../styles/shared/formStyles'
 import LoginStyles from '../styles/login/loginStyles'
-import EventScannerStyles from '../styles/account/eventScannerStyles'
 import BusyButton from '../BusyButton'
 import {registerPushTokenIfPermitted} from '../notifications'
 
 const styles = SharedStyles.createStyles()
-const formStyles = FormStyles.createStyles()
 const loginStyles = LoginStyles.createStyles()
-const eventScannerStyles = EventScannerStyles.createStyles()
 
 /* eslint-disable camelcase,space-before-function-paren */
 
-const returnToButton = (navigation) => (
-  <TouchableHighlight
-    onPress={() => navigation.goBack()}
-    underlayColor="rgba(0, 0, 0, 0)"
-  >
-    <Icon style={loginStyles.backButton} name="arrow-back" />
-  </TouchableHighlight>
-)
+function ReturnToButton({navigation}) {
+  return (
+    <TouchableHighlight
+      onPress={() => navigation.goBack()}
+      underlayColor="rgba(0, 0, 0, 0)"
+    >
+      <Icon style={loginStyles.backButton} name="arrow-back" />
+    </TouchableHighlight>
+  )
+}
 
 export default class SignUpNotifications extends Component {
   static propTypes = {
@@ -41,7 +39,7 @@ export default class SignUpNotifications extends Component {
 
   static navigationOptions = ({navigation}) => {
     return {
-      headerLeft: returnToButton(navigation),
+      headerLeft: <ReturnToButton navigation={navigation} />,
       headerStyle: loginStyles.navigationContainer,
     }
   }
@@ -86,12 +84,25 @@ export default class SignUpNotifications extends Component {
           keyboardShouldPersistTaps={'handled'}
         >
           <View>
-            <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomLarge]}>Don't Miss Out!</Text>
-            <Image
-              source={require('../../assets/ios-notification.png')}
-            />
-            <Text style={[styles.bodyText, styles.textCenter, styles.paddingVertical]}>
-              Turn on notifications to find out when a friend sends you tickets, or your upcoming events change.
+            <Text
+              style={[
+                styles.headerSecondary,
+                styles.textCenter,
+                styles.paddingBottomLarge,
+              ]}
+            >
+              {"Don't Miss Out!"}
+            </Text>
+            <Image source={require('../../assets/ios-notification.png')} />
+            <Text
+              style={[
+                styles.bodyText,
+                styles.textCenter,
+                styles.paddingVertical,
+              ]}
+            >
+              Turn on notifications to find out when a friend sends you tickets,
+              or your upcoming events change.
             </Text>
             <BusyButton
               style={loginStyles.buttonContainer}
@@ -125,8 +136,13 @@ export default class SignUpNotifications extends Component {
               underlayColor="rgba(0, 0, 0, 0)"
             >
               <View style={styles.flexRowCenter}>
-                <Text style={loginStyles.mutedText}>{"Nah, hopefully I'll figure it out"}</Text>
-                <Icon style={loginStyles.mutedText} name="keyboard-arrow-right" />
+                <Text style={loginStyles.mutedText}>
+                  {"Nah, hopefully I'll figure it out"}
+                </Text>
+                <Icon
+                  style={loginStyles.mutedText}
+                  name="keyboard-arrow-right"
+                />
               </View>
             </TouchableHighlight>
           </View>
