@@ -9,6 +9,10 @@ import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import {Brightness} from 'expo'
 import {optimizeCloudinaryImage} from '../cloudinary'
 
+// In case we cannot get a value for the brightness from
+// Brightness.getBrightnessAsync()
+const DEFAULT_BRIGHTNESS = 0.3
+
 const styles = SharedStyles.createStyles()
 
 const ticketWalletStyles = TicketWalletStyles.createStyles()
@@ -18,14 +22,14 @@ async function getBrightness() {
 }
 
 /**
- * Turned off because of https://github.com/revelrylabs/bn-mobile-react/issues/398
  *
  * Android doesn't return to initial brightness.
  * `setSystemBrightness`, which might be the solution,
  * is still experimental in Expo as of the time this comment was written.
+ * https://github.com/revelrylabs/bn-mobile-react/issues/398
+ * is still a problem, but included a default brightness value
  */
 async function setBrightness(zeroToOne) {
-  return
   await Brightness.setBrightnessAsync(zeroToOne)
 }
 
@@ -47,6 +51,11 @@ export default class EventsTicket extends Component {
 
   async doBrightness() {
     this._prevBrightness = await getBrightness()
+
+    if(!this._prevBrightness) {
+      this._prevBrightness = DEFAULT_BRIGHTNESS
+    }
+
     await setBrightness(1)
   }
 
