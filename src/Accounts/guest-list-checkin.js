@@ -22,6 +22,7 @@ import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
 import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view'
 import {KeyboardDismisser} from '../ui'
+import {LoadingScreen} from '../constants/modals'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
@@ -303,7 +304,11 @@ export default class ManualCheckin extends Component {
             </View>
 
             {isFetchingGuests && <BusyState />}
-            
+
+            <LoadingScreen
+              toggleModal={this.toggleLoadingModal}
+            />
+
             <GuestList
               style={{flex: 1}}
               guests={guests}
