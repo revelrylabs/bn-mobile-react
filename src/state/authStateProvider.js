@@ -4,6 +4,7 @@ import {AsyncStorage} from 'react-native'
 import {server, refreshWithToken, apiErrorAlert} from '../constants/Server'
 import {registerPushTokenIfPermitted} from '../notifications'
 import {identify, track} from '../constants/analytics'
+import {facebookConnect} from '../facebook'
 
 /* eslint-disable camelcase,space-before-function-paren */
 
@@ -160,6 +161,18 @@ class AuthContainer extends Container {
 
       navigate('LogIn')
       return false
+    } finally {
+      await this.setState({isFetching: false})
+    }
+  }
+
+  facebook = async () => {
+    await this.setState({isFetching: true})
+    try {
+      const response = await facebookConnect()
+      // TODO: finish login
+    } catch (error) {
+      apiErrorAlert(error)
     } finally {
       await this.setState({isFetching: false})
     }

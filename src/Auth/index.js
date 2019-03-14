@@ -16,6 +16,8 @@ export default class AuthIndex extends Component {
   }
 
   render() {
+    const {facebook} = this.props.screenProps.auth
+
     return (
       <View style={loginStyles.signupBkgdContainer}>
         <Image
@@ -60,7 +62,7 @@ export default class AuthIndex extends Component {
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
-                onPress={() => alert('Not implemented')}
+                onPress={facebook}
                 style={loginStyles.buttonSecondary}
               >
                 <Text style={loginStyles.buttonSecondaryText}>

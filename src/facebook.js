@@ -17,7 +17,7 @@ async function requestFacebook() {
 
 // https://docs.expo.io/versions/latest/sdk/facebook/#facebookloginwithreadpermissionsasyncappid-options
 async function connectToBigNeon(facebookResponse) {
-  // TODO
+  alert('Not implemented')
 }
 
 export async function facebookConnect() {
