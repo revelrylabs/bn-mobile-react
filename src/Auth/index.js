@@ -56,6 +56,18 @@ export default class AuthIndex extends Component {
                 </Text>
               </TouchableHighlight>
             </View>
+
+            <View style={loginStyles.buttonContainer}>
+              <TouchableHighlight
+                underlayColor="rgba(0, 0, 0, 0)"
+                onPress={() => alert('Not implemented')}
+                style={loginStyles.buttonSecondary}
+              >
+                <Text style={loginStyles.buttonSecondaryText}>
+                  Facebook Connect
+                </Text>
+              </TouchableHighlight>
+            </View>
           </View>
         </View>
       </View>
