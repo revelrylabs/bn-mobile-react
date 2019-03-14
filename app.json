@@ -6,6 +6,9 @@
     "version": "1.0.36",
     "slug": "big-neon-mobile",
     "orientation": "portrait",
+    "facebookScheme": "fb1737006886375028",
+    "facebookAppId": "1737006886375028",
+    "facebookDisplayName": "Big Neon",
     "ios": {
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Big Neon allows you to select a photo from your library to use for your profile picture"
