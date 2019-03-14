@@ -37,10 +37,10 @@ function shouldAllowCheckIn({status, redeem_key}) {
 
 function guestStatusBadgeStyle(status) {
   switch (status) {
-    case 'Purchased':
-      return doormanStyles.ticketPurchasedBadgeWrapper
-    default:
-      null
+  case 'Purchased':
+    return doormanStyles.ticketPurchasedBadgeWrapper
+  default:
+    null
   }
 }
 
@@ -140,7 +140,7 @@ function checkInErrorText(guest) {
 class GuestList extends Component {
   // Calm down, eslint. Quit punishing us for handling errors. Geez.
   /* eslint-disable-next-line complexity */
-  onRowOpen = async (rowKey, rowMap, toValue) => {
+  onRowOpen = async(rowKey, rowMap, toValue) => {
     const guest = this.props.guests.find((item) => item.id === rowKey)
 
     if (canCheckOut(guest) && toValue === SCREEN_WIDTH) {
@@ -169,7 +169,11 @@ class GuestList extends Component {
         keyExtractor={({id}) => id}
         onRowOpen={this.onRowOpen}
         renderItem={({item}) => (
-          <SwipeRow disableLeftSwipe swipeToOpenPercent={40} leftOpenValue={SCREEN_WIDTH}>
+          <SwipeRow
+            disableLeftSwipe
+            swipeToOpenPercent={40}
+            leftOpenValue={SCREEN_WIDTH}
+          >
             <GuestTicketCardUnderlay guest={item} />
             <GuestTicketCard guest={item} onSelect={onSelect} />
           </SwipeRow>
@@ -245,7 +249,7 @@ export default class ManualCheckin extends Component {
     this.selectGuest(null)
   }
 
-  checkInGuest = async (guest) => {
+  checkInGuest = async(guest) => {
     const {event_id, id: ticket_id, redeem_key} = guest
 
     try {
@@ -262,7 +266,9 @@ export default class ManualCheckin extends Component {
   get shouldShowLoadingScreen() {
     const {isFetchingGuests, guests, guestListQuery} = this.props
 
-    return isFetchingGuests && guests.length === 0 && guestListQuery.length === 0
+    return (
+      isFetchingGuests && guests.length === 0 && guestListQuery.length === 0
+    )
   }
 
   render() {

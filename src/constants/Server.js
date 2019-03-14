@@ -5,23 +5,19 @@ import {AsyncStorage} from 'react-native'
 // import mocker from './mocker'
 import {apiURL, timeout} from './config'
 import Base64 from './base64'
-import { Constants } from 'expo';
+import {Constants} from 'expo'
 
-const DEFAULT_ERROR_MSG =  'There was a problem.'
+const DEFAULT_ERROR_MSG = 'There was a problem.'
 
 function buildErrorMessage({error, fields}) {
   let msg = error
 
   if (typeof fields === 'object') {
-    const fieldsString = Object
-      .keys(fields)
-      .map(name => fields[name].map(x => (x.message || x.code)).join('\n'))
+    const fieldsString = Object.keys(fields)
+      .map((name) => fields[name].map((x) => x.message || x.code).join('\n'))
       .join('\n')
 
-    msg = [
-      msg,
-      fieldsString,
-    ].join('\n\n')
+    msg = [msg, fieldsString].join('\n\n')
   }
 
   return msg
@@ -41,11 +37,14 @@ export function apiErrorAlert(error, msg = DEFAULT_ERROR_MSG) {
 
   const {data} = response
 
-  return alert(data && data.error && buildErrorMessage(data) || msg)
+  return alert((data && data.error && buildErrorMessage(data)) || msg)
 }
 
 export async function retrieveTokens() {
-  const [userToken, refreshToken] = await AsyncStorage.multiGet(['userToken', 'refreshToken']);
+  const [userToken, refreshToken] = await AsyncStorage.multiGet([
+    'userToken',
+    'refreshToken',
+  ])
 
   user = userToken[1] ? userToken[1] : false
   refresh = refreshToken[1] ? refreshToken[1] : false
@@ -53,23 +52,37 @@ export async function retrieveTokens() {
   return {userToken: user, refreshToken: refresh}
 }
 
-function getDeviceHeaders(){
+function getDeviceHeaders() {
   const headers = {
-    'x-bn-platform-name': (Constants.platform.ios) ? 'ios': (Constants.platform.android) ? 'android' : 'unknown',
-    'x-bn-device-model-year': (Constants.platform.ios) ? Constants.platform.ios.model : Constants.deviceYearClass,
-    'x-bn-app-build': (Constants.platform.ios) ? Constants.platform.ios.buildNumber : (Constants.platform.android) ? Constants.platform.android.versionCode : "unknown",
-    'x-bn-install-id': Constants.installationId
+    'x-bn-platform-name': Constants.platform.ios ?
+      'ios' :
+      Constants.platform.android ?
+        'android' :
+        'unknown',
+    'x-bn-device-model-year': Constants.platform.ios ?
+      Constants.platform.ios.model :
+      Constants.deviceYearClass,
+    'x-bn-app-build': Constants.platform.ios ?
+      Constants.platform.ios.buildNumber :
+      Constants.platform.android ?
+        Constants.platform.android.versionCode :
+        'unknown',
+    'x-bn-install-id': Constants.installationId,
   }
-  return headers;
+
+  return headers
 }
 
-export const bigneonServer = new Bigneon.Server({prefix: apiURL, timeout: timeout}, { headers: getDeviceHeaders()})// , {}, mocker)
+export const bigneonServer = new Bigneon.Server(
+  {prefix: apiURL, timeout},
+  {headers: getDeviceHeaders()}
+) // , {}, mocker)
 
 function parseJwt(token) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  const base64Url = token.split('.')[1]
+  const base64 = base64Url.replace('-', '+').replace('_', '/')
 
-  return JSON.parse(Base64.atob(base64));
+  return JSON.parse(Base64.atob(base64))
 }
 
 function needsRefresh(token) {
@@ -79,15 +92,20 @@ function needsRefresh(token) {
 
   const user = parseJwt(token)
 
-  return (user && user.exp < Math.floor(Date.now() / 1000))
+  return user && user.exp < Math.floor(Date.now() / 1000)
 }
 
 /* eslint-disable camelcase */
 export async function refreshWithToken(token) {
   const resp = await bigneonServer.auth.refresh({refresh_token: token})
-  const {data: {access_token, refresh_token}} = resp
+  const {
+    data: {access_token, refresh_token},
+  } = resp
 
-  const _setTokens = await AsyncStorage.multiSet([['userToken', access_token], ['refreshToken', refresh_token]])
+  const _setTokens = await AsyncStorage.multiSet([
+    ['userToken', access_token],
+    ['refreshToken', refresh_token],
+  ])
   const _setAPIToken = await bigneonServer.client.setToken(access_token)
 }
 
@@ -101,7 +119,7 @@ async function refresher() {
 }
 
 function wrapInTokenRefresher(fn) {
-  return async (...args) => {
+  return async(...args) => {
     await refresher()
     return await fn(...args)
   }

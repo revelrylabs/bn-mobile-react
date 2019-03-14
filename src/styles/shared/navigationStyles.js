@@ -44,7 +44,7 @@ const NavigationStyles = {
       android: {
         paddingLeft: globalPaddingLarger,
       },
-    })
+    }),
   },
   headerLeftWrapper: {
     flexDirection: 'row',

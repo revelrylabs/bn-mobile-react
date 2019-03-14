@@ -59,7 +59,7 @@ const EventScannerStyles = {
     alignItems: 'center',
     backgroundColor: pillContainerColor,
     borderColor: 'transparent',
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',

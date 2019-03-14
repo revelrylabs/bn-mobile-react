@@ -143,12 +143,12 @@ Ticket.propTypes = {
 
 class TicketsView extends React.Component {
   componentDidMount() {
-    //Capturing if we scrolled to a ticket
+    // Capturing if we scrolled to a ticket
     this.animatedTicketIndex = null
     this.scrolled = false
   }
 
-  requestScrollToTicket = index => {
+  requestScrollToTicket = (index) => {
     this.animatedTicketIndex = index
     this.scrolled = false
   }
@@ -186,7 +186,7 @@ class TicketsView extends React.Component {
     return (
       <FlatList
         {...this.props}
-        ref={ref => {
+        ref={(ref) => {
           this.maybeScrollToTicket(ref)
         }}
         keyExtractor={(item, _) => item.event.id}
@@ -201,23 +201,23 @@ class TicketsView extends React.Component {
             item.tickets,
             ({order_id}) => order_id === purchasedTicket
           ) ? (
-            <AnimatedTicket
-              navigate={navigate}
-              ticket={item}
-              activeTab={activeTab}
-              springValue={springValue}
-              setPurchasedTicket={setPurchasedTicket}
-              requestScrollToTicket={this.requestScrollToTicket}
-              index={index}
-            />
-          ) : (
-            <Ticket
-              navigate={navigate}
-              activeTab={activeTab}
-              ticket={item}
-              setPurchasedTicket={setPurchasedTicket}
-            />
-          )
+              <AnimatedTicket
+                navigate={navigate}
+                ticket={item}
+                activeTab={activeTab}
+                springValue={springValue}
+                setPurchasedTicket={setPurchasedTicket}
+                requestScrollToTicket={this.requestScrollToTicket}
+                index={index}
+              />
+            ) : (
+              <Ticket
+                navigate={navigate}
+                activeTab={activeTab}
+                ticket={item}
+                setPurchasedTicket={setPurchasedTicket}
+              />
+            )
         }}
       />
     )
@@ -264,9 +264,9 @@ export default class MyTickets extends Component {
   }
 
   tabStyle(viewType) {
-    return viewType === this.activeTab
-      ? styles.subnavHeaderActive
-      : styles.subnavHeader
+    return viewType === this.activeTab ?
+      styles.subnavHeaderActive :
+      styles.subnavHeader
   }
 
   tabWrapperStyle(viewType) {
@@ -281,12 +281,12 @@ export default class MyTickets extends Component {
     return EMPTY_TEXT_FOR_ACTIVE_TAB[this.activeTab]
   }
 
-  refreshTickets = async () => {
+  refreshTickets = async() => {
     await this.props.screenProps.store.userTickets()
     this.spring()
   }
 
-  changeTab = tab => {
+  changeTab = (tab) => {
     this.props.screenProps.store.setPurchasedTicket(null)
     this.activeTab = tab
   }

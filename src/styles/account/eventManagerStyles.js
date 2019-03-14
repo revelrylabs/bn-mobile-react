@@ -72,7 +72,7 @@ const EventManagerStyles = {
   buttonScanTicket: {
     alignItems: 'center',
     backgroundColor: white,
-    borderColor: borderColor,
+    borderColor,
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,

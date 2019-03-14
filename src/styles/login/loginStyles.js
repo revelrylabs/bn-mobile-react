@@ -182,10 +182,10 @@ const LoginStyles = {
     height: 55,
     borderColor: 'transparent',
     borderWidth: 1,
-    borderRadius: 55/2,
+    borderRadius: 55 / 2,
     marginRight: globalMargin,
     width: 55,
-  }
+  },
 }
 
 function createStyles(overrides = {}) {

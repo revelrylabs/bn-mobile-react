@@ -25,7 +25,6 @@ const fullWidth = Dimensions.get('window').width
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 export const ticketPriceFontSize = globalFontSizeSmall * 2
 
-
 const CheckoutStyles = {
   // MAIN BODY STYLES
   mainBody: {
@@ -34,15 +33,15 @@ const CheckoutStyles = {
     paddingRight: 0,
     paddingHorizontal: 0,
     minHeight: '100%',
-    marginTop: fullWidth/2 - 50
+    marginTop: fullWidth / 2 - 50,
   },
   checkoutMainBody: {
     marginTop: 100,
   },
   mainBodyContent: {
     backgroundColor: 'white',
-    borderTopRightRadius: 30/2,
-    borderTopLeftRadius: 30/2,
+    borderTopRightRadius: 30 / 2,
+    borderTopLeftRadius: 30 / 2,
     height: fullHeight,
     paddingTop: globalPaddingMedium,
     minHeight: '100%',
@@ -128,7 +127,7 @@ const CheckoutStyles = {
   // ICON STYLES
   iconPayment: {
     borderColor: 'transparent',
-    borderRadius: 15/2,
+    borderRadius: 15 / 2,
     borderWidth: 1,
     height: 50,
     marginRight: globalMargin,
@@ -136,7 +135,7 @@ const CheckoutStyles = {
   },
   iconPaymentSmall: {
     borderColor: 'transparent',
-    borderRadius: 15/2,
+    borderRadius: 15 / 2,
     borderWidth: 1,
     height: 25,
     marginRight: globalMargin,
@@ -167,7 +166,7 @@ const CheckoutStyles = {
   buttonRounded: {
     backgroundColor: white,
     borderColor: primaryColor,
-    borderRadius: 15/2,
+    borderRadius: 15 / 2,
     borderWidth: 2,
     flex: 1,
     height: 45,

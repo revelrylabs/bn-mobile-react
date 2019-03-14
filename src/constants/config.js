@@ -12,7 +12,6 @@ const SEGMENT_IOS_STAGING = 'ew0hTJ9I33lME9Y9UNLAiAw4A9rjeyFV'
 const SEGMENT_ANDROID_PRODUCTION = 'XZRPUZtqgXU4diulRekh7nV3Z2sHZS6f'
 const SEGMENT_IOS_PRODUCTION = 'x6xb253zBvxlkW6l4wBGGuf8whD07f41'
 
-
 const defaultConfig = {
   timeout: 10000,
 }

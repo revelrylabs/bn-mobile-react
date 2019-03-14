@@ -59,7 +59,7 @@ const AccountStyles = {
     backgroundColor: sectionHeaderColor,
     borderColor: white,
     borderWidth: 1,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     height: 55,
     marginTop: -50,
     padding: globalPaddingSmall,

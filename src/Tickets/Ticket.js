@@ -1,8 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Linking, Platform, Image, TouchableHighlight} from 'react-native';
+import {
+  Text,
+  View,
+  Linking,
+  Platform,
+  Image,
+  TouchableHighlight,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import QRCode from 'react-native-qrcode';
+import QRCode from 'react-native-qrcode'
 import imageOverlay from '../../assets/event-img-overlay.png'
 
 import TicketStyles from '../styles/tickets/ticketStyles'
@@ -16,11 +23,7 @@ const ticketWalletStyles = TicketWalletStyles.createStyles()
 /* eslint-disable camelcase */
 
 function TicketBottomRow({children}) {
-  return (
-    <View style={ticketWalletStyles.bottomNav}>
-      {children}
-    </View>
-  )
+  return <View style={ticketWalletStyles.bottomNav}>{children}</View>
 }
 
 function staticBottomText(text) {
@@ -56,18 +59,27 @@ export default class Ticket extends Component {
   get skipQR() {
     const {redeem_key} = this.state
 
-    return !redeem_key || redeem_key === '' || this.props.ticket.status === 'Redeemed'
+    return (
+      !redeem_key ||
+      redeem_key === '' ||
+      this.props.ticket.status === 'Redeemed'
+    )
   }
 
   buildQRText() {
     const {redeem_key} = this.state
-    const {ticket: {ticketId, eventId}} = this.props
+    const {
+      ticket: {ticketId, eventId},
+    } = this.props
 
     if (this.skipQR) {
       return
     }
 
-    const qrObj = {type: 0, data: {redeem_key, id: ticketId, event_id: eventId, extra: ''}};
+    const qrObj = {
+      type: 0,
+      data: {redeem_key, id: ticketId, event_id: eventId, extra: ''},
+    }
 
     this.setState({qrText: JSON.stringify(qrObj)})
   }
@@ -76,24 +88,29 @@ export default class Ticket extends Component {
     const {redeemTicketInfo, ticket} = this.props
     const details = await redeemTicketInfo(ticket.ticketId)
 
-    this.setState({
-      firstName: details.first_name,
-      lastName: details.last_name,
-      redeem_key: details.redeem_key,
-    }, () => {
-      this.buildQRText()
-    })
+    this.setState(
+      {
+        firstName: details.first_name,
+        lastName: details.last_name,
+        redeem_key: details.redeem_key,
+      },
+      () => {
+        this.buildQRText()
+      }
+    )
   }
 
   openVenueDirections = () => {
     const {ticket} = this.props
     const {venue} = ticket
-    const daddr = encodeURIComponent(`${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`);
+    const daddr = encodeURIComponent(
+      `${venue.address} ${venue.postal_code}, ${venue.city}, ${venue.country}`
+    )
 
     if (Platform.OS === 'ios') {
-      Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`);
+      Linking.openURL(`http://maps.apple.com/?daddr=${daddr}`)
     } else {
-      Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
+      Linking.openURL(`http://maps.google.com/?daddr=${daddr}`)
     }
   }
 
@@ -107,20 +124,38 @@ export default class Ticket extends Component {
     } else {
       return (
         <View>
-          {false && // TODO: Re-enable when functionality is implemented -- issue #253
-            <View style={[ticketWalletStyles.bottomNavLinkContainer, styles.borderRight]}>
-              <Icon style={ticketWalletStyles.bottomNavIcon} name="account-balance-wallet" />
-              <Text style={ticketWalletStyles.bottomNavLinkText}>ADD TO WALLET</Text>
+          {false && ( // TODO: Re-enable when functionality is implemented -- issue #253
+            <View
+              style={[
+                ticketWalletStyles.bottomNavLinkContainer,
+                styles.borderRight,
+              ]}
+            >
+              <Icon
+                style={ticketWalletStyles.bottomNavIcon}
+                name="account-balance-wallet"
+              />
+              <Text style={ticketWalletStyles.bottomNavLinkText}>
+                ADD TO WALLET
+              </Text>
             </View>
-          }
+          )}
           <TouchableHighlight
             underlayColor="rgba(0, 0, 0, 0)"
-            onPress={
-              () => navigate('TransferTickets', {activeTab, ticketId, eventId, firstName, lastName})
+            onPress={() =>
+              navigate('TransferTickets', {
+                activeTab,
+                ticketId,
+                eventId,
+                firstName,
+                lastName,
+              })
             }
           >
             <View style={ticketWalletStyles.bottomNavLinkContainer}>
-              <Text style={ticketWalletStyles.bottomNavLinkText}>TRANSFER TICKET</Text>
+              <Text style={ticketWalletStyles.bottomNavLinkText}>
+                TRANSFER TICKET
+              </Text>
               <Icon style={ticketWalletStyles.bottomNavIcon} name="launch" />
             </View>
           </TouchableHighlight>
@@ -158,8 +193,12 @@ export default class Ticket extends Component {
       } else {
         return (
           <View style={ticketWalletStyles.placeholderCard}>
-            <Text style={[ticketWalletStyles.placeholderText, styles.paddingBottom]}>
-              To protect you and your purchase against fraudulent activity the QR code used to grant access to the event will be hidden until closer to the event door time.
+            <Text
+              style={[ticketWalletStyles.placeholderText, styles.paddingBottom]}
+            >
+              To protect you and your purchase against fraudulent activity the
+              QR code used to grant access to the event will be hidden until
+              closer to the event door time.
             </Text>
             <Text style={ticketWalletStyles.placeholderText}>
               Screenshots of this ticket may not be honored by the venue.
@@ -204,11 +243,17 @@ export default class Ticket extends Component {
               </View>
             </View>
             <View>
-              <Text numberOfLines={1} style={ticketStyles.header}>{ticket.name}</Text>
-              <Text numberOfLines={1} style={ticketWalletStyles.details}>{ticket.date} &bull; {ticket.starts} &bull; {ticket.venue}</Text>
+              <Text numberOfLines={1} style={ticketStyles.header}>
+                {ticket.name}
+              </Text>
+              <Text numberOfLines={1} style={ticketWalletStyles.details}>
+                {ticket.date} &bull; {ticket.starts} &bull; {ticket.venue}
+              </Text>
               <TouchableHighlight onPress={this.openVenueDirections}>
                 <View style={styles.iconLinkContainer}>
-                  <Text style={ticketWalletStyles.iconLinkText}>GET DIRECTIONS</Text>
+                  <Text style={ticketWalletStyles.iconLinkText}>
+                    GET DIRECTIONS
+                  </Text>
                   <Icon style={ticketWalletStyles.iconLink} name="call-made" />
                 </View>
               </TouchableHighlight>
@@ -217,17 +262,21 @@ export default class Ticket extends Component {
         </View>
         <View style={ticketWalletStyles.ticketContainerBottom}>
           <View style={[styles.flexRowFlexStartCenter, styles.padding]}>
-            {false && // TODO: Re-enable when functionality is implemented.
-            <View style={ticketWalletStyles.avatarContainer}>
-              <Image
-                style={ticketWalletStyles.avatar}
-                source={require('../../assets/avatar-female.png')}
-              />
-            </View>
-            }
+            {false && ( // TODO: Re-enable when functionality is implemented.
+              <View style={ticketWalletStyles.avatarContainer}>
+                <Image
+                  style={ticketWalletStyles.avatar}
+                  source={require('../../assets/avatar-female.png')}
+                />
+              </View>
+            )}
             <View>
-              <Text style={ticketStyles.ticketHolderHeader}>{ticket.ticketType}</Text>
-              <Text style={ticketStyles.ticketHolderSubheader}>{firstName} {lastName}</Text>
+              <Text style={ticketStyles.ticketHolderHeader}>
+                {ticket.ticketType}
+              </Text>
+              <Text style={ticketStyles.ticketHolderSubheader}>
+                {firstName} {lastName}
+              </Text>
             </View>
           </View>
         </View>
