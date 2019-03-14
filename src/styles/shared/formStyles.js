@@ -21,7 +21,6 @@ const fullHeight = Dimensions.get('window').height
 const fullWidth = Dimensions.get('window').width
 
 const FormStyles = {
-
   // CONTAINER STYLES
   inputContainer: {
     paddingBottom: globalPadding,

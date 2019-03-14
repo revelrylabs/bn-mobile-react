@@ -67,7 +67,7 @@ const SharedStyles = {
     flexDirection: 'column',
     paddingHorizontal: globalPadding,
     paddingTop: globalPadding,
-    flex:1
+    flex: 1,
   },
   containerDark: {
     backgroundColor: containerDarkColor,
@@ -269,7 +269,7 @@ const SharedStyles = {
   },
   iconLinkCircleContainer: {
     backgroundColor: whiteTransparent,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     height: 45,
     padding: globalPaddingSmall,
     width: 45,
@@ -280,7 +280,7 @@ const SharedStyles = {
   },
   iconLinkCircleContainerActive: {
     backgroundColor: white,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     height: 45,
     padding: globalPaddingSmall,
     width: 45,
@@ -355,14 +355,14 @@ const SharedStyles = {
   },
   avatar: {
     borderColor: white,
-    borderRadius: 45/2,
+    borderRadius: 45 / 2,
     borderWidth: 1,
     height: 45,
     marginLeft: -10,
     width: 45,
   },
   avatarSmall: {
-    borderRadius: 30/2,
+    borderRadius: 30 / 2,
     height: 30,
     marginLeft: -10,
     width: 30,

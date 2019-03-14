@@ -6,7 +6,6 @@ import GetTickets from './tickets'
 import Checkout from './checkout'
 import PaymentTypes from './payments'
 
-
 const EventsIndexRoute = {
   screen: EventsIndex,
   navigationOptions: {

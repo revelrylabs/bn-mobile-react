@@ -10,15 +10,24 @@ const styles = SharedStyles.createStyles()
 const eventManagerStyles = EventManagerStyles.createStyles()
 
 function HeaderText({children}) {
-  return <Text style={[styles.headerSecondary, styles.textCenter]}>{children}</Text>
+  return (
+    <Text style={[styles.headerSecondary, styles.textCenter]}>{children}</Text>
+  )
 }
 
 function ScanButton({onPress}) {
   return (
     <View style={[styles.buttonContainer, styles.marginVertical]}>
-      <TouchableHighlight style={eventManagerStyles.buttonScanTicket} underlayColor="#F5F6F7" onPress={onPress}>
+      <TouchableHighlight
+        style={eventManagerStyles.buttonScanTicket}
+        underlayColor="#F5F6F7"
+        onPress={onPress}
+      >
         <View style={styles.buttonIconContainer}>
-          <Icon style={eventManagerStyles.buttonScanIcon} name="filter-center-focus" />
+          <Icon
+            style={eventManagerStyles.buttonScanIcon}
+            name="filter-center-focus"
+          />
           <Text style={eventManagerStyles.buttonScanTicketText}>
             Scan Tickets
           </Text>
@@ -29,15 +38,13 @@ function ScanButton({onPress}) {
 }
 
 function DoorEventDashboard({
-  event: {
-    tickets_redeemed: redeemed,
-    sold_held: sold1,
-    sold_unreserved: sold2,
-  },
+  event: {tickets_redeemed: redeemed, sold_held: sold1, sold_unreserved: sold2},
 }) {
   return (
     <View>
-      <HeaderText>{redeemed} of {sold1 + sold2} redeemed</HeaderText>
+      <HeaderText>
+        {redeemed} of {sold1 + sold2} redeemed
+      </HeaderText>
     </View>
   )
 }

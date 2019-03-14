@@ -234,7 +234,7 @@ const EventDetailsStyles = {
     width: 45,
   },
   attendeeContainer: {
-    borderColor: borderColor,
+    borderColor,
     borderRadius: 45 / 2,
     borderWidth: 1,
     height: 45,
@@ -282,7 +282,7 @@ const EventDetailsStyles = {
   buttonRounded: {
     alignItems: 'center',
     backgroundColor: white,
-    borderColor: borderColor,
+    borderColor,
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
@@ -325,7 +325,7 @@ const EventDetailsStyles = {
   },
   buttonRoundedSecondary: {
     backgroundColor: primaryColor,
-    borderColor: borderColor,
+    borderColor,
     borderRadius: 55 / 2,
     borderWidth: 1,
     flex: 1,

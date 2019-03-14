@@ -1,5 +1,10 @@
 import React from 'react'
-import {View, Modal as NativeModal, ActivityIndicator, Image} from 'react-native'
+import {
+  View,
+  Modal as NativeModal,
+  ActivityIndicator,
+  Image,
+} from 'react-native'
 import SharedStyles from '../styles/shared/sharedStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 
@@ -35,9 +40,7 @@ function ActivityModal({children, ...props}) {
     <NativeModal transparent {...props}>
       <ModalContainer>
         <FlexRowCenter>
-          <ModalActivityIndicator>
-            {children}
-          </ModalActivityIndicator>
+          <ModalActivityIndicator>{children}</ModalActivityIndicator>
         </FlexRowCenter>
       </ModalContainer>
     </NativeModal>

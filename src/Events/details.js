@@ -12,18 +12,18 @@ import {shareEvent} from '../sharing'
 
 const styles = SharedStyles.createStyles()
 const eventDetailsStyles = EventDetailsStyles.createStyles()
-const interestedStylesForEvent = user_is_interested =>
-  user_is_interested
-    ? {
-        button: eventDetailsStyles.buttonRoundedActive,
-        icon: eventDetailsStyles.buttonRoundedActiveIcon,
-        text: eventDetailsStyles.buttonRoundedActiveText,
-      }
-    : {
-        button: eventDetailsStyles.buttonRounded,
-        icon: eventDetailsStyles.buttonRoundedIcon,
-        text: eventDetailsStyles.buttonRoundedText,
-      }
+const interestedStylesForEvent = (user_is_interested) =>
+  user_is_interested ?
+    {
+      button: eventDetailsStyles.buttonRoundedActive,
+      icon: eventDetailsStyles.buttonRoundedActiveIcon,
+      text: eventDetailsStyles.buttonRoundedActiveText,
+    } :
+    {
+      button: eventDetailsStyles.buttonRounded,
+      icon: eventDetailsStyles.buttonRoundedIcon,
+      text: eventDetailsStyles.buttonRoundedText,
+    }
 
 function toSentence(arr) {
   return (
@@ -71,7 +71,7 @@ export default class Details extends Component {
       return null
     }
 
-    return toSentence(map(artists, eventArtist => eventArtist.artist.name))
+    return toSentence(map(artists, (eventArtist) => eventArtist.artist.name))
   }
 
   get ageLimit() {

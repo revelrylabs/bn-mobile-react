@@ -11,12 +11,12 @@ const LOCATIONS_FETCH_MIN_MINUTES = 15
 
 function ticketFilter({status, ticket_pricing}) {
   switch (status) {
-    case 'SoldOut':
-      return true
-    case 'Published':
-      return !!ticket_pricing
-    default:
-      return false
+  case 'SoldOut':
+    return true
+  case 'Published':
+    return !!ticket_pricing
+  default:
+    return false
   }
 }
 
@@ -73,9 +73,9 @@ class EventsContainer extends Container {
 
     ticketTypes = map(ticketTypesById, (ticket, _id) => ticket)
 
-    return ticketTypes
-      ? ticketTypes.filter(ticketFilter).sort(ticketComparator)
-      : []
+    return ticketTypes ?
+      ticketTypes.filter(ticketFilter).sort(ticketComparator) :
+      []
   }
 
   locationsPromise = null
@@ -111,12 +111,12 @@ class EventsContainer extends Container {
       } = await server.regions.index()
 
       await this.setState({locations})
-    } catch (error) { 
+    } catch (error) {
       apiErrorAlert(error)
     }
   }
 
-  _cacheResourcesAsync = async (eventImagePrefetch) => { 
+  _cacheResourcesAsync = async (eventImagePrefetch) => {
     Promise.all(eventImagePrefetch)
   }
 
@@ -127,14 +127,16 @@ class EventsContainer extends Container {
         this.fetchLocations(),
       ])
       const eventsById = {}
-      var imagePrefetch = [];
+      const imagePrefetch = []
 
-      data.data.forEach(event => {
+      data.data.forEach((event) => {
         if (!event.promo_image_url) {
           event.promo_image_url = `${baseURL}/images/event-placeholder.png`
         }
-        //Add images to the cache
-        imagePrefetch.push(Image.prefetch(optimizeCloudinaryImage(event.promo_image_url)));
+        // Add images to the cache
+        imagePrefetch.push(
+          Image.prefetch(optimizeCloudinaryImage(event.promo_image_url))
+        )
 
         eventsById[event.id] = event
       })
@@ -155,7 +157,7 @@ class EventsContainer extends Container {
     this.setState({selectedEvent: {}})
   }
 
-  getEvent = async id => {
+  getEvent = async (id) => {
     try {
       const {data} = await server.events.read({id})
       const ticketTypesById = {}
@@ -164,7 +166,7 @@ class EventsContainer extends Container {
         data.promo_image_url = `${baseURL}/images/event-placeholder.png`
       }
 
-      data.ticket_types.forEach(ttype => {
+      data.ticket_types.forEach((ttype) => {
         ticketTypesById[ttype.id] = ttype
       })
 

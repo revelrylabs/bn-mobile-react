@@ -24,7 +24,7 @@ export default class PasswordReset extends Component {
     }
   }
 
-  resetPassword = async () => {
+  resetPassword = async() => {
     const {email} = this.state
 
     if (!email.match(/^[^@]+@[^@]+$/)) {
@@ -33,7 +33,9 @@ export default class PasswordReset extends Component {
     }
 
     try {
-      const {data: {message}} = await doPasswordReset(this.state.email)
+      const {
+        data: {message},
+      } = await doPasswordReset(this.state.email)
 
       alert(message)
       this.props.navigation.navigate('LogIn')
@@ -45,9 +47,14 @@ export default class PasswordReset extends Component {
   render() {
     return (
       <View style={loginStyles.container}>
-
         <View>
-          <Text style={[styles.headerSecondary, styles.textCenter, styles.paddingBottomJumbo]}>
+          <Text
+            style={[
+              styles.headerSecondary,
+              styles.textCenter,
+              styles.paddingBottomJumbo,
+            ]}
+          >
             Welcome back!
           </Text>
           <TextInput
@@ -60,7 +67,10 @@ export default class PasswordReset extends Component {
             onChangeText={(email) => this.setState({email})}
           />
         </View>
-        <TouchableHighlight style={loginStyles.buttonContainer} onPress={this.resetPassword}>
+        <TouchableHighlight
+          style={loginStyles.buttonContainer}
+          onPress={this.resetPassword}
+        >
           <LinearGradient
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}

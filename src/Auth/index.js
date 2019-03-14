@@ -13,7 +13,7 @@ export default class AuthIndex extends Component {
 
   static navigationOptions = {
     header: null,
-  };
+  }
 
   render() {
     return (
@@ -24,7 +24,6 @@ export default class AuthIndex extends Component {
         />
 
         <View style={loginStyles.section}>
-
           <Image
             style={loginStyles.logo}
             source={require('../../assets/big-neon-logo.png')}
@@ -52,13 +51,13 @@ export default class AuthIndex extends Component {
                 onPress={() => this.props.navigation.navigate('LogIn')}
                 style={loginStyles.buttonSecondary}
               >
-                <Text style={loginStyles.buttonSecondaryText}>Login To Your Account</Text>
+                <Text style={loginStyles.buttonSecondaryText}>
+                  Login To Your Account
+                </Text>
               </TouchableHighlight>
             </View>
           </View>
-
         </View>
-
       </View>
     )
   }

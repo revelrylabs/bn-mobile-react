@@ -6,7 +6,11 @@ function itemIsTicket({item_type: type}) {
 }
 
 function sumUnitPrices(items) {
-  return items.reduce((sum, {unit_price_in_cents: unitPrice, quantity}) => sum + unitPrice * quantity, 0)
+  return items.reduce(
+    (sum, {unit_price_in_cents: unitPrice, quantity}) =>
+      sum + unitPrice * quantity,
+    0
+  )
 }
 
 /**
@@ -92,7 +96,9 @@ class CartContainer extends Container {
   }
 
   get maxAdditionalQuantity() {
-    return this.data.limited_tickets_remaining.find(({ticket_type_id: id}) => id === this.ticketTypeId).tickets_remaining
+    return this.data.limited_tickets_remaining.find(
+      ({ticket_type_id: id}) => id === this.ticketTypeId
+    ).tickets_remaining
   }
 
   get maxCommittableQuantity() {
@@ -126,7 +132,9 @@ class CartContainer extends Container {
 
   get usedPromo() {
     // Return true if any ticket's redemption_code is truthy
-    return !!this.tickets.find(({redemption_code: code}) => code === this.ticketPromo)
+    return !!this.tickets.find(
+      ({redemption_code: code}) => code === this.ticketPromo
+    )
   }
 
   get promoTickets() {
@@ -135,7 +143,13 @@ class CartContainer extends Container {
 
   get replaceParams() {
     return {
-      items: [{ticket_type_id: this.ticketTypeId, redemption_code: this.ticketPromo, quantity: this.state.requestedQuantity}],
+      items: [
+        {
+          ticket_type_id: this.ticketTypeId,
+          redemption_code: this.ticketPromo,
+          quantity: this.state.requestedQuantity,
+        },
+      ],
     }
   }
 
@@ -148,7 +162,7 @@ class CartContainer extends Container {
 
   setQuantity(quantity) {
     this.setState({requestedQuantity: quantity, isChangingQuantity: true})
-    const quantityDebounceKey = this._quantityDebounceKey = new Date().getTime()
+    const quantityDebounceKey = (this._quantityDebounceKey = new Date().getTime())
 
     setTimeout(() => {
       if (quantityDebounceKey === this._quantityDebounceKey) {
@@ -156,7 +170,6 @@ class CartContainer extends Container {
       }
     }, 100)
   }
-
 
   async _commitQuantity() {
     try {
@@ -202,33 +215,33 @@ class CartContainer extends Container {
 
   // can't place an order until there's payment info and quantity isn't changing anymore
   get canPlaceOrder() {
-    return !this.isChangingQuantity && !this.totalCents || this.payment
+    return (!this.isChangingQuantity && !this.totalCents) || this.payment
   }
 
   async placeOrder(onSuccess, onError) {
     const {totalCents: amount} = this
-    const method = amount ? {
-      type: 'Card',
-      provider: 'Stripe',
-      token: this.payment.id,
-      save_payment_method: false,
-      set_default: false,
-    } : {
-      type: 'Free',
-    }
+    const method = amount ?
+      {
+        type: 'Card',
+        provider: 'Stripe',
+        token: this.payment.id,
+        save_payment_method: false,
+        set_default: false,
+      } :
+      {
+        type: 'Free',
+      }
 
     try {
       await server.cart.checkout({amount, method})
       onSuccess()
-    } catch(error) {
+    } catch (error) {
       onError()
       setTimeout(() => {
         apiErrorAlert(error)
-      }, 600);
+      }, 600)
     }
   }
 }
 
-export {
-  CartContainer,
-}
+export {CartContainer}

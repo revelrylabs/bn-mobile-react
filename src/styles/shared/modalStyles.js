@@ -35,14 +35,14 @@ const ModalStyles = {
     flexDirection: 'column',
     height: fullHeight,
     justifyContent: 'center',
-    paddingHorizontal: globalPadding
+    paddingHorizontal: globalPadding,
   },
   contentWrapper: {
     alignItems: 'center',
     backgroundColor: containerDarkColor,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingJumbo,
-    borderRadius: 6
+    borderRadius: 6,
   },
   contentRoundedWrapper: {
     backgroundColor: containerDarkColor,
@@ -70,7 +70,7 @@ const ModalStyles = {
   activityIndicator: {
     alignItems: 'center',
     backgroundColor: containerDarkColor,
-    borderRadius: 20/2,
+    borderRadius: 20 / 2,
     justifyContent: 'space-around',
     height: 100,
     width: 100,

@@ -4,7 +4,7 @@ import {server, apiErrorAlert, defaultEventSort} from '../constants/Server'
 /* eslint-disable camelcase,space-before-function-paren */
 export class EventManagerContainer extends Container {
   constructor(props = {}) {
-    super(props);
+    super(props)
 
     this.state = {
       events: [],
@@ -22,7 +22,6 @@ export class EventManagerContainer extends Container {
   // TODO: filter by live vs upcoming?
   getEvents = async () => {
     try {
-
       const {data} = await server.events.checkins(defaultEventSort)
 
       this.setState({
@@ -36,7 +35,7 @@ export class EventManagerContainer extends Container {
   }
 
   scanForEvent = async (event) => {
-    this.setState({eventToScan: event, guests: []});
+    this.setState({eventToScan: event, guests: []})
   }
 
   /* eslint-disable-next-line complexity */
@@ -47,7 +46,10 @@ export class EventManagerContainer extends Container {
     let guests = null
 
     try {
-      guests = (await server.events.guests.index({event_id: id, query: guestListQuery})).data.data
+      guests = (await server.events.guests.index({
+        event_id: id,
+        query: guestListQuery,
+      })).data.data
     } catch (error) {
       apiErrorAlert(error)
     }
@@ -55,7 +57,7 @@ export class EventManagerContainer extends Container {
     if (guests) {
       await this.setState({guests})
     }
-    
+
     await this.setState({isFetchingGuests: false})
   }
 

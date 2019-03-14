@@ -16,16 +16,18 @@ import {
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
+
 export const fullWidth = Dimensions.get('window').width
 
-function wp (percentage) {
-  const value = (percentage * fullWidth) / 100;
+function wp(percentage) {
+  const value = (percentage * fullWidth) / 100
 
-  return Math.round(value);
+  return Math.round(value)
 }
-const slideWidth = wp(100);
-const itemHorizontalMargin = wp(2);
-export const itemWidth = slideWidth + itemHorizontalMargin * 2;
+const slideWidth = wp(100)
+const itemHorizontalMargin = wp(2)
+
+export const itemWidth = slideWidth + itemHorizontalMargin * 2
 export const whiteTransparent = 'rgba(255, 255, 255, 0.8)'
 
 const TicketWalletStyles = {
@@ -99,7 +101,7 @@ const TicketWalletStyles = {
   },
   avatar: {
     borderColor: 'transparent',
-    borderRadius: 45/2,
+    borderRadius: 45 / 2,
     borderWidth: 1,
     height: 45,
     width: 45,
@@ -147,8 +149,8 @@ const TicketWalletStyles = {
   // BOTTOM NAV STYLES
   bottomNav: {
     backgroundColor: white,
-    borderBottomRightRadius: 20/2,
-    borderBottomLeftRadius: 20/2,
+    borderBottomRightRadius: 20 / 2,
+    borderBottomLeftRadius: 20 / 2,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: fullWidth - 43,

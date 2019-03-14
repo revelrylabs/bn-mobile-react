@@ -49,7 +49,7 @@ const EventCardStyles = {
   // ICON STYLES
   iconLinkCircleContainerSmall: {
     backgroundColor: whiteTransparent,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     height: 28,
     padding: globalPaddingTiny,
     width: 28,
@@ -60,7 +60,7 @@ const EventCardStyles = {
   },
   iconLinkCircleContainerSmallActive: {
     backgroundColor: white,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
     height: 28,
     padding: globalPaddingTiny,
     width: 28,
