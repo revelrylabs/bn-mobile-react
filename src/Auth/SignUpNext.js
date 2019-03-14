@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   Image,
   ActivityIndicator,
+  Platform,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {Feather} from '@expo/vector-icons'
@@ -114,7 +115,11 @@ export default class SignUpNext extends Component {
         this.setState({isBusy: false})
       }
 
-      navigate('AuthLoading')
+      if (Platform.OS === 'ios') {
+        navigate('SignUpNotifications')
+      } else {
+        navigate('AuthLoading')
+      }
     }
   }
 
