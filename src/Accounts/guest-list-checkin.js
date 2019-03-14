@@ -22,6 +22,7 @@ import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
 import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view'
 import {KeyboardDismisser} from '../ui'
+import {LoadingScreen} from '../constants/modals'
 
 const styles = SharedStyles.createStyles()
 const doormanStyles = DoormanStyles.createStyles()
@@ -32,14 +33,6 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 
 function shouldAllowCheckIn({status, redeem_key}) {
   return status === 'Purchased' && redeem_key
-}
-
-function BusyState() {
-  return (
-    <View style={ticketStyles.emptyStateContainer}>
-      <Text style={ticketStyles.emptyStateText}>Hang on a sec...</Text>
-    </View>
-  )
 }
 
 function guestStatusBadgeStyle(status) {
@@ -266,9 +259,15 @@ export default class ManualCheckin extends Component {
     }
   }
 
+  get shouldShowLoadingScreen() {
+    const {isFetchingGuests, guests, guestListQuery} = this.props
+
+    return isFetchingGuests && guests.length === 0 && guestListQuery.length === 0
+  }
+
   render() {
     const {selectedGuest} = this.state
-    const {isFetchingGuests, guests, guestListQuery} = this.props
+    const {guests, guestListQuery} = this.props
 
     if (selectedGuest !== null) {
       return (
@@ -302,8 +301,8 @@ export default class ManualCheckin extends Component {
               </View>
             </View>
 
-            {isFetchingGuests && <BusyState />}
-            
+            <LoadingScreen visible={this.shouldShowLoadingScreen} />
+
             <GuestList
               style={{flex: 1}}
               guests={guests}

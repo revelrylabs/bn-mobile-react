@@ -1,58 +1,75 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {View, Modal, ActivityIndicator, Image} from 'react-native'
+import {View, Modal as NativeModal, ActivityIndicator, Image} from 'react-native'
 import SharedStyles from '../styles/shared/sharedStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 
 const styles = SharedStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 
-export const LoadingScreen = ({toggleModal, modalVisible}) => (
-  <Modal
-    onRequestClose={() => {
-      toggleModal(!modalVisible)
-    }}
-    visible={modalVisible}
-    transparent
-  >
-    <View style={modalStyles.modalContainer}>
-      <View style={styles.flexRowCenter}>
-        <View style={modalStyles.activityIndicator}>
-          <ActivityIndicator size="large" color="#FF20B1" />
-        </View>
-      </View>
+function ModalContainer({children, style, ...props}) {
+  return (
+    <View style={[modalStyles.modalContainer, style]} {...props}>
+      {children}
     </View>
-  </Modal>
-)
-
-LoadingScreen.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  modalVisible: PropTypes.bool.isRequired,
+  )
 }
 
-
-export const SuccessScreen = ({toggleModal, modalVisible}) => (
-  <Modal
-    onRequestClose={() => {
-      toggleModal(!modalVisible)
-    }}
-    visible={modalVisible}
-    transparent
-  >
-    <View style={modalStyles.modalContainer}>
-      <View style={styles.flexRowCenter}>
-        <View style={modalStyles.activityIndicator}>
-          <Image
-            style={modalStyles.emojiActivityIndicator}
-            source={require('../../assets/emoji-loader.png')}
-          />
-        </View>
-      </View>
+function ModalActivityIndicator({children, style, ...props}) {
+  return (
+    <View style={[modalStyles.activityIndicator, style]} {...props}>
+      {children}
     </View>
-  </Modal>
-)
+  )
+}
 
-SuccessScreen.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  modalVisible: PropTypes.bool.isRequired,
+function FlexRowCenter({children, style, ...props}) {
+  return (
+    <View style={[styles.flexRowCenter, style]} {...props}>
+      {children}
+    </View>
+  )
+}
+
+function ActivityModal({children, ...props}) {
+  return (
+    <NativeModal transparent {...props}>
+      <ModalContainer>
+        <FlexRowCenter>
+          <ModalActivityIndicator>
+            {children}
+          </ModalActivityIndicator>
+        </FlexRowCenter>
+      </ModalContainer>
+    </NativeModal>
+  )
+}
+
+function SpinnerActivity(props) {
+  return <ActivityIndicator size="large" color="#FF20B1" {...props} />
+}
+
+function EmojiActivity(props) {
+  return (
+    <Image
+      style={modalStyles.emojiActivityIndicator}
+      source={require('../../assets/emoji-loader.png')}
+      {...props}
+    />
+  )
+}
+
+export function LoadingScreen({children: _, ...props}) {
+  return (
+    <ActivityModal {...props}>
+      <SpinnerActivity />
+    </ActivityModal>
+  )
+}
+
+export function SuccessScreen({children: _, ...props}) {
+  return (
+    <ActivityModal {...props}>
+      <EmojiActivity />
+    </ActivityModal>
+  )
 }
