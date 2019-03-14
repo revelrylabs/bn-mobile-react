@@ -157,14 +157,6 @@ export default class EventShow extends Component {
     this.changeScreen('checkout')
   }
 
-  toggleLoadingModal = ({showLoadingModal}) => {
-    this.setState({showLoadingModal})
-  }
-
-  toggleSuccessModal = ({showSuccessModal}) => {
-    this.setState({showSuccessModal})
-  }
-
   get ticketRange() {
     const str = priceRangeString(this.state.event.ticket_types)
 
@@ -479,14 +471,8 @@ export default class EventShow extends Component {
           onWillFocus={() => this.loadEvent()}
           onDidBlur={() => this.clearEvent()}
         />
-        <LoadingScreen
-          toggleModal={this.toggleLoadingModal}
-          modalVisible={showLoadingModal}
-        />
-        <SuccessScreen
-          toggleModal={this.toggleSuccessModal}
-          modalVisible={showSuccessModal}
-        />
+        <LoadingScreen visible={showLoadingModal} />
+        <SuccessScreen visible={showSuccessModal} />
         <Image
           style={eventDetailsStyles.videoBkgd}
           source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}

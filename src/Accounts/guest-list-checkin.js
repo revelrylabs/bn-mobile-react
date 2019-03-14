@@ -35,14 +35,6 @@ function shouldAllowCheckIn({status, redeem_key}) {
   return status === 'Purchased' && redeem_key
 }
 
-function BusyState() {
-  return (
-    <View style={ticketStyles.emptyStateContainer}>
-      <Text style={ticketStyles.emptyStateText}>Hang on a sec...</Text>
-    </View>
-  )
-}
-
 function guestStatusBadgeStyle(status) {
   switch (status) {
     case 'Purchased':
@@ -267,9 +259,15 @@ export default class ManualCheckin extends Component {
     }
   }
 
+  get shouldShowLoadingScreen() {
+    const {isFetchingGuests, guests, guestListQuery} = this.props
+
+    return isFetchingGuests && guests.length === 0 && guestListQuery.length === 0
+  }
+
   render() {
     const {selectedGuest} = this.state
-    const {isFetchingGuests, guests, guestListQuery} = this.props
+    const {guests, guestListQuery} = this.props
 
     if (selectedGuest !== null) {
       return (
@@ -303,11 +301,7 @@ export default class ManualCheckin extends Component {
               </View>
             </View>
 
-            {isFetchingGuests && <BusyState />}
-
-            <LoadingScreen
-              toggleModal={this.toggleLoadingModal}
-            />
+            <LoadingScreen visible={this.shouldShowLoadingScreen} />
 
             <GuestList
               style={{flex: 1}}

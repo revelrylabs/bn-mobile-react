@@ -8,7 +8,7 @@ export default class GuestListScreen extends Component {
 
     return (
       <View>
-      <GuestList {...managerState} searchGuestList={searchGuestList} />
+        <GuestList {...managerState} searchGuestList={searchGuestList} />
       </View>
     )
   }
