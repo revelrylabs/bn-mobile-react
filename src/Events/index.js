@@ -247,7 +247,7 @@ export default class EventsIndex extends Component {
 
     return (
       <View style={styles.containerFullHeight}>
-        <NavigationEvents onWillFocus={() => this.loadEvents()} />
+        <NavigationEvents onDidFocus={() => this.loadEvents()} />
         <ScrollView
           style={{flex: 1}}
           scrollEventThrottle={16}
