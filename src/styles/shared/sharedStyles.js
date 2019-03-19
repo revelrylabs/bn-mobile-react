@@ -544,6 +544,12 @@ const SharedStyles = {
   flex3: {
     flex: 3,
   },
+
+  // LIST
+  separator: {
+    borderBottomColor: sectionHeaderColor,
+    borderBottomWidth: 1,
+  },
 }
 
 function createStyles(overrides = {}) {
