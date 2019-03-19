@@ -79,11 +79,20 @@ export default class Details extends Component {
       event: {age_limit},
     } = this.props
 
-    if (age_limit) {
+
+    //Specifically using weak typing here for backwards compatibility
+    if (!age_limit || age_limit == 0) {
+      //Cater for blank or 0 value age limit
+      return 'This event is for all ages.'
+    } else if (isNaN(age_limit)) {
+      //If they have used a text value for the age limit return it unchanged
+      return age_limit
+    } else {
+      //It is a number so use the pre-canned version
       return `You must be ${age_limit} to enter this event.`
     }
 
-    return 'This event is for all ages.'
+
   }
 
   get youtube() {
