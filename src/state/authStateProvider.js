@@ -40,6 +40,7 @@ class AuthContainer extends Container {
       ['userToken', access_token],
       ['refreshToken', refresh_token],
     ])
+
     const currentUser = await this.getCurrentUser(
       navigate,
       access_token,
@@ -71,6 +72,7 @@ class AuthContainer extends Container {
     refresh_token,
     setToken = true
   ) => {
+
     // eslint-disable-line space-before-function-paren
     try {
       await this.setState({isFetching: true})
@@ -166,7 +168,7 @@ class AuthContainer extends Container {
     }
   }
 
-  facebook = async () => {
+  facebook = async (navigate) => {
     await this.setState({isFetching: true})
     try {
       const facebook = await requestFacebookAuth()
@@ -175,11 +177,15 @@ class AuthContainer extends Container {
         return
       }
 
-      const auth = await connectFacebookToBigNeon(facebook)
+      const resp = await connectFacebookToBigNeon(facebook)
 
-      console.log(auth)
+      await this.setLoginData(resp, navigate, true)
+      this.identify('Signed In')
+      return true
     } catch (error) {
       apiErrorAlert(error)
+      navigate('LogIn')
+      return false
     } finally {
       await this.setState({isFetching: false})
     }

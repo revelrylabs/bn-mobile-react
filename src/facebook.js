@@ -19,5 +19,5 @@ export async function requestFacebookAuth() {
 
 // https://docs.expo.io/versions/latest/sdk/facebook/#facebookloginwithreadpermissionsasyncappid-options
 export async function connectFacebookToBigNeon({token: accessToken, expires: expiresIn}) {
-  return await server.external.facebookLogin({accessToken, expiresIn})
+  return await server.external.facebookLogin({accessToken, expiresIn, signedRequest: ' '})
 }
