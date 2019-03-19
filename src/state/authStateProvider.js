@@ -4,6 +4,7 @@ import {AsyncStorage} from 'react-native'
 import {server, refreshWithToken, apiErrorAlert} from '../constants/Server'
 import {registerPushTokenIfPermitted} from '../notifications'
 import {identify, track} from '../constants/analytics'
+import {requestFacebookAuth, connectFacebookToBigNeon} from '../facebook'
 
 /* eslint-disable camelcase,space-before-function-paren */
 
@@ -39,6 +40,7 @@ class AuthContainer extends Container {
       ['userToken', access_token],
       ['refreshToken', refresh_token],
     ])
+
     const currentUser = await this.getCurrentUser(
       navigate,
       access_token,
@@ -70,6 +72,7 @@ class AuthContainer extends Container {
     refresh_token,
     setToken = true
   ) => {
+
     // eslint-disable-line space-before-function-paren
     try {
       await this.setState({isFetching: true})
@@ -158,6 +161,29 @@ class AuthContainer extends Container {
     } catch (error) {
       apiErrorAlert(error, 'There was a problem logging in.')
 
+      navigate('LogIn')
+      return false
+    } finally {
+      await this.setState({isFetching: false})
+    }
+  }
+
+  facebook = async (navigate) => {
+    await this.setState({isFetching: true})
+    try {
+      const facebook = await requestFacebookAuth()
+
+      if (!facebook) {
+        return
+      }
+
+      const resp = await connectFacebookToBigNeon(facebook)
+
+      await this.setLoginData(resp, navigate, true)
+      this.identify('Signed In')
+      return true
+    } catch (error) {
+      apiErrorAlert(error)
       navigate('LogIn')
       return false
     } finally {

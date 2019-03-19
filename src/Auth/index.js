@@ -16,6 +16,9 @@ export default class AuthIndex extends Component {
   }
 
   render() {
+    const {facebook} = this.props.screenProps.auth
+    const {navigate} = this.props.navigation
+
     return (
       <View style={loginStyles.signupBkgdContainer}>
         <Image
@@ -33,7 +36,7 @@ export default class AuthIndex extends Component {
             <TouchableHighlight
               style={loginStyles.buttonContainer}
               underlayColor="rgba(0, 0, 0, 0)"
-              onPress={() => this.props.navigation.navigate('SignUp')}
+              onPress={() => navigate('SignUp')}
             >
               <LinearGradient
                 start={{x: 0, y: 0}}
@@ -48,11 +51,23 @@ export default class AuthIndex extends Component {
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
-                onPress={() => this.props.navigation.navigate('LogIn')}
+                onPress={() => navigate('LogIn')}
                 style={loginStyles.buttonSecondary}
               >
                 <Text style={loginStyles.buttonSecondaryText}>
                   Login To Your Account
+                </Text>
+              </TouchableHighlight>
+            </View>
+
+            <View style={loginStyles.buttonContainer}>
+              <TouchableHighlight
+                underlayColor="rgba(0, 0, 0, 0)"
+                onPress={() => facebook(navigate)}
+                style={loginStyles.buttonSecondary}
+              >
+                <Text style={loginStyles.buttonSecondaryText}>
+                  Facebook Connect
                 </Text>
               </TouchableHighlight>
             </View>
