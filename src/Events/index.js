@@ -73,7 +73,7 @@ function SuggestedSearches({searchText, events, navigate}) {
     <View>
       <Text style={styles.sectionHeader}>{'Suggested Searches'}</Text>
       <FlatList
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         data={events}
         renderItem={({item, separators}) => (
@@ -212,11 +212,11 @@ export default class EventsIndex extends Component {
     return this.filterEventsBySearchText(eventsToDisplay, this.state.searchText)
   }
 
-  setFavorite = mainFavorite => {
+  setFavorite = (mainFavorite) => {
     this.setState({mainFavorite})
   }
 
-  updateSearchText = text => {
+  updateSearchText = (text) => {
     this.setState({
       searchText: text,
     })
@@ -224,7 +224,7 @@ export default class EventsIndex extends Component {
 
   get currentLocationDisplayName() {
     const selectedLoc = this.locations.find(
-      loc => loc.id === this.state.selectedLocationId
+      (loc) => loc.id === this.state.selectedLocationId
     )
 
     return (selectedLoc && (selectedLoc.selectedName || selectedLoc.name)) || ''
@@ -273,7 +273,7 @@ export default class EventsIndex extends Component {
     ))
   }
 
-  searchEvents = query => {
+  searchEvents = (query) => {
     this.props.searchEvents(query)
   }
 
@@ -340,7 +340,7 @@ export default class EventsIndex extends Component {
               Explore
             </Animated.Text>
             <ModalDropdown
-              ref={ref => {
+              ref={(ref) => {
                 this._dropdown = ref
               }}
               onSelect={store.changeLocation}
@@ -369,7 +369,7 @@ export default class EventsIndex extends Component {
             />
             <TextInput
               style={formStyles.searchInput}
-              placeholder="Search artists, shows, venues..."
+              placeholder="Search by event names..."
               searchIcon={{size: 24}}
               underlineColorAndroid="transparent"
               onChangeText={this.updateSearchText}
@@ -424,16 +424,16 @@ export default class EventsIndex extends Component {
                     >
                       <View
                         style={
-                          mainFavorite
-                            ? styles.iconLinkCircleContainerActive
-                            : styles.iconLinkCircleContainer
+                          mainFavorite ?
+                            styles.iconLinkCircleContainerActive :
+                            styles.iconLinkCircleContainer
                         }
                       >
                         <Icon
                           style={
-                            mainFavorite
-                              ? styles.iconLinkCircleActive
-                              : styles.iconLinkCircle
+                            mainFavorite ?
+                              styles.iconLinkCircleActive :
+                              styles.iconLinkCircle
                           }
                           name="star"
                         />
