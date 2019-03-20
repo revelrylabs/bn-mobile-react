@@ -547,8 +547,9 @@ const SharedStyles = {
 
   // LIST
   separator: {
-    borderBottomColor: sectionHeaderColor,
-    borderBottomWidth: 1,
+    height: 1,
+    width: '100%',
+    backgroundColor: sectionHeaderColor,
   },
 }
 

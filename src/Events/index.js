@@ -72,19 +72,23 @@ function SuggestedSearches({searchText, events, navigate}) {
   return (
     <View>
       <Text style={styles.sectionHeader}>{'Suggested Searches'}</Text>
-      <View style={styles.separator} />
       <FlatList
         keyExtractor={item => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         data={events}
         renderItem={({item, separators}) => (
           <TouchableHighlight
+            style={styles.rowContainer}
             onPress={() => navigate('EventsShow', {eventId: item.id})}
             onShowUnderlay={separators.highlight}
             onHideUnderlay={separators.unhighlight}
           >
             <View>
-              <BoldText searchText={searchText} name={item.name} />
+              <BoldText
+                style={styles.buttonText}
+                searchText={searchText}
+                name={item.name}
+              />
             </View>
           </TouchableHighlight>
         )}
