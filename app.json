@@ -3,7 +3,7 @@
     "sdkVersion": "31.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
-    "version": "1.0.39",
+    "version": "1.0.40",
     "slug": "big-neon-mobile",
     "orientation": "portrait",
     "facebookScheme": "fb1737006886375028",
@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "com.bigneon.mobile",
-      "versionCode": 39,
+      "versionCode": 40,
       "permissions": [
         "CAMERA",
         "CAMERA_ROLL",
@@ -41,7 +41,7 @@
           "config": {
             "organization": "big-neon-5x",
             "project": "react-native-mobile-apps",
-            "authToken": "__SECRET_SENTRY_AUTH_TOKEN__"
+            "authToken": "a0fdde3bde4848928392320aca886dc71863cdc2dfb44d1fbbd2bb041d91dd48"
           }
         }
       ]
