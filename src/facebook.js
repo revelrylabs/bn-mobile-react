@@ -5,6 +5,7 @@ import {server} from './constants/Server'
 const appId = Constants.manifest.facebookAppId
 const options = {
   permissions: ['public_profile', 'email'],
+  behavior: 'system',
 }
 
 export async function requestFacebookAuth() {
