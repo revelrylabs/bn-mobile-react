@@ -227,7 +227,17 @@ export default class EventsIndex extends Component {
       (loc) => loc.id === this.state.selectedLocationId
     )
 
-    return (selectedLoc && (selectedLoc.selectedName || selectedLoc.name)) || ''
+    // Limit before having to truncate
+    const characterLimit = 18
+
+    let name =
+      (selectedLoc && (selectedLoc.selectedName || selectedLoc.name)) || ''
+
+    if (name.length > characterLimit) {
+      name = name.substring(0, characterLimit)
+    }
+
+    return name
   }
 
   locRowOption = (rowData, rowID, _highlighted) => {
