@@ -78,7 +78,7 @@ function SuggestedSearches({searchText, events, navigate}) {
         data={events}
         renderItem={({item, separators}) => (
           <TouchableHighlight
-            style={styles.rowContainer}
+            style={[styles.rowContainer, styles.paddingVerticalSmall]}
             onPress={() => navigate('EventsShow', {eventId: item.id})}
             onShowUnderlay={separators.highlight}
             onHideUnderlay={separators.unhighlight}
