@@ -59,7 +59,8 @@ const FormStyles = {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: globalMarginSmall,
+    marginBottom: globalMargin,
+    marginTop: globalMarginSmall,
     paddingLeft: globalPaddingSmall,
   },
 

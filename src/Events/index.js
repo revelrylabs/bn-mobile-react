@@ -488,8 +488,6 @@ export default class EventsIndex extends Component {
             </TouchableHighlight>
           )}
 
-          <View style={styles.spacer} />
-
           {this.allEvents}
 
           <View style={styles.spacer} />
