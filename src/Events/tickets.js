@@ -125,7 +125,7 @@ export default class GetTickets extends Component {
     return (
       <View>
         <View style={checkoutStyles.headerWrapper}>
-          <Text style={checkoutStyles.header}>Ticket Type</Text>
+          <Text style={checkoutStyles.header}>Select Ticket Type</Text>
         </View>
         {this.ticketList}
         {this.promoCode}
