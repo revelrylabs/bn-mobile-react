@@ -67,7 +67,7 @@ export default class Details extends Component {
       event: {artists},
     } = this.props
 
-    if (artists.length === 0) {
+    if (!artists || artists.length === 0) {
       return null
     }
 
