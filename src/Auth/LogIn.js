@@ -138,13 +138,12 @@ export default class LogIn extends Component {
               <Icon name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
-        </View>
-        <View>
-         <TouchableHighlight
+          <TouchableHighlight
               onPress={() => this.props.navigation.navigate('SignUp')}
             >
-             <View style={[styles.flexRowCenter,styles.paddingSmall,styles.marginBottom]}>
-              <Text style={[styles.linkText]}>New here? Create your account</Text>
+             <View style={[styles.flexRowCenter,styles.paddingSmall,styles.marginTop]}>
+              <Text style={[styles.linkTextDark]}>Don't have an account? </Text>
+              <Text style={[styles.linkText]}>Create one</Text>
               <Icon name="keyboard-arrow-right" style={[styles.linkText]}/>
             </View>
           </TouchableHighlight>

@@ -62,7 +62,7 @@ export default class AuthIndex extends Component {
                 <Text style={loginStyles.buttonText}>Continue with email</Text>
               </LinearGradient>
             </TouchableHighlight>
-          </View>
+          
           <View style={loginStyles.disclaimerWrapper}>
             <Text style={[loginStyles.mutedText, styles.textCenter]}>
               By continuing you agree to our
@@ -103,6 +103,7 @@ export default class AuthIndex extends Component {
                   Privacy Policy
                 </Text>
               </TouchableHighlight>
+            </View>
             </View>
           </View>
         </View>
