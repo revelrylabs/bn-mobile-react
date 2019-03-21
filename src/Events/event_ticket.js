@@ -34,13 +34,13 @@ export class Ticket extends Component {
   }
 
   get subHeaderContent() {
-    const {status, ticket_pricing} = this.props.ticket
+    const {description, status, ticket_pricing} = this.props.ticket
 
     switch (status) {
     case 'SoldOut':
       return 'SOLD OUT'
     case 'Published':
-      return ticket_pricing.name
+      return description ?  description : ticket_pricing.name
     default:
       return null
     }
