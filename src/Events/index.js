@@ -11,6 +11,7 @@ import {
   Platform,
   RefreshControl,
   Easing,
+  FlatList,
 } from 'react-native'
 import {NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -24,6 +25,7 @@ import EventItemView from './event_card'
 import {DateTime} from 'luxon'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import emptyState from '../../assets/icon-empty-state.png'
+import EventCardStyles from '../styles/shared/eventCardStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -31,6 +33,7 @@ const slideshowStyles = SlideShowStyles.createStyles()
 const navigationStyles = NavigationStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
+const eventCardStyles = EventCardStyles.createStyles()
 
 const HEADER_MAX_HEIGHT = 0
 const HEADER_MIN_HEIGHT = -25
@@ -45,6 +48,51 @@ function EmptyEvents({locationName}) {
           locationName == 'All Locations' ? '' : ` ${locationName}`
         } events and experiences powered by Big Neon launching soon!`}
       </Text>
+    </View>
+  )
+}
+
+function BoldText({searchText, name}) {
+  const firstPart = name.substring(0, searchText.length)
+  const secondPart = name.substring(searchText.length)
+
+  return (
+    <Text>
+      <Text style={{fontWeight: 'bold'}}>{firstPart}</Text>
+      <Text>{secondPart}</Text>
+    </Text>
+  )
+}
+
+function SuggestedSearches({searchText, events, navigate}) {
+  if (searchText === '' || events.length === 0) {
+    return null
+  }
+
+  return (
+    <View>
+      <Text style={styles.sectionHeader}>{'Suggested Searches'}</Text>
+      <FlatList
+        keyExtractor={(item) => item.id}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        data={events}
+        renderItem={({item, separators}) => (
+          <TouchableHighlight
+            style={[styles.rowContainer, styles.paddingVerticalSmall]}
+            onPress={() => navigate('EventsShow', {eventId: item.id})}
+            onShowUnderlay={separators.highlight}
+            onHideUnderlay={separators.unhighlight}
+          >
+            <View>
+              <BoldText
+                style={styles.buttonText}
+                searchText={searchText}
+                name={item.name}
+              />
+            </View>
+          </TouchableHighlight>
+        )}
+      />
     </View>
   )
 }
@@ -127,6 +175,26 @@ export default class EventsIndex extends Component {
     return !lastUpdate || lastUpdate.plus({minutes: 15}) < DateTime.local()
   }
 
+  filterEventsByLocation(events, selectedLocationId) {
+    if (selectedLocationId) {
+      return events.filter(
+        ({venue: {region_id}}) => region_id === selectedLocationId
+      )
+    }
+
+    return events
+  }
+
+  filterEventsBySearchText(events, searchText) {
+    if (searchText !== '') {
+      return events.filter(({name}) =>
+        name.toLowerCase().startsWith(searchText.toLowerCase())
+      )
+    }
+
+    return events
+  }
+
   get events() {
     const {
       screenProps: {
@@ -136,21 +204,12 @@ export default class EventsIndex extends Component {
       },
     } = this.props
 
-    let eventsToDisplay = events
+    const eventsToDisplay = this.filterEventsByLocation(
+      events,
+      selectedLocationId
+    )
 
-    if (selectedLocationId) {
-      eventsToDisplay = eventsToDisplay.filter(
-        ({venue: {region_id}}) => region_id === selectedLocationId
-      )
-    }
-
-    if (this.state.searchText !== '') {
-      eventsToDisplay = eventsToDisplay.filter(({name}) =>
-        name.toLowerCase().startsWith(this.state.searchText.toLowerCase())
-      )
-    }
-
-    return eventsToDisplay
+    return this.filterEventsBySearchText(eventsToDisplay, this.state.searchText)
   }
 
   setFavorite = (mainFavorite) => {
@@ -168,7 +227,17 @@ export default class EventsIndex extends Component {
       (loc) => loc.id === this.state.selectedLocationId
     )
 
-    return (selectedLoc && (selectedLoc.selectedName || selectedLoc.name)) || ''
+    // Limit before having to truncate
+    const characterLimit = 18
+
+    let name =
+      (selectedLoc && (selectedLoc.selectedName || selectedLoc.name)) || ''
+
+    if (name.length > characterLimit) {
+      name = name.substring(0, characterLimit)
+    }
+
+    return name
   }
 
   locRowOption = (rowData, rowID, _highlighted) => {
@@ -310,13 +379,21 @@ export default class EventsIndex extends Component {
             />
             <TextInput
               style={formStyles.searchInput}
-              placeholder="Search artists, shows, venues..."
+              placeholder="Search by event names..."
               searchIcon={{size: 24}}
               underlineColorAndroid="transparent"
               onChangeText={this.updateSearchText}
               disabled
             />
           </View>
+
+          {this.state.searchText !== '' && (
+            <SuggestedSearches
+              searchText={this.state.searchText}
+              events={this.events}
+              navigate={navigate}
+            />
+          )}
 
           {this.state.searchText !== '' && (
             <Text style={styles.sectionHeader}>
@@ -410,8 +487,6 @@ export default class EventsIndex extends Component {
               </View>
             </TouchableHighlight>
           )}
-
-          <View style={styles.spacer} />
 
           {this.allEvents}
 
