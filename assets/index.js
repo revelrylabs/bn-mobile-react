@@ -1,4 +1,4 @@
-import {Asset, Image} from 'expo';
+import {Asset, Image} from 'expo'
 
 const IMAGES = [
   require('./account-placeholder-bkgd.png'),
@@ -18,20 +18,20 @@ const IMAGES = [
   require('./icon-wallet.png'),
   require('./login-bkgd.png'),
   require('./qr-code-placeholder.png'),
-  require('./qr-code-small.png')
+  require('./qr-code-small.png'),
+  require('./event-placeholder.png'),
 ]
 
 function cacheImages(images) {
   return images.map((image) => {
     if (typeof image === 'string') {
-      return Image.prefetch(image);
+      return Image.prefetch(image)
     } else {
-      return Asset.fromModule(image).downloadAsync();
+      return Asset.fromModule(image).downloadAsync()
     }
-  });
+  })
 }
 
-
 export async function loadImages() {
-  return await cacheImages(IMAGES);
+  return await cacheImages(IMAGES)
 }

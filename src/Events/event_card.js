@@ -67,6 +67,7 @@ export default class EventsIndex extends Component {
             <Image
               style={eventCardStyles.eventImage}
               source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
+              defaultSource={require('../../assets/event-placeholder.png')}
             />
             <View style={eventCardStyles.detailsContainer}>
               <View style={eventCardStyles.sectionTop}>
