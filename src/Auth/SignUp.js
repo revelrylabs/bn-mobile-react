@@ -77,6 +77,7 @@ export default class SignUp extends Component {
   }
 
   render() {
+    const {navigate} = this.props.navigation
     return (
       <KeyboardAvoidingView
         style={loginStyles.container}

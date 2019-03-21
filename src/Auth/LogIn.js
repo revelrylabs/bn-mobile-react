@@ -77,14 +77,15 @@ export default class LogIn extends Component {
     return (
       <View style={loginStyles.container}>
         <View>
-          <Text
-            style={[
-              styles.headerSecondary,
-              styles.textCenter,
-              styles.paddingBottomJumbo,
-            ]}
-          >
-            Welcome back!
+          <Text style={loginStyles.smallText}>Access your experiences</Text>
+            <Text
+              style={[
+                styles.headerSecondary,
+                styles.textCenter,
+                styles.paddingBottom,
+              ]}
+            >
+              Log in to your account
           </Text>
           <TextInput
             keyboardType="email-address"
@@ -122,7 +123,7 @@ export default class LogIn extends Component {
               colors={['#5491CC', '#9A68B2', '#E53D96']}
               style={loginStyles.button}
             >
-              <Text style={loginStyles.buttonText}>Login to your account</Text>
+              <Text style={loginStyles.buttonText}>{"Let's Do This"}</Text>
             </LinearGradient>
           </BusyButton>
           <TouchableHighlight
@@ -132,13 +133,23 @@ export default class LogIn extends Component {
               })
             }
           >
-            <View style={styles.flexRowCenter}>
-              <Text style={styles.linkTextDark}>Reset your password</Text>
+            <View style={[styles.flexRowCenter,styles.paddingSmall,styles.marginBottom]}>
+              <Text style={[styles.linkTextDark]}>Reset your password</Text>
               <Icon name="keyboard-arrow-right" />
             </View>
           </TouchableHighlight>
         </View>
-
+        <View>
+         <TouchableHighlight
+              onPress={() => this.props.navigation.navigate('SignUp')}
+            >
+             <View style={[styles.flexRowCenter,styles.paddingSmall,styles.marginBottom]}>
+              <Text style={[styles.linkText]}>New here? Create your account</Text>
+              <Icon name="keyboard-arrow-right" style={[styles.linkText]}/>
+            </View>
+          </TouchableHighlight>
+        </View>
+        
         {false && ( // TODO: Re-enable when functionality is implemented.
           <View>
             <TouchableHighlight>
