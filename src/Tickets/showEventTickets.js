@@ -11,7 +11,7 @@ import {optimizeCloudinaryImage} from '../cloudinary'
 
 // In case we cannot get a value for the brightness from
 // Brightness.getBrightnessAsync()
-const DEFAULT_BRIGHTNESS = 0.3
+const DEFAULT_BRIGHTNESS = 0.5
 
 const styles = SharedStyles.createStyles()
 
