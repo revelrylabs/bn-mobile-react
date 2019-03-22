@@ -103,6 +103,15 @@ const LoginStyles = {
     height: 60,
     justifyContent: 'center',
   },
+  buttonFacebook: {
+    backgroundColor: facebookColor,
+    borderColor: 'transparent',
+    borderRadius: 4,
+    borderWidth: 1,
+    flex: 1,
+    height: 60,
+    justifyContent: 'center',
+  },
   buttonSecondaryText: {
     color: whiteTransparent,
     fontFamily: globalFontRegular,
@@ -128,7 +137,21 @@ const LoginStyles = {
     fontSize: globalFontSize,
     textAlign: 'center',
   },
-
+  buttonSecondaryLight: {
+    backgroundColor: 'transparent',
+    borderColor: primaryColor,
+    borderRadius: 4,
+    borderWidth: 1,
+    flex: 1,
+    height: 40,
+    justifyContent: 'center',
+  },
+  buttonSecondaryLightText: {
+    color: primaryColor,
+    fontFamily: globalFontRegular,
+    fontSize: globalFontSize,
+    textAlign: 'center',
+  },
   // TEXT STYLES
   linkTextBlue: {
     backgroundColor: 'transparent',
