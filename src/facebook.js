@@ -2,11 +2,11 @@ import {Constants, Facebook} from 'expo'
 import {Platform} from 'react-native'
 import {server} from './constants/Server'
 
-const BEHAVIOR = Platform.OS === 'ios' ? 'web' : 'system'
+// const BEHAVIOR = Platform.OS === 'ios' ? 'web' : 'system'
 const appId = Constants.manifest.facebookAppId
 const options = {
   permissions: ['public_profile', 'email'],
-  behavior: BEHAVIOR,
+  behavior: 'system',
 }
 
 export async function requestFacebookAuth() {

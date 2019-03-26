@@ -372,20 +372,22 @@ export default class EventsIndex extends Component {
             </ModalDropdown>
           </View>
 
-          <View style={formStyles.searchContainer}>
-            <Image
-              style={formStyles.searchIcon}
-              source={require('../../assets/icon-search.png')}
-            />
-            <TextInput
-              style={formStyles.searchInput}
-              placeholder="Search by event names..."
-              searchIcon={{size: 24}}
-              underlineColorAndroid="transparent"
-              onChangeText={this.updateSearchText}
-              disabled
-            />
-          </View>
+          { false && (
+            <View style={formStyles.searchContainer}>
+              <Image
+                style={formStyles.searchIcon}
+                source={require('../../assets/icon-search.png')}
+              />
+              <TextInput
+                style={formStyles.searchInput}
+                placeholder="Search by event names..."
+                searchIcon={{size: 24}}
+                underlineColorAndroid="transparent"
+                onChangeText={this.updateSearchText}
+                disabled
+              />
+            </View>
+          )}
 
           {this.state.searchText !== '' && (
             <SuggestedSearches
