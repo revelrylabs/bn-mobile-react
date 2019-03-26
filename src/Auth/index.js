@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight} from 'react-native'
+import {Text, View, Image, TouchableHighlight, Platform} from 'react-native'
 import {LinearGradient} from 'expo'
 import LoginStyles from '../styles/login/loginStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -37,7 +37,7 @@ export default class AuthIndex extends Component {
           
 
           <View>
-            {false && (
+            {Platform.OS === 'android' && (
               <View style={loginStyles.buttonContainer}>
                 <TouchableHighlight
                   underlayColor="rgba(0, 0, 0, 0)"
