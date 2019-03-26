@@ -67,9 +67,11 @@ export class Ticket extends Component {
               <Text style={checkoutStyles.ticketHeader}>
                 {this.props.ticket.name}
               </Text>
-              <Text style={checkoutStyles.ticketSubHeader}>
-                {this.subHeaderContent}
-              </Text>
+              {false && (
+                <Text style={checkoutStyles.ticketSubHeader}>
+                  {this.subHeaderContent}
+                </Text>
+              )}
             </View>
           </View>
           {this.icon}
