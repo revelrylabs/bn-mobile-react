@@ -25,7 +25,6 @@ import EventItemView from './event_card'
 import {DateTime} from 'luxon'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import emptyState from '../../assets/icon-empty-state.png'
-import EventCardStyles from '../styles/shared/eventCardStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -33,7 +32,6 @@ const slideshowStyles = SlideShowStyles.createStyles()
 const navigationStyles = NavigationStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
-const eventCardStyles = EventCardStyles.createStyles()
 
 const HEADER_MAX_HEIGHT = 0
 const HEADER_MIN_HEIGHT = -25
@@ -49,17 +47,6 @@ function EmptyEvents({locationName}) {
         } events and experiences powered by Big Neon launching soon!`}
       </Text>
     </View>
-  )
-}
-
-function BoldText({searchText, name}) {
-  const firstPart = name.substring(0, searchText.length)
-  const secondPart = name.substring(searchText.length)
-
-  return (
-    <Text>
-      <Text>{name}</Text>
-    </Text>
   )
 }
 
