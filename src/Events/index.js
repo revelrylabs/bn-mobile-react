@@ -58,8 +58,7 @@ function BoldText({searchText, name}) {
 
   return (
     <Text>
-      <Text style={{fontWeight: 'bold'}}>{firstPart}</Text>
-      <Text>{secondPart}</Text>
+      <Text>{name}</Text>
     </Text>
   )
 }
@@ -75,7 +74,7 @@ function SuggestedSearches({searchText, events, navigate}) {
       <FlatList
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        data={events}
+        data={events.slice(0, 5)}
         renderItem={({item, separators}) => (
           <TouchableHighlight
             style={[styles.rowContainer, styles.paddingVerticalSmall]}
@@ -84,11 +83,9 @@ function SuggestedSearches({searchText, events, navigate}) {
             onHideUnderlay={separators.unhighlight}
           >
             <View>
-              <BoldText
-                style={styles.buttonText}
-                searchText={searchText}
-                name={item.name}
-              />
+              <Text>
+                <Text>{item.name}</Text>
+              </Text>
             </View>
           </TouchableHighlight>
         )}
@@ -188,7 +185,7 @@ export default class EventsIndex extends Component {
   filterEventsBySearchText(events, searchText) {
     if (searchText !== '') {
       return events.filter(({name}) =>
-        name.toLowerCase().startsWith(searchText.toLowerCase())
+        name.toLowerCase().includes(searchText.trim().toLowerCase())
       )
     }
 
@@ -372,22 +369,19 @@ export default class EventsIndex extends Component {
             </ModalDropdown>
           </View>
 
-          { false && (
-            <View style={formStyles.searchContainer}>
-              <Image
-                style={formStyles.searchIcon}
-                source={require('../../assets/icon-search.png')}
-              />
-              <TextInput
-                style={formStyles.searchInput}
-                placeholder="Search by event names..."
-                searchIcon={{size: 24}}
-                underlineColorAndroid="transparent"
-                onChangeText={this.updateSearchText}
-                disabled
-              />
-            </View>
-          )}
+          <View style={formStyles.searchContainer}>
+            <Image
+              style={formStyles.searchIcon}
+              source={require('../../assets/icon-search.png')}
+            />
+            <TextInput
+              style={formStyles.searchInput}
+              placeholder="Search for an event"
+              searchIcon={{size: 24}}
+              underlineColorAndroid="transparent"
+              onChangeText={this.updateSearchText}
+            />
+          </View>
 
           {this.state.searchText !== '' && (
             <SuggestedSearches
