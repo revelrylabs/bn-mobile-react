@@ -4,10 +4,12 @@ import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
+import TicketStyles from '../styles/tickets/ticketStyles'
 import {toDollars} from '../constants/money'
 
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
+const ticketStyles = TicketStyles.createStyles()
 
 /* eslint-disable camelcase */
 
@@ -40,7 +42,7 @@ export class Ticket extends Component {
     case 'SoldOut':
       return 'SOLD OUT'
     case 'Published':
-      return description ?  description : ticket_pricing.name
+      return description ? description : ticket_pricing.name
     default:
       return null
     }
@@ -63,15 +65,13 @@ export class Ticket extends Component {
         <View style={checkoutStyles.rowContainer}>
           <View style={checkoutStyles.row}>
             <Text style={checkoutStyles.ticketPrice}>{this.priceContent}</Text>
-            <View>
+            <View style={ticketStyles.ticketHolderWrapper}>
               <Text style={checkoutStyles.ticketHeader}>
                 {this.props.ticket.name}
               </Text>
-              {false && (
-                <Text style={checkoutStyles.ticketSubHeader}>
-                  {this.subHeaderContent}
-                </Text>
-              )}
+              <Text style={checkoutStyles.ticketSubHeader}>
+                {this.subHeaderContent}
+              </Text>
             </View>
           </View>
           {this.icon}
