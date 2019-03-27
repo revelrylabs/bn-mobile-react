@@ -33,6 +33,17 @@ export class Ticket extends Component {
       'N/A'
   }
 
+  get headerContent() {
+    const {status, ticket_pricing} = this.props.ticket
+
+    switch (status) {
+    case 'SoldOut':
+      return 'SOLD OUT'
+    default:
+      return ticket_pricing.name
+    }
+  }
+
   get subHeaderContent() {
     const {description, status, ticket_pricing} = this.props.ticket
 
@@ -65,7 +76,7 @@ export class Ticket extends Component {
             <Text style={checkoutStyles.ticketPrice}>{this.priceContent}</Text>
             <View>
               <Text style={checkoutStyles.ticketHeader}>
-                {this.props.ticket.name}
+                {this.headerContent}
               </Text>
               {false && (
                 <Text style={checkoutStyles.ticketSubHeader}>
