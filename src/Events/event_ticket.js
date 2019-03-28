@@ -4,10 +4,12 @@ import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import AccountStyles from '../styles/account/accountStyles'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
+import TicketStyles from '../styles/tickets/ticketStyles'
 import {toDollars} from '../constants/money'
 
 const accountStyles = AccountStyles.createStyles()
 const checkoutStyles = CheckoutStyles.createStyles()
+const ticketStyles = TicketStyles.createStyles()
 
 /* eslint-disable camelcase */
 
@@ -32,7 +34,8 @@ export class Ticket extends Component {
     default:
       return ticket_pricing ?
         `$${toDollars(
-          ticket_pricing.price_in_cents - ticket_pricing.discount_in_cents
+          ticket_pricing.price_in_cents - ticket_pricing.discount_in_cents,
+          0
         )}` :
         'N/A'
     }
@@ -66,9 +69,11 @@ export class Ticket extends Component {
         onPress={this.getOnPressHandler()}
       >
         <View style={checkoutStyles.rowContainer}>
-          <View style={checkoutStyles.row}>
-            <Text style={checkoutStyles.ticketPrice}>{this.priceContent}</Text>
-            <View>
+          <View style={[checkoutStyles.row, ticketStyles.ticketHolderWrapper]}>
+            <Text style={checkoutStyles.altTicketPrice}>
+              {this.priceContent}
+            </Text>
+            <View style={[ticketStyles.ticketHolderWrapper]}>
               <Text style={checkoutStyles.ticketHeader}>
                 {this.props.ticket.name}
               </Text>

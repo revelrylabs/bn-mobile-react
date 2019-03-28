@@ -107,6 +107,12 @@ const CheckoutStyles = {
     fontSize: ticketPriceFontSize,
     paddingRight: globalPadding,
   },
+  altTicketPrice: {
+    color: primaryColor,
+    fontFamily: globalFontSemiBold,
+    fontSize: globalFontSizeSmall,
+    paddingRight: globalPadding,
+  },
   ticketHeader: {
     color: textColor,
     fontFamily: globalFontSemiBold,
