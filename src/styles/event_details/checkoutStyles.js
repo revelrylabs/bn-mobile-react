@@ -29,8 +29,7 @@ const CheckoutStyles = {
   // MAIN BODY STYLES
   mainBody: {
     backgroundColor: 'transparent',
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingBottom: globalPaddingLarge + 80,
     paddingHorizontal: 0,
     minHeight: '100%',
     marginTop: fullWidth / 2 - 50,
