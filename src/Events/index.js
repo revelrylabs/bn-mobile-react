@@ -79,7 +79,7 @@ function SuggestedSearches({searchText, events, navigate}) {
         renderItem={({item, separators}) => (
           <TouchableHighlight
             style={[styles.rowContainer, styles.paddingVerticalSmall]}
-            onPress={() => navigate('EventsShow', {eventId: item.id})}
+            onPress={() => navigate('EventsShow', {eventId: item.id, event: item})}
             onShowUnderlay={separators.highlight}
             onHideUnderlay={separators.unhighlight}
           >
@@ -276,7 +276,7 @@ export default class EventsIndex extends Component {
     return events.map((event, index) => (
       <EventItemView
         key={index}
-        onPress={() => navigate('EventsShow', {eventId: event.id})}
+        onPress={() => navigate('EventsShow', {eventId: event.id, event})}
         event={event}
         onInterested={toggleInterest}
       />
