@@ -24,23 +24,17 @@ export class Ticket extends Component {
   }
 
   get priceContent() {
-    const {ticket_pricing} = this.props.ticket
-
-    return ticket_pricing ?
-      `$${toDollars(
-        ticket_pricing.price_in_cents - ticket_pricing.discount_in_cents
-      )}` :
-      'N/A'
-  }
-
-  get headerContent() {
     const {status, ticket_pricing} = this.props.ticket
 
     switch (status) {
     case 'SoldOut':
       return 'SOLD OUT'
     default:
-      return ticket_pricing.name
+      return ticket_pricing ?
+        `$${toDollars(
+          ticket_pricing.price_in_cents - ticket_pricing.discount_in_cents
+        )}` :
+        'N/A'
     }
   }
 
@@ -51,7 +45,7 @@ export class Ticket extends Component {
     case 'SoldOut':
       return 'SOLD OUT'
     case 'Published':
-      return description ?  description : ticket_pricing.name
+      return description ? description : ticket_pricing.name
     default:
       return null
     }
@@ -76,7 +70,7 @@ export class Ticket extends Component {
             <Text style={checkoutStyles.ticketPrice}>{this.priceContent}</Text>
             <View>
               <Text style={checkoutStyles.ticketHeader}>
-                {this.headerContent}
+                {this.props.ticket.name}
               </Text>
               {false && (
                 <Text style={checkoutStyles.ticketSubHeader}>
