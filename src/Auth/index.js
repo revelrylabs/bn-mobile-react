@@ -37,19 +37,17 @@ export default class AuthIndex extends Component {
           
 
           <View>
-            {Platform.OS === 'android' && (
-              <View style={loginStyles.buttonContainer}>
-                <TouchableHighlight
-                  underlayColor="rgba(0, 0, 0, 0)"
-                  onPress={() => facebook(navigate)}
-                  style={loginStyles.buttonFacebook}
-                >
-                  <Text style={loginStyles.buttonText}>
-                    Continue with Facebook
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            )}
+            <View style={loginStyles.buttonContainer}>
+              <TouchableHighlight
+                underlayColor="rgba(0, 0, 0, 0)"
+                onPress={() => facebook(navigate)}
+                style={loginStyles.buttonFacebook}
+              >
+                <Text style={loginStyles.buttonText}>
+                  Continue with Facebook
+                </Text>
+              </TouchableHighlight>
+            </View>
             <TouchableHighlight
               style={loginStyles.buttonContainer}
               underlayColor="rgba(0, 0, 0, 0)"
