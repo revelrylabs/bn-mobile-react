@@ -56,10 +56,10 @@ We're using [Expo Build releasing through Fastlane](https://blog.expo.io/automat
 
 #### Set up your environment for deployment
 
-The `expo` CLI should be installed if you've run `npm install`. Login to epo using the BigNeon credentials:
+The `expo` CLI should be installed if you've run `npm install`. Login to expo using the BigNeon credentials:
 
 ```
-$ expo login
+$ npm run expo -- login
 username/email: bigneon
 password: <message brad or zach>
 ```
@@ -73,6 +73,7 @@ export LANG=en_US.UTF-8
 export DELIVER_USERNAME=apple developer username
 export DELIVER_PASSWORD=apple developer password
 export FASTLANE_ITC_TEAM_ID=119447135
+export SECRET_SENTRY_AUTH_TOKEN=sentry auth token
 ```
 
 The Team ID is the Big Neon Team ID in the App Store. To deploy, you will need to be added to the organization.
