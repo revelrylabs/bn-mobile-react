@@ -18,6 +18,7 @@ const EventsShowRoute = {
   screen: EventsShow,
   navigationOptions: ({navigation}) => ({
     eventId: navigation.state.params.eventId,
+    event: navigation.state.params.event,
   }),
 }
 

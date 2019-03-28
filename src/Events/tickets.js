@@ -1,6 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, TouchableHighlight, Image, TextInput} from 'react-native'
+import {
+  Text,
+  View,
+  TouchableHighlight,
+  Image,
+  TextInput,
+  ScrollView,
+} from 'react-native'
 import {MaterialIcons} from '@expo/vector-icons'
 import {Ticket} from './event_ticket'
 import CheckoutStyles from '../styles/event_details/checkoutStyles'
@@ -123,13 +130,15 @@ export default class GetTickets extends Component {
 
   get hasTicketDisplay() {
     return (
-      <View>
-        <View style={checkoutStyles.headerWrapper}>
-          <Text style={checkoutStyles.header}>Select Ticket Type</Text>
+      <ScrollView>
+        <View>
+          <View style={checkoutStyles.headerWrapper}>
+            <Text style={checkoutStyles.header}>Select Ticket Type</Text>
+          </View>
+          {this.ticketList}
+          {this.promoCode}
         </View>
-        {this.ticketList}
-        {this.promoCode}
-      </View>
+      </ScrollView>
     )
   }
 

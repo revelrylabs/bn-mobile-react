@@ -81,7 +81,7 @@ export default class EventShow extends Component {
     super(props)
 
     this.state = {
-      event: false,
+      event: props.navigation.getParam('event', false),
       eventId: props.navigation.getParam('eventId', false),
       favorite: false,
       currentScreen: 'details',
@@ -89,7 +89,6 @@ export default class EventShow extends Component {
       showSuccessModal: false,
       success: null,
     }
-    this.loadEvent()
   }
 
   componentWillReceiveProps(newProps) {
@@ -101,8 +100,7 @@ export default class EventShow extends Component {
       },
     } = newProps
 
-    // Do we want to check if the event id different, or just always update?
-    if (selectedEvent) {
+    if (selectedEvent.id && selectedEvent.id === this.state.eventId) {
       this.setState({event: selectedEvent})
     }
   }
@@ -117,12 +115,12 @@ export default class EventShow extends Component {
     this.scrollView.scrollTo({y: 10, x: 0, animated: true})
   }
 
-  clearEvent() {
+  async clearEvent() {
     const {
       screenProps: {store},
     } = this.props
 
-    store.clearEvent() // @TODO: Test this more - old events still in pop up.
+    store.clearEvent()
   }
 
   async loadEvent() {
@@ -239,7 +237,6 @@ export default class EventShow extends Component {
     }
 
     // @TODO: Add a ScrollTo initial position
-
     switch (currentScreen) {
     case 'details':
       return <Details event={event} onInterested={toggleInterest} />
@@ -470,8 +467,8 @@ export default class EventShow extends Component {
     return (
       <View style={{backgroundColor: 'white'}}>
         <NavigationEvents
-          onWillFocus={() => this.loadEvent()}
-          onDidBlur={() => this.clearEvent()}
+          onDidFocus={() => this.loadEvent()}
+          onWillBlur={() => this.clearEvent()}
         />
         <LoadingScreen visible={showLoadingModal} />
         <SuccessScreen visible={showSuccessModal} />
