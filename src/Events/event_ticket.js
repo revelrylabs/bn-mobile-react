@@ -26,13 +26,19 @@ export class Ticket extends Component {
   }
 
   get priceContent() {
-    const {ticket_pricing} = this.props.ticket
+    const {status, ticket_pricing} = this.props.ticket
 
-    return ticket_pricing ?
-      `$${toDollars(
-        ticket_pricing.price_in_cents - ticket_pricing.discount_in_cents
-      )}` :
-      'N/A'
+    switch (status) {
+    case 'SoldOut':
+      return 'SOLD OUT'
+    default:
+      return ticket_pricing ?
+        `$${toDollars(
+          ticket_pricing.price_in_cents - ticket_pricing.discount_in_cents,
+          0
+        )}` :
+        'N/A'
+    }
   }
 
   get subHeaderContent() {
@@ -57,15 +63,25 @@ export class Ticket extends Component {
   }
 
   render() {
+    const price = this.priceContent
+
     return (
       <TouchableHighlight
         key={this.props.ticket.id}
         onPress={this.getOnPressHandler()}
       >
         <View style={checkoutStyles.rowContainer}>
-          <View style={checkoutStyles.row}>
-            <Text style={checkoutStyles.ticketPrice}>{this.priceContent}</Text>
-            <View style={ticketStyles.ticketHolderWrapper}>
+          <View style={[checkoutStyles.row, ticketStyles.ticketHolderWrapper]}>
+            <Text
+              style={
+                price === 'SOLD OUT' ?
+                  checkoutStyles.soldOutTicketPrice :
+                  checkoutStyles.ticketPrice
+              }
+            >
+              {price}
+            </Text>
+            <View style={[ticketStyles.ticketHolderWrapper]}>
               <Text style={checkoutStyles.ticketHeader}>
                 {this.props.ticket.name}
               </Text>

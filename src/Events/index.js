@@ -25,7 +25,6 @@ import EventItemView from './event_card'
 import {DateTime} from 'luxon'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import emptyState from '../../assets/icon-empty-state.png'
-import EventCardStyles from '../styles/shared/eventCardStyles'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -33,7 +32,6 @@ const slideshowStyles = SlideShowStyles.createStyles()
 const navigationStyles = NavigationStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
-const eventCardStyles = EventCardStyles.createStyles()
 
 const HEADER_MAX_HEIGHT = 0
 const HEADER_MIN_HEIGHT = -25
@@ -52,18 +50,6 @@ function EmptyEvents({locationName}) {
   )
 }
 
-function BoldText({searchText, name}) {
-  const firstPart = name.substring(0, searchText.length)
-  const secondPart = name.substring(searchText.length)
-
-  return (
-    <Text>
-      <Text style={{fontWeight: 'bold'}}>{firstPart}</Text>
-      <Text>{secondPart}</Text>
-    </Text>
-  )
-}
-
 function SuggestedSearches({searchText, events, navigate}) {
   if (searchText === '' || events.length === 0) {
     return null
@@ -75,20 +61,16 @@ function SuggestedSearches({searchText, events, navigate}) {
       <FlatList
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        data={events}
+        data={events.slice(0, 5)}
         renderItem={({item, separators}) => (
           <TouchableHighlight
             style={[styles.rowContainer, styles.paddingVerticalSmall]}
-            onPress={() => navigate('EventsShow', {eventId: item.id})}
+            onPress={() => navigate('EventsShow', {eventId: item.id, event: item})}
             onShowUnderlay={separators.highlight}
             onHideUnderlay={separators.unhighlight}
           >
             <View>
-              <BoldText
-                style={styles.buttonText}
-                searchText={searchText}
-                name={item.name}
-              />
+              <Text>{item.name}</Text>
             </View>
           </TouchableHighlight>
         )}
@@ -188,7 +170,7 @@ export default class EventsIndex extends Component {
   filterEventsBySearchText(events, searchText) {
     if (searchText !== '') {
       return events.filter(({name}) =>
-        name.toLowerCase().startsWith(searchText.toLowerCase())
+        name.toLowerCase().includes(searchText.trim().toLowerCase())
       )
     }
 
@@ -276,7 +258,7 @@ export default class EventsIndex extends Component {
     return events.map((event, index) => (
       <EventItemView
         key={index}
-        onPress={() => navigate('EventsShow', {eventId: event.id})}
+        onPress={() => navigate('EventsShow', {eventId: event.id, event})}
         event={event}
         onInterested={toggleInterest}
       />
@@ -372,22 +354,19 @@ export default class EventsIndex extends Component {
             </ModalDropdown>
           </View>
 
-          { false && (
-            <View style={formStyles.searchContainer}>
-              <Image
-                style={formStyles.searchIcon}
-                source={require('../../assets/icon-search.png')}
-              />
-              <TextInput
-                style={formStyles.searchInput}
-                placeholder="Search by event names..."
-                searchIcon={{size: 24}}
-                underlineColorAndroid="transparent"
-                onChangeText={this.updateSearchText}
-                disabled
-              />
-            </View>
-          )}
+          <View style={formStyles.searchContainer}>
+            <Image
+              style={formStyles.searchIcon}
+              source={require('../../assets/icon-search.png')}
+            />
+            <TextInput
+              style={formStyles.searchInput}
+              placeholder="Search for an event"
+              searchIcon={{size: 24}}
+              underlineColorAndroid="transparent"
+              onChangeText={this.updateSearchText}
+            />
+          </View>
 
           {this.state.searchText !== '' && (
             <SuggestedSearches
