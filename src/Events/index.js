@@ -70,9 +70,7 @@ function SuggestedSearches({searchText, events, navigate}) {
             onHideUnderlay={separators.unhighlight}
           >
             <View>
-              <Text>
-                <Text>{item.name}</Text>
-              </Text>
+              <Text>{item.name}</Text>
             </View>
           </TouchableHighlight>
         )}
