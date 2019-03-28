@@ -107,7 +107,7 @@ const CheckoutStyles = {
     fontSize: ticketPriceFontSize,
     paddingRight: globalPadding,
   },
-  altTicketPrice: {
+  soldOutTicketPrice: {
     color: primaryColor,
     fontFamily: globalFontSemiBold,
     fontSize: globalFontSizeSmall,

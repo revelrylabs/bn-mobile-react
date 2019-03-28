@@ -63,6 +63,8 @@ export class Ticket extends Component {
   }
 
   render() {
+    const price = this.priceContent
+
     return (
       <TouchableHighlight
         key={this.props.ticket.id}
@@ -70,8 +72,14 @@ export class Ticket extends Component {
       >
         <View style={checkoutStyles.rowContainer}>
           <View style={[checkoutStyles.row, ticketStyles.ticketHolderWrapper]}>
-            <Text style={checkoutStyles.altTicketPrice}>
-              {this.priceContent}
+            <Text
+              style={
+                price === 'SOLD OUT' ?
+                  checkoutStyles.soldOutTicketPrice :
+                  checkoutStyles.ticketPrice
+              }
+            >
+              {price}
             </Text>
             <View style={[ticketStyles.ticketHolderWrapper]}>
               <Text style={checkoutStyles.ticketHeader}>
