@@ -19,7 +19,11 @@ export class Ticket extends Component {
     onTicketSelection: PropTypes.func.isRequired,
   }
 
-  getOnPressHandler() {
+  getOnPressHandler(isSoldOut) {
+    if (isSoldOut) {
+      return () => {}
+    }
+
     const {ticket, onTicketSelection} = this.props
 
     return ticket.ticket_pricing && (() => onTicketSelection(ticket))
@@ -64,17 +68,18 @@ export class Ticket extends Component {
 
   render() {
     const price = this.priceContent
+    const isSoldOut = price === 'SOLD OUT'
 
     return (
       <TouchableHighlight
         key={this.props.ticket.id}
-        onPress={this.getOnPressHandler()}
+        onPress={this.getOnPressHandler(isSoldOut)}
       >
         <View style={checkoutStyles.rowContainer}>
           <View style={[checkoutStyles.row, ticketStyles.ticketHolderWrapper]}>
             <Text
               style={
-                price === 'SOLD OUT' ?
+                isSoldOut ?
                   checkoutStyles.soldOutTicketPrice :
                   checkoutStyles.ticketPrice
               }
@@ -90,7 +95,7 @@ export class Ticket extends Component {
               </Text>
             </View>
           </View>
-          {this.icon}
+          {isSoldOut ? null : this.icon}
         </View>
       </TouchableHighlight>
     )
