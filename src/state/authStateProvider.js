@@ -168,13 +168,15 @@ class AuthContainer extends Container {
     }
   }
 
-  facebook = async (navigate) => {
+  facebook = async (navigate, loading = () => {}) => {
     await this.setState({isFetching: true})
     try {
       const facebook = await requestFacebookAuth()
 
       if (!facebook) {
         return
+      } else {
+        loading(true)
       }
 
       const resp = await connectFacebookToBigNeon(facebook)
@@ -183,10 +185,13 @@ class AuthContainer extends Container {
       this.identify('Signed In')
       return true
     } catch (error) {
-      apiErrorAlert(error)
+      setTimeout(() => {
+        apiErrorAlert(error)
+      }, 600)
       navigate('LogIn')
       return false
     } finally {
+      loading(false)
       await this.setState({isFetching: false})
     }
   }

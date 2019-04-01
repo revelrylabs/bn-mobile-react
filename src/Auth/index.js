@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight, Platform} from 'react-native'
+import {Text, View, Image, TouchableHighlight} from 'react-native'
 import {LinearGradient} from 'expo'
+import {LoadingScreen} from '../constants/modals'
 import LoginStyles from '../styles/login/loginStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
 import {WebBrowser} from 'expo'
@@ -17,12 +18,24 @@ export default class AuthIndex extends Component {
     header: null,
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      displayLoading: false,
+    }
+  }
+
+  showModal = (displayLoading) => {
+    this.setState({displayLoading})
+  }
+
   render() {
     const {facebook} = this.props.screenProps.auth
     const {navigate} = this.props.navigation
 
     return (
       <View style={loginStyles.signupBkgdContainer}>
+        <LoadingScreen visible={this.state.displayLoading} />
         <Image
           style={loginStyles.signupBkgd}
           source={require('../../assets/login-bkgd.png')}
@@ -34,13 +47,13 @@ export default class AuthIndex extends Component {
             source={require('../../assets/big-neon-logo.png')}
           />
 
-          
+
 
           <View>
             <View style={loginStyles.buttonContainer}>
               <TouchableHighlight
                 underlayColor="rgba(0, 0, 0, 0)"
-                onPress={() => facebook(navigate)}
+                onPress={() => facebook(navigate, this.showModal)}
                 style={loginStyles.buttonFacebook}
               >
                 <Text style={loginStyles.buttonText}>
@@ -62,7 +75,7 @@ export default class AuthIndex extends Component {
                 <Text style={loginStyles.buttonText}>Continue with email</Text>
               </LinearGradient>
             </TouchableHighlight>
-          
+
           <View style={loginStyles.disclaimerWrapper}>
             <Text style={[loginStyles.mutedText, styles.textCenter]}>
               By continuing you agree to our
