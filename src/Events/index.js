@@ -428,7 +428,7 @@ export default class EventsIndex extends Component {
             />
             <TextInput
               style={formStyles.searchInput}
-              placeholder="Search for an event"
+              placeholder="Search artists, shows, venues..."
               searchIcon={{size: 24}}
               underlineColorAndroid="transparent"
               onChangeText={this.updateSearchText}
