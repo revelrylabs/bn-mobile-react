@@ -225,7 +225,7 @@ export default class EventScanner extends Component {
 
   state = {
     hasCameraPermission: null,
-    checkInMode: 'manual',
+    checkInMode: 'automatic',
     ticketDetails: null,
     ...RESET_STATE,
   }
