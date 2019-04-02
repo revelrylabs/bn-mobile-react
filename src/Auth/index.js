@@ -25,8 +25,20 @@ export default class AuthIndex extends Component {
     }
   }
 
+  componentDidMount() {
+    this.mounted = true
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
+    this.setState({displayLoading: false})
+  }
+
   showModal = (displayLoading) => {
-    this.setState({displayLoading})
+    // Don't setState on an unmounted component
+    if (this.mounted) {
+      this.setState({displayLoading})
+    }
   }
 
   render() {
