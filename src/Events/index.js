@@ -55,17 +55,63 @@ function SuggestedSearches({searchText, events, navigate}) {
     return null
   }
 
+  const reducer = (names, event) => {
+    names.push({eventId: event.id, id: event.id, name: event.name, event})
+    event.artists.forEach(({artist}) => {
+      if (artist.name.toLowerCase().includes(searchText.trim().toLowerCase())) {
+        names.push({
+          eventId: event.id,
+          id: artist.id,
+          name: artist.name,
+          event,
+        })
+      }
+    })
+
+    if (
+      event.venue.name.toLowerCase().includes(searchText.trim().toLowerCase())
+    ) {
+      names.push({
+        eventId: event.id,
+        id: event.venue.id,
+        name: event.venue.name,
+        event,
+      })
+    }
+
+    return names
+  }
+
+  const sorter = (eventA, eventB) => {
+    const nameA = eventA.name.toUpperCase() // ignore upper and lowercase
+    const nameB = eventB.name.toUpperCase() // ignore upper and lowercase
+
+    if (nameA < nameB) {
+      return -1
+    }
+    if (nameA > nameB) {
+      return 1
+    }
+
+    // names must be equal
+    return 0
+  }
+
+  const names = events.reduce(reducer, []).sort(sorter)
+
   return (
     <View>
       <Text style={styles.sectionHeader}>{'Suggested Searches'}</Text>
       <FlatList
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        data={events.slice(0, 5)}
+        data={names.slice(0, 5)}
         renderItem={({item, separators}) => (
           <TouchableHighlight
             style={[styles.rowContainer, styles.paddingVerticalSmall]}
-            onPress={() => navigate('EventsShow', {eventId: item.id, event: item})}
+            onPress={() =>
+              navigate('EventsShow', {eventId: item.eventId, event: item.event})
+            }
             onShowUnderlay={separators.highlight}
             onHideUnderlay={separators.unhighlight}
           >
@@ -169,12 +215,33 @@ export default class EventsIndex extends Component {
 
   filterEventsBySearchText(events, searchText) {
     if (searchText !== '') {
-      return events.filter(({name}) =>
-        name.toLowerCase().includes(searchText.trim().toLowerCase())
+      return events.filter(
+        ({name, artists, venue}) =>
+          name.toLowerCase().includes(searchText.trim().toLowerCase()) ||
+          this.searchArtistsForEvent(artists, searchText) ||
+          this.searchVenueForEvent(venue, searchText)
       )
     }
 
     return events
+  }
+
+  searchArtistsForEvent(artists, searchText) {
+    if (!artists) {
+      return false
+    }
+
+    return artists.some(({artist: {name}}) =>
+      name.toLowerCase().includes(searchText.trim().toLowerCase())
+    )
+  }
+
+  searchVenueForEvent(venue, searchText) {
+    if (!venue || !venue.name) {
+      return false
+    }
+
+    return venue.name.toLowerCase().includes(searchText.trim().toLowerCase())
   }
 
   get events() {
@@ -361,7 +428,7 @@ export default class EventsIndex extends Component {
             />
             <TextInput
               style={formStyles.searchInput}
-              placeholder="Search for an event"
+              placeholder="Search artists, shows, venues..."
               searchIcon={{size: 24}}
               underlineColorAndroid="transparent"
               onChangeText={this.updateSearchText}
