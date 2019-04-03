@@ -101,6 +101,7 @@ export default class LogIn extends Component {
             underlineColorAndroid="transparent"
             secureTextEntry
             onChangeText={(password) => this.setState({password})}
+            autoCapitalize="none"
           />
           <BusyButton
             style={loginStyles.buttonContainer}
@@ -148,7 +149,7 @@ export default class LogIn extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        
+
         {false && ( // TODO: Re-enable when functionality is implemented.
           <View>
             <TouchableHighlight>

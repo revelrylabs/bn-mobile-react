@@ -65,6 +65,7 @@ export default class PasswordReset extends Component {
             underlineColorAndroid="transparent"
             defaultValue={this.state.email}
             onChangeText={(email) => this.setState({email})}
+            autoCapitalize="none"
           />
         </View>
         <TouchableHighlight
