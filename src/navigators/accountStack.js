@@ -5,6 +5,7 @@ import {Subscribe} from 'unstated'
 import {AuthContainer} from '../state/authStateProvider'
 import {EventManagerContainer} from '../state/eventManagerStateProvider'
 import {NetworkContainer} from '../state/networkStateProvider'
+import {OrderHistoryContainer} from '../state/orderHistoryProvider'
 import AccountRoutes from '../Accounts/routes'
 import {last} from 'lodash'
 
@@ -42,11 +43,18 @@ export default class accountsStackWithStore extends Component {
 
   render() {
     return (
-      <Subscribe to={[AuthContainer, EventManagerContainer, NetworkContainer]}>
-        {(auth, eventManager, network) => (
+      <Subscribe
+        to={[
+          AuthContainer,
+          EventManagerContainer,
+          NetworkContainer,
+          OrderHistoryContainer,
+        ]}
+      >
+        {(auth, eventManager, network, orderHistory) => (
           <AccountsStack
             navigation={this.props.navigation}
-            screenProps={{auth, eventManager, network}}
+            screenProps={{auth, eventManager, network, orderHistory}}
           />
         )}
       </Subscribe>
