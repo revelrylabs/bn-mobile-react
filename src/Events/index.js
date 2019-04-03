@@ -105,7 +105,7 @@ function SuggestedSearches({searchText, events, navigate}) {
       <FlatList
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        data={names.slice(0, 5)}
+        data={names.slice(0, 3)}
         renderItem={({item, separators}) => (
           <TouchableHighlight
             style={[styles.rowContainer, styles.paddingVerticalSmall]}
