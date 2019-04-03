@@ -3,7 +3,7 @@
     "sdkVersion": "31.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
-    "version": "1.0.50",
+    "version": "1.0.51",
     "slug": "big-neon-mobile",
     "orientation": "portrait",
     "facebookScheme": "fb1737006886375028",
@@ -12,7 +12,12 @@
     "ios": {
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Big Neon allows you to select a photo from your library to use for your profile picture",
-        "LSApplicationQueriesSchemes": ["fbapi", "fb-messenger-share-api", "fbauth2", "fbshareextension"]
+        "LSApplicationQueriesSchemes": [
+          "fbapi",
+          "fb-messenger-share-api",
+          "fbauth2",
+          "fbshareextension"
+        ]
       },
       "bundleIdentifier": "com.bigneon.mobile",
       "config": {
@@ -25,7 +30,7 @@
     },
     "android": {
       "package": "com.bigneon.mobile",
-      "versionCode": 50,
+      "versionCode": 51,
       "permissions": [
         "CAMERA",
         "CAMERA_ROLL",
