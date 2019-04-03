@@ -121,6 +121,9 @@ const TicketStyles = {
     paddingHorizontal: globalPaddingLarge,
     textAlign: 'center',
   },
+  noTicketsPromoContainer: {
+    marginTop: -100,
+  },
 }
 
 function createStyles(overrides = {}) {
