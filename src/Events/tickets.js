@@ -24,19 +24,6 @@ const ticketStyles = TicketStyles.createStyles()
 
 /* eslint-disable camelcase, space-before-function-paren */
 
-function NoAvailableTickets() {
-  return (
-    <View style={ticketStyles.emptyStateContainer}>
-      <Image style={ticketStyles.emptyStateIcon} source={emptyState} />
-      <Text style={ticketStyles.emptyStateText}>
-        Looks like there are no tickets available at this time.
-      </Text>
-    </View>
-  )
-}
-
-function PromoCodeInput({isPromoCodeApplied}) {}
-
 export default class GetTickets extends Component {
   static propTypes = {
     onTicketSelection: PropTypes.func,
@@ -70,6 +57,22 @@ export default class GetTickets extends Component {
         onTicketSelection={this.props.onTicketSelection}
       />
     ))
+  }
+
+  get noAvailableTickets() {
+    return (
+      <View>
+        <View style={ticketStyles.emptyStateContainer}>
+          <Image style={ticketStyles.emptyStateIcon} source={emptyState} />
+          <Text style={ticketStyles.emptyStateText}>
+            Looks like there are no tickets available at this time.
+          </Text>
+        </View>
+        <View style={ticketStyles.noTicketsPromoContainer}>
+          {this.promoCode}
+        </View>
+      </View>
+    )
   }
 
   promoCodeApplied() {
@@ -146,7 +149,7 @@ export default class GetTickets extends Component {
     return (
       <View style={checkoutStyles.mainBody}>
         <View style={checkoutStyles.mainBodyContent}>
-          {this.hasTickets ? this.hasTicketDisplay : <NoAvailableTickets />}
+          {this.hasTickets ? this.hasTicketDisplay : this.noAvailableTickets}
         </View>
       </View>
     )
