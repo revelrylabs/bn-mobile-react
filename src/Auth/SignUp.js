@@ -78,6 +78,7 @@ export default class SignUp extends Component {
 
   render() {
     const {navigate} = this.props.navigation
+
     return (
       <KeyboardAvoidingView
         style={loginStyles.container}
@@ -116,6 +117,7 @@ export default class SignUp extends Component {
               placeholder="Password"
               underlineColorAndroid="transparent"
               onChangeText={(password) => this.setState({password})}
+              autoCapitalize="none"
             />
 
             <BusyButton
