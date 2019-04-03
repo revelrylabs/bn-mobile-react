@@ -216,23 +216,21 @@ export default class Account extends Component {
             </TouchableHighlight>
           )}
 
-          {false && ( // TODO: Re-enable when functionality is implemented.
-            <TouchableHighlight
-              underlayColor="rgba(0, 0, 0, 0)"
-              onPress={() => navigate('OrderHistory')}
-            >
-              <View style={accountStyles.rowContainer}>
-                <View style={accountStyles.row}>
-                  <Icon style={accountStyles.accountIcon} name="assignment" />
-                  <Text style={accountStyles.accountHeader}>Order History</Text>
-                </View>
-                <Icon
-                  style={accountStyles.accountArrow}
-                  name="keyboard-arrow-right"
-                />
+          <TouchableHighlight
+            underlayColor="rgba(0, 0, 0, 0)"
+            onPress={() => navigate('OrderHistory')}
+          >
+            <View style={accountStyles.rowContainer}>
+              <View style={accountStyles.row}>
+                <Icon style={accountStyles.accountIcon} name="assignment" />
+                <Text style={accountStyles.accountHeader}>Order History</Text>
               </View>
-            </TouchableHighlight>
-          )}
+              <Icon
+                style={accountStyles.accountArrow}
+                name="keyboard-arrow-right"
+              />
+            </View>
+          </TouchableHighlight>
 
           {(canScanTickets() && (
             <Fragment>

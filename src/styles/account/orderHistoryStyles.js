@@ -19,6 +19,7 @@ const OrderHistoryStyles = {
   dateWrapper: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    flexBasis: 100,
   },
   icon: {
     color: sectionHeaderColor,

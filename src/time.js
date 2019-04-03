@@ -25,3 +25,7 @@ export function eventIsInPast(event) {
 
   return DateTime.fromISO(end_time) < DateTime.local()
 }
+
+export function toMonthAndDate(datetime) {
+  return DateTime.fromISO(datetime).toFormat('LLL dd')
+}
