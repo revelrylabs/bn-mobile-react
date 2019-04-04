@@ -5,6 +5,10 @@ function itemIsTicket({item_type: type}) {
   return type === 'Tickets'
 }
 
+function itemIsDiscount({item_type: type}) {
+  return type === 'Discount'
+}
+
 function sumUnitPrices(items) {
   return items.reduce(
     (sum, {unit_price_in_cents: unitPrice, quantity}) =>
@@ -88,7 +92,11 @@ class CartContainer extends Container {
   }
 
   get fees() {
-    return this.items.filter((item) => !itemIsTicket(item))
+    return this.items.filter((item) => !itemIsTicket(item) && !itemIsDiscount(item))
+  }
+
+  get discounts() {
+    return this.items.filter(itemIsDiscount)
   }
 
   get selectedTicket() {
@@ -124,6 +132,10 @@ class CartContainer extends Container {
 
   get feesCents() {
     return sumUnitPrices(this.fees)
+  }
+
+  get discountCents() {
+    return sumUnitPrices(this.discounts);
   }
 
   get totalCents() {
@@ -174,7 +186,6 @@ class CartContainer extends Container {
   async _commitQuantity() {
     try {
       const response = await server.cart.replace(this.replaceParams)
-
       // set these first so we can calculate actual quantity
       await this.setState({response, isReady: true})
     } catch (error) {

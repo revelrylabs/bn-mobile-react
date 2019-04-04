@@ -31,7 +31,6 @@ export class Ticket extends Component {
 
   get priceContent() {
     const {status, ticket_pricing} = this.props.ticket
-
     switch (status) {
     case 'SoldOut':
       return 'SOLD OUT'
