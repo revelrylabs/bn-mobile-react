@@ -125,7 +125,7 @@ export default class Checkout extends Component {
 
   render() {
     const {event, cart} = this.props
-    const {ticketsCents, feesCents, totalCents} = cart
+    const {ticketsCents, feesCents, discountCents, totalCents} = cart
     const eventTime = eventDateTimes(event.localized_times).event_start
 
     return (
@@ -225,6 +225,11 @@ export default class Checkout extends Component {
                 >
                   Sub Total
                 </Text>
+                {
+                  discountCents ? (
+                      <Text style={checkoutStyles.ticketHeader}>Discount</Text>
+                  ) : null
+                }
                 <Text style={checkoutStyles.ticketHeader}>Fees</Text>
               </View>
             </View>
@@ -238,6 +243,18 @@ export default class Checkout extends Component {
                 >
                   ${toDollars(ticketsCents)} USD
                 </Text>
+                {
+                  discountCents ? (
+                      <Text
+                          style={[
+                            checkoutStyles.ticketSubHeader,
+                            styles.marginBottomSmall,
+                          ]}
+                      >
+                        ${toDollars(discountCents)} USD
+                      </Text>
+                  ) : null
+                }
                 <Text style={checkoutStyles.ticketSubHeader}>
                   ${toDollars(feesCents)} USD
                 </Text>

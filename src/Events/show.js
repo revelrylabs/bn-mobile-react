@@ -177,19 +177,28 @@ export default class EventShow extends Component {
     try {
       const response = await server.redemptionCodes.read({code})
       const {
-        data: {ticket_type},
+        data: {
+          //@deprecated
+          ticket_type,
+          ticket_types = []
+        },
       } = response
       const {event} = this.state
 
-      if (
-        !this.store.ticketTypeIds.includes(ticket_type.id) &&
-        ticket_type.event_id !== event.id
-      ) {
-        alert('This Promo Code is not valid for this event')
-        return
-      }
+      //This can be replaced by ticket_types once we are at parity with the server
+      const ticket_types_to_process = ticket_types.concat(ticket_type).filter(ticket_type => !!ticket_type)
+      ticket_types_to_process.forEach(ticket_type => {
+        if (
+            !this.store.ticketTypeIds.includes(ticket_type.id) &&
+            ticket_type.event_id !== event.id
+        ) {
+          alert('This Promo Code is not valid for this event')
+          return
+        }
 
-      this.store.replaceTicketType(ticket_type)
+        this.store.replaceTicketType(ticket_type)
+      })
+
     } catch (error) {
       apiErrorAlert(
         error,
