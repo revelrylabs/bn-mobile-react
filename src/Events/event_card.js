@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight} from 'react-native'
+import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventCardStyles from '../styles/shared/eventCardStyles'
 import {eventDateTimes} from '../time'
 import {toDollars} from '../constants/money'
 import {optimizeCloudinaryImage} from '../cloudinary'
+import CachedImage from '../CachedImage'
 
 const styles = SharedStyles.createStyles()
 const eventCardStyles = EventCardStyles.createStyles()
@@ -64,7 +65,7 @@ export default class EventsIndex extends Component {
       <TouchableHighlight underlayColor="#fff" onPress={onPress}>
         <View>
           <View style={eventCardStyles.eventContainer}>
-            <Image
+            <CachedImage
               style={eventCardStyles.eventImage}
               source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
               defaultSource={require('../../assets/event-placeholder.png')}
