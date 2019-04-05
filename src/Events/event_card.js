@@ -7,7 +7,7 @@ import EventCardStyles from '../styles/shared/eventCardStyles'
 import {eventDateTimes} from '../time'
 import {toDollars} from '../constants/money'
 import {optimizeCloudinaryImage} from '../cloudinary'
-import CachedImage from '../CachedImage'
+import {Image} from 'react-native-expo-image-cache'
 
 const styles = SharedStyles.createStyles()
 const eventCardStyles = EventCardStyles.createStyles()
@@ -65,7 +65,7 @@ export default class EventsIndex extends Component {
       <TouchableHighlight underlayColor="#fff" onPress={onPress}>
         <View>
           <View style={eventCardStyles.eventContainer}>
-            <CachedImage
+            <Image
               style={eventCardStyles.eventImage}
               source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
               defaultSource={require('../../assets/event-placeholder.png')}
