@@ -15,6 +15,8 @@ import TicketStyles from '../styles/tickets/ticketStyles'
 import FormStyles from '../styles/shared/formStyles'
 import SharedStyles from '../styles/shared/sharedStyles'
 import emptyState from '../../assets/icon-empty-state.png'
+import {server, apiErrorAlert} from '../constants/Server'
+import {LoadingScreen} from '../constants/modals'
 import {autotrim} from '../string'
 
 const styles = SharedStyles.createStyles()
@@ -27,22 +29,82 @@ const ticketStyles = TicketStyles.createStyles()
 export default class GetTickets extends Component {
   static propTypes = {
     onTicketSelection: PropTypes.func,
-    onPromoApply: PropTypes.func,
-    onPromoRemove: PropTypes.func,
     event: PropTypes.object,
     ticketsToDisplay: PropTypes.array,
+    store: PropTypes.object,
   }
 
   state = {
     promoCode: '',
+    applyingPromo: false,
+  }
+
+  onPromoApply = async (code = '') => {
+    if (code === '') {
+      alert('You must enter a promotional code.')
+      return
+    }
+
+    try {
+      this.setState({applyingPromo: true})
+      const response = await server.redemptionCodes.read({code})
+      const {
+        data: {
+          //@deprecated
+          ticket_type,
+          ticket_types = []
+        },
+      } = response
+      const {event, store} = this.props
+
+      //This can be replaced by ticket_types once we are at parity with the server
+      const ticket_types_to_process = ticket_types.concat(ticket_type).filter(ticket_type => !!ticket_type)
+      ticket_types_to_process.forEach(ticket_type => {
+        if (
+            !store.ticketTypeIds.includes(ticket_type.id) &&
+            ticket_type.event_id !== event.id
+        ) {
+          alert('This Promo Code is not valid for this event')
+          return
+        }
+
+        store.replaceTicketType(ticket_type)
+      })
+
+    } catch (error) {
+      setTimeout(() => {
+        apiErrorAlert(
+          error,
+          'There was a problem applying this promotional code.'
+        )
+      }, 600)
+    } finally {
+      this.setState({applyingPromo: false})
+    }
+  }
+
+  onPromoRemove = async (eventId) => {
+    try {
+      this.setState({applyingPromo: true})
+      await this.props.store.getEvent(eventId)
+    } catch (error) {
+      setTimeout(() => {
+        apiErrorAlert(
+          error,
+          'There was a problem applying this promotional code.'
+        )
+      }, 600)
+    } finally {
+      this.setState({applyingPromo: false})
+    }
   }
 
   handlePromoSubmit = () => {
-    this.props.onPromoApply(this.state.promoCode)
+    this.onPromoApply(this.state.promoCode)
   }
 
   handleRemovePromoSubmit = () => {
-    this.props.onPromoRemove(this.props.event.id)
+    this.onPromoRemove(this.props.event.id)
   }
 
   get hasTickets() {
@@ -148,6 +210,7 @@ export default class GetTickets extends Component {
   render() {
     return (
       <View style={checkoutStyles.mainBody}>
+        <LoadingScreen visible={this.state.applyingPromo} />
         <View style={checkoutStyles.mainBodyContent}>
           {this.hasTickets ? this.hasTicketDisplay : this.noAvailableTickets}
         </View>

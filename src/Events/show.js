@@ -23,7 +23,6 @@ import PaymentTypes from './payments'
 import Checkout from './checkout'
 import {toDollars} from '../constants/money'
 import {LoadingScreen, SuccessScreen} from '../constants/modals'
-import {server, apiErrorAlert} from '../constants/Server'
 import {min, max, isEmpty, uniq} from 'lodash'
 import {optimizeCloudinaryImage} from '../cloudinary'
 
@@ -168,55 +167,7 @@ export default class EventShow extends Component {
     )
   }
 
-  onPromoApply = async (code = '') => {
-    if (code === '') {
-      alert('You must enter a promotional code.')
-      return
-    }
 
-    try {
-      const response = await server.redemptionCodes.read({code})
-      const {
-        data: {
-          //@deprecated
-          ticket_type,
-          ticket_types = []
-        },
-      } = response
-      const {event} = this.state
-
-      //This can be replaced by ticket_types once we are at parity with the server
-      const ticket_types_to_process = ticket_types.concat(ticket_type).filter(ticket_type => !!ticket_type)
-      ticket_types_to_process.forEach(ticket_type => {
-        if (
-            !this.store.ticketTypeIds.includes(ticket_type.id) &&
-            ticket_type.event_id !== event.id
-        ) {
-          alert('This Promo Code is not valid for this event')
-          return
-        }
-
-        this.store.replaceTicketType(ticket_type)
-      })
-
-    } catch (error) {
-      apiErrorAlert(
-        error,
-        'There was a problem applying this promotional code.'
-      )
-    }
-  }
-
-  onPromoRemove = async (eventId) => {
-    try {
-      await this.store.getEvent(eventId)
-    } catch (error) {
-      apiErrorAlert(
-        error,
-        'There was a problem applying this promotional code.'
-      )
-    }
-  }
 
   onTicketSelection = async (ticketType) => {
     try {
@@ -253,11 +204,10 @@ export default class EventShow extends Component {
       return (
         <GetTickets
           event={event}
+          store={this.store}
           ticketsToDisplay={ticketsToDisplay}
           onTicketSelection={this.onTicketSelection}
           changeScreen={this.changeScreen}
-          onPromoApply={this.onPromoApply}
-          onPromoRemove={this.onPromoRemove}
         />
       )
     case 'checkout':
