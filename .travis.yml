@@ -33,9 +33,9 @@ jobs:
           skip_cleanup: true
           script: ./bin/deploy_ci "production"
     - stage: deploy-beta
-      if: branch = develop
+      if: branch = deploy-via-ci
       on:
-        branch: develop
+        branch: deploy-via-ci
       script: skip
       before_deploy:
         - gem update --system
