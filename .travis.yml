@@ -36,7 +36,6 @@ jobs:
       if: branch = deploy-via-ci
       script: skip
       install:
-        - gem update --system
         - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
         - cat $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
         - bundle update
