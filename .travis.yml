@@ -6,9 +6,11 @@ node_js: '10.7.0'
 cache:
   directories:
     - '~/.npm'
+    - .jest
 before_install:
   - gem update --system
   - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
+  - cat $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
 before_script:
   - bundle update
   - bundle install
@@ -16,3 +18,17 @@ before_script:
 script:
   - npm ci
   - npx jest --ci
+jobs:
+  include:
+    - stage: deploy-production
+      if: branch = master
+      on:
+        branch: master
+      script:
+        - ./bin/deploy_ci "production"
+    - stage: deploy-beta
+      if: branch = develop
+      on:
+        branch: develop
+      script:
+        - ./bin/deploy_ci "staging"
