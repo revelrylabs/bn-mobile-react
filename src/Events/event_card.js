@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight} from 'react-native'
+import {Text, View, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventCardStyles from '../styles/shared/eventCardStyles'
 import {eventDateTimes} from '../time'
 import {toDollars} from '../constants/money'
 import {optimizeCloudinaryImage} from '../cloudinary'
+import {Image} from 'react-native-expo-image-cache'
 
 const styles = SharedStyles.createStyles()
 const eventCardStyles = EventCardStyles.createStyles()
