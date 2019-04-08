@@ -10,6 +10,8 @@ sed -i .bak "s/__SECRET_SENTRY_AUTH_TOKEN__/$SENTRY_AUTH_TOKEN/g" app.json
 # Install dependencies
 npm ci
 
+npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+
 # Publish `production` release
 # npx expo publish --release-channel $ENVIRONMENT --non-interactive
 
