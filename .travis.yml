@@ -2,18 +2,41 @@ os: osx
 language: node_js
 osx_image: xcode10.1
 node_js: '10.7.0'
-cache:
-  directories:
-    - '~/.npm'
-    - .jest
-before_install:
-  - gem update --system
-  - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
-  - cat $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
-before_script:
-  - bundle update
-  - bundle install
-  - npm i -g npm@latest
-script:
-  - npm ci
-  - npx jest --ci
+jobs:
+  include:
+    - stage: 'Tests' # naming the Tests stage
+      name: 'Unit Tests' # names the first Tests stage job
+      node_js: '10.7.0'
+      cache:
+        directories:
+          - '~/.npm'
+          - .jest
+      before_install:
+        - gem update --system
+        - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
+        - cat $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
+      before_script:
+        - bundle update
+        - bundle install
+        - npm i -g npm@latest
+      script:
+        - npm ci
+        - npx jest --ci
+    - stage: deploy-production
+      if: branch = master
+      on:
+        branch: master
+      script: skip
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          script: ./bin/deploy_ci "production"
+    - stage: deploy-beta
+      if: branch = develop
+      on:
+        branch: develop
+      script: skip
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          script: ./bin/deploy_ci "staging"
