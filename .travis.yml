@@ -24,7 +24,7 @@ jobs:
       before_deploy:
         - gem update --system
         - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
-        - cat $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
+        - echo $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
         - bundle update
         - bundle install
         - npm i -g npm@latest
