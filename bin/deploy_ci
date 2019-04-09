@@ -16,19 +16,19 @@ npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
 npx expo publish --release-channel $ENVIRONMENT --non-interactive
 
 # Start building standalone android build using `$ENVIRONMENT` release channel
-# npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
+npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
 
 # Download the built android binary
-# curl -o app.apk "$(npx expo url:apk --non-interactive)"
+curl -o app.apk "$(npx expo url:apk --non-interactive)"
 
 # Ask Keith for the JSON key. Store this one directory below the app, and DO NOT ADD TO GIT
-# fastlane supply --track 'beta' --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
+fastlane supply --track 'beta' --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
 
 # Start building standalone android build using `$ENVIRONMENT` release channel
-# npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
+npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
 
 # Download the artifact to current directory as `app.ipa`
-# curl -o app.ipa "$(npx expo url:ipa --non-interactive)"
+curl -o app.ipa "$(npx expo url:ipa --non-interactive)"
 
 # In your bash profile, you'll need to set:
 # export DELIVER_USERNAME=apple developer username
@@ -36,4 +36,4 @@ npx expo publish --release-channel $ENVIRONMENT --non-interactive
 # export FASTLANE_ITC_TEAM_ID=119447135
 
 # Use fastlane to upload your current standalone iOS build to test flight on iTunes Connect.
-# fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata --username $APPLE_USERNAME
+fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata --username $APPLE_USERNAME
