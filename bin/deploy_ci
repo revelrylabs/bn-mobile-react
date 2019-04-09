@@ -13,7 +13,7 @@ npm ci
 npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
 
 # Publish `production` release
-# npx expo publish --release-channel $ENVIRONMENT --non-interactive
+npx expo publish --release-channel $ENVIRONMENT --non-interactive
 
 # Start building standalone android build using `$ENVIRONMENT` release channel
 # npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
