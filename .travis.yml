@@ -1,12 +1,12 @@
 os: osx
 language: node_js
 osx_image: xcode10.1
-node_js: '10.7.0'
+node_js: '10.15.3'
 jobs:
   include:
     - stage: 'Tests' # naming the Tests stage
       name: 'Unit Tests' # names the first Tests stage job
-      node_js: '10.7.0'
+      node_js: '10.15.3'
       cache:
         directories:
           - '~/.npm'
@@ -17,6 +17,7 @@ jobs:
         - npm ci
         - npx jest --ci
     - stage: deploy-production
+      node_js: '10.15.3'
       if: branch = master
       on:
         branch: master
@@ -32,6 +33,7 @@ jobs:
           skip_cleanup: true
           script: ./bin/deploy_ci "production"
     - stage: deploy-beta
+      node_js: '10.15.3'
       if: branch = deploy-via-ci
       install:
         - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
