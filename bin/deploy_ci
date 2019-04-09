@@ -36,4 +36,4 @@ curl -o app.ipa "$(npx expo url:ipa --non-interactive)"
 # export FASTLANE_ITC_TEAM_ID=119447135
 
 # Use fastlane to upload your current standalone iOS build to test flight on iTunes Connect.
-fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata --username $APPLE_USERNAME
+fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata
