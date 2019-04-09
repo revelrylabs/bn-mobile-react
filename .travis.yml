@@ -33,13 +33,9 @@ jobs:
           script: ./bin/deploy_ci "production"
     - stage: deploy-beta
       if: branch = deploy-via-ci
-      script: skip
       install:
         - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
         - echo $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
         - bundle update
         - bundle install
-      deploy:
-        - provider: script
-          skip_cleanup: true
-          script: chmod +x ./bin/deploy_ci && ./bin/deploy_ci "staging"
+      script: ./bin/deploy_ci "staging"
