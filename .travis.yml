@@ -36,7 +36,7 @@ jobs:
       node_js: '10.15.3'
       if: branch = deploy-via-ci
       before_install:
-        - openssl aes-256-cbc -K $encrypted_5880cf525281_key -iv $encrypted_5880cf525281_iv -in secrets.tar.enc -out secrets.tar -d
+        - openssl aes-256-cbc -K $encrypted_d778c411c1ef_key -iv $encrypted_d778c411c1ef_iv -in secrets.tar.enc -out secrets.tar -d
         - tar xvf secrets.tar
       install:
         - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
