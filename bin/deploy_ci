@@ -2,7 +2,7 @@
 set -e # exit entire script when command exits with non-zero status
 
 ENVIRONMENT=$1
-FASTLANE_TRACK=$([ "$ENVIRONMENT" = "production" ] && echo "beta" || echo "alpha")
+TRACK=$([ "$ENVIRONMENT" = "production" ] && echo "beta" || echo "alpha")
 
 # inject sentry auth token into app.json
 [ -z "$SENTRY_AUTH_TOKEN" ] && echo 'Missing required environment vars.' && exit 1
@@ -23,7 +23,7 @@ npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-pub
 curl -o app.apk "$(npx expo url:apk --non-interactive)"
 
 # Ask Keith for the JSON key. Store this one directory below the app, and DO NOT ADD TO GIT
-fastlane supply --track $FASTLANE_TRACK --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
+fastlane supply --track $TRACK --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
 
 # Start building standalone android build using `$ENVIRONMENT` release channel
 npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish

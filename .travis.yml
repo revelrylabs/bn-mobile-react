@@ -24,8 +24,6 @@ jobs:
       script: skip
       before_deploy:
         - gem update --system
-        - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
-        - echo $GOOGLE_DEPLOY_KEY_JSON > .creds/google-deploy-key.json
         - bundle update
         - bundle install
       deploy:
@@ -39,7 +37,6 @@ jobs:
         - openssl aes-256-cbc -K $encrypted_d778c411c1ef_key -iv $encrypted_d778c411c1ef_iv -in secrets.tar.enc -out secrets.tar -d
         - tar xvf secrets.tar
       install:
-        - echo -e "machine github.com\n  login $APPLE_USERNAME\n  password $CI_USER_PASSWORD" >> ~/.netrc
         - bundle update
         - bundle install
       script: ./bin/deploy_ci "staging"
