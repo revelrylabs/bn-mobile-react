@@ -7,18 +7,14 @@ git config --global user.email "travis@travis-ci.org"
 
 git config --global user.name "Travis CI"
 
-echo ${TRAVIS_REPO_SLUG}
-
-echo https://github.com/${TRAVIS_REPO_SLUG}.git
-
-git remote add origin-ci https://bryanjos:${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git > /dev/null 2>&1
-
 git remote -v
 
 node -e 'require("./bumpVersion.js").increment();'
+
+cat app.json
 
 git add app.json
 
 git commit --message "Increment version numbers in app.json. Travis build: $TRAVIS_BUILD_NUMBER"
 
-git push origin-ci $BRANCH
+git push origin $BRANCH
