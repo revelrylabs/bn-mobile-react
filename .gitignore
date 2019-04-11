@@ -27,4 +27,3 @@ yarn-error.log*
 
 # sed backup
 app.json.bak
-app.secrets.json
