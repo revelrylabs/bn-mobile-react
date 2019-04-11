@@ -1,8 +1,6 @@
 #! /usr/bin/env bash
 set -e # exit entire script when command exits with non-zero status
 
-BRANCH=$1
-
 git config --global user.email "travis@travis-ci.org"
 
 git config --global user.name "Travis CI"
@@ -11,10 +9,8 @@ git remote add origin-ci https://bryanjos:${GH_TOKEN}@github.com/${TRAVIS_REPO_S
 
 node -e 'require("./bumpVersion.js").increment();'
 
-cat app.json
-
 git add app.json
 
 git commit --message "Increment version numbers in app.json. Travis build: $TRAVIS_BUILD_NUMBER"
 
-git push origin-ci HEAD:$BRANCH
+git push origin-ci HEAD:$TRAVIS_BRANCH

@@ -40,5 +40,5 @@ jobs:
       install:
         - bundle update
         - bundle install
-      script: ./bin/increment_version_number "deploy-via-ci"
-      #script: ./bin/deploy_ci "staging"
+      before_script: ./bin/increment_version_number
+      script: ./bin/deploy_ci "staging"
