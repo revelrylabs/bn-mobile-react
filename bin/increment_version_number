@@ -13,6 +13,8 @@ echo https://github.com/${TRAVIS_REPO_SLUG}.git
 
 git remote add origin-ci https://bryanjos:${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git > /dev/null 2>&1
 
+git remote -v
+
 node -e 'require("./bumpVersion.js").increment();'
 
 git add app.json
