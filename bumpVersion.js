@@ -19,7 +19,7 @@ module.exports.increment = function(level = 'patch') {
 
   app.expo.version = version.join('.')
   app.expo.android.versionCode = `${parseInt(android, 10) + 1}`
-  fs.writeFile('app.json', JSON.stringify(app), (err) => {
+  fs.writeFile('app.json', JSON.stringify(app, null, 2), (err) => {
     if (err) {
       throw err
     }

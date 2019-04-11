@@ -1,23 +1,23 @@
 os: osx
 language: node_js
 osx_image: xcode10.1
-node_js: '10.15.3'
+node_js: 10.15.3
 jobs:
   include:
-    - stage: 'Tests' # naming the Tests stage
-      name: 'Unit Tests' # names the first Tests stage job
-      node_js: '10.15.3'
+    - stage: Tests
+      name: Unit Tests
+      node_js: 10.15.3
       cache:
         directories:
           - '~/.npm'
-          - .jest
+          - '.jest'
       before_script:
         - npm i -g npm@latest
       script:
         - npm ci
         - npx jest --ci
     - stage: deploy-production
-      node_js: '10.15.3'
+      node_js: 10.15.3
       if: branch = master
       on:
         branch: master
@@ -31,12 +31,23 @@ jobs:
           skip_cleanup: true
           script: ./bin/deploy_ci "production"
     - stage: deploy-beta
-      node_js: '10.15.3'
+      node_js: 10.15.3
       if: branch = deploy-via-ci
       before_install:
-        - openssl aes-256-cbc -K $encrypted_d778c411c1ef_key -iv $encrypted_d778c411c1ef_iv -in secrets.tar.enc -out secrets.tar -d
+        - openssl aes-256-cbc -K $encrypted_d778c411c1ef_key -iv $encrypted_d778c411c1ef_iv
+          -in secrets.tar.enc -out secrets.tar -d
         - tar xvf secrets.tar
       install:
         - bundle update
         - bundle install
+      before_script:
+        - node -e 'require("./bumpVersion.js").increment();'
+        - git config --global user.email "travis@travis-ci.org"
+        - git config --global user.name "Travis CI"
+        - git commit --message "Increment version numbers in app.json. Travis build: $TRAVIS_BUILD_NUMBER"
+        - git remote add origin-ci https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} > /dev/null 2>&1
+        - git push --quiet --set-upstream origin-ci deploy-via-ci
       script: ./bin/deploy_ci "staging"
+env:
+  global:
+    secure: fbE8LhtiWWfQqw9O4zLxjPBrLX4wfRDt01wGBTuylq1XWOoVwUDjNo8I/OEruRTbK5fKaZ9SSWhzCCFudRCFVgajB4aBVSxZLXlyACVf1n9ckWv186HL7ldABR785lDLrhJp2Fjb9Bx1p8vE1I9zpvciULyh6URDOqU08L4JCJvWGLLJBHCGEtmmCAWZ562MbPlg1wtpxZuHPIbDngnQrEOS9Asg9dY2IZkExMhYCa7PijM5mqpLpMYrTCdHhPTrZ2Xo3nSpvEmJCribx7bR0hgN7DR1wTDF0+M7+41RJXw9DHyg6uGp3urhkvGXk1paLxD0euKLMSuHfBSw8WyfAzgM63ap3+qiMNPPtS+k1/IPTq+jn/WBdwQnoPWco4GwXKI0605kSDDeV4pwGzQDYjErjtVHNsUixj748wZh1Zf6GWBZ6QMI0Jzc76vJDluh+OhucT2/0NQ1YKr/GqjUO4EZVUtIqIwN+ztGiRP4hYEJHpnKNFRF8mKoEMcKjH6KqS6Z2XPJWt8hIaEvurmmYx+IEJnrcDtE/MV+k6yKKk+cxdloC29YaesYBM3xZkeX2qqGHFpUcprKS/y78ZeZXnLAomjKLlE6gqrWRwq1+4IYN/sL1Yfd3fLZZrLcfPDTIkve4fKSRcD8m/zZ0Nv64QiRVOJ/rHGWGF07ld4D6+w=
