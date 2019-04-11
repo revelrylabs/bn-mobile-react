@@ -13,4 +13,4 @@ git add app.json
 
 git commit --message "Increment version numbers in app.json. Travis build: $TRAVIS_BUILD_NUMBER"
 
-git push --quiet --set-upstream origin-ci $TRAVIS_BRANCH
+git push origin-ci $TRAVIS_BRANCH
