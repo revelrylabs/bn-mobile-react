@@ -19,20 +19,18 @@ jobs:
     - stage: deploy-production
       node_js: 10.15.3
       if: branch = master
-      on:
-        branch: master
-      script: skip
-      before_deploy:
-        - gem update --system
+      before_install:
+        - openssl aes-256-cbc -K $encrypted_d778c411c1ef_key -iv $encrypted_d778c411c1ef_iv
+          -in secrets.tar.enc -out secrets.tar -d
+        - tar xvf secrets.tar
+      install:
         - bundle update
         - bundle install
-      deploy:
-        - provider: script
-          skip_cleanup: true
-          script: ./bin/deploy_ci "production"
+      before_script: ./bin/increment_version_number
+      script: ./bin/deploy_ci "production"
     - stage: deploy-beta
       node_js: 10.15.3
-      if: branch = deploy-via-ci
+      if: branch = develop
       before_install:
         - openssl aes-256-cbc -K $encrypted_d778c411c1ef_key -iv $encrypted_d778c411c1ef_iv
           -in secrets.tar.enc -out secrets.tar -d

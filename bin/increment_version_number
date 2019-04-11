@@ -11,6 +11,6 @@ node -e 'require("./bumpVersion.js").increment();'
 
 git add app.json
 
-git commit --message "Increment version numbers in app.json. Travis build: $TRAVIS_BUILD_NUMBER"
+git commit --message "Increment version numbers in app.json. Travis build: $TRAVIS_BUILD_NUMBER [ci skip]"
 
 git push origin-ci HEAD:$TRAVIS_BRANCH
