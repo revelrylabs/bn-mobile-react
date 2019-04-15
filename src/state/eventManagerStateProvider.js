@@ -61,6 +61,17 @@ export class EventManagerContainer extends Container {
     await this.setState({isFetchingGuests: false})
   }
 
+  updateGuestStatus = (guestId, newStatus) => {
+    const guests = this.state.guests.slice(0)
+
+    for (let i = 0; i < guests.length; i++) {
+      if (guests[i].id === guestId) {
+        guests[i].status = newStatus
+        break
+      }
+    }
+  }
+
   // this just unpacks the barcode scanner result, nothing else
   readCode = ({data: json}) => {
     const {data} = JSON.parse(json)

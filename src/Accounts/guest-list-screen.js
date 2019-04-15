@@ -7,11 +7,16 @@ export default class GuestListScreen extends Component {
     const {
       state: managerState,
       searchGuestList,
+      updateGuestStatus,
     } = this.props.screenProps.eventManager
 
     return (
       <View>
-        <GuestList {...managerState} searchGuestList={searchGuestList} />
+        <GuestList
+          {...managerState}
+          searchGuestList={searchGuestList}
+          updateGuestStatus={updateGuestStatus}
+        />
       </View>
     )
   }
