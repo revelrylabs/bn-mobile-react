@@ -253,7 +253,7 @@ export default class ManualCheckin extends Component {
     const {event_id, id: ticket_id, redeem_key} = guest
 
     try {
-      this.props.updateGuestStatus(guest.id, 'redeemed')
+      this.props.updateGuestStatus(guest.id, 'processing')
       await server.events.tickets.redeem({event_id, ticket_id, redeem_key})
     } catch (error) {
       apiErrorAlert(error)
