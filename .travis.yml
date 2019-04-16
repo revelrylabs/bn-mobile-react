@@ -27,7 +27,7 @@ jobs:
         - bundle update
         - bundle install
       before_script: ./bin/increment_version_number
-      script: ./bin/deploy_ci "production"
+      script: ./bin/deploy "production"
     - stage: deploy-beta
       node_js: 10.15.3
       if: branch = develop
@@ -39,4 +39,4 @@ jobs:
         - bundle update
         - bundle install
       before_script: ./bin/increment_version_number
-      script: ./bin/deploy_ci "staging"
+      script: ./bin/deploy "staging"
