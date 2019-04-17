@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   ScrollView,
+  Alert,
 } from 'react-native'
 import {MaterialIcons} from '@expo/vector-icons'
 import {Ticket} from './event_ticket'
@@ -41,7 +42,7 @@ export default class GetTickets extends Component {
 
   onPromoApply = async (code = '') => {
     if (code === '') {
-      alert('You must enter a promotional code.')
+      Alert.alert('Error', 'You must enter a promotional code.')
       return
     }
 
@@ -50,27 +51,29 @@ export default class GetTickets extends Component {
       const response = await server.redemptionCodes.read({code})
       const {
         data: {
-          //@deprecated
+          // @deprecated
           ticket_type,
-          ticket_types = []
+          ticket_types = [],
         },
       } = response
       const {event, store} = this.props
 
-      //This can be replaced by ticket_types once we are at parity with the server
-      const ticket_types_to_process = ticket_types.concat(ticket_type).filter(ticket_type => !!ticket_type)
-      ticket_types_to_process.forEach(ticket_type => {
+      // This can be replaced by ticket_types once we are at parity with the server
+      const ticket_types_to_process = ticket_types
+        .concat(ticket_type)
+        .filter((ticket_type) => !!ticket_type)
+
+      ticket_types_to_process.forEach((ticket_type) => {
         if (
-            !store.ticketTypeIds.includes(ticket_type.id) &&
-            ticket_type.event_id !== event.id
+          !store.ticketTypeIds.includes(ticket_type.id) &&
+          ticket_type.event_id !== event.id
         ) {
-          alert('This Promo Code is not valid for this event')
+          Alert.alert('Error', 'This Promo Code is not valid for this event')
           return
         }
 
         store.replaceTicketType(ticket_type)
       })
-
     } catch (error) {
       setTimeout(() => {
         apiErrorAlert(

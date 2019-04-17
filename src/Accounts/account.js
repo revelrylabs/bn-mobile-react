@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   TouchableHighlight,
+  Alert,
 } from 'react-native'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -60,7 +61,7 @@ export default class AccountDetails extends Component {
   }
 
   onSaveChangesSuccess() {
-    alert('Your information has been updated.')
+    Alert.alert('Success', 'Your information has been updated.')
   }
 
   onSaveChangesError({error, fields}) {
@@ -68,7 +69,7 @@ export default class AccountDetails extends Component {
       .map((key) => fields[key].map(({message}) => message).join('\n'))
       .join('\n')
 
-    alert(`There was a problem:\n\n${msg}`)
+    Alert.alert('Error', `There was a problem:\n\n${msg}`)
   }
 
   onPressPictureButton = async() => {

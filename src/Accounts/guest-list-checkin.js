@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Dimensions,
   Animated,
+  Alert,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {price, username, usernameLastFirst} from '../string'
@@ -254,7 +255,7 @@ export default class ManualCheckin extends Component {
 
     try {
       await server.events.tickets.redeem({event_id, ticket_id, redeem_key})
-      alert(`Checked in ${username(guest)}`)
+      Alert.alert('Success', `Checked in ${username(guest)}`)
     } catch (error) {
       apiErrorAlert(error)
     } finally {
