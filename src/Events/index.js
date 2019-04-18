@@ -12,6 +12,7 @@ import {
   RefreshControl,
   Easing,
   FlatList,
+  ActivityIndicator,
 } from 'react-native'
 import {NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -310,30 +311,149 @@ export default class EventsIndex extends Component {
     }
   }
 
-  get allEvents() {
+  _handleRefresh = () => {
     const {
-      navigation: {navigate},
       screenProps: {
-        store: {toggleInterest},
+        store: {
+          refreshEvents,
+        },
       },
     } = this.props
+
+    this.setState({refreshing: true})
+    refreshEvents(() => this.setState({refreshing: false}))
+  }
+
+  _handleLoadMore = () => {
+    const {
+      screenProps: {
+        store: {
+          fetchNextPage,
+          hasNextPage,
+        },
+      },
+    } = this.props
+
+    // check if we have more pages
+    if (!hasNextPage) {
+      return null
+    }
+
+    // If we do, fetch the next one
+    fetchNextPage()
+  }
+
+  get loadingMoreEvents() {
+    const {screenProps: {store: {state: {loading}}}} = this.props
     const events = this.events
 
-    if (events.length === 0) {
-      return <EmptyEvents locationName={this.currentLocationDisplayName} />
+    if (events.length !== 0 && !this.state.refreshing && loading) { // Dont show the bottom loader when pull to refresh. or on empty page
+      return <Text>Loading...</Text>
     }
-    return events.map((event, index) => (
-      <EventItemView
-        key={index}
-        onPress={() => navigate('EventsShow', {eventId: event.id, event})}
-        event={event}
-        onInterested={toggleInterest}
-      />
-    ))
+
+    return null
   }
 
   searchEvents = (query) => {
     this.props.searchEvents(query)
+  }
+
+  get headerElement() {
+    const scrollY = Animated.add(
+      this.state.scrollY,
+      Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0
+    )
+    const opacity = scrollY.interpolate({
+      inputRange: [0, 0.9, 1],
+      outputRange: [1, 0, 1],
+    })
+
+    const {
+      navigation: {navigate},
+      screenProps: {store},
+    } = this.props
+
+    return (
+      <View>
+        <View
+          style={[styles.sectionHeaderContainer, styles.flexRowSpaceBetween]}
+        >
+          <Animated.Text style={[styles.header, {opacity}]}>
+            Explore
+          </Animated.Text>
+          <ModalDropdown
+            ref={(ref) => {
+              this._dropdown = ref
+            }}
+            onSelect={store.changeLocation}
+            options={this.locations}
+            renderRow={this.locRowOption}
+            renderSeparator={() => <View />}
+            dropdownStyle={modalStyles.modalDropdownContainer}
+          >
+            <View style={styles.dropdownLinkContainer}>
+              <Image
+                style={styles.iconImageSmall}
+                source={require('../../assets/heart-small.png')}
+              />
+              <Text style={styles.iconLinkText}>
+                {this.currentLocationDisplayName}
+              </Text>
+              <Icon style={styles.iconLink} name="keyboard-arrow-down" />
+            </View>
+          </ModalDropdown>
+        </View>
+
+        <View style={formStyles.searchContainer}>
+          <Image
+            style={formStyles.searchIcon}
+            source={require('../../assets/icon-search.png')}
+          />
+          <TextInput
+            style={formStyles.searchInput}
+            placeholder="Search artists, shows, venues..."
+            searchIcon={{size: 24}}
+            underlineColorAndroid="transparent"
+            onChangeText={this.updateSearchText}
+          />
+        </View>
+
+        {this.state.searchText !== '' && (
+          <SuggestedSearches
+            searchText={this.state.searchText}
+            events={this.events}
+            navigate={navigate}
+          />
+        )}
+
+        {this.state.searchText !== '' && (
+          <Text style={styles.sectionHeader}>
+            {`Search Results for "${this.state.searchText}"`}
+          </Text>
+        )}
+      </View>
+    )
+  }
+
+  get footerElement() {
+      const {screenProps: {store: {state: {loading}}}} = this.props
+
+      if (!loading) return null;
+
+      return (
+        <View
+          style={{
+            position: 'relative',
+            width: styles.fullWidth,
+            height: 160,
+            paddingVertical: 20,
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          <ActivityIndicator animating size="large" />
+        </View>
+      );
   }
 
   /* eslint-disable-next-line complexity */
@@ -359,14 +479,17 @@ export default class EventsIndex extends Component {
 
     const {
       navigation: {navigate},
-      screenProps: {store},
+      screenProps: {
+        store: {toggleInterest},
+      },
     } = this.props
     const {mainFavorite} = this.state
+    const events = this.events
 
     return (
       <View style={styles.containerFullHeight}>
         <NavigationEvents onDidFocus={() => this.loadEvents()} />
-        <ScrollView
+        <FlatList
           style={{flex: 1}}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
@@ -376,10 +499,7 @@ export default class EventsIndex extends Component {
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
-              onRefresh={() => {
-                this.setState({refreshing: true})
-                setTimeout(() => this.setState({refreshing: false}), 1000)
-              }}
+              onRefresh={this._handleRefresh}
               // Android offset for RefreshControl
               progressViewOffset={HEADER_MAX_HEIGHT}
             />
@@ -391,155 +511,110 @@ export default class EventsIndex extends Component {
           contentOffset={{
             y: -HEADER_MAX_HEIGHT,
           }}
-        >
-          <View
-            style={[styles.sectionHeaderContainer, styles.flexRowSpaceBetween]}
+          data={events}
+          keyExtractor={event => event.id}
+          ListHeaderComponent={this.headerElement}
+          ListFooterComponent={this.footerElement}
+          ListEmptyComponent={<EmptyEvents locationName={this.currentLocationDisplayName} />}
+          renderItem={({ item }) => (
+            <EventItemView
+              onPress={() => navigate('EventsShow', {eventId: item.id, event: item})}
+              event={item}
+              onInterested={toggleInterest}
+            />
+          )}
+          onEndReached={this._handleLoadMore}
+          onEndReachedThreshold={0.5}
+        />
+
+
+        {false && (
+          <Text
+            style={
+              styles.sectionHeader // TODO: Re-enable when functionality is implemented.
+            }
           >
-            <Animated.Text style={[styles.header, {opacity}]}>
-              Explore
-            </Animated.Text>
-            <ModalDropdown
-              ref={(ref) => {
-                this._dropdown = ref
-              }}
-              onSelect={store.changeLocation}
-              options={this.locations}
-              renderRow={this.locRowOption}
-              renderSeparator={() => <View />}
-              dropdownStyle={modalStyles.modalDropdownContainer}
-            >
-              <View style={styles.dropdownLinkContainer}>
-                <Image
-                  style={styles.iconImageSmall}
-                  source={require('../../assets/heart-small.png')}
-                />
-                <Text style={styles.iconLinkText}>
-                  {this.currentLocationDisplayName}
-                </Text>
-                <Icon style={styles.iconLink} name="keyboard-arrow-down" />
-              </View>
-            </ModalDropdown>
-          </View>
+            Hot This Week
+          </Text>
+        )}
 
-          <View style={formStyles.searchContainer}>
-            <Image
-              style={formStyles.searchIcon}
-              source={require('../../assets/icon-search.png')}
-            />
-            <TextInput
-              style={formStyles.searchInput}
-              placeholder="Search artists, shows, venues..."
-              searchIcon={{size: 24}}
-              underlineColorAndroid="transparent"
-              onChangeText={this.updateSearchText}
-            />
-          </View>
+        {false && (
+          <TouchableHighlight
+            underlayColor="rgba(0, 0, 0, 0)"
+            onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}
+          >
+            <View style={slideshowStyles.slideshowContainer}>
+              <Image
+                style={slideshowStyles.slideShowImage}
+                source={require('../../assets/featured-1.png')}
+              />
+              <Image
+                style={slideshowStyles.slideShowImage}
+                source={require('../../assets/featured-img-overlay.png')}
+              />
 
-          {this.state.searchText !== '' && (
-            <SuggestedSearches
-              searchText={this.state.searchText}
-              events={this.events}
-              navigate={navigate}
-            />
-          )}
-
-          {this.state.searchText !== '' && (
-            <Text style={styles.sectionHeader}>
-              {`Search Results for "${this.state.searchText}"`}
-            </Text>
-          )}
-
-          {false && (
-            <Text
-              style={
-                styles.sectionHeader // TODO: Re-enable when functionality is implemented.
-              }
-            >
-              Hot This Week
-            </Text>
-          )}
-
-          {false && ( // TODO: Re-enable when functionality is implemented.
-            <TouchableHighlight
-              underlayColor="rgba(0, 0, 0, 0)"
-              onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}
-            >
-              <View style={slideshowStyles.slideshowContainer}>
-                <Image
-                  style={slideshowStyles.slideShowImage}
-                  source={require('../../assets/featured-1.png')}
-                />
-                <Image
-                  style={slideshowStyles.slideShowImage}
-                  source={require('../../assets/featured-img-overlay.png')}
-                />
-
-                <View style={slideshowStyles.detailsContainer}>
-                  <View style={slideshowStyles.sectionTop}>
-                    <TouchableHighlight
-                      underlayColor="rgba(0, 0, 0, 0)"
-                      onPress={() => this.setFavorite(!mainFavorite)}
+              <View style={slideshowStyles.detailsContainer}>
+                <View style={slideshowStyles.sectionTop}>
+                  <TouchableHighlight
+                    underlayColor="rgba(0, 0, 0, 0)"
+                    onPress={() => this.setFavorite(!mainFavorite)}
+                  >
+                    <View
+                      style={
+                        mainFavorite ?
+                          styles.iconLinkCircleContainerActive :
+                          styles.iconLinkCircleContainer
+                      }
                     >
-                      <View
+                      <Icon
                         style={
                           mainFavorite ?
-                            styles.iconLinkCircleContainerActive :
-                            styles.iconLinkCircleContainer
+                            styles.iconLinkCircleActive :
+                            styles.iconLinkCircle
                         }
-                      >
-                        <Icon
-                          style={
-                            mainFavorite ?
-                              styles.iconLinkCircleActive :
-                              styles.iconLinkCircle
-                          }
-                          name="star"
-                        />
-                      </View>
-                    </TouchableHighlight>
-                    <View style={styles.avatarContainer}>
-                      <Image
-                        style={styles.avatar}
-                        source={require('../../assets/avatar-male.png')}
-                      />
-                      <Image
-                        style={styles.avatar}
-                        source={require('../../assets/avatar-female.png')}
+                        name="star"
                       />
                     </View>
+                  </TouchableHighlight>
+                  <View style={styles.avatarContainer}>
+                    <Image
+                      style={styles.avatar}
+                      source={require('../../assets/avatar-male.png')}
+                    />
+                    <Image
+                      style={styles.avatar}
+                      source={require('../../assets/avatar-female.png')}
+                    />
                   </View>
+                </View>
 
-                  <View style={slideshowStyles.sectionMiddle}>
-                    <Icon
-                      style={slideshowStyles.slideShowIconLinkLeft}
-                      name="keyboard-arrow-left"
-                    />
-                    <Icon
-                      style={slideshowStyles.slideShowIconLinkRight}
-                      name="keyboard-arrow-right"
-                    />
+                <View style={slideshowStyles.sectionMiddle}>
+                  <Icon
+                    style={slideshowStyles.slideShowIconLinkLeft}
+                    name="keyboard-arrow-left"
+                  />
+                  <Icon
+                    style={slideshowStyles.slideShowIconLinkRight}
+                    name="keyboard-arrow-right"
+                  />
+                </View>
+                <View>
+                  <View style={styles.priceTagContainer}>
+                    <Text style={styles.priceTag}>$30</Text>
                   </View>
-                  <View>
-                    <View style={styles.priceTagContainer}>
-                      <Text style={styles.priceTag}>$30</Text>
-                    </View>
-                    <Text style={slideshowStyles.header}>Childish Gambino</Text>
-                    <View style={styles.flexRowSpaceBetween}>
-                      <Text style={slideshowStyles.details}>
-                        Fox Theater &bull; Oakland, CA
-                      </Text>
-                      <Text style={slideshowStyles.details}>July 15, 2018</Text>
-                    </View>
+                  <Text style={slideshowStyles.header}>Childish Gambino</Text>
+                  <View style={styles.flexRowSpaceBetween}>
+                    <Text style={slideshowStyles.details}>
+                      Fox Theater &bull; Oakland, CA
+                    </Text>
+                    <Text style={slideshowStyles.details}>July 15, 2018</Text>
                   </View>
                 </View>
               </View>
-            </TouchableHighlight>
-          )}
+            </View>
+          </TouchableHighlight>
+        )}
 
-          {this.allEvents}
-
-          <View style={styles.spacer} />
-        </ScrollView>
         <Animated.View
           style={[
             navigationStyles.scrollHeaderContainer,
