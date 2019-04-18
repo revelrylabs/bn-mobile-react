@@ -1,4 +1,3 @@
-import 'get-own-property-symbols'
 import 'proxy-polyfill'
 import Bigneon from 'bn-api-node'
 import {AsyncStorage} from 'react-native'
