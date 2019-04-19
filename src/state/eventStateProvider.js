@@ -32,11 +32,16 @@ function ticketComparator({ticket_pricing: a}, {ticket_pricing: b}) {
   }
   return b - a
 }
+
 class EventsContainer extends Container {
   constructor(props = {}) {
     super(props)
 
     this.state = {
+      total: null,
+      page: 0,
+      limit: 10,
+      loading: false,
       events: [],
       eventsById: {},
       ticketTypesById: {},
@@ -76,6 +81,16 @@ class EventsContainer extends Container {
     return ticketTypes ?
       ticketTypes.filter(ticketFilter).sort(ticketComparator) :
       []
+  }
+
+  get hasNextPage() {
+    const {total, page, limit} = this.state
+
+    if (total && total > 0) {
+      return (total - ((page + 1) * limit)) > 0
+    }
+
+    return false
   }
 
   locationsPromise = null
@@ -120,15 +135,20 @@ class EventsContainer extends Container {
     Promise.all(eventImagePrefetch)
   }
 
-  getEvents = async (_location = null) => {
+  getEvents = async (replaceEvents = false) => {
+    const {limit, page, events, eventsById} = this.state
+
     try {
+      this.setState({loading: true})
+
       const [{data}, ..._rest] = await Promise.all([
-        server.events.index(defaultEventSort),
+        server.events.index({...defaultEventSort, limit, page}),
         this.fetchLocations(),
       ])
-      const eventsById = {}
       const imagePrefetch = []
+      const eventsByIdObj = replaceEvents ? {} : eventsById
 
+      // process event images
       data.data.forEach((event) => {
         if (!event.promo_image_url) {
           event.promo_image_url = `${baseURL}/images/event-placeholder.png`
@@ -138,19 +158,40 @@ class EventsContainer extends Container {
           Image.prefetch(optimizeCloudinaryImage(event.promo_image_url))
         )
 
-        eventsById[event.id] = event
+        eventsByIdObj[event.id] = event
       })
       this._cacheResourcesAsync(imagePrefetch)
 
       this.setState({
         lastUpdate: DateTime.local(),
-        events: data.data,
-        eventsById,
+        events: replaceEvents ? data.data : events.concat(data.data),
+        eventsById: eventsByIdObj,
         paging: data.paging,
+        total: data.paging.total,
+        limit: data.paging.limit,
+        page: data.paging.page,
       })
     } catch (error) {
-      apiErrorAlert(error)
+      setTimeout( () => {
+        apiErrorAlert(error)
+      }, 600)
+    } finally {
+      this.setState({loading: false})
     }
+  }
+
+  refreshEvents = async (onFinish) => {
+    await this.setState({ page: 0 })
+    await this.getEvents(true)
+    onFinish()
+  }
+
+  fetchNextPage = async () => {
+    await this.setState(state => {
+      return { page: state.page + 1 };
+    })
+
+    this.getEvents()
   }
 
   clearEvent = () => {
