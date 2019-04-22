@@ -1,6 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, View, Image, TouchableHighlight, WebView} from 'react-native'
+import {
+  Text,
+  View,
+  Image,
+  TouchableHighlight,
+  WebView,
+  Alert,
+} from 'react-native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -105,7 +112,7 @@ export default class PaymentTypes extends Component {
       const payment = JSON.parse(data)
 
       if (payment.error) {
-        alert(`There was an error.\n\n${payment.error}`)
+        Alert.alert('Error', `There was an error.\n\n${payment.error}`)
       } else {
         this.props.selectPayment(payment)
       }
