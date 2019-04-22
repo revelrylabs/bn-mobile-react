@@ -1,6 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, Image, TextInput, TouchableHighlight} from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableHighlight,
+  Alert,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {LinearGradient} from 'expo'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -28,7 +35,7 @@ export default class PasswordReset extends Component {
     const {email} = this.state
 
     if (!email.match(/^[^@]+@[^@]+$/)) {
-      alert('Please enter a valid email address.')
+      Alert.alert('Error', 'Please enter a valid email address.')
       return
     }
 
@@ -37,10 +44,13 @@ export default class PasswordReset extends Component {
         data: {message},
       } = await doPasswordReset(this.state.email)
 
-      alert(message)
+      Alert.alert(message)
       this.props.navigation.navigate('LogIn')
     } catch (_error) {
-      alert('Something went wrong, and we could not reset your password.')
+      Alert.alert(
+        'Error',
+        'Something went wrong, and we could not reset your password.'
+      )
     }
   }
 

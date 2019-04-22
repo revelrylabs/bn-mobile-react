@@ -1,7 +1,10 @@
 #! /usr/bin/env bash
 set -e # exit entire script when command exits with non-zero status
 
+# Environment should be "production" or "staging"
 ENVIRONMENT=$1
+
+#The track is used to tell fastlane where to place the android release
 TRACK=$([ "$ENVIRONMENT" = "production" ] && echo "beta" || echo "alpha")
 
 # inject sentry auth token into app.json
@@ -11,12 +14,13 @@ sed -i .bak "s/__SECRET_SENTRY_AUTH_TOKEN__/$SENTRY_AUTH_TOKEN/g" app.json
 # Install dependencies
 npm ci
 
+# Login to expo
 npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
 
-# Publish `production` release
+# Publish release
 npx expo publish --release-channel $ENVIRONMENT --non-interactive
 
-# Start building standalone android build using `$ENVIRONMENT` release channel
+# Start building standalone android build using release channel
 npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
 
 # Download the built android binary
@@ -25,7 +29,7 @@ curl -o app.apk "$(npx expo url:apk --non-interactive)"
 # Ask Keith for the JSON key. Store this one directory below the app, and DO NOT ADD TO GIT
 fastlane supply --track $TRACK --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
 
-# Start building standalone android build using `$ENVIRONMENT` release channel
+# Start building standalone iOS build using release channel
 npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
 
 # Download the artifact to current directory as `app.ipa`

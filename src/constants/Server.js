@@ -1,7 +1,6 @@
-import 'get-own-property-symbols'
 import 'proxy-polyfill'
 import Bigneon from 'bn-api-node'
-import {AsyncStorage} from 'react-native'
+import {AsyncStorage, Alert} from 'react-native'
 // import mocker from './mocker'
 import {apiURL, timeout} from './config'
 import Base64 from './base64'
@@ -26,7 +25,10 @@ function buildErrorMessage({error, fields}) {
 /* eslint-disable-next-line complexity */
 export function apiErrorAlert(error, msg = DEFAULT_ERROR_MSG) {
   if (error.message === 'Network Error') {
-    return alert('Network Error: Your device may have lost connectivity.')
+    return Alert.alert(
+      'Error',
+      'Network Error: Your device may have lost connectivity.'
+    )
   }
 
   const {response} = error
@@ -37,7 +39,10 @@ export function apiErrorAlert(error, msg = DEFAULT_ERROR_MSG) {
 
   const {data} = response
 
-  return alert((data && data.error && buildErrorMessage(data)) || msg)
+  return Alert.alert(
+    'Error',
+    (data && data.error && buildErrorMessage(data)) || msg
+  )
 }
 
 export async function retrieveTokens() {
