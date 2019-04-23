@@ -1,16 +1,29 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ScrollView, Text, View, Image, TextInput, TouchableHighlight, Animated, Platform, RefreshControl, Easing} from 'react-native';
-import {NavigationEvents} from 'react-navigation';
+import {
+  ScrollView,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableHighlight,
+  Animated,
+  Platform,
+  RefreshControl,
+  Easing,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native'
+import {NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import ModalDropdown from 'react-native-modal-dropdown';
+import ModalDropdown from 'react-native-modal-dropdown'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
 import SlideShowStyles from '../styles/shared/slideshowStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import EventItemView from './event_card'
-import {DateTime} from 'luxon';
+import {DateTime} from 'luxon'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import emptyState from '../../assets/icon-empty-state.png'
 
@@ -21,18 +34,94 @@ const navigationStyles = NavigationStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 
-const HEADER_MAX_HEIGHT = 0;
-const HEADER_MIN_HEIGHT = -25;
-const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+const HEADER_MAX_HEIGHT = 0
+const HEADER_MIN_HEIGHT = -25
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
 
 function EmptyEvents({locationName}) {
   return (
     <View style={ticketStyles.emptyStateContainer}>
-      <Image
-        style={ticketStyles.emptyStateIcon}
-        source={emptyState}
+      <Image style={ticketStyles.emptyStateIcon} source={emptyState} />
+      <Text style={ticketStyles.emptyStateText}>
+        {`More${
+          locationName == 'All Locations' ? '' : ` ${locationName}`
+        } events and experiences powered by Big Neon launching soon!`}
+      </Text>
+    </View>
+  )
+}
+
+function SuggestedSearches({searchText, events, navigate}) {
+  if (searchText === '' || events.length === 0) {
+    return null
+  }
+
+  const reducer = (names, event) => {
+    names.push({eventId: event.id, id: event.id, name: event.name, event})
+    event.artists.forEach(({artist}) => {
+      if (artist.name.toLowerCase().includes(searchText.trim().toLowerCase())) {
+        names.push({
+          eventId: event.id,
+          id: artist.id,
+          name: artist.name,
+          event,
+        })
+      }
+    })
+
+    if (
+      event.venue.name.toLowerCase().includes(searchText.trim().toLowerCase())
+    ) {
+      names.push({
+        eventId: event.id,
+        id: event.venue.id,
+        name: event.venue.name,
+        event,
+      })
+    }
+
+    return names
+  }
+
+  const sorter = (eventA, eventB) => {
+    const nameA = eventA.name.toUpperCase() // ignore upper and lowercase
+    const nameB = eventB.name.toUpperCase() // ignore upper and lowercase
+
+    if (nameA < nameB) {
+      return -1
+    }
+    if (nameA > nameB) {
+      return 1
+    }
+
+    // names must be equal
+    return 0
+  }
+
+  const names = events.reduce(reducer, []).sort(sorter)
+
+  return (
+    <View>
+      <Text style={styles.sectionHeader}>{'Suggested Searches'}</Text>
+      <FlatList
+        keyExtractor={(item) => item.id}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        data={names.slice(0, 3)}
+        renderItem={({item, separators}) => (
+          <TouchableHighlight
+            style={[styles.rowContainer, styles.paddingVerticalSmall]}
+            onPress={() =>
+              navigate('EventsShow', {eventId: item.eventId, event: item.event})
+            }
+            onShowUnderlay={separators.highlight}
+            onHideUnderlay={separators.unhighlight}
+          >
+            <View>
+              <Text>{item.name}</Text>
+            </View>
+          </TouchableHighlight>
+        )}
       />
-      <Text style={ticketStyles.emptyStateText}>{"More" + (locationName == "All Locations" ? null : " " + locationName) + " events and experiences powered by Big Neon launching soon!"}</Text>
     </View>
   )
 }
@@ -45,13 +134,15 @@ export default class EventsIndex extends Component {
 
   /* eslint-disable-next-line complexity */
   constructor(props) {
-    super(props);
-    const {screenProps: {store}} = props
+    super(props)
+    const {
+      screenProps: {store},
+    } = props
     const {state} = store
 
     this.state = {
       scrollY: new Animated.Value(
-        Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
+        Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0
       ),
       refreshing: false,
       toValue: 1,
@@ -59,12 +150,19 @@ export default class EventsIndex extends Component {
       easing: Easing.linear,
       selectedLocationId: state.selectedLocationId || 2,
       mainFavorite: true,
-    };
+      searchText: '',
+    }
   }
 
   componentWillReceiveProps(newProps) {
     // Check for updated Location
-    const {screenProps: {store: {state: {selectedLocationId}}}} = newProps
+    const {
+      screenProps: {
+        store: {
+          state: {selectedLocationId},
+        },
+      },
+    } = newProps
 
     if (selectedLocationId !== this.state.selectedLocationId) {
       // also do some kind of event re-search action to load new city events
@@ -74,43 +172,122 @@ export default class EventsIndex extends Component {
 
   get locations() {
     return [
-      {id: null, name: 'Where are you looking for events?', selectedName: 'All Locations'},
+      {
+        id: null,
+        name: 'Where are you looking for events?',
+        selectedName: 'All Locations',
+      },
       ...this.props.screenProps.store.state.locations,
     ]
   }
 
   loadEvents() {
-    const {screenProps: {store}} = this.props
+    const {
+      screenProps: {store},
+    } = this.props
 
     if (this.events.length === 0 || this.eventsRefresh) {
       store.getEvents()
+      this.setState({searchText: ''})
     }
   }
 
   get eventsRefresh() {
-    const {screenProps: {store: {state: {lastUpdate}}}} = this.props
+    const {
+      screenProps: {
+        store: {
+          state: {lastUpdate},
+        },
+      },
+    } = this.props
 
     return !lastUpdate || lastUpdate.plus({minutes: 15}) < DateTime.local()
   }
 
-  get events() {
-    const {screenProps: {store: {state: {events, selectedLocationId}}}} = this.props
-
-    if (!selectedLocationId) {
-      return events
+  filterEventsByLocation(events, selectedLocationId) {
+    if (selectedLocationId) {
+      return events.filter(
+        ({venue: {region_id}}) => region_id === selectedLocationId
+      )
     }
 
-    return events.filter(({venue: {region_id}}) => region_id === selectedLocationId)
+    return events
+  }
+
+  filterEventsBySearchText(events, searchText) {
+    if (searchText !== '') {
+      return events.filter(
+        ({name, artists, venue}) =>
+          name.toLowerCase().includes(searchText.trim().toLowerCase()) ||
+          this.searchArtistsForEvent(artists, searchText) ||
+          this.searchVenueForEvent(venue, searchText)
+      )
+    }
+
+    return events
+  }
+
+  searchArtistsForEvent(artists, searchText) {
+    if (!artists) {
+      return false
+    }
+
+    return artists.some(({artist: {name}}) =>
+      name.toLowerCase().includes(searchText.trim().toLowerCase())
+    )
+  }
+
+  searchVenueForEvent(venue, searchText) {
+    if (!venue || !venue.name) {
+      return false
+    }
+
+    return venue.name.toLowerCase().includes(searchText.trim().toLowerCase())
+  }
+
+  get events() {
+    const {
+      screenProps: {
+        store: {
+          state: {events, selectedLocationId},
+        },
+      },
+    } = this.props
+
+    const eventsToDisplay = this.filterEventsByLocation(
+      events,
+      selectedLocationId
+    )
+
+    return this.filterEventsBySearchText(eventsToDisplay, this.state.searchText)
   }
 
   setFavorite = (mainFavorite) => {
     this.setState({mainFavorite})
   }
 
-  get currentLocationDisplayName() {
-    const selectedLoc = this.locations.find((loc) => (loc.id === this.state.selectedLocationId))
+  updateSearchText = (text) => {
+    this.setState({
+      searchText: text,
+    })
+  }
 
-    return selectedLoc && (selectedLoc.selectedName || selectedLoc.name) || ''
+  get currentLocationDisplayName() {
+    const selectedLoc = this.locations.find(
+      (loc) => loc.id === this.state.selectedLocationId
+    )
+
+    // Limit before having to truncate
+    const characterLimit = 18
+
+    let name =
+      (selectedLoc && (selectedLoc.selectedName || selectedLoc.name)) || ''
+
+    if (name.length > characterLimit) {
+      name = name.substring(0, characterLimit)
+    }
+
+    return name
   }
 
   locRowOption = (rowData, rowID, _highlighted) => {
@@ -134,65 +311,195 @@ export default class EventsIndex extends Component {
     }
   }
 
-  get allEvents() {
-    const {navigation: {navigate}, screenProps: {store: {toggleInterest}}} = this.props
-    const events = this.events
-    if(events.length == 0){
-      return <EmptyEvents locationName={this.currentLocationDisplayName} />
+  _handleRefresh = () => {
+    const {
+      screenProps: {
+        store: {
+          refreshEvents,
+        },
+      },
+    } = this.props
+
+    this.setState({refreshing: true})
+    refreshEvents(() => this.setState({refreshing: false}))
+  }
+
+  _handleLoadMore = () => {
+    const {
+      screenProps: {
+        store: {
+          fetchNextPage,
+          hasNextPage,
+        },
+      },
+    } = this.props
+
+    // check if we have more pages
+    if (!hasNextPage) {
+      return null
     }
-    return events.map((event, index) => (
-      <EventItemView
-        key={index}
-        onPress={() => navigate('EventsShow', {eventId: event.id})}
-        event={event}
-        onInterested={toggleInterest}
-      />
-    ))
+
+    // If we do, fetch the next one
+    fetchNextPage()
+  }
+
+  get loadingMoreEvents() {
+    const {screenProps: {store: {state: {loading}}}} = this.props
+    const events = this.events
+
+    if (events.length !== 0 && !this.state.refreshing && loading) { // Dont show the bottom loader when pull to refresh. or on empty page
+      return <Text>Loading...</Text>
+    }
+
+    return null
+  }
+
+  searchEvents = (query) => {
+    this.props.searchEvents(query)
+  }
+
+  get headerElement() {
+    const scrollY = Animated.add(
+      this.state.scrollY,
+      Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0
+    )
+    const opacity = scrollY.interpolate({
+      inputRange: [0, 0.9, 1],
+      outputRange: [1, 0, 1],
+    })
+
+    const {
+      navigation: {navigate},
+      screenProps: {store},
+    } = this.props
+
+    return (
+      <View>
+        <View
+          style={[styles.sectionHeaderContainer, styles.flexRowSpaceBetween]}
+        >
+          <Animated.Text style={[styles.header, {opacity}]}>
+            Explore
+          </Animated.Text>
+          <ModalDropdown
+            ref={(ref) => {
+              this._dropdown = ref
+            }}
+            onSelect={store.changeLocation}
+            options={this.locations}
+            renderRow={this.locRowOption}
+            renderSeparator={() => <View />}
+            dropdownStyle={modalStyles.modalDropdownContainer}
+          >
+            <View style={styles.dropdownLinkContainer}>
+              <Image
+                style={styles.iconImageSmall}
+                source={require('../../assets/heart-small.png')}
+              />
+              <Text style={styles.iconLinkText}>
+                {this.currentLocationDisplayName}
+              </Text>
+              <Icon style={styles.iconLink} name="keyboard-arrow-down" />
+            </View>
+          </ModalDropdown>
+        </View>
+
+        <View style={formStyles.searchContainer}>
+          <Image
+            style={formStyles.searchIcon}
+            source={require('../../assets/icon-search.png')}
+          />
+          <TextInput
+            style={formStyles.searchInput}
+            placeholder="Search artists, shows, venues..."
+            searchIcon={{size: 24}}
+            underlineColorAndroid="transparent"
+            onChangeText={this.updateSearchText}
+          />
+        </View>
+
+        {this.state.searchText !== '' && (
+          <SuggestedSearches
+            searchText={this.state.searchText}
+            events={this.events}
+            navigate={navigate}
+          />
+        )}
+
+        {this.state.searchText !== '' && (
+          <Text style={styles.sectionHeader}>
+            {`Search Results for "${this.state.searchText}"`}
+          </Text>
+        )}
+      </View>
+    )
+  }
+
+  get footerElement() {
+      const {screenProps: {store: {state: {loading}}}} = this.props
+
+      if (!loading) return null;
+
+      return (
+        <View
+          style={{
+            position: 'relative',
+            width: styles.fullWidth,
+            height: 160,
+            paddingVertical: 20,
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          <ActivityIndicator animating size="large" />
+        </View>
+      );
   }
 
   /* eslint-disable-next-line complexity */
   render() {
     const scrollY = Animated.add(
       this.state.scrollY,
-      Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0,
-    );
+      Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0
+    )
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE],
       outputRange: [HEADER_MAX_HEIGHT, 100],
       extrapolate: 'clamp',
-    });
+    })
     const headerTranslate = scrollY.interpolate({
       inputRange: [0, 100],
       outputRange: [0, -HEADER_SCROLL_DISTANCE],
       extrapolate: 'clamp',
-    });
+    })
     const opacity = scrollY.interpolate({
       inputRange: [0, 0.9, 1],
       outputRange: [1, 0, 1],
-    });
+    })
 
-    const {navigation: {navigate}, screenProps: {store}} = this.props
+    const {
+      navigation: {navigate},
+      screenProps: {
+        store: {toggleInterest},
+      },
+    } = this.props
     const {mainFavorite} = this.state
+    const events = this.events
 
     return (
       <View style={styles.containerFullHeight}>
-        <NavigationEvents
-          onWillFocus={() => this.loadEvents()}
-        />
-        <ScrollView
-          style={{flex:1}}
+        <NavigationEvents onDidFocus={() => this.loadEvents()} />
+        <FlatList
+          style={{flex: 1}}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
-          )}
+          onScroll={Animated.event([
+            {nativeEvent: {contentOffset: {y: this.state.scrollY}}},
+          ])}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
-              onRefresh={() => {
-                this.setState({refreshing: true});
-                setTimeout(() => this.setState({refreshing: false}), 1000);
-              }}
+              onRefresh={this._handleRefresh}
               // Android offset for RefreshControl
               progressViewOffset={HEADER_MAX_HEIGHT}
             />
@@ -204,52 +511,38 @@ export default class EventsIndex extends Component {
           contentOffset={{
             y: -HEADER_MAX_HEIGHT,
           }}
-        >
-          <View style={[styles.sectionHeaderContainer, styles.flexRowSpaceBetween]}>
-            <Animated.Text style={[styles.header, {opacity}]}>Explore</Animated.Text>
-            <ModalDropdown
-              ref={(ref) => {
-                this._dropdown = ref
-              }}
-              onSelect={store.changeLocation}
-              options={this.locations}
-              renderRow={this.locRowOption}
-              renderSeparator={() => <View />}
-              dropdownStyle={modalStyles.modalDropdownContainer}
-            >
-              <View style={styles.dropdownLinkContainer}>
-                <Image
-                  style={styles.iconImageSmall}
-                  source={require('../../assets/heart-small.png')}
-                />
-                <Text style={styles.iconLinkText}>{this.currentLocationDisplayName}</Text>
-                <Icon style={styles.iconLink} name="keyboard-arrow-down" />
-              </View>
-            </ModalDropdown>
-          </View>
-
-          {false && // TODO: Re-enable when functionality is implemented.
-          <View style={formStyles.searchContainer}>
-            <Image
-              style={formStyles.searchIcon}
-              source={require('../../assets/icon-search.png')}
+          data={events}
+          keyExtractor={event => event.id}
+          ListHeaderComponent={this.headerElement}
+          ListFooterComponent={this.footerElement}
+          ListEmptyComponent={<EmptyEvents locationName={this.currentLocationDisplayName} />}
+          renderItem={({ item }) => (
+            <EventItemView
+              onPress={() => navigate('EventsShow', {eventId: item.id, event: item})}
+              event={item}
+              onInterested={toggleInterest}
             />
-            <TextInput
-              style={formStyles.searchInput}
-              placeholder="Search artists, shows, venues..."
-              searchIcon={{size: 24}}
-              underlineColorAndroid="transparent"
-              disabled
-            />
-          </View>
-          }
+          )}
+          onEndReached={this._handleLoadMore}
+          onEndReachedThreshold={0.5}
+        />
 
-          {false && // TODO: Re-enable when functionality is implemented.
-          <Text style={styles.sectionHeader}>Hot This Week</Text>
-          }
 
-          {false && // TODO: Re-enable when functionality is implemented.
-          <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}>
+        {false && (
+          <Text
+            style={
+              styles.sectionHeader // TODO: Re-enable when functionality is implemented.
+            }
+          >
+            Hot This Week
+          </Text>
+        )}
+
+        {false && (
+          <TouchableHighlight
+            underlayColor="rgba(0, 0, 0, 0)"
+            onPress={() => navigate('EventsShow', {name: 'Childish Gambino'})}
+          >
             <View style={slideshowStyles.slideshowContainer}>
               <Image
                 style={slideshowStyles.slideShowImage}
@@ -262,9 +555,25 @@ export default class EventsIndex extends Component {
 
               <View style={slideshowStyles.detailsContainer}>
                 <View style={slideshowStyles.sectionTop}>
-                  <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)" onPress={() => this.setFavorite(!mainFavorite)}>
-                    <View style={mainFavorite ? styles.iconLinkCircleContainerActive : styles.iconLinkCircleContainer}>
-                      <Icon style={mainFavorite ? styles.iconLinkCircleActive : styles.iconLinkCircle} name="star" />
+                  <TouchableHighlight
+                    underlayColor="rgba(0, 0, 0, 0)"
+                    onPress={() => this.setFavorite(!mainFavorite)}
+                  >
+                    <View
+                      style={
+                        mainFavorite ?
+                          styles.iconLinkCircleContainerActive :
+                          styles.iconLinkCircleContainer
+                      }
+                    >
+                      <Icon
+                        style={
+                          mainFavorite ?
+                            styles.iconLinkCircleActive :
+                            styles.iconLinkCircle
+                        }
+                        name="star"
+                      />
                     </View>
                   </TouchableHighlight>
                   <View style={styles.avatarContainer}>
@@ -280,8 +589,14 @@ export default class EventsIndex extends Component {
                 </View>
 
                 <View style={slideshowStyles.sectionMiddle}>
-                  <Icon style={slideshowStyles.slideShowIconLinkLeft} name="keyboard-arrow-left" />
-                  <Icon style={slideshowStyles.slideShowIconLinkRight} name="keyboard-arrow-right" />
+                  <Icon
+                    style={slideshowStyles.slideShowIconLinkLeft}
+                    name="keyboard-arrow-left"
+                  />
+                  <Icon
+                    style={slideshowStyles.slideShowIconLinkRight}
+                    name="keyboard-arrow-right"
+                  />
                 </View>
                 <View>
                   <View style={styles.priceTagContainer}>
@@ -289,28 +604,33 @@ export default class EventsIndex extends Component {
                   </View>
                   <Text style={slideshowStyles.header}>Childish Gambino</Text>
                   <View style={styles.flexRowSpaceBetween}>
-                    <Text style={slideshowStyles.details}>Fox Theater  &bull;  Oakland, CA</Text>
+                    <Text style={slideshowStyles.details}>
+                      Fox Theater &bull; Oakland, CA
+                    </Text>
                     <Text style={slideshowStyles.details}>July 15, 2018</Text>
                   </View>
                 </View>
               </View>
             </View>
           </TouchableHighlight>
-          }
+        )}
 
-          <View style={styles.spacer} />
-
-          {this.allEvents}
-
-          <View style={styles.spacer} />
-        </ScrollView>
-        <Animated.View style={[navigationStyles.scrollHeaderContainer, {height: headerHeight, transform: [{translateY: headerTranslate}]}]}>
+        <Animated.View
+          style={[
+            navigationStyles.scrollHeaderContainer,
+            {height: headerHeight, transform: [{translateY: headerTranslate}]},
+          ]}
+        >
           <View style={navigationStyles.scrollHeader}>
-            <Animated.Text style={[navigationStyles.scrollTitle, {opacity}]}>Explore</Animated.Text>
-            <Animated.Text style={navigationStyles.scrollSubTitle}>All Dates &bull; {this.currentLocationDisplayName}</Animated.Text>
+            <Animated.Text style={[navigationStyles.scrollTitle, {opacity}]}>
+              Explore
+            </Animated.Text>
+            <Animated.Text style={navigationStyles.scrollSubTitle}>
+              All Dates &bull; {this.currentLocationDisplayName}
+            </Animated.Text>
           </View>
         </Animated.View>
       </View>
-    );
+    )
   }
 }

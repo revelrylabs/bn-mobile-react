@@ -1,56 +1,63 @@
 import {Container} from 'unstated'
 import {server, apiErrorAlert} from '../constants/Server'
-import {DateTime} from 'luxon'
-import {find} from 'lodash'
+import {eventDateTimes, eventIsInPast} from '../time'
 
 /* eslint-disable camelcase,space-before-function-paren */
 
 class TicketsContainer extends Container {
   constructor(props = {}) {
-    super(props);
+    super(props)
 
     this.state = {
       tickets: [],
-      ticketsByEventId: {},
       purchasedTicket: null,
-    };
-
-    this.userTickets()
+    }
   }
 
   // Grabbing tickets from orders right now - not preserving any order-level details
   userTickets = async () => {
     try {
       const response = await server.tickets.index()
-
-      const {data, _paging} = response.data; // @TODO: pagination
-
-      const ticketsByEventId = {}
-
-      const ticketGroups = {
+      const {data, _paging} = response.data // @TODO: pagination
+      const tabData = {
         upcoming: [],
         past: [],
         transfer: [],
-      };
+      }
 
-      // @TODO: api data structure will eventually change
-      data.forEach((ticketGroup) => {
-        const event = ticketGroup[0];
-        const tickets = ticketGroup[1];
-        const bucket = DateTime.fromISO(event.event_start) < DateTime.local() ? 'past' : 'upcoming'
+      data.forEach(([event, tix]) => {
+        const untransferredCategory = eventIsInPast(event) ? 'past' : 'upcoming'
+        const {event_start, door_time} = eventDateTimes(event.localized_times)
 
-        event.formattedDate = DateTime.fromISO(event.event_start).toFormat('EEE, MMMM d');
-        event.formattedDoors = DateTime.fromISO(event.door_time).toFormat('t');
-        event.formattedShow = DateTime.fromISO(event.event_start).toFormat('t');
+        event.formattedDate = event_start.toFormat('EEE, MMMM d')
+        event.formattedDoors = door_time.toFormat('t')
+        event.formattedStart = event_start.toFormat('t')
 
-        const eventAndTicketsObject = {event, tickets}
+        const categories = {
+          upcoming: [],
+          past: [],
+          transfer: [],
+        }
 
-        ticketsByEventId[event.id] = eventAndTicketsObject
-        ticketGroups[bucket].push(eventAndTicketsObject);
-      });
+        tix.forEach((ticket) => {
+          categories[
+            ticket.pending_transfer ? 'transfer' : untransferredCategory
+          ].push(ticket)
+        })
 
-      this.setState({tickets: ticketGroups, ticketsByEventId});
+        Object.keys(categories).forEach((key) => {
+          const tickets = categories[key]
 
+          if (tickets.length) {
+            tabData[key].push({event, tickets})
+          }
+        })
+      })
+
+      // sort past events in reverse order
+      tabData.past = tabData.past.reverse()
+
+      this.setState({tickets: tabData})
     } catch (error) {
       apiErrorAlert(error, 'Loading tickets failed.')
     }
@@ -60,22 +67,33 @@ class TicketsContainer extends Container {
     this.setState({purchasedTicket})
   }
 
-  ticketsForEvent = (eventId) => {
-    return this.state.ticketsByEventId[eventId]
+  ticketsForEvent = (activeTab, eventId) => {
+    return this.state.tickets[activeTab || 'upcoming'].find(
+      ({event: {id}}) => id === eventId
+    )
   }
 
-  redeemTicketInfo = async (ticket_id) => { // eslint-disable-line complexity
+  redeemTicketInfo = async (ticket_id) => {
+    // eslint-disable-line complexity
     try {
-
       const response = await server.tickets.redeem.read({ticket_id})
 
-      return response.data;
+      return response.data
     } catch (error) {
       apiErrorAlert(error, 'Creating QR code failed failed.')
     }
   }
+
+  transferTickets = async (emailOrPhone, ticketIds) => {
+    const payload = {
+      email: '', // There's a bug in the API lib that's asking for this, but the server uses email_or_phone
+      email_or_phone: emailOrPhone,
+      ticket_ids: ticketIds,
+      validity_period_in_seconds: 60 * 60 * 24, // TODO make this config based
+    }
+
+    await server.tickets.transfer.send(payload)
+  }
 }
 
-export {
-  TicketsContainer,
-}
+export {TicketsContainer}
