@@ -58,9 +58,9 @@ npx expo publish --release-channel $ENVIRONMENT --non-interactive
 
 echo "Starting standalone android build on $ENVIRONMENT channel"
 if [[ -z "${TRAVIS}" ]]; then
-  travis_wait 60 npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
-else
   npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
+else
+  travis_wait 60 npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
 fi
 
 # Download the built android binary
@@ -73,9 +73,9 @@ fastlane supply --track $TRACK --json_key './.creds/google-deploy-key.json' --pa
 
 echo "Starting standalone iOS build on $ENVIRONMENT channel"
 if [[ -z "${TRAVIS}" ]]; then
-  travis_wait 30 npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
-else
   npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
+else
+  travis_wait 30 npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
 fi
 
 # Download the artifact to current directory as `app.ipa`
