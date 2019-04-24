@@ -36,6 +36,15 @@ if [ -z "$SENTRY_AUTH_TOKEN" ] || [ -z "$EXPO_USERNAME" ] || [ -z "$EXPO_PASSWOR
   exit 1
 fi
 
+function write_visual_bells() {
+  while true; do
+    echo -en "\a"
+    sleep 10
+  done
+}
+
+write_visual_bells&
+
 # Environment should be "production" or "staging"
 ENVIRONMENT=$1
 
@@ -57,11 +66,7 @@ echo "Publishing release to $ENVIRONMENT channel"
 npx expo publish --release-channel $ENVIRONMENT --non-interactive
 
 echo "Starting standalone android build on $ENVIRONMENT channel"
-if [[ -z "${TRAVIS}" ]]; then
-  npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
-else
-  travis_wait 60 npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
-fi
+npx expo build:android --release-channel $ENVIRONMENT --non-interactive --no-publish
 
 # Download the built android binary
 echo "Downloading android apk"
@@ -72,11 +77,7 @@ echo "Publishing apk to $TRACK track in Google Play Store"
 fastlane supply --track $TRACK --json_key './.creds/google-deploy-key.json' --package_name "com.bigneon.mobile" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
 
 echo "Starting standalone iOS build on $ENVIRONMENT channel"
-if [[ -z "${TRAVIS}" ]]; then
-  npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
-else
-  travis_wait 30 npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
-fi
+npx expo build:ios --release-channel $ENVIRONMENT --non-interactive --no-publish
 
 # Download the artifact to current directory as `app.ipa`
 echo "Downloading iOS ipa"
@@ -87,3 +88,4 @@ echo "Publishing to iTunes Connect"
 fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata --username $DELIVER_USERNAME
 
 echo "$ENVIRONMENT deploy completed"
+exit 0
