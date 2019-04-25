@@ -89,7 +89,7 @@ class EventsContainer extends Container {
     const {total, page, limit} = this.state
 
     if (total && total > 0) {
-      return (total - ((page + 1) * limit)) > 0
+      return total - (page + 1) * limit > 0
     }
 
     return false
@@ -141,12 +141,17 @@ class EventsContainer extends Container {
     Promise.all(eventImagePrefetch)
   }
 
-   _fetchEvents = async () => {
+  _fetchEvents = async () => {
     const {limit, page, query} = this.state
 
     if (query && query.length >= 3) {
       return Promise.all([
-        server.events.index({...defaultEventSort, limit: 5, status: 'Published', query}),
+        server.events.index({
+          ...defaultEventSort,
+          limit: 5,
+          status: 'Published',
+          query,
+        }),
         this.fetchLocations(),
       ])
     }
@@ -191,7 +196,7 @@ class EventsContainer extends Container {
         page: data.paging.page,
       })
     } catch (error) {
-      setTimeout( () => {
+      setTimeout(() => {
         apiErrorAlert(error)
       }, 600)
     } finally {
@@ -200,14 +205,14 @@ class EventsContainer extends Container {
   }
 
   refreshEvents = async (onFinish) => {
-    await this.setState({ page: 0 })
+    await this.setState({page: 0})
     await this.getEvents(true)
     onFinish()
   }
 
   fetchNextPage = async () => {
-    await this.setState(state => {
-      return { page: state.page + 1 };
+    await this.setState((state) => {
+      return {page: state.page + 1}
     })
 
     this.getEvents()

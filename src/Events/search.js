@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import {
   Text,
   View,
@@ -10,13 +9,12 @@ import {
 } from 'react-native'
 import SharedStyles from '../styles/shared/sharedStyles'
 import FormStyles from '../styles/shared/formStyles'
+import {uniqBy} from 'lodash'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
 
-
 function SuggestedSearches({searchText, events, navigate}) {
-
   if (searchText === '' || events.length === 0) {
     return null
   }
@@ -63,7 +61,10 @@ function SuggestedSearches({searchText, events, navigate}) {
     return 0
   }
 
-  const names = events.reduce(reducer, []).sort(sorter)
+  const names = uniqBy(
+    uniqBy(events.reduce(reducer, []).sort(sorter), (item) => item.id),
+    (item) => item.name
+  )
 
   return (
     <View>
@@ -97,20 +98,27 @@ export default class EventSearch extends Component {
   }
 
   searchEvents = () => {
-    if (this.props.store.state.query.length >= 3) {
+    const query = this.props.store.state.query
+
+    if (query.length >= 3 || query.length === 0) {
       this.props.store.getEvents(true)
     }
   }
 
-  updateSearchText = async (text) => {
+  updateSearchText = async(text) => {
     await this.props.store.setQuery(text)
-    console.log("STATE", this.props.store.state);
-
     this.searchEvents()
+  }
+
+  shouldShowResults() {
+    const {query} = this.props.store.state
+
+    return query.length >= 3
   }
 
   render() {
     const {query} = this.props.store.state
+    const showResults = this.shouldShowResults()
 
     return (
       <View>
@@ -128,7 +136,7 @@ export default class EventSearch extends Component {
           />
         </View>
 
-        {query !== '' && (
+        {showResults && (
           <SuggestedSearches
             searchText={query}
             events={this.events}
@@ -136,7 +144,7 @@ export default class EventSearch extends Component {
           />
         )}
 
-        {query !== '' && (
+        {showResults && (
           <Text style={styles.sectionHeader}>
             {`Search Results for "${query}"`}
           </Text>
