@@ -1,5 +1,5 @@
 import React from 'react'
-import App from './App'
+import App from '../App'
 
 import ShallowRenderer from 'react-test-renderer/shallow'
 const renderer = new ShallowRenderer()

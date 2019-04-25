@@ -48,6 +48,8 @@ React Navigation (https://reactnavigation.org/)
 
 ### Deploying
 
+For deployment details, look in `bin/deploy`. This script is used to deploy builds to the appropriate stores.
+
 There are staging and production deploy scripts, based on using Expo's release channels. These will build the apps with the appropriate staging or production config settings.
 
 You will need Apple and Google developer accounts.

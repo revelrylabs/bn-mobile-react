@@ -7,6 +7,7 @@ import {
   Image,
   TouchableHighlight,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native'
 import {WebBrowser} from 'expo'
 import {
@@ -166,8 +167,6 @@ export default class EventShow extends Component {
       </View>
     )
   }
-
-
 
   onTicketSelection = async (ticketType) => {
     try {
@@ -344,7 +343,7 @@ export default class EventShow extends Component {
       this.setState({showLoadingModal: false, success: false})
 
     if (cart.totalCents && !cart.payment) {
-      alert('Please enter your payment details')
+      Alert.alert('Error', 'Please enter your payment details')
       return false
     }
 
