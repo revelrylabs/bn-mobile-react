@@ -42,6 +42,8 @@ class EventsContainer extends Container {
       page: 0,
       limit: 10,
       loading: false,
+      query: '',
+      suggestedNames: [],
       events: [],
       eventsById: {},
       ticketTypesById: {},
@@ -93,6 +95,10 @@ class EventsContainer extends Container {
     return false
   }
 
+  setQuery = async (query) => {
+    this.setState({query})
+  }
+
   locationsPromise = null
   locationsLastFetched = null
 
@@ -135,16 +141,29 @@ class EventsContainer extends Container {
     Promise.all(eventImagePrefetch)
   }
 
+   _fetchEvents = async () => {
+    const {limit, page, query} = this.state
+
+    if (query && query.length >= 3) {
+      return Promise.all([
+        server.events.index({...defaultEventSort, limit: 5, status: 'Published', query}),
+        this.fetchLocations(),
+      ])
+    }
+
+    return Promise.all([
+      server.events.index({...defaultEventSort, limit, page}),
+      this.fetchLocations(),
+    ])
+  }
+
   getEvents = async (replaceEvents = false) => {
-    const {limit, page, events, eventsById} = this.state
+    const {events, eventsById} = this.state
 
     try {
       this.setState({loading: true})
 
-      const [{data}, ..._rest] = await Promise.all([
-        server.events.index({...defaultEventSort, limit, page}),
-        this.fetchLocations(),
-      ])
+      const [{data}, ..._rest] = await this._fetchEvents()
       const imagePrefetch = []
       const eventsByIdObj = replaceEvents ? {} : eventsById
 

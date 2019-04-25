@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {
-  ScrollView,
   Text,
   View,
   Image,
-  TextInput,
   TouchableHighlight,
   Animated,
   Platform,
@@ -23,6 +21,7 @@ import SlideShowStyles from '../styles/shared/slideshowStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import EventItemView from './event_card'
+import EventSearch from './search'
 import {DateTime} from 'luxon'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import emptyState from '../../assets/icon-empty-state.png'
@@ -47,81 +46,6 @@ function EmptyEvents({locationName}) {
           locationName == 'All Locations' ? '' : ` ${locationName}`
         } events and experiences powered by Big Neon launching soon!`}
       </Text>
-    </View>
-  )
-}
-
-function SuggestedSearches({searchText, events, navigate}) {
-  if (searchText === '' || events.length === 0) {
-    return null
-  }
-
-  const reducer = (names, event) => {
-    names.push({eventId: event.id, id: event.id, name: event.name, event})
-    event.artists.forEach(({artist}) => {
-      if (artist.name.toLowerCase().includes(searchText.trim().toLowerCase())) {
-        names.push({
-          eventId: event.id,
-          id: artist.id,
-          name: artist.name,
-          event,
-        })
-      }
-    })
-
-    if (
-      event.venue.name.toLowerCase().includes(searchText.trim().toLowerCase())
-    ) {
-      names.push({
-        eventId: event.id,
-        id: event.venue.id,
-        name: event.venue.name,
-        event,
-      })
-    }
-
-    return names
-  }
-
-  const sorter = (eventA, eventB) => {
-    const nameA = eventA.name.toUpperCase() // ignore upper and lowercase
-    const nameB = eventB.name.toUpperCase() // ignore upper and lowercase
-
-    if (nameA < nameB) {
-      return -1
-    }
-    if (nameA > nameB) {
-      return 1
-    }
-
-    // names must be equal
-    return 0
-  }
-
-  const names = events.reduce(reducer, []).sort(sorter)
-
-  return (
-    <View>
-      <Text style={styles.sectionHeader}>{'Suggested Searches'}</Text>
-      <FlatList
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        data={names.slice(0, 3)}
-        renderItem={({item, separators}) => (
-          <TouchableHighlight
-            style={[styles.rowContainer, styles.paddingVerticalSmall]}
-            onPress={() =>
-              navigate('EventsShow', {eventId: item.eventId, event: item.event})
-            }
-            onShowUnderlay={separators.highlight}
-            onHideUnderlay={separators.unhighlight}
-          >
-            <View>
-              <Text>{item.name}</Text>
-            </View>
-          </TouchableHighlight>
-        )}
-      />
     </View>
   )
 }
@@ -266,12 +190,6 @@ export default class EventsIndex extends Component {
     this.setState({mainFavorite})
   }
 
-  updateSearchText = (text) => {
-    this.setState({
-      searchText: text,
-    })
-  }
-
   get currentLocationDisplayName() {
     const selectedLoc = this.locations.find(
       (loc) => loc.id === this.state.selectedLocationId
@@ -354,10 +272,6 @@ export default class EventsIndex extends Component {
     return null
   }
 
-  searchEvents = (query) => {
-    this.props.searchEvents(query)
-  }
-
   get headerElement() {
     const scrollY = Animated.add(
       this.state.scrollY,
@@ -404,33 +318,7 @@ export default class EventsIndex extends Component {
           </ModalDropdown>
         </View>
 
-        <View style={formStyles.searchContainer}>
-          <Image
-            style={formStyles.searchIcon}
-            source={require('../../assets/icon-search.png')}
-          />
-          <TextInput
-            style={formStyles.searchInput}
-            placeholder="Search artists, shows, venues..."
-            searchIcon={{size: 24}}
-            underlineColorAndroid="transparent"
-            onChangeText={this.updateSearchText}
-          />
-        </View>
-
-        {this.state.searchText !== '' && (
-          <SuggestedSearches
-            searchText={this.state.searchText}
-            events={this.events}
-            navigate={navigate}
-          />
-        )}
-
-        {this.state.searchText !== '' && (
-          <Text style={styles.sectionHeader}>
-            {`Search Results for "${this.state.searchText}"`}
-          </Text>
-        )}
+        <EventSearch navigate={navigate} store={store} />
       </View>
     )
   }
