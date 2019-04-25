@@ -88,7 +88,7 @@ export default class GetTickets extends Component {
 
   onPromoRemove = async (eventId) => {
     try {
-      this.setState({applyingPromo: true})
+      this.setState({applyingPromo: true, promoCode: ''})
       await this.props.store.getEvent(eventId)
     } catch (error) {
       setTimeout(() => {
