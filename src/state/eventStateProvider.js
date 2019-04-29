@@ -148,7 +148,7 @@ class EventsContainer extends Container {
       return Promise.all([
         server.events.index({
           ...defaultEventSort,
-          limit: 5,
+          limit,
           status: 'Published',
           query,
         }),
