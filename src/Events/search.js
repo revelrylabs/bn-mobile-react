@@ -101,7 +101,7 @@ export default class EventSearch extends Component {
     const query = this.props.store.state.query
 
     if (query.length >= 3 || query.length === 0) {
-      this.props.store.getEvents(true)
+      this.props.store.getEvents({page: 0, query, replaceEvents: true})
     }
   }
 

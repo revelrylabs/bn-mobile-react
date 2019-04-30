@@ -141,36 +141,60 @@ class EventsContainer extends Container {
     Promise.all(eventImagePrefetch)
   }
 
-  _fetchEvents = async () => {
-    const {limit, page, query} = this.state
-
-    if (query && query.length >= 3) {
-      return Promise.all([
-        server.events.index({
-          ...defaultEventSort,
-          limit,
-          status: 'Published',
-          query,
-        }),
-        this.fetchLocations(),
-      ])
-    }
-
-    return Promise.all([
-      server.events.index({...defaultEventSort, limit, page}),
-      this.fetchLocations(),
-    ])
+  _fetchEvents = async (options) => {
+    return Promise.all([server.events.index(options), this.fetchLocations()])
   }
 
-  getEvents = async (replaceEvents = false) => {
+  buildFetchEventsOptions(incomingOptions) {
+    const {limit} = this.state
+
+    const options = {...defaultEventSort, limit, page: incomingOptions.page}
+
+    if (incomingOptions.query && incomingOptions.query.length >= 3) {
+      options.query = incomingOptions.query
+      options.status = 'Published'
+    }
+
+    if (incomingOptions.selectedLocationId) {
+      options.region_id = incomingOptions.selectedLocationId
+    }
+
+    return options
+  }
+
+  getEvents = async (options = {}) => {
     const {events, eventsById} = this.state
+
+    let query = this.state.query
+
+    if ('query' in options) {
+      query = options.query
+    }
+
+    let selectedLocationId = this.state.selectedLocationId
+
+    if ('selectedLocationId' in options) {
+      selectedLocationId = options.selectedLocationId
+    }
+
+    let page = this.state.page
+
+    if ('page' in options) {
+      page = options.page
+    }
+
+    const queryOptions = this.buildFetchEventsOptions({
+      query,
+      selectedLocationId,
+      page,
+    })
 
     try {
       this.setState({loading: true})
 
-      const [{data}, ..._rest] = await this._fetchEvents()
+      const [{data}, ..._rest] = await this._fetchEvents(queryOptions)
       const imagePrefetch = []
-      const eventsByIdObj = replaceEvents ? {} : eventsById
+      const eventsByIdObj = options.replaceEvents ? {} : eventsById
 
       // process event images
       data.data.forEach((event) => {
@@ -188,12 +212,14 @@ class EventsContainer extends Container {
 
       this.setState({
         lastUpdate: DateTime.local(),
-        events: replaceEvents ? data.data : events.concat(data.data),
+        events: options.replaceEvents ? data.data : events.concat(data.data),
         eventsById: eventsByIdObj,
         paging: data.paging,
         total: data.paging.total,
         limit: data.paging.limit,
         page: data.paging.page,
+        selectedLocationId,
+        query,
       })
     } catch (error) {
       setTimeout(() => {
@@ -206,7 +232,7 @@ class EventsContainer extends Container {
 
   refreshEvents = async (onFinish) => {
     await this.setState({page: 0})
-    await this.getEvents(true)
+    await this.getEvents({replaceEvents: true})
     onFinish()
   }
 
