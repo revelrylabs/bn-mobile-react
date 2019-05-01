@@ -137,17 +137,17 @@ export default class EventSearch extends Component {
         </View>
 
         {showResults && (
+          <React.Fragment>
           <SuggestedSearches
             searchText={query}
             events={this.events}
             navigate={this.props.navigate}
           />
-        )}
-
-        {showResults && (
-          <Text style={styles.sectionHeader}>
+                    <Text style={styles.sectionHeader}>
             {`Search Results for "${query}"`}
           </Text>
+          </React.Fragment>
+
         )}
       </View>
     )
