@@ -51,8 +51,8 @@ export async function retrieveTokens() {
     'refreshToken',
   ])
 
-  user = userToken[1] ? userToken[1] : false
-  refresh = refreshToken[1] ? refreshToken[1] : false
+  const user = userToken[1] ? userToken[1] : false
+  const refresh = refreshToken[1] ? refreshToken[1] : false
 
   return {userToken: user, refreshToken: refresh}
 }

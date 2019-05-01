@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {
-  ScrollView,
   Text,
   View,
   Image,
-  TextInput,
   TouchableHighlight,
   Animated,
   Platform,
@@ -23,6 +21,7 @@ import SlideShowStyles from '../styles/shared/slideshowStyles'
 import NavigationStyles from '../styles/shared/navigationStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import EventItemView from './event_card'
+import EventSearch from './search'
 import {DateTime} from 'luxon'
 import TicketStyles from '../styles/tickets/ticketStyles'
 import emptyState from '../../assets/icon-empty-state.png'
@@ -47,81 +46,6 @@ function EmptyEvents({locationName}) {
           locationName == 'All Locations' ? '' : ` ${locationName}`
         } events and experiences powered by Big Neon launching soon!`}
       </Text>
-    </View>
-  )
-}
-
-function SuggestedSearches({searchText, events, navigate}) {
-  if (searchText === '' || events.length === 0) {
-    return null
-  }
-
-  const reducer = (names, event) => {
-    names.push({eventId: event.id, id: event.id, name: event.name, event})
-    event.artists.forEach(({artist}) => {
-      if (artist.name.toLowerCase().includes(searchText.trim().toLowerCase())) {
-        names.push({
-          eventId: event.id,
-          id: artist.id,
-          name: artist.name,
-          event,
-        })
-      }
-    })
-
-    if (
-      event.venue.name.toLowerCase().includes(searchText.trim().toLowerCase())
-    ) {
-      names.push({
-        eventId: event.id,
-        id: event.venue.id,
-        name: event.venue.name,
-        event,
-      })
-    }
-
-    return names
-  }
-
-  const sorter = (eventA, eventB) => {
-    const nameA = eventA.name.toUpperCase() // ignore upper and lowercase
-    const nameB = eventB.name.toUpperCase() // ignore upper and lowercase
-
-    if (nameA < nameB) {
-      return -1
-    }
-    if (nameA > nameB) {
-      return 1
-    }
-
-    // names must be equal
-    return 0
-  }
-
-  const names = events.reduce(reducer, []).sort(sorter)
-
-  return (
-    <View>
-      <Text style={styles.sectionHeader}>{'Suggested Searches'}</Text>
-      <FlatList
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        data={names.slice(0, 3)}
-        renderItem={({item, separators}) => (
-          <TouchableHighlight
-            style={[styles.rowContainer, styles.paddingVerticalSmall]}
-            onPress={() =>
-              navigate('EventsShow', {eventId: item.eventId, event: item.event})
-            }
-            onShowUnderlay={separators.highlight}
-            onHideUnderlay={separators.unhighlight}
-          >
-            <View>
-              <Text>{item.name}</Text>
-            </View>
-          </TouchableHighlight>
-        )}
-      />
     </View>
   )
 }
@@ -204,72 +128,20 @@ export default class EventsIndex extends Component {
     return !lastUpdate || lastUpdate.plus({minutes: 15}) < DateTime.local()
   }
 
-  filterEventsByLocation(events, selectedLocationId) {
-    if (selectedLocationId) {
-      return events.filter(
-        ({venue: {region_id}}) => region_id === selectedLocationId
-      )
-    }
-
-    return events
-  }
-
-  filterEventsBySearchText(events, searchText) {
-    if (searchText !== '') {
-      return events.filter(
-        ({name, artists, venue}) =>
-          name.toLowerCase().includes(searchText.trim().toLowerCase()) ||
-          this.searchArtistsForEvent(artists, searchText) ||
-          this.searchVenueForEvent(venue, searchText)
-      )
-    }
-
-    return events
-  }
-
-  searchArtistsForEvent(artists, searchText) {
-    if (!artists) {
-      return false
-    }
-
-    return artists.some(({artist: {name}}) =>
-      name.toLowerCase().includes(searchText.trim().toLowerCase())
-    )
-  }
-
-  searchVenueForEvent(venue, searchText) {
-    if (!venue || !venue.name) {
-      return false
-    }
-
-    return venue.name.toLowerCase().includes(searchText.trim().toLowerCase())
-  }
-
   get events() {
     const {
       screenProps: {
         store: {
-          state: {events, selectedLocationId},
+          state: {events},
         },
       },
     } = this.props
 
-    const eventsToDisplay = this.filterEventsByLocation(
-      events,
-      selectedLocationId
-    )
-
-    return this.filterEventsBySearchText(eventsToDisplay, this.state.searchText)
+    return events
   }
 
   setFavorite = (mainFavorite) => {
     this.setState({mainFavorite})
-  }
-
-  updateSearchText = (text) => {
-    this.setState({
-      searchText: text,
-    })
   }
 
   get currentLocationDisplayName() {
@@ -314,9 +186,7 @@ export default class EventsIndex extends Component {
   _handleRefresh = () => {
     const {
       screenProps: {
-        store: {
-          refreshEvents,
-        },
+        store: {refreshEvents},
       },
     } = this.props
 
@@ -327,10 +197,7 @@ export default class EventsIndex extends Component {
   _handleLoadMore = () => {
     const {
       screenProps: {
-        store: {
-          fetchNextPage,
-          hasNextPage,
-        },
+        store: {fetchNextPage, hasNextPage},
       },
     } = this.props
 
@@ -343,19 +210,34 @@ export default class EventsIndex extends Component {
     fetchNextPage()
   }
 
+  onLocationChanged = (event, location) => {
+    const {
+      screenProps: {store},
+    } = this.props
+
+    store.getEvents({
+      page: 0,
+      selectedLocationId: location.id,
+      replaceEvents: true,
+    })
+  }
+
   get loadingMoreEvents() {
-    const {screenProps: {store: {state: {loading}}}} = this.props
+    const {
+      screenProps: {
+        store: {
+          state: {loading},
+        },
+      },
+    } = this.props
     const events = this.events
 
-    if (events.length !== 0 && !this.state.refreshing && loading) { // Dont show the bottom loader when pull to refresh. or on empty page
+    if (events.length !== 0 && !this.state.refreshing && loading) {
+      // Dont show the bottom loader when pull to refresh. or on empty page
       return <Text>Loading...</Text>
     }
 
     return null
-  }
-
-  searchEvents = (query) => {
-    this.props.searchEvents(query)
   }
 
   get headerElement() {
@@ -385,7 +267,7 @@ export default class EventsIndex extends Component {
             ref={(ref) => {
               this._dropdown = ref
             }}
-            onSelect={store.changeLocation}
+            onSelect={this.onLocationChanged}
             options={this.locations}
             renderRow={this.locRowOption}
             renderSeparator={() => <View />}
@@ -404,56 +286,38 @@ export default class EventsIndex extends Component {
           </ModalDropdown>
         </View>
 
-        <View style={formStyles.searchContainer}>
-          <Image
-            style={formStyles.searchIcon}
-            source={require('../../assets/icon-search.png')}
-          />
-          <TextInput
-            style={formStyles.searchInput}
-            placeholder="Search artists, shows, venues..."
-            searchIcon={{size: 24}}
-            underlineColorAndroid="transparent"
-            onChangeText={this.updateSearchText}
-          />
-        </View>
-
-        {this.state.searchText !== '' && (
-          <SuggestedSearches
-            searchText={this.state.searchText}
-            events={this.events}
-            navigate={navigate}
-          />
-        )}
-
-        {this.state.searchText !== '' && (
-          <Text style={styles.sectionHeader}>
-            {`Search Results for "${this.state.searchText}"`}
-          </Text>
-        )}
+        <EventSearch navigate={navigate} store={store} />
       </View>
     )
   }
 
   get footerElement() {
-      const {screenProps: {store: {state: {loading}}}} = this.props
+    const {
+      screenProps: {
+        store: {
+          state: {loading},
+        },
+      },
+    } = this.props
 
-      if (!loading) return null;
+    if (!loading) {
+      return null
+    }
 
-      return (
-        <View
-          style={{
-            position: 'relative',
-            width: styles.fullWidth,
-            height: 160,
-            paddingVertical: 20,
-            marginTop: 10,
-            marginBottom: 10,
-          }}
-        >
-          <ActivityIndicator animating size="large" />
-        </View>
-      );
+    return (
+      <View
+        style={{
+          position: 'relative',
+          width: styles.fullWidth,
+          height: 160,
+          paddingVertical: 20,
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    )
   }
 
   /* eslint-disable-next-line complexity */
@@ -512,13 +376,17 @@ export default class EventsIndex extends Component {
             y: -HEADER_MAX_HEIGHT,
           }}
           data={events}
-          keyExtractor={event => event.id}
+          keyExtractor={(event) => event.id}
           ListHeaderComponent={this.headerElement}
           ListFooterComponent={this.footerElement}
-          ListEmptyComponent={<EmptyEvents locationName={this.currentLocationDisplayName} />}
-          renderItem={({ item }) => (
+          ListEmptyComponent={
+            <EmptyEvents locationName={this.currentLocationDisplayName} />
+          }
+          renderItem={({item}) => (
             <EventItemView
-              onPress={() => navigate('EventsShow', {eventId: item.id, event: item})}
+              onPress={() =>
+                navigate('EventsShow', {eventId: item.id, event: item})
+              }
               event={item}
               onInterested={toggleInterest}
             />
@@ -526,7 +394,6 @@ export default class EventsIndex extends Component {
           onEndReached={this._handleLoadMore}
           onEndReachedThreshold={0.5}
         />
-
 
         {false && (
           <Text
