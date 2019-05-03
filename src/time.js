@@ -15,11 +15,13 @@ export function eventDateTimes({door_time, event_start, event_end}) {
 }
 
 export function eventIsInPast(event) {
+  const localized_times = eventDateTimes(event.localized_times)
+
   // if we have an event end, use that
   // otherwise add EVENT_LENGTH_IN_HOURS to start time
-  const end_time = event.event_end ?
-    event.event_end :
-    DateTime.fromISO(event.event_start)
+  const end_time = localized_times.event_end ?
+    localized_times.event_end :
+    DateTime.fromISO(localized_times.event_start)
       .plus({hours: EVENT_LENGTH_IN_HOURS})
       .toISO()
 
