@@ -66,7 +66,7 @@ function GuestRowContent({guest}) {
         </View>
       </View>
       <Text style={doormanStyles.bodyText}>
-        {price(guest.price_in_cents)} | {guest.ticket_type}
+        {price(guest.price_in_cents)} | {guest.ticket_type} | {guest.id.slice(guest.id.length - 8)}
       </Text>
     </View>
   )
