@@ -3,10 +3,10 @@ import {PropTypes} from 'prop-types'
 import {
   Text,
   View,
-  Image,
   Animated,
   TouchableHighlight,
   FlatList,
+  Image,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
@@ -17,6 +17,7 @@ import imageOverlay from '../../assets/event-img-overlay.png'
 import {some} from 'lodash'
 import {NavigationEvents} from 'react-navigation'
 import {optimizeCloudinaryImage} from '../cloudinary'
+import {Image as CachedImage} from 'react-native-expo-image-cache'
 
 const styles = SharedStyles.createStyles()
 const slideshowStyles = SlideShowStyles.createStyles()
@@ -73,9 +74,9 @@ const Ticket = ({navigate, ticket, activeTab, setPurchasedTicket}) => {
         }}
       >
         <View style={ticketStyles.ticketContainer}>
-          <Image
+          <CachedImage
             style={ticketStyles.eventImage}
-            source={{uri: optimizeCloudinaryImage(event.promo_image_url)}}
+            uri={optimizeCloudinaryImage(event.promo_image_url)}
           />
           <Image style={ticketStyles.eventImageOverlay} source={imageOverlay} />
           <View style={ticketStyles.detailsContainer}>
