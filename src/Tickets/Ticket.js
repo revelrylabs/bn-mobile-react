@@ -5,8 +5,8 @@ import {
   View,
   Linking,
   Platform,
-  Image,
   TouchableHighlight,
+  Image,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import QRCode from 'react-native-qrcode'
@@ -19,6 +19,8 @@ import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 const styles = SharedStyles.createStyles()
 const ticketStyles = TicketStyles.createStyles()
 const ticketWalletStyles = TicketWalletStyles.createStyles()
+
+import {Image as CachedImage} from 'react-native-expo-image-cache'
 
 /* eslint-disable camelcase */
 
@@ -228,9 +230,9 @@ export default class Ticket extends Component {
       <View>
         <View style={ticketStyles.ticketContainer}>
           <View style={ticketWalletStyles.eventImageWrapper}>
-            <Image
+            <CachedImage
               style={ticketWalletStyles.eventImage}
-              source={{uri: ticket.image}}
+              uri={ticket.image}
             />
             <Image
               style={ticketStyles.eventImageOverlay}

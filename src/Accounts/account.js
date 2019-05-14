@@ -4,7 +4,6 @@ import {
   View,
   Image,
   TextInput,
-  ScrollView,
   TouchableHighlight,
   Alert,
 } from 'react-native'
@@ -14,6 +13,7 @@ import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import {autotrim} from '../string'
 import {accessCameraRoll, selectCameraRollImage} from '../image'
 import {uploadImageToCloudinary} from '../cloudinary'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const styles = SharedStyles.createStyles()
 const accountStyles = AccountStyles.createStyles()
@@ -96,7 +96,7 @@ export default class AccountDetails extends Component {
     } = this
 
     return (
-      <ScrollView
+      <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         style={styles.containerDark}
       >
@@ -222,7 +222,7 @@ export default class AccountDetails extends Component {
             </TouchableHighlight>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }

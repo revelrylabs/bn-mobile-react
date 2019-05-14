@@ -42,6 +42,8 @@ class EventsContainer extends Container {
       page: 0,
       limit: 10,
       loading: false,
+      query: '',
+      suggestedNames: [],
       events: [],
       eventsById: {},
       ticketTypesById: {},
@@ -87,10 +89,14 @@ class EventsContainer extends Container {
     const {total, page, limit} = this.state
 
     if (total && total > 0) {
-      return (total - ((page + 1) * limit)) > 0
+      return total - (page + 1) * limit > 0
     }
 
     return false
+  }
+
+  setQuery = async (query) => {
+    this.setState({query})
   }
 
   locationsPromise = null
@@ -135,18 +141,60 @@ class EventsContainer extends Container {
     Promise.all(eventImagePrefetch)
   }
 
-  getEvents = async (replaceEvents = false) => {
-    const {limit, page, events, eventsById} = this.state
+  _fetchEvents = async (options) => {
+    return Promise.all([server.events.index(options), this.fetchLocations()])
+  }
+
+  buildFetchEventsOptions(incomingOptions) {
+    const {limit} = this.state
+
+    const options = {...defaultEventSort, limit, page: incomingOptions.page}
+
+    if (incomingOptions.query && incomingOptions.query.length >= 3) {
+      options.query = incomingOptions.query
+      options.status = 'Published'
+    }
+
+    if (incomingOptions.selectedLocationId) {
+      options.region_id = incomingOptions.selectedLocationId
+    }
+
+    return options
+  }
+
+  getEvents = async (options = {}) => {
+    const {events, eventsById} = this.state
+
+    let query = this.state.query
+
+    if ('query' in options) {
+      query = options.query
+    }
+
+    let selectedLocationId = this.state.selectedLocationId
+
+    if ('selectedLocationId' in options) {
+      selectedLocationId = options.selectedLocationId
+    }
+
+    let page = this.state.page
+
+    if ('page' in options) {
+      page = options.page
+    }
+
+    const queryOptions = this.buildFetchEventsOptions({
+      query,
+      selectedLocationId,
+      page,
+    })
 
     try {
       this.setState({loading: true})
 
-      const [{data}, ..._rest] = await Promise.all([
-        server.events.index({...defaultEventSort, limit, page}),
-        this.fetchLocations(),
-      ])
+      const [{data}, ..._rest] = await this._fetchEvents(queryOptions)
       const imagePrefetch = []
-      const eventsByIdObj = replaceEvents ? {} : eventsById
+      const eventsByIdObj = options.replaceEvents ? {} : eventsById
 
       // process event images
       data.data.forEach((event) => {
@@ -164,15 +212,17 @@ class EventsContainer extends Container {
 
       this.setState({
         lastUpdate: DateTime.local(),
-        events: replaceEvents ? data.data : events.concat(data.data),
+        events: options.replaceEvents ? data.data : events.concat(data.data),
         eventsById: eventsByIdObj,
         paging: data.paging,
         total: data.paging.total,
         limit: data.paging.limit,
         page: data.paging.page,
+        selectedLocationId,
+        query,
       })
     } catch (error) {
-      setTimeout( () => {
+      setTimeout(() => {
         apiErrorAlert(error)
       }, 600)
     } finally {
@@ -181,14 +231,14 @@ class EventsContainer extends Container {
   }
 
   refreshEvents = async (onFinish) => {
-    await this.setState({ page: 0 })
-    await this.getEvents(true)
+    await this.setState({page: 0})
+    await this.getEvents({replaceEvents: true})
     onFinish()
   }
 
   fetchNextPage = async () => {
-    await this.setState(state => {
-      return { page: state.page + 1 };
+    await this.setState((state) => {
+      return {page: state.page + 1}
     })
 
     this.getEvents()
