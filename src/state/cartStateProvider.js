@@ -92,7 +92,9 @@ class CartContainer extends Container {
   }
 
   get fees() {
-    return this.items.filter((item) => !itemIsTicket(item) && !itemIsDiscount(item))
+    return this.items.filter(
+      (item) => !itemIsTicket(item) && !itemIsDiscount(item)
+    )
   }
 
   get discounts() {
@@ -104,9 +106,15 @@ class CartContainer extends Container {
   }
 
   get maxAdditionalQuantity() {
-    return this.data.limited_tickets_remaining.find(
+    const item = this.data.limited_tickets_remaining.find(
       ({ticket_type_id: id}) => id === this.ticketTypeId
-    ).tickets_remaining
+    )
+
+    if (item) {
+      return item.tickets_remaining
+    }
+
+    return 0
   }
 
   get maxCommittableQuantity() {
@@ -135,7 +143,7 @@ class CartContainer extends Container {
   }
 
   get discountCents() {
-    return sumUnitPrices(this.discounts);
+    return sumUnitPrices(this.discounts)
   }
 
   get totalCents() {
@@ -187,6 +195,7 @@ class CartContainer extends Container {
     try {
       const response = await server.cart.replace(this.replaceParams)
       // set these first so we can calculate actual quantity
+
       await this.setState({response, isReady: true})
     } catch (error) {
       apiErrorAlert(error)
