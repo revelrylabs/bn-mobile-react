@@ -3,7 +3,11 @@
     "sdkVersion": "31.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
+<<<<<<< HEAD
     "version": "1.0.104",
+=======
+    "version": "1.0.103",
+>>>>>>> 0d064fbc2627687df579a60c5569fb0cfe99258e
     "slug": "big-neon-mobile",
     "orientation": "portrait",
     "facebookScheme": "fb1737006886375028",
