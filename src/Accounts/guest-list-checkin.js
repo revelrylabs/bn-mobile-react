@@ -11,6 +11,7 @@ import {
   Dimensions,
   Animated,
   Alert,
+  Keyboard,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {price, username, usernameLastFirst} from '../string'
@@ -165,6 +166,7 @@ class GuestList extends Component {
     return (
       <SwipeListView
         {...rest}
+        onScroll={() => Keyboard.dismiss()}
         useFlatList
         data={guests}
         keyExtractor={({id}) => id}
