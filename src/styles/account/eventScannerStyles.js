@@ -115,6 +115,11 @@ const EventScannerStyles = {
     fontFamily: globalFontSemiBold,
     fontSize: globalFontSizeJumbo,
   },
+  messageFooter: {
+    color: white,
+    fontFamily: globalFontSemiBold,
+    fontSize: globalFontSizeSmall,
+  },
   messageIconError: {
     color: errorColor,
     fontSize: statusMessageIconFontSize,

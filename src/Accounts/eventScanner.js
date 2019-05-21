@@ -48,7 +48,14 @@ function getStatusMessageConfig(error) {
     const text = error.response.data.error
 
     if (text === 'Ticket has already been redeemed.') {
-      return SCAN_ALERT_CONFIG.alreadyRedeemed
+      console.log(error.response)
+
+      return {
+        text: 'Already redeemed.',
+        footer: 'Redeemed by ya boy 5 minutes ago',
+        icon: 'close-o',
+        style: eventScannerStyles.messageIconCancel,
+      }
     }
 
     return {...SCAN_ALERT_CONFIG.error, text}
@@ -192,11 +199,14 @@ function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
 }
 
 // Displays error and success
-function StatusMessage({text, icon, style}) {
+function StatusMessage({text, icon, style, footer}) {
   return (
     <View style={eventScannerStyles.messageContainer}>
       <EvilIcons style={style} name={icon} />
       <Text style={eventScannerStyles.messageText}>{text}</Text>
+
+      {footer ? <Text style={eventScannerStyles.messageFooter}>{footer}</Text> : null}
+ 
     </View>
   )
 }
