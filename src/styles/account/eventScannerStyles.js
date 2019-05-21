@@ -114,11 +114,12 @@ const EventScannerStyles = {
     color: white,
     fontFamily: globalFontSemiBold,
     fontSize: globalFontSizeJumbo,
+    paddingBottom: globalPaddingLarge,
   },
   messageFooter: {
     color: white,
-    fontFamily: globalFontSemiBold,
     fontSize: globalFontSizeSmall,
+    paddingBottom: globalPaddingSmall,
   },
   messageIconError: {
     color: errorColor,

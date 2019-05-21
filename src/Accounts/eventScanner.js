@@ -53,8 +53,8 @@ function getStatusMessageConfig(error) {
 
       return {
         text: 'Already redeemed.',
-        footer: `Redeemed by ${redeemedBy } 
-        ${DateTime.fromISO(redeemedAt, {zone: 'utc'}).toRelative()}`,
+        doorperson: redeemedBy,
+        time: DateTime.fromISO(redeemedAt, {zone: 'utc'}).toRelative(),
         icon: 'close-o',
         style: eventScannerStyles.messageIconCancel,
       }
@@ -201,18 +201,24 @@ function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
 }
 
 // Displays error and success
-function StatusMessage({text, icon, style, footer}) {
+function StatusMessage({text, icon, style, doorperson, time}) {
+  if (doorperson) {
+    return (
+      <View style={eventScannerStyles.messageContainer}>
+        <EvilIcons style={style} name={icon} />
+        <Text style={eventScannerStyles.messageText}>{text}</Text>
+        <Text style={eventScannerStyles.messageFooter}>Checked-in by <Text style={{ fontWeight: 'bold' }}>{doorperson}</Text></Text>
+        <Text style={eventScannerStyles.messageFooter}> <Text style={{ fontWeight: 'bold' }}>{time}</Text></Text>
+      </View>
+    )
+  }
   return (
     <View style={eventScannerStyles.messageContainer}>
       <EvilIcons style={style} name={icon} />
       <Text style={eventScannerStyles.messageText}>{text}</Text>
-
-      {footer ? <Text style={eventScannerStyles.messageFooter}>{footer}</Text> : null}
- 
     </View>
   )
 }
-
 // Throw this after another absolute fill view to darken/blur it
 // Might only darken and not blur on Android?
 function BlurOverlay() {
