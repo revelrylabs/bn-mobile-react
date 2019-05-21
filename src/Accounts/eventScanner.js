@@ -48,7 +48,16 @@ function getStatusMessageConfig(error) {
     const text = error.response.data.error
 
     if (text === 'Ticket has already been redeemed.') {
-      return SCAN_ALERT_CONFIG.alreadyRedeemed
+      const redeemedBy = error.response.data.redeemed_by
+      const redeemedAt = error.response.data.redeemed_at
+
+      return {
+        text: 'Already redeemed.',
+        doorperson: redeemedBy,
+        time: DateTime.fromISO(redeemedAt, {zone: 'utc'}).toRelative(),
+        icon: 'close-o',
+        style: eventScannerStyles.messageIconCancel,
+      }
     }
 
     return {...SCAN_ALERT_CONFIG.error, text}
@@ -192,7 +201,17 @@ function TicketDetailsPill({user, ticket, redeemedAt, onPress}) {
 }
 
 // Displays error and success
-function StatusMessage({text, icon, style}) {
+function StatusMessage({text, icon, style, doorperson, time}) {
+  if (doorperson) {
+    return (
+      <View style={eventScannerStyles.messageContainer}>
+        <EvilIcons style={style} name={icon} />
+        <Text style={eventScannerStyles.messageText}>{text}</Text>
+        <Text style={eventScannerStyles.messageFooter}>Checked-in by <Text style={{ fontWeight: 'bold' }}>{doorperson}</Text></Text>
+        <Text style={eventScannerStyles.messageFooter}> <Text style={{ fontWeight: 'bold' }}>{time}</Text></Text>
+      </View>
+    )
+  }
   return (
     <View style={eventScannerStyles.messageContainer}>
       <EvilIcons style={style} name={icon} />
@@ -200,7 +219,6 @@ function StatusMessage({text, icon, style}) {
     </View>
   )
 }
-
 // Throw this after another absolute fill view to darken/blur it
 // Might only darken and not blur on Android?
 function BlurOverlay() {
