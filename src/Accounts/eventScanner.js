@@ -48,11 +48,13 @@ function getStatusMessageConfig(error) {
     const text = error.response.data.error
 
     if (text === 'Ticket has already been redeemed.') {
-      console.log(error.response)
+      const redeemedBy = error.response.data.redeemed_by
+      const redeemedAt = error.response.data.redeemed_at
 
       return {
         text: 'Already redeemed.',
-        footer: 'Redeemed by ya boy 5 minutes ago',
+        footer: `Redeemed by ${redeemedBy } 
+        ${DateTime.fromISO(redeemedAt, {zone: 'utc'}).toRelative()}`,
         icon: 'close-o',
         style: eventScannerStyles.messageIconCancel,
       }
