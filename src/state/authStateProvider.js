@@ -59,7 +59,7 @@ class AuthContainer extends Container {
     // eslint-disable-line space-before-function-paren
     // await AsyncStorage.clear(); // This was maybe throwing errors when calling it on an empty asyncstorage.
     await this.setState({isFetching: true})
-    await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove).catch(alert('error with logout'))
+    await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove)
 
     this.setState(this.defaultState, () => {
       navigate('AuthLoading')
