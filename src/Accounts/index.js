@@ -10,6 +10,7 @@ import {
   Button,
   Linking,
 } from 'react-native'
+import {Constants} from 'expo'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SharedStyles from '../styles/shared/sharedStyles'
 import AccountStyles from '../styles/account/accountStyles'
@@ -263,6 +264,15 @@ export default class Account extends Component {
             onPress={() => Linking.openURL('mailto:fansupport@bigneon.com')}
             title="Contact Support"
           />
+          <Text
+            style={[
+              accountStyles.sectionHeader,
+              styles.marginTop,
+              styles.textCenter,
+            ]}
+          >
+            {`Version ${Constants.manifest.version}`}
+          </Text>
         </View>
       </ScrollView>
     )
