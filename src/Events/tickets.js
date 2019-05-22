@@ -6,7 +6,6 @@ import {
   TouchableHighlight,
   Image,
   TextInput,
-  ScrollView,
   Alert,
 } from 'react-native'
 import {MaterialIcons} from '@expo/vector-icons'
@@ -19,6 +18,7 @@ import emptyState from '../../assets/icon-empty-state.png'
 import {server, apiErrorAlert} from '../constants/Server'
 import {LoadingScreen} from '../constants/modals'
 import {autotrim} from '../string'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const styles = SharedStyles.createStyles()
 const formStyles = FormStyles.createStyles()
@@ -198,7 +198,7 @@ export default class GetTickets extends Component {
 
   get hasTicketDisplay() {
     return (
-      <ScrollView>
+      <KeyboardAwareScrollView extraScrollHeight={200}>
         <View>
           <View style={checkoutStyles.headerWrapper}>
             <Text style={checkoutStyles.header}>Select Ticket Type</Text>
@@ -206,7 +206,7 @@ export default class GetTickets extends Component {
           {this.ticketList}
           {this.promoCode}
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 
