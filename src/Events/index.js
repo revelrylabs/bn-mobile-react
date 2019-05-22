@@ -165,20 +165,24 @@ export default class EventsIndex extends Component {
   locRowOption = (rowData, rowID, _highlighted) => {
     if (rowID === '0') {
       return (
-        <View>
-          <View style={modalStyles.rowWrapper}>
-            <Text style={modalStyles.sectionHeader}>{rowData.name}</Text>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+          <View>
+            <View style={modalStyles.rowWrapper}>
+              <Text style={modalStyles.sectionHeader}>{rowData.name}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableHighlight>
       )
     } else {
       return (
-        <View>
-          <View style={modalStyles.rowWrapper}>
-            <Icon style={modalStyles.locationIcon} name="location-on" />
-            <Text style={modalStyles.locationText}>{rowData.name}</Text>
+        <TouchableHighlight underlayColor="rgba(0, 0, 0, 0)">
+          <View>
+            <View style={modalStyles.rowWrapper}>
+              <Icon style={modalStyles.locationIcon} name="location-on" />
+              <Text style={modalStyles.locationText}>{rowData.name}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableHighlight>
       )
     }
   }
