@@ -59,6 +59,22 @@ function DoorEventSummary({event: {name}, dashboard, onPressScan}) {
   )
 }
 
+function GuestList() {
+  // await this.props.screenProps.eventManager.scanForEvent(this.event)
+  this.props.navigation.navigate('GuestList')
+}
+
+
+function GuestListTab({onPress}) {
+  return (
+    <View style={styles.buttonContainer}>
+      <TouchableHighlight style={styles.button} onPress={onPress}>
+        <Text style={styles.buttonText}>Guest List</Text>
+      </TouchableHighlight>
+    </View>
+  )
+}
+
 export default class DoorEvent extends Component {
   state = {
     dashboardResponse: null,
