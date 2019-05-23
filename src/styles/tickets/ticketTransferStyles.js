@@ -3,6 +3,11 @@ import {
   boxShadowColor,
   globalPaddingMedium,
   globalMargin,
+  disabledColor,
+  textColor,
+  globalFontSize,
+  globalFontRegular,
+  globalPadding,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -25,6 +30,22 @@ const TicketTransferStyles = {
   qrCodeSmall: {
     height: 45,
     width: 45,
+  },
+  accountIconSmall: {
+    height: 45,
+    width: 45,
+  },
+  input: {
+    color: textColor,
+    alignContent: 'center',
+    backgroundColor: disabledColor,
+    borderColor: 'transparent',
+    fontFamily: globalFontRegular,
+    fontSize: globalFontSize,
+    height: 50,
+    paddingHorizontal: globalPadding,
+    width: '80%',
+    marginVertical: globalPadding,
   },
 }
 

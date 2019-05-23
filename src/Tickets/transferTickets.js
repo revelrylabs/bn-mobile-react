@@ -24,7 +24,8 @@ import ModalStyles from '../styles/shared/modalStyles'
 import FormStyles from '../styles/shared/formStyles'
 import {autotrim, pluralize} from '../string'
 import qrCodeIcon from '../../assets/qr-code-small.png'
-import {BarCodeScanner, Permissions} from 'expo'
+import accountIcon from '../../assets/icon-account.png'
+import {BarCodeScanner, Permissions, Contacts} from 'expo'
 import BusyButton from '../BusyButton'
 
 const styles = SharedStyles.createStyles()
@@ -90,7 +91,9 @@ export default class TransferTickets extends Component {
       checkboxes: {[props.navigation.state.params.ticketId]: true},
       emailOrPhone: '',
       showQRModal: false,
+      showAddressBook: false,
       hasCameraPermission: null,
+      hasAddressBookPermission: null,
       scannedEmail: null,
     }
   }
@@ -108,6 +111,26 @@ export default class TransferTickets extends Component {
     this.setState({showQRModal: visible})
     if (visible && !this.state.hasCameraPermission) {
       this.cameraPermissions()
+    }
+  }
+
+  toggleAddressBook = async(visible) => {
+    const {data} = await Contacts.getContactsAsync({
+      fields: [Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers],
+    })
+
+    if (data.length > 0) {
+      const contact = data[0]
+
+      console.log(contact)
+    }
+
+    this.setState({showAddressBook: visible})
+    if (visible && !this.state.hasAddressBookPermission) {
+      this.addressBookPermissions()
+    }
+
+    if (this.state.hasAddressBookPermission) {
     }
   }
   get tickets() {
@@ -191,6 +214,12 @@ export default class TransferTickets extends Component {
     this.setState({hasCameraPermission: status === 'granted'})
   }
 
+  addressBookPermissions = async() => {
+    const {status} = await Permissions.askAsync(Permissions.CONTACTS)
+
+    this.setState({hasAddressBookPermission: status === 'granted'})
+  }
+
   transfer = async() => {
     if (this.state.isSubmitting) {
       return
@@ -228,6 +257,7 @@ export default class TransferTickets extends Component {
     const {hasValidRecipient, transferCount} = this
 
     let disabled = true
+
     let buttonText = `Transfer ${pluralize(transferCount, 'Ticket')}`
 
     if (!hasValidRecipient) {
@@ -274,17 +304,27 @@ export default class TransferTickets extends Component {
                   />
                 </TouchableHighlight>
               </View>
-              <TextInput
-                keyboardType="email-address"
-                style={formStyles.input}
-                placeholder="Recipient email or phone or scan"
-                searchIcon={{size: 24}}
-                underlineColorAndroid="transparent"
-                value={this.state.scannedEmail}
-                onChangeText={autotrim((emailOrPhone) =>
-                  this.setState({emailOrPhone})
-                )}
-              />
+              <View style={styles.flexRowSpaceBetween}>
+                <TextInput
+                  keyboardType="email-address"
+                  style={ticketTransferStyles.input}
+                  placeholder="Recipient email or phone or scan"
+                  searchIcon={{size: 24}}
+                  underlineColorAndroid="transparent"
+                  value={this.state.scannedEmail}
+                  onChangeText={autotrim((emailOrPhone) =>
+                    this.setState({emailOrPhone})
+                  )}
+                />
+                <TouchableHighlight
+                  onPress={() => this.toggleAddressBook(true)}
+                >
+                  <Image
+                    style={[ticketTransferStyles.accountIconSmall]}
+                    source={accountIcon}
+                  />
+                </TouchableHighlight>
+              </View>
             </View>
             <ScrollView
               showsVerticalScrollIndicator={false}
