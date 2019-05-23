@@ -46,7 +46,7 @@
     "react-native-qrcode": "^0.2.7",
     "react-native-size-matters": "^0.2.1",
     "react-native-snap-carousel": "^3.8.0",
-    "react-native-swipe-list-view": "^1.5.3",
+    "react-native-swipe-list-view": "^1.5.4",
     "react-native-video": "^3.2.0",
     "react-navigation": "^2.11.2",
     "sentry-expo": "^1.11.2",
