@@ -108,7 +108,7 @@ const ROUTES = {
   GuestList: {
     screen: GuestList,
     navigationOptions: navOptions({
-      back: {route: 'EventScanner', text: 'Scan Tickets'},
+      back: {route: 'DoorEvent', text: 'Event'},
     }),
   },
 }
