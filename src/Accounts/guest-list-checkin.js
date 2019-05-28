@@ -200,7 +200,7 @@ function GuestToCheckIn({guest, onCancel, onCheckIn}) {
             onPress={() => onCancel(guest)}
           >
             <Text style={eventDetailsStyles.buttonRoundedText}>
-              Back to List
+              Back to Guest List
             </Text>
           </TouchableHighlight>
           {shouldAllowCheckIn(guest) ? (
