@@ -6,6 +6,7 @@ import {server, apiErrorAlert} from '../constants/Server'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventManagerStyles from '../styles/account/eventManagerStyles'
 
+
 const styles = SharedStyles.createStyles()
 const eventManagerStyles = EventManagerStyles.createStyles()
 
@@ -41,7 +42,7 @@ function DoorEventDashboard({
   event: {tickets_redeemed: redeemed, sold_held: sold1, sold_unreserved: sold2},
 }) {
   return (
-    <View>
+    <View style={eventManagerStyles.redeemedStats}>
       <HeaderText>
         {redeemed} of {sold1 + sold2} redeemed
       </HeaderText>
@@ -49,15 +50,27 @@ function DoorEventDashboard({
   )
 }
 
-function DoorEventSummary({event: {name}, dashboard, onPressScan}) {
+function DoorEventSummary({event: {name}, dashboard, onPressScan, onPressGuestList}) {
   return (
     <View>
       <HeaderText>{name}</HeaderText>
       <ScanButton onPress={onPressScan} />
+      <GuestList onPress={onPressGuestList} />
       {dashboard && <DoorEventDashboard {...dashboard} />}
     </View>
   )
 }
+
+function GuestList({onPress}) {
+  return (
+    <View style={styles.buttonContainer}>
+      <TouchableHighlight style={styles.button} onPress={onPress}>
+        <Text style={styles.buttonText}>Guest List</Text>
+      </TouchableHighlight>
+    </View>
+  )
+}
+
 
 export default class DoorEvent extends Component {
   state = {
@@ -94,6 +107,11 @@ export default class DoorEvent extends Component {
     this.props.navigation.navigate('EventScanner')
   }
 
+  guestListButton = async() =>{
+    await this.props.screenProps.eventManager.scanForEvent(this.event)
+    this.props.navigation.navigate('GuestList', {name: this.event.name})
+  }
+
   render() {
     return (
       <View style={styles.containerFullHeight}>
@@ -102,6 +120,7 @@ export default class DoorEvent extends Component {
           event={this.event}
           dashboard={this.dashboardData}
           onPressScan={this.chooseEvent}
+          onPressGuestList={this.guestListButton}
         />
       </View>
     )

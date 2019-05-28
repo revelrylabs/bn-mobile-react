@@ -54,6 +54,11 @@ const EventManagerStyles = {
     paddingTop: globalPadding,
   },
 
+  redeemedStats: {
+    paddingTop: globalPadding,
+    fontSize: globalFontSize,
+  },
+
   // HEADER STYLES
   sectionHeader: {
     color: sectionHeaderColor,

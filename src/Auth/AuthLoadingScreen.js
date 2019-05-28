@@ -21,26 +21,33 @@ class AuthStore extends Component {
   }
 
   // Fetch the token from storage then navigate to our appropriate place
+  // eslint-disable-next-line complexity
   _bootstrapAsync = async() => {
     // eslint-disable-line complexity,space-before-function-paren
     const {
       navigation: {navigate},
       auth,
     } = this.props
-    const {userToken, refreshToken} = await retrieveTokens()
 
-    if (userToken && refreshToken) {
-      if (!auth.state.currentUser.user) {
-        await auth.getCurrentUser(navigate, userToken, refreshToken)
-      }
-      if (!shouldDoNextSignUpStep(auth.state.currentUser.user)) {
-        navigate('App')
+    try {
+      const {userToken, refreshToken} = await retrieveTokens()
+
+      if (userToken && refreshToken) {
+        if (!auth.state.currentUser.user) {
+          await auth.getCurrentUser(navigate, userToken, refreshToken)
+        }
+        if (!shouldDoNextSignUpStep(auth.state.currentUser.user)) {
+          navigate('App')
+        } else {
+          navigate('SignUpNext')
+        }
       } else {
-        navigate('SignUpNext')
+        navigate('Auth')
       }
-    } else {
+    } catch {
       navigate('Auth')
     }
+
   }
 
   render() {
