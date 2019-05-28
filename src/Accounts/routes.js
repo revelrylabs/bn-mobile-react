@@ -55,6 +55,15 @@ function defaultNavOptions(title, navigation) {
   return _configureNav(navigation, {title})
 }
 
+function guestOptions(opts = {}) {
+  const makeGuestOpts = (navigation, options) => {
+    options.back.text = navigation.getParam('name', 'Event')
+    return options
+  }
+
+  return ({navigation}) => _configureNav(navigation, makeGuestOpts(navigation, opts))
+}
+
 const ROUTES = {
   Account: {
     screen: Account,
@@ -107,8 +116,8 @@ const ROUTES = {
   },
   GuestList: {
     screen: GuestList,
-    navigationOptions: navOptions({
-      back: {route: 'EventScanner', text: 'Scan Tickets'},
+    navigationOptions: guestOptions({
+      back: {route: 'DoorEvent'},
     }),
   },
 }
