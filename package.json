@@ -6,7 +6,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.13.0",
-    "expo-cli": "^2.18.3",
+    "expo-cli": "^2.18.4",
     "jest-expo": "~31.0.0",
     "react-native-testing-library": "^1.7.0",
     "react-test-renderer": "16.3.1"
