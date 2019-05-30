@@ -58,7 +58,7 @@ function CheckoutButton({onCheckout, disabled, busy}) {
         onPress={disabled ? null : onCheckout}
       >
         <Text style={styles.buttonText}>
-          {busy ? 'Updating...' : ' Purchase Ticket'}
+          {busy ? 'Updating...' : ' Purchase Ticket(s)'}
         </Text>
       </TouchableHighlight>
     </View>

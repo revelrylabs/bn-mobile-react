@@ -53,7 +53,7 @@ function TicketStatusBadge({status, style}) {
 function GuestRowContent({guest}) {
   return (
     <View>
-      <View style={styles.flexRowSpaceBetween}>
+      <View style={doormanStyles.flexRowGuestList}>
         <Text numberOfLines={1} style={styles.headerSecondary}>
           {usernameLastFirst(guest)}
         </Text>
