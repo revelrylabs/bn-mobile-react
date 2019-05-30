@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  FlatList,
 } from 'react-native'
 import CircleCheckBox from 'react-native-circle-checkbox'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -20,6 +21,7 @@ import SharedStyles, {
 import TicketStyles from '../styles/tickets/ticketStyles'
 import TicketWalletStyles from '../styles/tickets/ticketWalletStyles'
 import TicketTransferStyles from '../styles/tickets/ticketTransferStyles'
+import DoormanStyles from '../styles/account/doormanStyles'
 import ModalStyles from '../styles/shared/modalStyles'
 import FormStyles from '../styles/shared/formStyles'
 import {autotrim, pluralize} from '../string'
@@ -34,6 +36,7 @@ const ticketWalletStyles = TicketWalletStyles.createStyles()
 const ticketTransferStyles = TicketTransferStyles.createStyles()
 const modalStyles = ModalStyles.createStyles()
 const formStyles = FormStyles.createStyles()
+const doormanStyles = DoormanStyles.createStyles()
 
 function Card({children}) {
   return (
@@ -82,6 +85,67 @@ QRCodeScanner.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
   handleBarCodeScanned: PropTypes.func.isRequired,
 }
+
+function AddressBook({
+  toggleModal,
+  modalVisible,
+  handleContactClicked,
+  contacts,
+}) {
+  return (
+    <Modal
+      onRequestClose={() => {
+        toggleModal(!modalVisible)
+      }}
+      visible={modalVisible}
+      transparent
+    >
+      <View style={modalStyles.modalContainer}>
+        <View style={modalStyles.contentWrapper}>
+          <Text style={modalStyles.headerSecondary}>Contacts</Text>
+
+          <FlatList
+            style={{height: 100, marginBottom: 50, flex: 1}}
+            keyExtractor={({id}) => id}
+            data={contacts}
+            renderItem={({item}) => (
+              <TouchableHighlight
+                style={doormanStyles.rowContainer}
+                underlayColor="rgba(0, 0, 0, 0)"
+                onPress={(data) => {
+                  handleContactClicked(data)
+                  toggleModal(false)
+                }}
+              >
+                <View style={doormanStyles.row}>
+                  <Text>{item.name}</Text>
+                </View>
+              </TouchableHighlight>
+            )}
+          />
+
+          <View style={[styles.buttonContainer, {borderRadius: 6}]}>
+            <TouchableHighlight
+              style={[styles.button, {borderRadius: 6}]}
+              name="Cancel"
+              onPress={() => {
+                toggleModal(false)
+              }}
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  )
+}
+
+AddressBook.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+  handleContactClicked: PropTypes.func.isRequired,
+}
 export default class TransferTickets extends Component {
   constructor(props) {
     super(props)
@@ -95,6 +159,7 @@ export default class TransferTickets extends Component {
       hasCameraPermission: null,
       hasAddressBookPermission: null,
       scannedEmail: null,
+      contacts: [],
     }
   }
 
@@ -105,6 +170,11 @@ export default class TransferTickets extends Component {
     }
     this.setState({scannedEmail: parsedScan.email})
     this.toggleQRModal(false)
+  }
+
+  handleContactClicked = (result) => {
+    this.setState({selectedContact: result.data})
+    this.toggleAddressBook(false)
   }
 
   toggleQRModal = (visible) => {
@@ -120,17 +190,14 @@ export default class TransferTickets extends Component {
     })
 
     if (data.length > 0) {
-      const contact = data[0]
-
-      console.log(contact)
+      this.setState({
+        contacts: data,
+      })
     }
 
     this.setState({showAddressBook: visible})
     if (visible && !this.state.hasAddressBookPermission) {
       this.addressBookPermissions()
-    }
-
-    if (this.state.hasAddressBookPermission) {
     }
   }
   get tickets() {
@@ -253,7 +320,7 @@ export default class TransferTickets extends Component {
 
   render() {
     const {navigation} = this.props
-    const {checkboxes, showQRModal} = this.state
+    const {checkboxes, showQRModal, showAddressBook, contacts} = this.state
     const {hasValidRecipient, transferCount} = this
 
     let disabled = true
@@ -275,6 +342,12 @@ export default class TransferTickets extends Component {
             handleBarCodeScanned={this.handleBarCodeScanned}
             toggleModal={this.toggleQRModal}
             modalVisible={showQRModal}
+          />
+          <AddressBook
+            handleContactClicked={this.handleContactClicked}
+            toggleModal={this.toggleAddressBook}
+            modalVisible={showAddressBook}
+            contacts={contacts}
           />
           <Image
             style={ticketWalletStyles.modalBkgdImage}
