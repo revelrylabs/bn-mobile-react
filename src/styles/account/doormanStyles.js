@@ -16,6 +16,7 @@ import {
   globalPaddingTiny,
   globalMargin,
   globalMarginSmall,
+  globalMarginTiny,
 } from '../shared/sharedStyles'
 import {StyleSheet, Dimensions, Platform} from 'react-native'
 const fullHeight = Dimensions.get('window').height
@@ -81,7 +82,7 @@ const DoormanStyles = {
     backgroundColor: white,
     borderBottomColor: borderColor,
     borderBottomWidth: 1,
-    paddingHorizontal: globalPadding,
+    paddingHorizontal: globalPaddingTiny,
     paddingVertical: globalPaddingSmall,
   },
   row: {
@@ -93,7 +94,9 @@ const DoormanStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: fullWidth / 1.8,
+    width: fullWidth / 1.6,
+    marginLeft: globalMarginTiny,
+    marginRight: globalMarginTiny,
   },
 
   // BADGE STYLES
