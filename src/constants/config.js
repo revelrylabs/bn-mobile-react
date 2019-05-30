@@ -14,7 +14,7 @@ const SEGMENT_ANDROID_PRODUCTION = 'XZRPUZtqgXU4diulRekh7nV3Z2sHZS6f'
 const SEGMENT_IOS_PRODUCTION = 'x6xb253zBvxlkW6l4wBGGuf8whD07f41'
 
 const defaultConfig = {
-  timeout: 10000,
+  timeout: 30000,
 }
 
 const dev = {
