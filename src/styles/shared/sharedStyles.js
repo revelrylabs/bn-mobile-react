@@ -502,6 +502,7 @@ const SharedStyles = {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: fullWidth / 2,
   },
   flexRowCenter: {
     alignItems: 'center',
