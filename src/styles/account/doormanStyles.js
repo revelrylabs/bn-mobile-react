@@ -83,12 +83,17 @@ const DoormanStyles = {
     borderBottomWidth: 1,
     paddingHorizontal: globalPadding,
     paddingVertical: globalPaddingSmall,
-    width: fullWidth,
   },
   row: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  flexRowGuestList: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: fullWidth / 1.8,
   },
 
   // BADGE STYLES

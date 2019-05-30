@@ -143,7 +143,10 @@ export default class EventsTicket extends Component {
         />
         <View>
           <View
-            style={[ticketWalletStyles.closeModalContainer, styles.paddingTop]}
+            style={[
+              ticketWalletStyles.closeModalContainer,
+              ticketWalletStyles.paddingTop,
+            ]}
           >
             <Icon
               style={styles.iconLinkCircle}

@@ -6,6 +6,7 @@ import {server, apiErrorAlert} from '../constants/Server'
 import SharedStyles from '../styles/shared/sharedStyles'
 import EventManagerStyles from '../styles/account/eventManagerStyles'
 
+
 const styles = SharedStyles.createStyles()
 const eventManagerStyles = EventManagerStyles.createStyles()
 
@@ -108,7 +109,7 @@ export default class DoorEvent extends Component {
 
   guestListButton = async() =>{
     await this.props.screenProps.eventManager.scanForEvent(this.event)
-    this.props.navigation.navigate('GuestList')
+    this.props.navigation.navigate('GuestList', {name: this.event.name})
   }
 
   render() {
