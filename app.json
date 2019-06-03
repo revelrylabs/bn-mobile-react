@@ -3,11 +3,7 @@
     "sdkVersion": "31.0.0",
     "name": "Big Neon",
     "icon": "./assets/appIcon.png",
-<<<<<<< HEAD
     "version": "1.0.119",
-=======
-    "version": "1.0.115",
->>>>>>> dd7350f9b3d228c5c60b79b1c5bd9b20ccb5df3d
     "slug": "big-neon-mobile",
     "orientation": "portrait",
     "facebookScheme": "fb1737006886375028",
@@ -34,11 +30,7 @@
     },
     "android": {
       "package": "com.bigneon.mobile",
-<<<<<<< HEAD
       "versionCode": 119,
-=======
-      "versionCode": 115,
->>>>>>> dd7350f9b3d228c5c60b79b1c5bd9b20ccb5df3d
       "permissions": [
         "CAMERA",
         "CAMERA_ROLL",
