@@ -58,16 +58,18 @@ export default class EventsTicket extends Component {
       this._prevBrightness = (await getBrightness()) || DEFAULT_BRIGHTNESS
 
       await setBrightness(1)
-    } catch (_error) {
-      console.warn('Unable to set brightness')
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn(`Unable to set brightness. Error: ${error.message}`)
     }
   }
 
   async undoBrightness() {
     try {
       await setBrightness(this._prevBrightness)
-    } catch (_error) {
-      console.warn('Unable to set brightness')
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn(`Unable to set brightness. Error ${error.message}`)
     }
   }
 
