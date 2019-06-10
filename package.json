@@ -49,7 +49,7 @@
     "react-native-swipe-list-view": "^1.5.5",
     "react-native-video": "^3.2.0",
     "react-navigation": "^2.11.2",
-    "sentry-expo": "^1.11.2",
+    "sentry-expo": "^1.13.0",
     "unstated": "^2.1.1"
   }
 }
